@@ -16,7 +16,7 @@ public class Weekly {
     @Id @Column(name="WEEKLY_ID")
     private String id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USER_ID")
     private User user;
 
@@ -39,13 +39,13 @@ public class Weekly {
     @Column(name="WEEKLY_TEXT")
     private String text;
 
-    @OneToMany(mappedBy = "weekly")
+    @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
     private List<Daily> dailys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "weekly")
+    @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
     private List<Gowith> gowiths = new ArrayList<>();
 
-    @OneToOne(mappedBy = "weekly")
+    @OneToOne(mappedBy = "weekly", fetch = FetchType.LAZY)
     private AttachWeekly attachWeekly;
 
 }

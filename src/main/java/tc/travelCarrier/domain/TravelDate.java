@@ -11,7 +11,6 @@ import java.util.Date;
 
 @Embeddable
 @Getter
-@Setter
 public class TravelDate {
 
     @Column(name="EDATE")

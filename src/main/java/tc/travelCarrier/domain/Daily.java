@@ -15,10 +15,12 @@ public class Daily {
     @Column(name="DAILY_ID")
     private String id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="WEEKLY_ID")
     private Weekly weekly;
 
-    @OneToMany(mappedBy = "daily")
+    @OneToMany(mappedBy = "daily", cascade = CascadeType.ALL)
     private List<Kword> kwords = new ArrayList<>();
+
+
 }

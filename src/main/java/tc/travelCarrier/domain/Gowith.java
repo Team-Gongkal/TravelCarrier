@@ -13,7 +13,7 @@ public class Gowith {
     @Column(name = "GOWITH_NO")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WEEKLY_ID")
     private Weekly weekly;
 

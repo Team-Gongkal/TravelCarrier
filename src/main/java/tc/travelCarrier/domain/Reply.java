@@ -13,14 +13,14 @@ public class Reply {
     @Column(name="REPLY_ID")
     private String id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ATTACH_NO")
     private AttachDaily attachDaily;
 
     @Column(name="REPLY_TEXT")
     private String text;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USER_ID")
     private User user;
 

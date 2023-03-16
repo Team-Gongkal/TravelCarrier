@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class AttachWeekly extends Attach{
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="WEEKLY_ID")
     private Weekly weekly;
 

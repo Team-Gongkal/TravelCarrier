@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class AttachUser extends Attach{
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USER_ID")
     private User user;
 }

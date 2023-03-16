@@ -28,6 +28,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Weekly> weeklys = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private AttachUser attachUser;
 }

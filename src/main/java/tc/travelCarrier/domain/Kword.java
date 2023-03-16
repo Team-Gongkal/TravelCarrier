@@ -13,10 +13,11 @@ public class Kword {
     @Column(name="KWORD_NO")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DAILY_ID")
     private Daily daily;
 
     @Column(name="KWORD_TEXT")
     private String text;
+
 }
