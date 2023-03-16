@@ -27,10 +27,10 @@ public class Weekly {
     private String nation;
 
     @Embedded
-    private TravelDate travelDate;
+    private TravelDate travelDate; //여행기간
 
     @Embedded
-    private CrudDate crudDate; //생성일
+    private CrudDate crudDate; //글 생성일
 
     @Enumerated(EnumType.STRING)
     @Column(name="WEEKLY_OPEN")

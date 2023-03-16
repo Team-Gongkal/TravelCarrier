@@ -17,6 +17,7 @@ public class Gowith {
     @JoinColumn(name = "WEEKLY_ID")
     private Weekly weekly;
 
+    @Column(name = "USER_ID")
     private Long userId; //탈퇴하면 동행인 안뜨는거 방지하기위해 연관관계X
 
 

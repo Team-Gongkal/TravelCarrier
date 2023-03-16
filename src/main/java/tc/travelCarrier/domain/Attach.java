@@ -10,9 +10,6 @@ public abstract class Attach {
     @Id @Column(name="ATTACH_NO")
     private String id;
 
-    @Column(name="DTYPE")
-    private String dtype;
-
     @Column(name="ATTACH_TITLE")
     private String attachTitle;
 

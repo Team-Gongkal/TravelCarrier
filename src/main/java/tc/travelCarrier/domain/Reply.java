@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Reply {
 
     @Id
+    @Column(name="REPLY_ID")
     private String id;
 
     @ManyToOne
