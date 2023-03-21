@@ -9,7 +9,7 @@ public abstract class Attach {
 
     @Id @Column(name="ATTACH_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
 
     @Column(name="ATTACH_TITLE")
     private String attachTitle;

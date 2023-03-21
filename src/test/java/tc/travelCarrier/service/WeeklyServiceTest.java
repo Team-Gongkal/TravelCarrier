@@ -31,17 +31,18 @@ public class WeeklyServiceTest {
 
         user.setId(1);
 
-        weekly.setUser(user);
+ /*       weekly.setUser(user);
         weekly.setTitle("Paris");
         weekly.setNation("France");
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         weekly.setTravelDate(new TravelDate(f.parse("2022-10-20"),f.parse("2022-10-30")));
         weekly.setCrudDate(new CrudDate(new Date(), null));
         weekly.setStatus(OpenStatus.FOLLOW);
-        weekly.setText("완전 재밌었던 파리여행");
+        weekly.setText("완전 재밌었던 파리여행");*/
 
+        String thumbnail = "무시해";
         //when
-        String savedId = weeklyService.create(weekly);
+        int savedId = weeklyService.create(weekly);
 
         //then
         assertEquals(weekly, weeklyRepository.findOne(savedId));

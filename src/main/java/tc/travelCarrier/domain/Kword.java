@@ -11,7 +11,7 @@ public class Kword {
 
     @Id @GeneratedValue
     @Column(name="KWORD_NO")
-    private Long id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DAILY_ID")

@@ -7,6 +7,7 @@ import lombok.With;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Weekly {
 
     @Id @Column(name="WEEKLY_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USER_ID")
@@ -44,19 +45,33 @@ public class Weekly {
     private List<Daily> dailys = new ArrayList<>();
 
     @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
-    private List<Gowith> gowiths = new ArrayList<>();
+    private HashSet<Gowith> gowiths = new HashSet<>();
 
-    @OneToOne(mappedBy = "weekly", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "weekly", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private AttachWeekly attachWeekly;
 
     //==비즈니스로직==//
     // 위클리 등록하면 daily, gowiths, attachWeekly에 값 들어가는 동작 만드느건가?
     //재고수량처럼 데이터를 가지고 있는 엔티티쪽에 작성하는거래!
-    /**
-     *  daily 증가???
-     */
-    public void addDaily(int day) {
-        //this.dailys.size() += day;
+
+
+    //연관관계 메소드
+    public void addGowith(Gowith gowith) {
+        gowiths.add(gowith);
+        gowith.setWeekly(this); //추가한걸 연관관계 주인인 파라미터 한테도!!
     }
+
+
+    //생성메소드
+    public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, String nation,
+                  TravelDate travelDate, CrudDate crudDate, OpenStatus status,
+                  String text, HashSet<Integer> gowiths){
+
+        Weekly weekly = new Weekly();
+        //weekly.setc
+
+        return weekly;
+    }
+
 
 }

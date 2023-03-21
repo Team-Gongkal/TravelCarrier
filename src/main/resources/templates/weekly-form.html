@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>weekly-form</title>
+</head>
+
+<body>
+  <form action="/weekly/regist" name="weekly_form" th:object="${memberForm}" method="post">
+    <div class="thumbnail">
+      <div class="thumbnail_input">
+        <div class="thumbnail_text">
+          <h3>썸네일</h3>
+          <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
+        </div>
+        <div class="thumbnail_img">
+          <div class="crop_circle">
+            <img src="" alt="">
+          </div>
+        </div>
+        <div class="thumbnail_btn">
+          <button>이미지 변경</button>
+          <button>이미지 삭제</button>
+        </div>
+      </div>
+    </div>
+    <div class="weekly_input">
+      <!-- 국가 선택----------------------------- -->
+      <div class="country">
+        <h3>여행 국가</h3>
+        <select name="nation" value="">
+          <option name="nation1" id="" value="1">KOREA</option>
+          <option name="nation2" id="" value="2">FRANCE</option>
+          <option name="nation3" id="" value="3">SPAIN</option>
+          <option name="nation4" id="" value="4">CHAINA</option>
+        </select>
+
+      </div>
+      <!-- 여행 기간------------------------------- -->
+      <div class="period">
+        <h3>여행 기간</h3>
+        <!-- 여행 시작일 -->
+        <span class="dateSet">
+          <input type="text" id="startDate" name="sdate">
+          <a href="#none" class="dateClick">달력</a>
+        </span>
+        <!-- 여행 종료일 -->
+        <span class="dateSet">
+          <input type="text" id="endDate" name="edate">
+          <a href="#none" class="dateClick">달력</a>
+        </span>
+      </div>
+      <!-- 제목 입력-------------------------------- -->
+      <div class="title">
+        <h3>제목</h3>
+        <input name = "title" type="text">
+      </div>
+      <!-- 일기 작성-------------------------------- -->
+      <div class="writing">
+        <h3>일기작성</h3>
+        <textarea name="text" id="" cols="30" rows="10"></textarea>
+      </div>
+      <!-- 동행인--------------------------------------- -->
+      <div class="companion">
+        <h3>동행인</h3>
+        <!-- 보이는 부분 -->
+        <span class="buttonUI">동행인 추가</span>
+        <!-- 팝업 -->
+        <div class="companion_popup">
+          <h3>아이디 검색</h3>
+          <div class="id_search">
+            <input type="search" name="companion" id="">
+          </div>
+          <div class="profileList">
+            <ul>
+              <li>
+                <span class="profile_circle"></span>
+                <span>name</span>
+                <span>
+                  <input type="radio" name="friend" value=1 id="">
+                </span>
+              </li>
+              <li>
+                <span class="profile_circle"></span>
+                <span>name</span>
+                <span>
+                  <input type="radio" name="friend" value=2 id="">
+                </span>
+              </li>
+              <li>
+                <span class="profile_circle"></span>
+                <span>name</span>
+                <span>
+                  <input type="radio" name="friend" value=3 id="">
+                </span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <!-- 공개여부------------------------------------ -->
+      <div class="disclosure">
+        <h3>공개여부</h3>
+        <span class="buttonUI private">
+          <input type="radio" name="status" value="3" id="private" checked>
+        </span>
+        <span class="buttonUI public">
+          <input type="radio" name="status" value="1" id="public">
+        </span>
+        <span class="buttonUI shareFriends">
+          <input type="radio" name="status" value="2" id="shareFriends">
+        </span>
+      </div>
+    </div>
+    <button type="submit"> 저장하기 </button>
+  </form>
+  <script src="period.js"></script>
+</body>
+
+</html>

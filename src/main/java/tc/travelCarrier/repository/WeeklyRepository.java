@@ -2,11 +2,14 @@ package tc.travelCarrier.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import tc.travelCarrier.domain.Attach;
+import tc.travelCarrier.domain.Gowith;
 import tc.travelCarrier.domain.Weekly;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,7 +21,7 @@ public class WeeklyRepository {
         em.persist(weekly);
     }
 
-    public Weekly findOne(String id){
+    public Weekly findOne(int id){
         Weekly weekly =  em.find(Weekly.class, id);
         return weekly;
     }

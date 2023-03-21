@@ -15,7 +15,7 @@ public class TravelDate {
 
     public TravelDate(){}
 
-    public TravelDate(Date eDate, Date sDate){
+    public TravelDate(Date sDate, Date eDate){
         this.sDate = sDate;
         this.eDate = eDate;
     }

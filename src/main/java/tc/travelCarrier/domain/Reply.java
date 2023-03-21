@@ -11,7 +11,7 @@ public class Reply {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="REPLY_ID")
-    private String id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ATTACH_NO")

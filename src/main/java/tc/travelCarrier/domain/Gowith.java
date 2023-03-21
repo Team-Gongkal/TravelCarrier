@@ -11,7 +11,7 @@ public class Gowith {
 
     @Id @GeneratedValue
     @Column(name = "GOWITH_NO")
-    private Long id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WEEKLY_ID")
