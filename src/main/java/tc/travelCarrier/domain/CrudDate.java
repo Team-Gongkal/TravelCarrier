@@ -9,6 +9,12 @@ import java.util.Date;
 @Embeddable
 @Getter @Setter
 public class CrudDate {
+    public CrudDate(){}
+
+    public CrudDate(Date cdate, Date udate){
+        this.cdate = cdate;
+        this.udate = udate;
+    }
     @Column(name="CDATE")
     private Date cdate;
     @Column(name="UDATE")

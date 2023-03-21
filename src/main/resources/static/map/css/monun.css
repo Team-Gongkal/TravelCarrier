@@ -1,0 +1,100 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  background-color: #bdccd4;
+  background-image: 
+  /* 큰 세로줄 */ linear-gradient(
+      90deg,
+      rgba(53, 58, 82, 0.2) 0px,
+      rgba(53, 58, 82, 0.2) 1px,
+      transparent 1px,
+      transparent 99px,
+      transparent 100px
+    ),
+    /* 큰 가로줄 */
+      linear-gradient(
+        rgba(53, 58, 82, 0.2) 0px,
+        rgba(53, 58, 82, 0.2) 1px,
+        transparent 1px,
+        transparent 99px,
+        transparent 100px
+      ),
+    /* 세밀한 가로줄 */
+      linear-gradient(
+        rgba(53, 58, 82, 0.2) 0px,
+        rgba(53, 58, 82, 0.2) 1px,
+        transparent 1px,
+        transparent 99px,
+        transparent 100px
+      ),
+    /* 큰 가로줄 */
+      linear-gradient(
+        90deg,
+        rgba(53, 58, 82, 0.2) 0px,
+        rgba(53, 58, 82, 0.2) 1px,
+        transparent 1px,
+        transparent 99px,
+        transparent 100px
+      ),
+    /* 큰 가로줄 강조 */
+      linear-gradient(
+        transparent 0px,
+        transparent 0px,
+        #bdccd4 0px,
+        #bdccd4 0px,
+        transparent 0px,
+        transparent 0px
+      ),
+    /* 플러스 세로선 */
+      linear-gradient(
+        90deg,
+        rgba(53, 58, 82, 0.2) 0px,
+        rgba(53, 58, 82, 0.2) 1px,
+        transparent 1px,
+        transparent 99px,
+        rgba(53, 58, 82, 0.2) 99px,
+        rgba(53, 58, 82, 0.2) 100px
+      ),
+    /* 플러스 강조, 네모박스 생김 */
+      /* linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 5px,
+        #bdccd4 5px,
+        #bdccd4 95px,
+        transparent 95px,
+        transparent 100px
+      ), */
+      linear-gradient(
+        transparent 0px,
+        transparent 1px,
+        #bdccd4 1px,
+        #bdccd4 99px,
+        transparent 99px,
+        transparent 100px
+      );
+  linear-gradient: (rgba(53, 58, 82, 0.2), rgba(53, 58, 82, 0.2));
+  background-size: 100px 100%, 100% 100px, 100% 10px, 10px 100%, 100% 100px,
+    100px 100%, 100px 100%;
+}
+.map {
+  overflow: hidden;
+}
+
+/* map */
+.map {
+  -ms-overflow-style: none;
+}
+.main::-webkit-scrollbar {
+  display: none;
+}

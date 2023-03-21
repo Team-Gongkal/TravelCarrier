@@ -13,8 +13,17 @@ import java.util.Date;
 @Getter
 public class TravelDate {
 
+    public TravelDate(){}
+
+    public TravelDate(Date eDate, Date sDate){
+        this.sDate = sDate;
+        this.eDate = eDate;
+    }
+
     @Column(name="EDATE")
     private Date sDate;
     @Column(name="SDATE")
     private Date eDate;
+
+
 }

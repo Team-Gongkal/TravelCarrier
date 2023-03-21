@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Gowith {
 
-    @Id @GeneratedValue()
+    @Id @GeneratedValue
     @Column(name = "GOWITH_NO")
     private Long id;
 

@@ -14,6 +14,7 @@ import java.util.List;
 public class Weekly {
 
     @Id @Column(name="WEEKLY_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,7 +40,7 @@ public class Weekly {
     @Column(name="WEEKLY_TEXT")
     private String text;
 
-    @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "weekly")
     private List<Daily> dailys = new ArrayList<>();
 
     @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
@@ -47,5 +48,15 @@ public class Weekly {
 
     @OneToOne(mappedBy = "weekly", fetch = FetchType.LAZY)
     private AttachWeekly attachWeekly;
+
+    //==비즈니스로직==//
+    // 위클리 등록하면 daily, gowiths, attachWeekly에 값 들어가는 동작 만드느건가?
+    //재고수량처럼 데이터를 가지고 있는 엔티티쪽에 작성하는거래!
+    /**
+     *  daily 증가???
+     */
+    public void addDaily(int day) {
+        //this.dailys.size() += day;
+    }
 
 }

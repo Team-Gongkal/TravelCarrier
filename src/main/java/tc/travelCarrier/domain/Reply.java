@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Reply {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="REPLY_ID")
     private String id;
 

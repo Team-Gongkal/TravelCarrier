@@ -8,6 +8,7 @@ import javax.persistence.*;
 public abstract class Attach {
 
     @Id @Column(name="ATTACH_NO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name="ATTACH_TITLE")

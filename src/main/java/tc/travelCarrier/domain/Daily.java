@@ -11,7 +11,7 @@ import java.util.List;
 @Getter @Setter
 public class Daily {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="DAILY_ID")
     private String id;
 

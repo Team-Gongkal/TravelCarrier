@@ -12,9 +12,9 @@ import java.util.List;
 @Getter @Setter
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="USER_ID")
-    private Long id;
+    private int id;
 
     @Column(name="USER_EMAIL")
     private String email;
