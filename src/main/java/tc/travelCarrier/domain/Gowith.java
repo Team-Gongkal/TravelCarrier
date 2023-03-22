@@ -9,6 +9,10 @@ import javax.persistence.*;
 @Getter @Setter
 public class Gowith {
 
+    public Gowith(){}
+    public Gowith(int userId){
+        this.userId = userId;
+    }
     @Id @GeneratedValue
     @Column(name = "GOWITH_NO")
     private int id;
@@ -18,7 +22,9 @@ public class Gowith {
     private Weekly weekly;
 
     @Column(name = "USER_ID")
-    private Long userId; //탈퇴하면 동행인 안뜨는거 방지하기위해 연관관계X
+    private int userId; //탈퇴하면 동행인 안뜨는거 방지하기위해 연관관계X
+
+
 
 
 }

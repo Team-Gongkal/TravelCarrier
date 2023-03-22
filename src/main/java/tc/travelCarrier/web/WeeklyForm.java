@@ -3,6 +3,7 @@ package tc.travelCarrier.web;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import tc.travelCarrier.domain.OpenStatus;
 import tc.travelCarrier.domain.TravelDate;
 
@@ -19,10 +20,12 @@ public class WeeklyForm {
     private String nation;
 
     private String thumbnail;
+    @DateTimeFormat(pattern = "yyy/MM/dd")
     private Date sdate;
     private Date edate;
     private String title;
     private String text;
     private HashSet<Integer> gowiths;
     private String status;
+
 }

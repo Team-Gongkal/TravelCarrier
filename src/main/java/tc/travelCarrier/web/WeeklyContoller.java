@@ -32,14 +32,26 @@ public class WeeklyContoller {
      * @param : WeeklyForm (폼정보)
      * @return : "weekly"+weeklyId (생성된 위클리의 ID)
      * */
-    @PostMapping(value="/weekly/regist")
+    @PostMapping(value="/weeklyForm/regist")
     public String regist(@Valid WeeklyForm form, BindingResult result){
+
+
+        System.out.println("==============================");
+        System.out.println("썸네일 : "+form.getThumbnail());
+        System.out.println("국가 : "+form.getNation());
+        System.out.println("출국일 : "+form.getSdate());
+        System.out.println("입국일 : "+form.getEdate());
+        System.out.println("제목 : "+form.getTitle());
+        System.out.println("본문 : "+form.getText());
+        System.out.println("공개여부 : "+form.getStatus());
+        for(int i : form.getGowiths()) System.out.println("동행인 : "+i);
+        System.out.println("==============================");
 
         if(result.hasErrors()) {
             return "error";
         }
 
-        TravelDate date = new TravelDate(form.getSdate(),form.getEdate());
+        TravelDate tdate = new TravelDate(form.getSdate(),form.getEdate());
 
         User user = new User();
         user.setId(1);
@@ -59,18 +71,15 @@ public class WeeklyContoller {
         if(form.getStatus().equals("2")) status = OpenStatus.FOLLOW;
         else if(form.getStatus().equals("3")) status = OpenStatus.ME;
 
-        //첨부파일 처리
+        System.out.println("ㅅㅂ");
 
-        //gowith set처리
+        Weekly weekly = Weekly.createWeekly(user,new AttachWeekly(), form.getTitle(), form.getNation(),
+                tdate, new CrudDate(new Date(),null), status, form.getText(), form.getGowiths());
 
+        System.out.println("위클리만듦");
 
-/*
-        Weekly weekly = new Weekly(user, new AttachWeekly(),form.getTitle(), form.getNation(), date,
-                new CrudDate(new Date(), null), status, form.getText(), form.getGowiths());
-*/
-
-       // int weeklyId = weeklyService.create(weekly);
-        int weeklyId = 1;
+        int weeklyId = weeklyService.register(weekly);
+        System.out.println("성공!");
         return "/weekly/"+weeklyId;
     }
 

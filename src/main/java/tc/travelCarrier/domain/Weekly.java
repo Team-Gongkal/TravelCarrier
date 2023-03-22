@@ -65,10 +65,18 @@ public class Weekly {
     //생성메소드
     public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, String nation,
                   TravelDate travelDate, CrudDate crudDate, OpenStatus status,
-                  String text, HashSet<Integer> gowiths){
-
+                  String text, HashSet<Integer> gowithIds){
+        System.out.println("+++createWeeklu+++");
         Weekly weekly = new Weekly();
-        //weekly.setc
+        weekly.setUser(user);
+        weekly.setAttachWeekly(attachWeekly);
+        weekly.setTitle(title);
+        weekly.setNation(nation);
+        weekly.setTravelDate(travelDate);
+        weekly.setCrudDate(crudDate);
+        weekly.setStatus(status);
+        weekly.setText(text);
+        for(int i : gowithIds) weekly.addGowith(new Gowith());
 
         return weekly;
     }

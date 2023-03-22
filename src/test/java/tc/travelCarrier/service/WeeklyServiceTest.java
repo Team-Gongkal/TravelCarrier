@@ -11,7 +11,9 @@ import tc.travelCarrier.domain.*;
 import tc.travelCarrier.repository.WeeklyRepository;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
@@ -28,33 +30,44 @@ public class WeeklyServiceTest {
         //given
         Weekly weekly = new Weekly();
         User user = new User();
-
         user.setId(1);
 
- /*       weekly.setUser(user);
-        weekly.setTitle("Paris");
-        weekly.setNation("France");
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        weekly.setTravelDate(new TravelDate(f.parse("2022-10-20"),f.parse("2022-10-30")));
-        weekly.setCrudDate(new CrudDate(new Date(), null));
-        weekly.setStatus(OpenStatus.FOLLOW);
-        weekly.setText("완전 재밌었던 파리여행");*/
+        weekly.setUser(user);
+        //weekly.setAttachWeekly();
+        weekly.setNation("Korea");
 
-        String thumbnail = "무시해";
+        weekly.setTitle("Seoul");
+        weekly.setText("완전 재밌었던 파리여행");
+        weekly.setTravelDate(new TravelDate(
+                new SimpleDateFormat("yyyy.MM.dd").parse("2020.01.20"),
+                new SimpleDateFormat("yyyy.MM.dd").parse("2020.01.25")));
+        weekly.setCrudDate(new CrudDate(new Date(), null));
+        List<Gowith> gowiths = new ArrayList<>();
+        gowiths.add(new Gowith(2));
+        gowiths.add(new Gowith(3));
+        weekly.setGowiths(gowiths);
+        weekly.setStatus(OpenStatus.FOLLOW);
+
         //when
-        int savedId = weeklyService.create(weekly);
+        int savedId = weeklyService.register(weekly);
 
         //then
         assertEquals(weekly, weeklyRepository.findOne(savedId));
 
     }
     @Test
-    public void 위클리_조회() throws Exception {
+    @Rollback(false)
+    public void 나의_위클리_조회() throws Exception {
         //given
+        User user = new User();
+        user.setId(1);
 
         //when
+        List<Weekly> weeklies = weeklyService.findWeeklies(user);
 
         //then
+        assertEquals("맞는 위클리셋인지 확인 ",
+                user.getId(), weeklies.get(0).getUser().getId());
 
     }
 }
