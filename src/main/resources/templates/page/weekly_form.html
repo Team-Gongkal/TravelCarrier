@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+<body>
+
+  <th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+  <main>
+    <form action="form.php" name="weekly_form">
+      <div class="thumbnail">
+        <div class="thumbnail_input">
+          <div class="thumbnail_text">
+            <h3>썸네일</h3>
+            <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
+          </div>
+          <div class="thumbnail_img">
+            <div class="crop_circle">
+              <img src="" alt="">
+            </div>
+          </div>
+          <div class="thumbnail_btn">
+            <input type="file" name="썸네일">이미지 변경</input>
+            <input>이미지 삭제</input>
+          </div>
+        </div>
+      </div>
+      <div class="weekly_input">
+        <!-- 국가 선택 / select:name = option:value----------------------------- -->
+        <div class="country">
+          <h3>여행 국가</h3>
+          <select name="국가명">
+            <option id="0" value="82" selected>KOREA</option>
+            <option id="1" value="83">FRANCE</option>
+            <option id="2" value="84">SPAIN</option>
+            <option id="3" value="85">CHAINA</option>
+          </select>
+
+        </div>
+        <!-- 여행 기간 / script로 text -> date변환------------------------------- -->
+        <div class="period">
+          <h3>여행 기간</h3>
+          <!-- 여행 시작일 -->
+          <span class="dateSet">
+            <input name="여행시작일" type="text" id="startDate" placeholder="2022-03-21">
+            <a href="#none" class="dateClick">달력</a>
+          </span>
+          <!-- 여행 종료일 -->
+          <span class="dateSet">
+            <input name="여행종료일" type="text" id="endDate" placeholder="2022-03-22">
+            <a href="#none" class="dateClick">달력</a>
+          </span>
+        </div>
+        <!-- 제목 입력-------------------------------- -->
+        <div class="title">
+          <h3>제목</h3>
+          <input name="제목" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)">
+        </div>
+        <!-- 일기 작성-------------------------------- -->
+        <div class="writing">
+          <h3>추가글</h3>
+          <textarea name="추가글" id="addText" cols="30" rows="10" placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요"></textarea>
+        </div>
+        <!-- 동행인--------------------------------------- -->
+        <div class="companion">
+          <h3>동행인</h3>
+          <!-- 보이는 부분 -->
+          <ul class="selectedFrieds">
+            <li>동행인 이미지</li>
+            <li>동행인 이미지</li>
+            <li>동행인 이미지</li>
+            <li id="plus_companion">동행인추가</li>
+          </ul>
+
+        </div>
+        <!-- 동행인 추가 팝업 -->
+        <div class="companion_popup">
+          <div class="id_search">
+            <h3>아이디 검색</h3>
+            <input type="search" name="" placeholder="이름 또는 아이디를 입력해주세요">
+          </div>
+          <div class="friendsList">
+            <ul>
+              <li>
+                <span class="profile_circle"></span>
+                <span>name</span>
+                <span>
+                  <input type="radio" name="friend" id="">
+                </span>
+              </li>
+              <li>
+                <span class="profile_circle"></span>
+                <span>name</span>
+                <span>
+                  <input type="radio" name="" id="">
+                </span>
+              </li>
+              <li>
+                <span class="profile_circle"></span>
+                <span>name</span>
+                <span>
+                  <input type="radio" name="" id="">
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <button type="button">확인</button>
+          </div>
+        </div>
+        <!-- 공개여부------------------------------------ -->
+        <div class="disclosure">
+          <h3>공개여부</h3>
+          <ul>
+            <li class="private">
+              <input type="radio" name="disclosure" value="private" checked>
+              <img src="" alt="">
+              <span>비공개</span>
+
+            </li>
+            <li class="public">
+              <input type="radio" name="disclosure" value="public">
+              <img src="" alt="">
+              <span>공개</span>
+
+            </li>
+            <li class="shareFriends">
+              <input type="radio" name="disclosure" value="shareFriends">
+              <img src="" alt="">
+              <span>친구공개</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button type="submit"> 저장하기 </button>
+    </form>
+  </main>
+
+
+</body>
+
+</html>

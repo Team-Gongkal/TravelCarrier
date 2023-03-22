@@ -56,8 +56,6 @@ html {
   transform: translate(-50%, -50%);
 }
 .map svg {
-  width: 1606;
-  height: auto;
 }
 .map > .img > img {
   position: absolute;
@@ -73,6 +71,8 @@ html {
 
 .러시아 {
   clip-path: url(#RUSSIA_G);
+  width: 125px;
+  height: 125px;
   /* position: absolute;
   top: 0;
   left: 0; */

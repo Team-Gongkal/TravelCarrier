@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+<body>
+  <th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+  <main>
+    <div class="weekly_thumbnails">
+      <div class="thumbnail thumbnail01"><a href="#none">
+          <div class="textbox">
+            <p class="travel_period">22.10.19-22.10.21</p>
+            <p class="travel_city">Budapest</p>
+          </div>
+        </a></div>
+      <div class="thumbnail thumbnail02"><a href="#none">
+          <div class="textbox">
+            <p class="travel_period">22.10.19-22.10.21</p>
+            <p class="travel_city">praha</p>
+          </div>
+        </a></div>
+      <div class="thumbnail thumbnail03"><a href="#none">
+          <div class="textbox">
+            <p class="travel_period">22.10.19-22.10.21</p>
+            <p class="travel_city">paris</p>
+          </div>
+        </a></div>
+      <div class="thumbnail thumbnail04"><a href="#none">
+          <div class="textbox">
+            <p class="travel_period">22.10.19-22.10.21</p>
+            <p class="travel_city">spain</p>
+          </div>
+        </a></div>
+      <div class="thumbnail thumbnail05"><a href="#none">
+          <div class="textbox">
+            <p class="travel_period">22.10.19-22.10.21</p>
+            <p class="travel_city">korea</p>
+          </div>
+        </a></div>
+      <div id="more_thumbnail">
+        <a href="#none">
+          <div class="plus">
+            <span></span>
+            <span></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+  <!-- script -->
+  <script>
+  </script>
+
+</body>
+
+</html>

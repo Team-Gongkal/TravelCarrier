@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<th:block lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <!--headerFragment 선언-->
+  <th:block th:fragment="headerFragment">
+
+    <header>
+      <nav>
+        <div class="nav">
+          <div class="hamburger on">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="logo">
+            <a href="index.html">
+              <img src="./image/header/logo/journal.png" alt="logo">
+            </a>
+          </div>
+        </div>
+        <div class="board_link">
+          <a href="">Board</a>
+        </div>
+        <div class="contact_link">
+          <a href="">Contact</a>
+        </div>
+      </nav>
+      <div class="navigation"></div>
+    </header>
+    <!-- utill 유틸 -->
+    <div class="utill_menu">
+      <div class="notice">
+        <img src="./image/header/icon/notification.png" alt="실시간 알림 아이콘">
+      </div>
+      <div class="profile">
+        <a href="#none"></a>
+      </div>
+    </div>
+  </th:block>
+
+  </html>

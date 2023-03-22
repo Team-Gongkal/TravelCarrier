@@ -1,0 +1,128 @@
+/*썸네일-----------------------------------------*/
+.weekly_thumbnails {
+  width: 14%;
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding-right: 0.5em;
+}
+.weekly_thumbnails > div {
+  width: 36%;
+  box-sizing: border-box;
+  border-radius: 100px;
+  padding-bottom: 35%;
+  align-self: flex-end;
+  margin-bottom: 5%;
+  cursor: pointer;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.5s;
+}
+.weekly_thumbnails > .thumbnail {
+  box-shadow: 0 0 2px #353a52b2;
+}
+.weekly_thumbnails > div > a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  position: absolute;
+  color: #efeee9;
+  transition: 0.2s;
+}
+div.textbox {
+  position: absolute;
+  top: 55%;
+  left: 10%;
+  transform: translateY(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.7s;
+}
+p.travel_period {
+  font-family: "NanumSquareNeo-Variable";
+  font-weight: 300;
+  font-size: 75%;
+  /* margin-bottom: 0.1em; */
+}
+p.travel_city {
+  font-weight: 500;
+  font-size: 150%;
+  letter-spacing: 0.1em;
+  text-transform: capitalize;
+}
+/* 배경 이미지 넣기 */
+.thumbnail01 {
+  background: url(../image/main/thumbnails/IMG_5553.JPG);
+}
+.thumbnail02 {
+  background: url(../image/main/thumbnails/IMG_5924.JPG);
+}
+.thumbnail03 {
+  background: url(../image/main/thumbnails/IMG_6802.JPG);
+}
+.thumbnail04 {
+  background: url(../image/main/thumbnails/IMG_9096.JPG);
+}
+.thumbnail05 {
+  background: url(../image/main/thumbnails/KakaoTalk_20220326_164558777_01.jpg);
+}
+/* 호버시 늘어나게 만들기 */
+.weekly_thumbnails > .thumbnail:hover {
+  width: 100%;
+  padding-bottom: 35%;
+  box-shadow: 1px 1px 3px #353a52a7;
+  transition: 0.5s;
+}
+.weekly_thumbnails > .thumbnail:hover > a {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.weekly_thumbnails > .thumbnail:hover div.textbox {
+  visibility: visible;
+  opacity: 100%;
+}
+/* 스크롤바 디자인 */
+.weekly_thumbnails::-webkit-scrollbar {
+  width: 0.5em;
+}
+.weekly_thumbnails::-webkit-scrollbar-thumb {
+  background: #353a52;
+  border-radius: 10px;
+}
+/* 더보기 버튼 */
+div#more_thumbnail {
+  background: rgb(239, 238, 233, 0.2);
+  box-shadow: 0px 0px 3px #353a5200;
+}
+
+.plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.plus span {
+  display: block;
+  width: 2em;
+  height: 0.1em;
+  border-radius: 5px;
+  background: #353a52;
+}
+.plus span:nth-child(1) {
+}
+.plus span:nth-child(2) {
+  transform: rotate(90deg);
+}
+div#more_thumbnail:hover {
+  background: rgb(239, 238, 233, 0.4);
+  box-shadow: 1px 1px 3px #353a5246;
+}
