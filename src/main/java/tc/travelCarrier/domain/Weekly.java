@@ -45,7 +45,7 @@ public class Weekly {
     private List<Daily> dailys = new ArrayList<>();
 
     @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
-    private HashSet<Gowith> gowiths = new HashSet<>();
+    private List<Gowith> gowiths = new ArrayList<>();
 
     @OneToOne(mappedBy = "weekly", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private AttachWeekly attachWeekly;
