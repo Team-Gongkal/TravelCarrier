@@ -24,7 +24,7 @@ public class WeeklyContoller {
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model){
         model.addAttribute("weeklyForm", new WeeklyForm());
-        return "weekly-form";
+        return "page/weekly_form_css";
     }
 
     /**
@@ -32,25 +32,24 @@ public class WeeklyContoller {
      * @param : WeeklyForm (폼정보)
      * @return : "weekly"+weeklyId (생성된 위클리의 ID)
      * */
-    @PostMapping(value="/weeklyForm/regist")
+    @PostMapping(value="/weeklyForm")
     public String regist(@Valid WeeklyForm form, BindingResult result){
 
-
         System.out.println("==============================");
-        System.out.println("썸네일 : "+form.getThumbnail());
+        System.out.println("썸네일 비었니? : "+form.getFile().isEmpty());
         System.out.println("국가 : "+form.getNation());
         System.out.println("출국일 : "+form.getSdate());
         System.out.println("입국일 : "+form.getEdate());
         System.out.println("제목 : "+form.getTitle());
         System.out.println("본문 : "+form.getText());
         System.out.println("공개여부 : "+form.getStatus());
-        for(int i : form.getGowiths()) System.out.println("동행인 : "+i);
+        System.out.println("동행인 : "+form.getGowiths().size());
         System.out.println("==============================");
 
         if(result.hasErrors()) {
             return "error";
         }
-
+/*
         TravelDate tdate = new TravelDate(form.getSdate(),form.getEdate());
 
         User user = new User();
@@ -79,8 +78,9 @@ public class WeeklyContoller {
         System.out.println("위클리만듦");
 
         int weeklyId = weeklyService.register(weekly);
-        System.out.println("성공!");
-        return "/weekly/"+weeklyId;
+        System.out.println("성공!");*/
+        //return "/weekly/"+weeklyId;
+        return "/";
     }
 
     /**

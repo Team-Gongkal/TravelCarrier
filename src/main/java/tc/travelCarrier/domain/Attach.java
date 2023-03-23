@@ -9,15 +9,15 @@ public abstract class Attach {
 
     @Id @Column(name="ATTACH_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    protected int id;
 
     @Column(name="ATTACH_TITLE")
-    private String attachTitle;
+    protected String attachTitle;
 
     @Column(name="ATTACH_ORIGIN")
-    private String origin;
+    protected String originPath;
 
     @Column(name="ATTACH_THUMB")
-    private String thumb;
+    protected String thumbPath;
 
 }
