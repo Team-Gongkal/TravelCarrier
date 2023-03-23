@@ -8,14 +8,12 @@ import javax.persistence.EntityManager;
 
 @Repository
 @RequiredArgsConstructor
-public class AttachWeeklyRepository {
-
+public class AttachRepository {
     private final EntityManager em;
+
 
     // 위클리 사진 저장
     public void save(AttachWeekly attachWeekly){
         em.persist(attachWeekly);
     }
-
-
 }

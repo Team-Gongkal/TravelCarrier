@@ -1,19 +1,20 @@
 package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.service.WeeklyService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
+
+import static tc.travelCarrier.domain.Weekly.createWeekly;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,23 +34,16 @@ public class WeeklyContoller {
      * @return : "weekly"+weeklyId (생성된 위클리의 ID)
      * */
     @PostMapping(value="/weeklyForm")
-    public String regist(@Valid WeeklyForm form, BindingResult result){
+    public String regist(@Valid WeeklyForm form, BindingResult result) throws IOException {
+        HashSet<Integer> tmp= new HashSet<>();
+        tmp.add(2);
+        tmp.add(3);
+        form.setGowiths(tmp);
 
-        System.out.println("==============================");
-        System.out.println("썸네일 비었니? : "+form.getFile().isEmpty());
-        System.out.println("국가 : "+form.getNation());
-        System.out.println("출국일 : "+form.getSdate());
-        System.out.println("입국일 : "+form.getEdate());
-        System.out.println("제목 : "+form.getTitle());
-        System.out.println("본문 : "+form.getText());
-        System.out.println("공개여부 : "+form.getStatus());
-        System.out.println("동행인 : "+form.getGowiths().size());
-        System.out.println("==============================");
-
-        if(result.hasErrors()) {
+/*        if(result.hasErrors()) {
             return "error";
-        }
-/*
+        }*/
+
         TravelDate tdate = new TravelDate(form.getSdate(),form.getEdate());
 
         User user = new User();
@@ -57,30 +51,24 @@ public class WeeklyContoller {
 
         OpenStatus status = OpenStatus.ALL;;
         switch(form.getStatus()) {
-            case "1" :
+            case "public" :
                 status = OpenStatus.ALL;
                 break;
-            case "2" :
+            case "shareFriends" :
                 status = OpenStatus.FOLLOW;
                 break;
-            case "3" :
+            case "private" :
                 status = OpenStatus.ME;
         }
 
-        if(form.getStatus().equals("2")) status = OpenStatus.FOLLOW;
-        else if(form.getStatus().equals("3")) status = OpenStatus.ME;
 
-        System.out.println("ㅅㅂ");
 
-        Weekly weekly = Weekly.createWeekly(user,new AttachWeekly(), form.getTitle(), form.getNation(),
-                tdate, new CrudDate(new Date(),null), status, form.getText(), form.getGowiths());
+        int weeklyId = weeklyService.register(form.getFile(),
+                createWeekly(user, null, form.getTitle(), form.getNation(),
+                tdate, new CrudDate(new Date(),null), status, form.getText(), form.getGowiths())
+        );
 
-        System.out.println("위클리만듦");
-
-        int weeklyId = weeklyService.register(weekly);
-        System.out.println("성공!");*/
-        //return "/weekly/"+weeklyId;
-        return "/";
+        return "page/main01";
     }
 
     /**

@@ -2,10 +2,7 @@ package tc.travelCarrier.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import tc.travelCarrier.domain.Attach;
-import tc.travelCarrier.domain.Gowith;
-import tc.travelCarrier.domain.User;
-import tc.travelCarrier.domain.Weekly;
+import tc.travelCarrier.domain.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,11 +16,12 @@ public class WeeklyRepository {
     private final EntityManager em;
 
     /**
-     * 새로운 위클리 저장
+     * 새로운 위클리 저장 (첨부파일 포함)
      * */
-    public void save(Weekly weekly){
+    public void save(Weekly weekly){;
         em.persist(weekly);
     }
+
 
     public Weekly findOne(int weeklyId){
         Weekly weekly =  em.find(Weekly.class, weeklyId);

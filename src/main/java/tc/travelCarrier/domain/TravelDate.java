@@ -15,15 +15,19 @@ public class TravelDate {
 
     public TravelDate(){}
 
-    public TravelDate(Date sDate, Date eDate){
+/*    public TravelDate(Date sDate, Date eDate){
+        this.sDate = sDate;
+        this.eDate = eDate;
+    }*/
+    public TravelDate(String sDate, String eDate){
         this.sDate = sDate;
         this.eDate = eDate;
     }
 
-    @Column(name="EDATE")
-    private Date sDate;
     @Column(name="SDATE")
-    private Date eDate;
+    private String sDate;
+    @Column(name="EDATE")
+    private String eDate;
 
 
 }

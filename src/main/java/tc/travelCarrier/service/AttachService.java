@@ -7,23 +7,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.AttachWeekly;
 import tc.travelCarrier.domain.Weekly;
-import tc.travelCarrier.repository.AttachWeeklyRepository;
+import tc.travelCarrier.repository.AttachRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
-
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class AttachWeeklyService {
-
+public class AttachService {
     @Value("${file.dir}")
     private String fileDir;
 
-    private final AttachWeeklyRepository weeklyRepository;
+    private final AttachRepository attachRepository;
 
-    public int saveAttachWeekly(MultipartFile file) throws IOException{
+    public int saveAttachWeekly(MultipartFile file) throws IOException {
         if(file.isEmpty()){
             return 0;
         }
@@ -56,9 +54,8 @@ public class AttachWeeklyService {
         // DB구조상 위클리 사진은 썸네일형태로만 저장하기로 되어있음!!
         file.transferTo(new File(thumbPath));
         // DB에 저장 - 이거 if로 나눠서 Repository만 바꾸면 파일저장은 이 메소드에서 끝낼수있을듯
-        weeklyRepository.save(attachWeekly);
+        attachRepository.save(attachWeekly);
 
         return 1;
     }
-
 }

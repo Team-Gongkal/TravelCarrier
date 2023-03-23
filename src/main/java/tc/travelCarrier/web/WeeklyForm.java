@@ -30,4 +30,5 @@ public class WeeklyForm {
     private HashSet<Integer> gowiths;
     private String status;
 
+
 }
