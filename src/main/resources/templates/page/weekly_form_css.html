@@ -51,7 +51,8 @@
   <!-- weekly form main 시작 -->
   <main id="weekly_form">
     <h1>만들어라 너의 일기장</h1>
-    <form action="form.php" name="weekly_form" class="weekly_form">
+    <form action="/TravelCarrier/weeklyForm" method="post" enctype="multipart/form-data" name="weekly_form"
+      class="weekly_form">
       <div class="thumbnail">
         <div class="thumbnail_input">
           <div class="thumbnail_text">
@@ -66,6 +67,7 @@
           <div class="thumbnail_btn">
             <button class="btn white_btn">
               <img class="weekly_icon" src="../../static/image/weekly/icon/edit-image-b.png" alt="img change icon">
+              <input type="file" name="file">이미지 변경</input>
               <span>이미지 변경</span>
             </button>
             <button class="btn white_btn">
@@ -80,7 +82,7 @@
           <li> <!-- 국가 선택 / select:name = option:value----------------------------- -->
             <div class="country">
               <h3>여행 국가</h3>
-              <select name="국가명">
+              <select name="nation">
                 <option id="0" value="82" selected>KOREA</option>
                 <option id="1" value="83">FRANCE</option>
                 <option id="2" value="84">SPAIN</option>
@@ -94,12 +96,12 @@
               <!-- 여행 시작일 -->
               <div class="period_flex">
                 <span class="dateSet">
-                  <input name="여행시작일" type="text" id="startDate" placeholder="2022-03-21">
+                  <input name="sdate" type="text" id="startDate" placeholder="2022-03-21">
                   <a href="#none" class="dateClick">달력</a>
                 </span>
                 <!-- 여행 종료일 -->
                 <span class="dateSet">
-                  <input name="여행종료일" type="text" id="endDate" placeholder="2022-03-22">
+                  <input name="edate" type="text" id="endDate" placeholder="2022-03-22">
                   <a href="#none" class="dateClick">달력</a>
                 </span>
               </div>
@@ -108,14 +110,14 @@
           <li> <!-- 제목 입력-------------------------------- -->
             <div class="title">
               <h3>제목</h3>
-              <input name="제목" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)">
+              <input name="title" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)">
             </div>
           </li>
           <li>
             <!-- 일기 작성-------------------------------- -->
             <div class="writing">
               <h3>추가글</h3>
-              <textarea name="추가글" id="addText" cols="30" rows="10"
+              <textarea name="text" id="addText" cols="30" rows="10"
                 placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요"></textarea>
             </div>
           </li>
@@ -135,7 +137,7 @@
             <div class="companion_popup">
               <div class="id_search">
                 <h3>아이디 검색</h3>
-                <input type="search" name="" placeholder="이름 또는 아이디를 입력해주세요">
+                <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
               </div>
               <div class="friendsList">
                 <ul class="checked_friends">
@@ -143,14 +145,14 @@
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="friend" value="yunah" checked>
+                      <input type="checkbox" name="gowiths" value="yunah" checked>
                     </span>
                   </li>
                   <li>
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="friend" value="sh" checked>
+                      <input type="checkbox" name="gowiths" value="sh" checked>
                     </span>
                   </li>
                 </ul>
@@ -159,21 +161,21 @@
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="friend" value="yum">
+                      <input type="checkbox" name="gowiths" value="yum">
                     </span>
                   </li>
                   <li>
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="friend" value="se">
+                      <input type="checkbox" name="gowiths" value="se">
                     </span>
                   </li>
                   <li>
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="friend" value="ming">
+                      <input type="checkbox" name="gowiths" value="ming">
                     </span>
                   </li>
                 </ul>
@@ -187,19 +189,19 @@
               <h3>공개여부</h3>
               <ul>
                 <li class="private">
-                  <input type="radio" name="disclosure" value="private" checked>
+                  <input type="radio" name="status" value="private" checked>
                   <img src="" alt="">
                   <span>비공개</span>
 
                 </li>
                 <li class="public">
-                  <input type="radio" name="disclosure" value="public">
+                  <input type="radio" name="status" value="public">
                   <img src="" alt="">
                   <span>공개</span>
 
                 </li>
                 <li class="shareFriends">
-                  <input type="radio" name="disclosure" value="shareFriends">
+                  <input type="radio" name="status" value="shareFriends">
                   <img src="" alt="">
                   <span>친구공개</span>
                 </li>
