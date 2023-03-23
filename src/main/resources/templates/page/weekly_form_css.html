@@ -92,15 +92,17 @@
             <div class="period">
               <h3>여행 기간</h3>
               <!-- 여행 시작일 -->
-              <span class="dateSet">
-                <input name="여행시작일" type="text" id="startDate" placeholder="2022-03-21">
-                <a href="#none" class="dateClick">달력</a>
-              </span>
-              <!-- 여행 종료일 -->
-              <span class="dateSet">
-                <input name="여행종료일" type="text" id="endDate" placeholder="2022-03-22">
-                <a href="#none" class="dateClick">달력</a>
-              </span>
+              <div class="period_flex">
+                <span class="dateSet">
+                  <input name="여행시작일" type="text" id="startDate" placeholder="2022-03-21">
+                  <a href="#none" class="dateClick">달력</a>
+                </span>
+                <!-- 여행 종료일 -->
+                <span class="dateSet">
+                  <input name="여행종료일" type="text" id="endDate" placeholder="2022-03-22">
+                  <a href="#none" class="dateClick">달력</a>
+                </span>
+              </div>
             </div>
           </li>
           <li> <!-- 제목 입력-------------------------------- -->
@@ -136,26 +138,42 @@
                 <input type="search" name="" placeholder="이름 또는 아이디를 입력해주세요">
               </div>
               <div class="friendsList">
-                <ul>
+                <ul class="checked_friends">
                   <li>
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="friend" value="yunah">
+                      <input type="checkbox" name="friend" value="yunah" checked>
                     </span>
                   </li>
                   <li>
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="friend" value="sh">
+                      <input type="checkbox" name="friend" value="sh" checked>
+                    </span>
+                  </li>
+                </ul>
+                <ul class="serch_friends">
+                  <li>
+                    <span class="profile_circle"></span>
+                    <span>name</span>
+                    <span>
+                      <input type="checkbox" name="friend" value="yum">
                     </span>
                   </li>
                   <li>
                     <span class="profile_circle"></span>
                     <span>name</span>
                     <span>
-                      <input type="checkbox" name="" id="">
+                      <input type="checkbox" name="friend" value="se">
+                    </span>
+                  </li>
+                  <li>
+                    <span class="profile_circle"></span>
+                    <span>name</span>
+                    <span>
+                      <input type="checkbox" name="friend" value="ming">
                     </span>
                   </li>
                 </ul>
