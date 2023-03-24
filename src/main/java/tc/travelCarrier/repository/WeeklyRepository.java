@@ -16,13 +16,16 @@ public class WeeklyRepository {
     private final EntityManager em;
 
     /**
-     * 새로운 위클리 저장 (첨부파일 포함)
+     * 새로운 위클리 저장
      * */
     public void save(Weekly weekly){;
         em.persist(weekly);
     }
 
 
+    /**
+     * 위클리 조회
+     * */
     public Weekly findOne(int weeklyId){
         Weekly weekly =  em.find(Weekly.class, weeklyId);
         return weekly;

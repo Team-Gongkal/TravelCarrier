@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.service.WeeklyService;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import static tc.travelCarrier.domain.Weekly.createWeekly;
 
@@ -25,7 +27,7 @@ public class WeeklyContoller {
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model){
         model.addAttribute("weeklyForm", new WeeklyForm());
-        return "page/weekly_form_css";
+        return "page/(t)weekly_form_css";
     }
 
     /**
@@ -68,17 +70,21 @@ public class WeeklyContoller {
                 tdate, new CrudDate(new Date(),null), status, form.getText(), form.getGowiths())
         );
 
-        return "page/main01";
+        return "redirect:/weekly/"+weeklyId;
     }
 
     /**
      * 선택한 여행의 위클리를 조회
      * @param : weeklyId
-     * @return : DailyForm???
+     * @return :
      * */
     @GetMapping("/weekly/{weeklyId}")
-    public String home() {
-
-        return "map01";
+    public String getWeekly(@PathVariable int weeklyId, Model model) {
+        Weekly weekly = weeklyService.findWeekly(weeklyId);
+        model.addAttribute("weekly",weekly);
+        return "page/weekly";
     }
+
+
+
 }

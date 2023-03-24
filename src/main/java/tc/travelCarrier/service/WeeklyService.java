@@ -35,7 +35,9 @@ public class WeeklyService {
     }
 
 
-    //위클리 첨부파일에 대한 메소드
+    /**
+     * 위클리 첨부파일 저장
+     * */
     public int saveAttachWeekly(MultipartFile file, Weekly weekly) throws IOException {
         if(file.isEmpty()){
             return 0;
@@ -70,13 +72,17 @@ public class WeeklyService {
     }
 
     /**
-     * 위클리 조회
+     * 위클리 목록조회
      */
     @Transactional(readOnly = true)
     public List<Weekly> findWeeklies(User user) {
         return weeklyRepository.findByUserId(user);
     }
 
+    /**
+     * 위클리 내용조회
+     * */
+    public Weekly findWeekly(int weeklyId) { return weeklyRepository.findOne(weeklyId);}
 
     /**
      * 위클리 수정
