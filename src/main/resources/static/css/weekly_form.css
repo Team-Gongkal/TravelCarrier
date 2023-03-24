@@ -195,7 +195,8 @@ a.dateClick {
 }
 #plus_companion > i {
   vertical-align: sub;
-  display: inline;
+  display: inline-block;
+  font-size: 1em;
 }
 #plus_companion > span {
   display: inline;
@@ -287,5 +288,5 @@ a.dateClick {
 }
 
 input[type="file"] {
-  display: none;
+  /* display: none; */
 }
