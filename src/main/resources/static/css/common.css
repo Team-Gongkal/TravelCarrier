@@ -10,14 +10,12 @@
   font-style: normal;
 }
 
-/* XEION CDN */
-@import url("http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css");
-
 /* color */
 /* color: #525d76; */
 /* color: #353a52; */
 /* color:#a0c1ca  button*/
 /* color: #f7f7f7 */
+/*   background: #efeee9; */
 
 /* 
 common--------------------------------------------- */
@@ -62,7 +60,7 @@ button {
 /* button UI */
 button.btn {
   width: calc(11 * 1rem);
-  padding: 0.8rem;
+  padding: 0.85rem;
   font-weight: 500;
   color: #f7f7f7;
   background: #a0c1ca;
@@ -73,12 +71,23 @@ button.btn {
   letter-spacing: 0.05rem;
 }
 button.white_btn {
-  padding: 0.9rem;
+  padding: 0.85rem;
   color: #a0c1ca;
   background: #efeee9;
   border: 1px solid #a0c1ca;
-  font-size: 0.7rem;
 }
 button > img {
   vertical-align: text-bottom;
 }
+
+/* 원형 자르기 */
+.circle {
+  max-width: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+  background: #000;
+}
+/* .circle:after {
+  content: "";
+  display: block;
+} */

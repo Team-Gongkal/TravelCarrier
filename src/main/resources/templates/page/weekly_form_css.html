@@ -13,6 +13,27 @@
   <link rel="stylesheet" href="../../static/css/header.css">
   <link rel="stylesheet" href="../../static/css/main.css">
   <link rel="stylesheet" href="../../static/css/weekly_form.css">
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"> -->
+
+  <!-- Script -->
+  <!-- <script src="../../static/script/jquery-3.6.4.min.js"></script>
+  <script src="../../static/script/jquery-ui.min.js"></script> -->
+
+
+  <!-- datepicker 한국어로 -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
+
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
 </head>
 
 <body>
@@ -60,17 +81,17 @@
             <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
           </div>
           <div class=" thumbnail_img ">
-            <div class="crop_circle">
+            <div class="circle thumbnail_circle">
               <img src="../../static/image/main/thumbnails/IMG_5924.JPG" alt="main_thumbnail_img">
             </div>
           </div>
           <div class="thumbnail_btn">
-            <button class="btn white_btn">
+            <button class="btn white_btn" type="button">
               <img class="weekly_icon" src="../../static/image/weekly/icon/edit-image-b.png" alt="img change icon">
-              <input type="file" name="file">이미지 변경</input>
+              <input type="file" name="file"></input>
               <span>이미지 변경</span>
             </button>
-            <button class="btn white_btn">
+            <button class="btn white_btn" type="button">
               <img class="weekly_icon" src="../../static/image/weekly/icon/trash-can-b.png" alt="img delate icon">
               <span>이미지 삭제</span>
             </button>
@@ -96,12 +117,12 @@
               <!-- 여행 시작일 -->
               <div class="period_flex">
                 <span class="dateSet">
-                  <input name="sdate" type="text" id="startDate" placeholder="2022-03-21">
-                  <a href="#none" class="dateClick">달력</a>
+                  <input name="sdate" type="text" id="sdate" placeholder="2022-03-21">
+                  <a href="#none" class="btncalender dateClick">달력</a>
                 </span>
                 <!-- 여행 종료일 -->
                 <span class="dateSet">
-                  <input name="edate" type="text" id="endDate" placeholder="2022-03-22">
+                  <input name="edate" type="text" id="edate" placeholder="2022-03-22">
                   <a href="#none" class="dateClick">달력</a>
                 </span>
               </div>
@@ -125,11 +146,20 @@
             <div class="companion">
               <h3>동행인</h3>
               <!-- 보이는 부분 -->
-              <ul class="selectedFrieds">
-                <li>동행인 이미지</li>
-                <li>동행인 이미지</li>
-                <li>동행인 이미지</li>
-                <li id="plus_companion">동행인추가</li>
+              <ul class="sel_companion">
+                <li class="circle">
+                  동행인 이미지
+                </li>
+                <li class="circle">
+                  동행인 이미지
+                </li>
+                <li class="circle">
+                  동행인 이미지
+                </li>
+                <li id="plus_companion">
+                  <i class="xi-plus"></i>
+                  <span>동행인 추가</span>
+                </li>
               </ul>
 
             </div>
@@ -189,21 +219,19 @@
               <h3>공개여부</h3>
               <ul>
                 <li class="private">
-                  <input type="radio" name="status" value="private" checked>
-                  <img src="" alt="">
-                  <span>비공개</span>
-
+                  <input type="radio" name="status" value="private" checked id="private">
+                  <label for="private"><img src="../../static/image/weekly/icon/hide-b.png" alt="" class="weekly_icon">
+                    비공개</label>
                 </li>
                 <li class="public">
-                  <input type="radio" name="status" value="public">
-                  <img src="" alt="">
-                  <span>공개</span>
-
+                  <input type="radio" name="status" value="public" id="public">
+                  <label for="public"><img src="../../static/image/weekly/icon/view-b.png" alt="" class="weekly_icon">
+                    공개</label>
                 </li>
                 <li class="shareFriends">
-                  <input type="radio" name="status" value="shareFriends">
-                  <img src="" alt="">
-                  <span>친구공개</span>
+                  <input type="radio" name="status" value="shareFriends" id="shareFriends">
+                  <label for="shareFriends"><img src="../../static/image/weekly/icon/people-b.png" alt=""
+                      class="weekly_icon"> 친구공개</label>
                 </li>
               </ul>
             </div>
@@ -216,7 +244,32 @@
       <button type="submit" class="btn"> 저장하기 </button>
     </form>
   </main>
-
+  <script>
+    $(document).ready(function () {
+      $.datepicker.setDefaults($.datepicker.regional['ko']);
+      $('#sdate').datepicker({
+        showOn: 'both',
+        buttonImage: "/", // 버튼 이미지
+        buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+        changeMonth: true,
+        chasngYear: true,
+        nextText: '다음달',
+        prevText: '이전달',
+        dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+        dayNamesMin: ['일', '월', '바뀜', '수', '목', '금', '토'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dateFormat: "yy-mm-dd",
+        shoMonthAfterYear: true,
+        maxDate: 0, //선택할 수 있는 최소 날짜로 (0: 오늘 이후 날짜 선택 불가하도록 함)
+        onClose: function (selectedDate) {
+          //시작일(startDate) datepicker가 닫힐때
+          //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+          $("#edate").datepicker("option", "minDate", selectedDate);
+        }
+      });
+    });
+  </script>
 
 </body>
 

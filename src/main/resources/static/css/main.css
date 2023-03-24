@@ -28,7 +28,7 @@
   transition: 0.5s;
 }
 .weekly_thumbnails > .thumbnail {
-  box-shadow: 0 0 2px #353a52b2;
+  box-shadow: 0 0 2px #525d76b2;
 }
 .weekly_thumbnails > div > a {
   display: block;
@@ -80,7 +80,7 @@ p.travel_city {
 .weekly_thumbnails > .thumbnail:hover {
   width: 100%;
   padding-bottom: 35%;
-  box-shadow: 1px 1px 3px #353a52a7;
+  box-shadow: 1px 1px 3px #525d76a7;
   transition: 0.5s;
 }
 .weekly_thumbnails > .thumbnail:hover > a {
@@ -95,13 +95,13 @@ p.travel_city {
   width: 0.5em;
 }
 .weekly_thumbnails::-webkit-scrollbar-thumb {
-  background: #353a52;
+  background: #525d76;
   border-radius: 10px;
 }
 /* 더보기 버튼 */
 div#more_thumbnail {
   background: rgb(239, 238, 233, 0.2);
-  box-shadow: 0px 0px 3px #353a5200;
+  box-shadow: 0px 0px 3px #525d7600;
 }
 
 .plus {
@@ -115,7 +115,7 @@ div#more_thumbnail {
   width: 2em;
   height: 0.1em;
   border-radius: 5px;
-  background: #353a52;
+  background: #525d76;
 }
 .plus span:nth-child(1) {
 }
@@ -124,5 +124,5 @@ div#more_thumbnail {
 }
 div#more_thumbnail:hover {
   background: rgb(239, 238, 233, 0.4);
-  box-shadow: 1px 1px 3px #353a5246;
+  box-shadow: 1px 1px 3px #525d7646;
 }

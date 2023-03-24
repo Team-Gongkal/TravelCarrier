@@ -50,21 +50,23 @@ main {
   height: 50vh;
   position: relative;
 }
-/* 원형 자르기 */
-.crop_circle {
+.thumbnail_circle {
   width: 100px;
   height: 100px;
-  border-radius: 100px;
-  background: #000;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  overflow: hidden;
+}
+.thumbnail_img > .circle:after {
+  padding-bottom: -50%;
 }
 .thumbnail_btn {
   text-align: center;
   margin-top: 0.5rem;
+}
+.thumbnail_btn span {
+  font-size: 0.7rem;
 }
 .thumbnail_btn > .white_btn:nth-child(1) {
   margin-right: 2em;
@@ -74,7 +76,7 @@ main {
   width: 50%;
   height: 100%;
   float: right;
-  background: cornflowerblue;
+  background: #efeee9;
   padding: 2.5rem;
 }
 .weekly_input > ul > li {
@@ -90,27 +92,166 @@ main {
 .country {
   width: 25%;
 }
+
+/* 여행 기간 */
 .period {
   width: 65%;
 }
 .period_flex {
   display: flex;
 }
-
+.dateSet {
+  background: #f7f7f7;
+}
+.dateSet:nth-child(1) {
+  border-right: 2px solid #efeee9;
+  border-radius: 0.2rem 0 0 0.2rem;
+}
+.dateSet:nth-child(2) {
+  border-radius: 0 0.2rem 0.2rem 0;
+}
+span.dateSet > input[type="text"] {
+  position: relative;
+  width: 80%;
+}
+a.dateClick {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  text-indent: -999em;
+  background: url(../image/weekly/icon/calendar-b.png) center center no-repeat;
+  background-size: cover;
+  vertical-align: middle;
+  position: relative;
+}
 /* 여행 제목 */
 .weekly_input > ul > li:nth-child(2) {
-  background: lightcoral;
 }
 /* 여행 추가글 작성 */
 .weekly_input > ul > li:nth-child(3) {
-  background: lightgreen;
 }
 /* 동행인 및 공개여부 */
 .weekly_input > ul > li:nth-child(4) {
   margin-bottom: 0em;
-  background: lightslategray;
+}
+.companion {
+  width: 40%;
+}
+.companion h3 {
+}
+.companion ul.sel_companion {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  /* display: flex; */
+}
+.companion ul.sel_companion li {
+  float: left;
+  width: 3em;
+  height: 3em;
+  text-indent: -999px;
+  border: 2px solid #efeee9;
+  position: absolute;
+  left: 0em;
+  font-size: 0.9rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.companion ul.sel_companion li:nth-child(1) {
+  background-image: url(../image/weekly/friendList/friend3.png);
+}
+.companion ul.sel_companion li:nth-child(2) {
+  background-image: url(../image/weekly/friendList/friend2.png);
+  left: 2.5em;
+}
+.companion ul.sel_companion li:nth-child(3) {
+  background-image: url(../image/weekly/friendList/friend1.png);
+  left: 5em;
+}
+#plus_companion {
+  border-radius: 100px;
+  left: 7.5em;
+  background: #efeee9;
+  text-indent: 0;
+  text-align: center;
+  line-height: 3em;
+  border: 2px solid rgb(53, 58, 82, 0.3);
+  cursor: pointer;
+  transition: 0.2s;
+  overflow: hidden;
+  color: rgb(53, 58, 82, 0.5);
 }
 
+#plus_companion:hover {
+  width: 7em;
+  border-radius: 100px;
+  left: 7.5em;
+  background: #efeee9;
+  text-indent: 0;
+  text-align: center;
+  line-height: 3em;
+  cursor: pointer;
+}
+#plus_companion > i {
+  vertical-align: sub;
+  display: inline;
+}
+#plus_companion > span {
+  display: inline;
+  font-size: 0.6em;
+  font-weight: 600;
+  display: none;
+}
+#plus_companion:hover span,
+#plus_companion:hover i {
+  display: inline-block;
+}
+
+/* 공개여부 = disclosure */
+.disclosure {
+  width: 65%;
+}
+.disclosure h3 {
+}
+.disclosure > ul {
+  display: flex;
+}
+.disclosure > ul > li {
+  width: 100%;
+}
+.disclosure input[type="radio"] {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  position: absolute;
+}
+.disclosure input[type="radio"] + label {
+  display: inline-block;
+  width: calc(270% / 3);
+  height: auto;
+  padding: 0.85rem 0rem;
+  position: relative;
+  cursor: pointer;
+  border: 2px solid rgb(53, 58, 82, 0.3);
+  border-radius: 100px;
+  text-align: center;
+  vertical-align: text-bottom;
+  background: #efeee9;
+  color: rgb(53, 58, 82, 0.3);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.disclosure input[type="radio"]:checked + label {
+  border: 2px solid #a0c1ca;
+  background: #ffffff;
+  color: #a0c1ca;
+  font-weight: 500;
+}
 /* input */
 .weekly_form input[type="text"],
 .weekly_form select,
@@ -122,17 +263,7 @@ main {
   border: none;
   border-radius: 0.2rem;
   box-sizing: border-box;
-}
-
-.dateSet:nth-child(1) input[type="text"] {
-  float: left;
-  border-radius: 0.2rem 0 0 0.2rem;
-  margin-right: 0.1em;
-  border-right: 2px solid #525d76;
-}
-.dateSet:nth-child(2) input {
-  float: left;
-  border-radius: 0 0.2rem 0.2rem 0;
+  color: #353a52;
 }
 
 /* button */
@@ -145,11 +276,16 @@ main {
 
 /* icon 아이콘 */
 .weekly_icon {
-  width: 0.8rem;
+  width: 0.9rem;
   height: auto;
   max-width: 100%;
+  vertical-align: sub;
 }
 
 .companion_popup {
-  /* display: none; */
+  display: none;
+}
+
+input[type="file"] {
+  display: none;
 }
