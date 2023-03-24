@@ -3,6 +3,8 @@ package tc.travelCarrier.web;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.OpenStatus;
 import tc.travelCarrier.domain.TravelDate;
 
@@ -18,11 +20,15 @@ public class WeeklyForm {
     @NotEmpty(message = "여행 국가 정보는 필수항목 입니다.")
     private String nation;
 
-    private String thumbnail;
-    private Date sdate;
-    private Date edate;
+    private MultipartFile file;
+
+    private String sdate;
+    private String edate;
+
     private String title;
     private String text;
     private HashSet<Integer> gowiths;
     private String status;
+
+
 }

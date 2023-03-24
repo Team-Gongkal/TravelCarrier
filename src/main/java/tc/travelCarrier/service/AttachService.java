@@ -5,38 +5,23 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import tc.travelCarrier.domain.*;
+import tc.travelCarrier.domain.AttachWeekly;
+import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.repository.AttachRepository;
-import tc.travelCarrier.repository.WeeklyRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
-
+@RequiredArgsConstructor
 @Service
 @Transactional
-@RequiredArgsConstructor
-public class WeeklyService {
-
-    private final WeeklyRepository weeklyRepository;
-    private final AttachRepository attachRepository;
+public class AttachService {
     @Value("${file.dir}")
     private String fileDir;
 
+    private final AttachRepository attachRepository;
 
-    /**
-     * 위클리 등록
-     */
-    public int register(MultipartFile file, Weekly weekly) throws IOException {
-        weeklyRepository.save(weekly);
-        saveAttachWeekly(file,weekly);
-        return weekly.getId();
-    }
-
-
-    //위클리 첨부파일에 대한 메소드
-    public int saveAttachWeekly(MultipartFile file, Weekly weekly) throws IOException {
+    public int saveAttachWeekly(MultipartFile file) throws IOException {
         if(file.isEmpty()){
             return 0;
         }
@@ -53,11 +38,16 @@ public class WeeklyService {
         // 썸네일로 변환한 파일의 저장경로
         String thumbPath = fileDir+"thumbnails/"+newTitle;
 
+        System.out.println("++++++++++++++");
+        System.out.println(orgPath);
+        System.out.println(thumbPath);
+        Weekly tmp = new Weekly();
+        tmp.setId(2);
         // AttachWeekly 엔티티 생성
         AttachWeekly attachWeekly = AttachWeekly.builder()
                 .attachTitle(newTitle)
                 .thumb(thumbPath)
-                .weekly(weekly)
+                .weekly(tmp)
                 .build();
 
         // 파일 저장
@@ -68,20 +58,4 @@ public class WeeklyService {
 
         return 1;
     }
-
-    /**
-     * 위클리 조회
-     */
-    @Transactional(readOnly = true)
-    public List<Weekly> findWeeklies(User user) {
-        return weeklyRepository.findByUserId(user);
-    }
-
-
-    /**
-     * 위클리 수정
-     */
-    /**
-     * 위클리 삭제
-     */
 }
