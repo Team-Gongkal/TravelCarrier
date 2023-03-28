@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelCarrier</title>
+
+  <link rel="stylesheet" href="../../static/css/reset.css">
+  <link rel="stylesheet" href="../../static/css/common.css">
+  <link rel="stylesheet" href="../../static/css/header.css">
+  <link rel="stylesheet" href="../../static/css/main.css">
+  <link rel="stylesheet" href="../../static/css/weekly_form.css">
+  <link rel="stylesheet" href="../../static/css/weekly.css">
+  <link rel="stylesheet" href="../../static/css/daily.css">
+
+  <!-- XEicon -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <div class="nav">
+        <div class="hamburger on">
+          <span></span>
+          <span></span>
+        </div>
+        <div class="logo">
+          <a href="index.html">
+            <img src="../../static/image/header/logo/journal.png" alt="logo">
+          </a>
+        </div>
+      </div>
+      <div class="board_link">
+        <a href="">Board</a>
+      </div>
+      <div class="contact_link">
+        <a href="">Contact</a>
+      </div>
+    </nav>
+    <div class="navigation"></div>
+  </header>
+  <!-- utill 유틸 -->
+  <div class="utill_menu">
+    <div class="notice">
+      <img src="../../static/image/header/icon/notification.png" alt="실시간 알림 아이콘">
+    </div>
+    <div class="profile">
+      <a href="#none"></a>
+    </div>
+  </div>
+  <main class="daily">
+    <!-- daily 시작화면 UI -->
+    <div class="daily_start">
+      <div class="sdaily_text">
+        <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
+        </p>
+        <p>사진과 함께 남겨주세요</p>
+      </div>
+      <div class="writing">
+        <div class="square rectL">
+          <div class="writing_icon">
+            <div class="circle">
+              <img src="../../static/image/daily/icon/pencil.png" alt="">
+            </div>
+            <span>글쓰기</span>
+          </div>
+          <!-- <div class="square rectL rectW"> -->
+        </div>
+      </div>
+    </div>
+
+    <!--daily-form 데일리 입력 폼/ 팝업-->
+    <form action="" id="daily_form">
+      <div class="form_popoup">
+        <div class="daily_form_title">
+          <h3>일기장</h3>
+          <button class="close">close</button>
+        </div>
+        <div class="daily_form">
+          <div class="daily_imgs">
+            <img src="../../static/image/daily/icon/upload-b.png" alt="">
+            <p>클릭하여 파일을 선택하거나</p>
+            <p>드래그하여 파일을 업로드해주세요</p>
+          </div>
+          <div class="daily_input">
+            <div class="daily_days">
+              <ul class="daily_days_slide">
+                <li class="Dtab days_num1">
+                  <span>DAY1</span>
+                </li>
+                <li class="Dtab days_num2">
+                  <span>DAY2</span>
+                </li>
+                <li class="Dtab days_num3">
+                  <span>DAY3</span>
+                </li>
+                <li class="Dtab days_num4">
+                  <span>DAY4</span>
+                </li>
+              </ul>
+            </div>
+            <div class="daily_title">
+              <h3>제목(선택)</h3>
+              <input type="text" placeholder="제목을 작성해주세요">
+            </div>
+            <div class="daily_text">
+              <h3>메모</h3>
+              <textarea name="" id="" cols="30" rows="10" placeholder="일기를 작성해주세요"></textarea>
+            </div>
+            <div class="daily_files">
+              <h3>이미지 파일</h3>
+              <p class="fileP">이미지 파일 경로
+                <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
+              </p>
+              <input type="radio" name="repImg" id="repImg">
+              <label for="repImg">대표이미지로 설정
+                <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn daily_btn">저장하기</button>
+    </form>
+
+    <!-- daily 일기화면(hover전) -->
+    <div class="diary_noH">
+      <h1>제목 title : paris</h1>
+      <p>기간 : 2023-03-28 ~ 2023-03-29</p>
+      <div class="diary_slides">
+        <div class="diary_slide">
+          <div class="square sqr">
+            <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="">
+          </div>
+          <div class="square rectL">
+            <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="">
+          </div>
+          <div class="square rectL">
+            <img src="../../static/image/daily/diary/IMG_7219.JPG" alt="">
+          </div>
+          <div class="square rectW">
+            <img src="../../static/image/daily/diary/IMG_6489.JPG" alt="">
+          </div>
+          <div class="square sqr">
+            <img src="../../static/image/daily/diary/IMG_7935.JPG" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="writing_icon">
+        <div class="circle">
+          <img src="../../static/image/daily/icon/pencil.png" alt="">
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    $(".writing").on('click', function () {
+      $("#daily_form").addClass('show');
+    });
+    $('.daily_btn').on('click', function () {
+      $("#daily_form").removeClass('show');
+    })
+  </script>
+</body>
+
+</html>

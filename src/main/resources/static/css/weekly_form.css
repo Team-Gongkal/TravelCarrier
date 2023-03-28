@@ -33,12 +33,6 @@ main {
   background: #f7f7f7;
 }
 
-.thumbnail_text > h3,
-.weekly_input h3 {
-  font-size: 1.2em;
-  font-weight: 700;
-  margin-bottom: 0.8em;
-}
 .thumbnail_text > p {
   color: rgb(82, 93, 118, 0.7);
   font-size: 0.8em;

@@ -85,9 +85,16 @@ button > img {
   max-width: 100%;
   border-radius: 100%;
   overflow: hidden;
-  background: #000;
+  /* background: #000; */
 }
 /* .circle:after {
   content: "";
   display: block;
 } */
+
+/* form > h3 */
+form h3 {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-bottom: 0.8em;
+}
