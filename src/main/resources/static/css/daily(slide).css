@@ -81,48 +81,23 @@ main.daily {
 }
 
 /* daily-form 데일리 입력 폼/ 팝업 */
-.daily_form_bg {
-  width: 100vw;
-  height: 100vh;
-  background: rgb(0, 0, 0, 0.7);
-  position: absolute;
-  top: 0;
-  left: 0;
+#daily_form {
+  display: none; /*삭제*/
   opacity: 0;
   visibility: hidden;
   transition: all 1s;
-  z-index: 100;
-}
-.daily_form_bg.show {
-  opacity: 100;
-  visibility: visible;
-}
-#daily_form {
-  width: 85vw;
-  height: 90vh;
-  border-radius: 1em;
-  margin-left: 1.5vw;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #efeee9;
-  z-index: 101;
 }
 #daily_form.show {
   opacity: 100%;
   visibility: visible;
 }
-.Dform_modal {
+.daily_form_popoup {
 }
 .daily_imgs {
   float: left;
 }
-/* day 탭메뉴 */
-.Dtab {
-  cursor: pointer;
-}
-/* 일기화면(호버전)--------------------*/
+
+/* 일기화면(호버전) */
 .diary_noH {
   width: 100%;
   height: 100%;
@@ -136,13 +111,12 @@ main.daily {
 }
 .diary_noH h1 {
   font-size: calc(100vh / 5);
-  margin-bottom: 0.2em;
+  margin-bottom: 0.15em;
   padding-right: 0.05em;
   font-weight: 700;
-  letter-spacing: 0.1em;
 }
 .diary_noH p {
-  font-size: calc(100vh / 12);
+  font-size: calc(100vh / 10);
   padding-right: 0.1em;
 }
 .diary_slides {

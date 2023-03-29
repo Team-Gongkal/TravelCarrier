@@ -1,0 +1,356 @@
+main.daily {
+}
+/* common------------------------------------------ */
+/* writing icon UI */
+.daily .circle {
+  width: 6.5rem;
+  cursor: pointer;
+}
+.daily .circle img {
+  width: 50%;
+  height: auto;
+  max-width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 사각형 */
+.square {
+  height: 20rem;
+  border-radius: 1em;
+  overflow: hidden;
+  object-fit: cover;
+  box-shadow: 1px 01px 5px 0.1px #b3b3b3;
+}
+.sqr {
+  width: 20rem;
+}
+.rectW {
+  width: 30rem;
+}
+.rectL {
+  width: 15rem;
+}
+
+/* daily 시작화면----------------------------------- */
+.diary_titlebox {
+}
+.Dform_title {
+  border-bottom: 1px solid #b3b3b3;
+  box-sizing: border-box;
+  padding: 1.5rem 0.5rem;
+  position: relative;
+}
+.Dform_title h3 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0;
+}
+.Dform_title button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  top: 30%;
+  right: 1rem;
+  color: #b3b3b3;
+}
+/* 데일리 시작화면-------------------------------------------------- */
+.daily_start {
+  /* display: none; 삭제 */
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.daily_start > div {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sdaily_text {
+  text-align: center;
+  top: 22%;
+}
+.sdaily_text p {
+  padding: 0.5em 0;
+  font-size: 0.9rem;
+
+  letter-spacing: 0.05rem;
+  color: #525d76;
+}
+.sdaily_text p b {
+  color: #a0c1ca;
+}
+.daily_start .writing {
+  top: 40%;
+  text-align: center;
+  cursor: pointer;
+}
+.writing .circle {
+  width: 7rem;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #a0c1ca;
+}
+.writing span {
+  display: block;
+  padding-top: 50%;
+  font-weight: 70;
+}
+
+/* daily-form 데일리 입력 폼/ 모달--------------------------------------- */
+.daily_form_bg {
+  width: 100vw;
+  height: 100vh;
+  background: rgb(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 1s;
+  z-index: 100;
+}
+.daily_form_bg.show {
+  opacity: 100;
+  visibility: visible;
+}
+#daily_form {
+  width: 85vw;
+  height: 90vh;
+  border-radius: 1em;
+  margin-left: 1.5vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #efeee9;
+  z-index: 101;
+}
+#daily_form.show {
+  opacity: 100%;
+  visibility: visible;
+}
+.Dform {
+  width: 100%;
+  height: 93%;
+  padding: 3rem 4rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+.Dform_imgs {
+  width: 45%;
+  height: auto;
+  float: left;
+  background: #000;
+  box-sizing: border-box;
+  color: #efeee9;
+  border-radius: 0.8em;
+}
+.Dform_imgs P {
+  font-size: 0.9em;
+  padding: 3% 3.5%;
+  opacity: 50%;
+}
+ul.Dform_imglist {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  padding: 0 0% 0 3.5%;
+  box-sizing: border-box;
+}
+/* 스크롤바 디자인 */
+ul.Dform_imglist::-webkit-scrollbar {
+  width: 0.3em;
+}
+ul.Dform_imglist::-webkit-scrollbar-thumb {
+  background: rgb(239, 238, 233, 0.5);
+  border-radius: 10px;
+}
+ul.Dform_imglist li,
+ul.Dform_imglist label {
+  width: 30%;
+  cursor: pointer;
+  margin: 0 3% 3% 0;
+  position: relative;
+  border-radius: 0.25em;
+}
+ul.Dform_imglist li:after,
+ul.Dform_imglist label:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 0.25em;
+}
+/*첨부된 이미지파일 미리보기 */
+ul.Dform_imglist li:nth-child(1)::after {
+  background-image: url(../image/daily/diary/IMG_6460.JPG);
+}
+ul.Dform_imglist li:nth-child(2)::after {
+  background-image: url(../image/daily/diary/IMG_6472.JPG);
+}
+ul.Dform_imglist li:nth-child(3)::after {
+  background-image: url(../image/daily/diary/IMG_6475.JPG);
+}
+ul.Dform_imglist li:nth-child(4)::after {
+  background-image: url(../image/daily/diary/IMG_6489.JPG);
+}
+ul.Dform_imglist li:nth-child(5)::after {
+  background-image: url(../image/daily/diary/IMG_6493.JPG);
+}
+ul.Dform_imglist li:nth-child(6)::after {
+  background-image: url(../image/daily/diary/IMG_6496.JPG);
+}
+ul.Dform_imglist li:nth-child(7)::after {
+  background-image: url(../image/daily/diary/IMG_6505.JPG);
+}
+ul.Dform_imglist li:nth-child(8)::after {
+  background-image: url(../image/daily/diary/IMG_6510.JPG);
+}
+ul.Dform_imglist li:nth-child(9)::after {
+  background-image: url(../image/daily/diary/IMG_6561.JPG);
+}
+ul.Dform_imglist li:nth-child(10)::after {
+  background-image: url(../image/daily/diary/IMG_6577.JPG);
+}
+ul.Dform_imglist li:last-child {
+}
+/* 대표이미지 */
+#main::before {
+  content: "대표";
+  width: 30%;
+  text-align: center;
+  padding: 0.2em;
+  box-sizing: border-box;
+  height: auto;
+  position: absolute;
+  background-color: rgb(235, 161, 24);
+}
+/*  선택이미지 */
+#clickImg {
+  box-sizing: border-box;
+  border: 1px solid #fff;
+}
+#clickImg:after {
+  box-sizing: border-box;
+  opacity: 50%;
+  text-align: center;
+}
+#clickImg:before {
+  content: "쓰레기통";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 이미지 추가하기 버튼 */
+ul.Dform_imglist label {
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #fdfdfd4c;
+  border-radius: 0.25em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+ul.Dform_imglist label i {
+  width: 20%;
+  height: 20%;
+  border: 1px solid #efeee9;
+  border-radius: 100%;
+  padding-top: 5%;
+  box-sizing: border-box;
+}
+input[type="file"]#moreImg {
+  background: #fff;
+  border: 1px solid red;
+  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+/*  */
+.Dform_input {
+  width: 50%;
+}
+/* day 탭메뉴 */
+.days_tabSlide {
+}
+.Dtab {
+  cursor: pointer;
+  display: inline-block;
+}
+/* 일기화면(호버전)--------------------*/
+.diary_noH {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: end;
+  position: relative;
+  padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.diary_noH h1 {
+  font-size: calc(100vh / 5);
+  margin-bottom: 0.2em;
+  padding-right: 0.05em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.diary_noH p {
+  font-size: calc(100vh / 12);
+  padding-right: 0.1em;
+}
+.diary_slides {
+  height: 20rem;
+  overflow: hidden;
+}
+.diary_slide {
+  width: 120%;
+}
+ul.diary_slide > li {
+  float: left;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  position: absolute;
+}
+.diary_slide img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+.diary_noH .circle {
+  max-width: 100%;
+  position: absolute;
+  bottom: 2%;
+  right: 1%;
+  z-index: 100;
+  background-color: rgba(214, 212, 212, 0.7);
+  transition: 0.5s;
+}
+.diary_noH .circle img {
+  width: 45%;
+}
+.diary_noH .circle:hover {
+  background-color: rgba(160, 193, 202, 0.9);
+}

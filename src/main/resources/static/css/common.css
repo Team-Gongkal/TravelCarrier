@@ -15,7 +15,7 @@
 /* color: #353a52; */
 /* color:#a0c1ca  button*/
 /* color: #f7f7f7 */
-/*   background: #efeee9; */
+/* background: #efeee9; */
 
 /* 
 common--------------------------------------------- */
@@ -82,16 +82,17 @@ button > img {
 
 /* 원형 자르기 */
 .circle {
+  width: 100%;
   max-width: 100%;
   border-radius: 100%;
-  overflow: hidden;
-  /* background: #000; */
+  position: relative;
+  box-sizing: border-box;
 }
-/* .circle:after {
+.circle:after {
   content: "";
   display: block;
-} */
-
+  padding-bottom: 100%;
+}
 /* form > h3 */
 form h3 {
   font-size: 1.2em;
