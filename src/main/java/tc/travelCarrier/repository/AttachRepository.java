@@ -2,6 +2,7 @@ package tc.travelCarrier.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.AttachWeekly;
 
 import javax.persistence.EntityManager;
@@ -16,4 +17,12 @@ public class AttachRepository {
     public void save(AttachWeekly attachWeekly){
         em.persist(attachWeekly);
     }
+
+    // 데일리 사진 저장
+    public void save(AttachDaily attachDaily){
+        em.persist(attachDaily);
+    }
+
+    // 프로필 사진 저장
+
 }

@@ -11,6 +11,12 @@ import java.util.List;
 @Getter @Setter
 public class Daily {
 
+    public Daily(){}
+    public Daily(Weekly weekly, String dailyDate){
+        this.weekly = weekly;
+        this.dailyDate = dailyDate;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="DAILY_ID")
     private int id;
@@ -19,8 +25,13 @@ public class Daily {
     @JoinColumn(name="WEEKLY_ID")
     private Weekly weekly;
 
+    @JoinColumn(name="DAILY_DATE")
+    private String dailyDate;
+
     @OneToMany(mappedBy = "daily", cascade = CascadeType.ALL)
     private List<Kword> kwords = new ArrayList<>();
+
+
 
 
 }

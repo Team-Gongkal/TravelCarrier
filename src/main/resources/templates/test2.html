@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<h2>데일리페이지~</h2>
+
+<div class="container">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>dailyId</th>
+        <th>title</th>
+          <th>text</th>
+        <th>sort</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="day : ${dailies}">
+        <td th:text="${day.daily?.id}"></td>-->
+        <td th:text="${day.title}"></td>-->
+        <td th:text="${day.text}"></td>
+        <td th:text="${day.sort}"></td>
+      </tr>
+      </tbody>
+    </table>
+
+  <h2>파일 업로드</h2>
+  <input type="file" name="upload_file" multiple />
+  <input type="button" id="btn_upload" value="submit" />
+
+
+
+</div>
+
+<script>
+
+  $(document).ready(function(){
+
+    $('#btn_upload').click(function(){
+
+      const files = $('input[name="upload_file"]')[0].files;
+
+      console.log("files", files);
+
+      var formData = new FormData();
+      for(let i=0; i<files.length; i++){
+        const file = files[i];
+        const title = $(`input[name="title${i+1}"]`).val();
+        const text = $(`input[name="text${i+1}"]`).val();
+
+        formData.append('files', file);
+        formData.append('titles', title);
+        formData.append('texts', text);
+      }
+
+    $.ajax({
+      url: '/TravelCarrier/createDaily', // 서버 URL
+      type: 'POST', // HTTP 메서드
+      data: formData, // FormData 객체
+      contentType: false, // Content-Type 헤더를 자동으로 설정
+      processData: false // 데이터를 변환하지 않음
+    }).done(function(response) {
+      console.log(response);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR, textStatus, errorThrown);
+    });
+
+    });
+  });
+
+
+</script>
+</body>
+</html>
