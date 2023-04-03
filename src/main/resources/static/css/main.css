@@ -50,12 +50,12 @@ div.textbox {
 }
 p.travel_period {
   font-family: "NanumSquareNeo-Variable";
-  font-weight: 300;
-  font-size: 75%;
-  /* margin-bottom: 0.1em; */
+  font-weight: 100;
+  font-size: 90%;
+  margin-bottom: 0.5em;
 }
 p.travel_city {
-  font-weight: 500;
+  font-weight: 200;
   font-size: 150%;
   letter-spacing: 0.1em;
   text-transform: capitalize;

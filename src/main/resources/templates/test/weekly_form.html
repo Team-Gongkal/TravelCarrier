@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+<body>
+
+  <th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+  <!-- weekly form main 시작 -->
+  <main id="weekly_form">
+    <h1>만들어라 너의 일기장</h1>
+    <form action="/TravelCarrier/weeklyForm" method="post" enctype="multipart/form-data" name="weekly_form"
+      class="weekly_form">
+      <div class="thumbnail">
+        <div class="thumbnail_input">
+          <div class="thumbnail_text">
+            <h3>썸네일</h3>
+            <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
+          </div>
+          <div class=" thumbnail_img ">
+            <div class="circle thumbnail_circle">
+              <img src="./image/main/thumbnails/IMG_5924.JPG" alt="main_thumbnail_img">
+            </div>
+          </div>
+          <div class="thumbnail_btn">
+            <button class="btn white_btn" type="button">
+              <img class="weekly_icon" src="./image/weekly/icon/edit-image-b.png" alt="img change icon">
+              <input type="file" name="file"></input>
+              <span>이미지 변경</span>
+            </button>
+            <button class="btn white_btn" type="button">
+              <img class="weekly_icon" src="./image/weekly/icon/trash-can-b.png" alt="img delate icon">
+              <span>이미지 삭제</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="weekly_input">
+        <ul>
+          <li> <!-- 국가 선택 / select:name = option:value----------------------------- -->
+            <div class="country">
+              <h3>여행 국가</h3>
+              <select name="nation">
+                <option id="0" value="82" selected>KOREA</option>
+                <option id="1" value="83">FRANCE</option>
+                <option id="2" value="84">SPAIN</option>
+                <option id="3" value="85">CHAINA</option>
+              </select>
+
+            </div>
+            <!-- 여행 기간 / script로 text -> date변환------------------------------- -->
+            <div class="period">
+              <h3>여행 기간</h3>
+              <!-- 여행 시작일 -->
+              <div class="period_flex">
+                <span class="dateSet">
+                  <input name="sdate" type="text" id="sdate" placeholder="2022-03-21">
+                  <a href="#none" class="btncalender dateClick">달력</a>
+                </span>
+                <!-- 여행 종료일 -->
+                <span class="dateSet">
+                  <input name="edate" type="text" id="edate" placeholder="2022-03-22">
+                  <a href="#none" class="dateClick">달력</a>
+                </span>
+              </div>
+            </div>
+          </li>
+          <li> <!-- 제목 입력-------------------------------- -->
+            <div class="title">
+              <h3>제목</h3>
+              <input name="title" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)">
+            </div>
+          </li>
+          <li>
+            <!-- 일기 작성-------------------------------- -->
+            <div class="writing">
+              <h3>추가글</h3>
+              <textarea name="text" id="addText" cols="30" rows="10"
+                placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요"></textarea>
+            </div>
+          </li>
+          <li> <!-- 동행인--------------------------------------- -->
+            <div class="companion">
+              <h3>동행인</h3>
+              <!-- 보이는 부분 -->
+              <ul class="sel_companion">
+                <li class="circle">
+                  동행인 이미지
+                </li>
+                <li class="circle">
+                  동행인 이미지
+                </li>
+                <li class="circle">
+                  동행인 이미지
+                </li>
+                <li id="plus_companion">
+                  <i class="xi-plus"></i>
+                  <span>동행인 추가</span>
+                </li>
+              </ul>
+
+            </div>
+            <!-- 동행인 추가 팝업 -->
+            <div class="companion_popup">
+              <div class="id_search">
+                <h3>아이디 검색</h3>
+                <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
+              </div>
+              <div class="friendsList">
+                <ul class="checked_friends">
+                  <li>
+                    <span class="profile_circle"></span>
+                    <span>name</span>
+                    <span>
+                      <input type="checkbox" name="gowiths" value="yunah" checked>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="profile_circle"></span>
+                    <span>name</span>
+                    <span>
+                      <input type="checkbox" name="gowiths" value="sh" checked>
+                    </span>
+                  </li>
+                </ul>
+                <ul class="serch_friends">
+                  <li>
+                    <span class="profile_circle"></span>
+                    <span>name</span>
+                    <span>
+                      <input type="checkbox" name="" value="yum">
+                    </span>
+                  </li>
+                  <li>
+                    <span class="profile_circle"></span>
+                    <span>name</span>
+                    <span>
+                      <input type="checkbox" name="" value="se">
+                    </span>
+                  </li>
+                  <li>
+                    <span class="profile_circle"></span>
+                    <span>name</span>
+                    <span>
+                      <input type="checkbox" name="" value="ming">
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <button type="button">확인</button>
+              </div>
+            </div>
+            <!-- 공개여부------------------------------------ -->
+            <div class="disclosure">
+              <h3>공개여부</h3>
+              <ul>
+                <li class="private">
+                  <input type="radio" name="status" value="private" checked id="private">
+                  <label for="private"><img src="./image/weekly/icon/hide-b.png" alt="" class="weekly_icon">
+                    비공개</label>
+                </li>
+                <li class="public">
+                  <input type="radio" name="status" value="public" id="public">
+                  <label for="public"><img src="./image/weekly/icon/view-b.png" alt="" class="weekly_icon">
+                    공개</label>
+                </li>
+                <li class="shareFriends">
+                  <input type="radio" name="status" value="shareFriends" id="shareFriends">
+                  <label for="shareFriends"><img src="./image/weekly/icon/people-b.png" alt="" class="weekly_icon">
+                    친구공개</label>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+      <button type="submit" class="btn"> 저장하기 </button>
+    </form>
+  </main>
+  <script>
+    $(document).ready(function () {
+      $.datepicker.setDefaults($.datepicker.regional['ko']);
+      $('#sdate').datepicker({
+        // showOn: 'both',
+        // buttonImage: "/", // 버튼 이미지
+        // buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+        changeMonth: true,
+        changeYear: true,
+        nextText: '다음달',
+        prevText: '이전달',
+        dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+        dayNamesMin: ['일', '월', '바뀜', '수', '목', '금', '토'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dateFormat: "yy-mm-dd",
+        shoMonthAfterYear: true,
+        yearRange: "1960:2023", //연도 범위
+        maxDate: 0, //선택할 수 있는 최소 날짜로 (0: 오늘 이후 날짜 선택 불가하도록 함)
+        onClose: function (selectedDate) {
+          //시작일(startDate) datepicker가 닫힐때
+          //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+          $("#edate").datepicker("option", "minDate", selectedDate);
+        }
+      });
+      //end Date
+      $('#edate').datepicker({
+        // showOn: 'both',
+        // buttonImage: "/", // 버튼 이미지
+        // buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+        changeMonth: true,
+        changeYear: true,
+        nextText: '다음달',
+        prevText: '이전달',
+        dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+        dayNamesMin: ['일', '월', '바뀜', '수', '목', '금', '토'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dateFormat: "yy-mm-dd",
+        shoMonthAfterYear: true,
+        yearRange: "1960:2023", //연도 범위
+        maxDate: 0, //선택할 수 있는 최소 날짜로 (0: 오늘 이후 날짜 선택 불가하도록 함)
+        onClose: function (selectedDate) {
+          //시작일(startDate) datepicker가 닫힐때
+          //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+          $("#sdate").datepicker("option", "maxDate", selectedDate);
+        }
+      });
+      //Date Click
+      $('.dateClick').on('click', function (e) {
+        $(e.target).prev("input").focus();
+        console.log(e.target);
+      })
+      //edate Click
+
+    });//스크립트 종료
+  </script>
+</body>
+
+</html>

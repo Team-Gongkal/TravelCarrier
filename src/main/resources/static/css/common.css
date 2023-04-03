@@ -1,13 +1,31 @@
 /* Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;500;600;700&display=swap");
 
-/* Nunnu Font */
+/* NanumSquareNeo */
 @font-face {
-  font-family: "NanumSquareNeo-Variable";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
-    format("woff2");
-  font-weight: normal;
-  font-style: normal;
+  font-family: "NanumSquareNeo";
+  src: url("../font/NanumSquareNeoTTF-aLt.woff") format("woff2");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  src: url("../font/NanumSquareNeoTTF-bRg.woff") format("woff2");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  src: url("../font/NanumSquareNeoTTF-cBd.woff") format("woff2");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  src: url("../font/NanumSquareNeoTTF-dEb.woff") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  src: url("../font/NanumSquareNeoTTF-eHv.woff") format("woff2");
+  font-weight: 500;
 }
 
 /* color */
@@ -34,7 +52,6 @@ body {
   /* color: #525d76; */
   color: #353a52;
   -ms-overflow-style: none;
-  font-weight: 400;
 }
 body {
   padding: 0 0% 0 0.78%;
@@ -48,7 +65,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 main {
-  font-family: "NanumSquareNeo-Variable";
+  font-family: "NanumSquareNeo";
 }
 /* input Ui */
 input,
@@ -61,13 +78,13 @@ button {
 button.btn {
   width: calc(11 * 1rem);
   padding: 0.85rem;
-  font-weight: 500;
+  font-weight: 300;
   color: #f7f7f7;
   background: #a0c1ca;
   border: none;
   border-radius: 0.2rem;
   cursor: pointer;
-  font-family: "NanumSquareNeo-Variable";
+  font-family: "NanumSquareNeo";
   letter-spacing: 0.05rem;
 }
 button.white_btn {
@@ -96,6 +113,6 @@ button > img {
 /* form > h3 */
 form h3 {
   font-size: 1.2em;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 0.8em;
 }

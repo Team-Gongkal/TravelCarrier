@@ -8,7 +8,7 @@ main {
 
 #weekly_form > h1 {
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 400;
   padding: 1.5em 0;
   text-align: center;
   border-bottom: 1.5px solid #525d76;
@@ -37,6 +37,7 @@ main {
   color: rgb(82, 93, 118, 0.7);
   font-size: 0.8em;
   line-height: 1.5em;
+  font-weight: 300;
 }
 .thumbnail_img {
   border: 1px solid #000;
@@ -61,6 +62,8 @@ main {
 }
 .thumbnail_btn span {
   font-size: 0.7rem;
+  letter-spacing: 0.05rem;
+  font-weight: 3000;
 }
 .thumbnail_btn > .white_btn:nth-child(1) {
   margin-right: 2em;
@@ -195,7 +198,7 @@ a.dateClick {
 #plus_companion > span {
   display: inline;
   font-size: 0.6em;
-  font-weight: 600;
+  font-weight: 400;
   display: none;
 }
 #plus_companion:hover span,
@@ -239,13 +242,13 @@ a.dateClick {
   background: #efeee9;
   color: rgb(53, 58, 82, 0.3);
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 400;
 }
 .disclosure input[type="radio"]:checked + label {
   border: 2px solid #a0c1ca;
   background: #ffffff;
   color: #a0c1ca;
-  font-weight: 500;
+  font-weight: 400;
 }
 /* input */
 .weekly_form input[type="text"],

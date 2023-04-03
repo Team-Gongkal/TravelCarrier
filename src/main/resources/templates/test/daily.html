@@ -13,8 +13,7 @@
   <link rel="stylesheet" href="../../static/css/main.css">
   <link rel="stylesheet" href="../../static/css/weekly_form.css">
   <link rel="stylesheet" href="../../static/css/weekly.css">
-  <!-- <link rel="stylesheet" href="../../static/css/daily.css"> -->
-  <link rel="stylesheet" href="../../static/css/daily(modal).css">
+  <link rel="stylesheet" href="../../static/css/daily.css">
 
   <!-- XEicon -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -74,7 +73,7 @@
       </div>
     </div>
 
-    <!--daily-form 데일리 입력 폼/ 전 -->
+    <!--daily-form 데일리 입력 폼/ 모달창 -->
     <div class="daily_form_bg">
       <form action="" id="daily_form">
         <div class="Dform_modal">
@@ -132,96 +131,56 @@
     <!--daily-form 데일리 입력 폼/ 모달창-->
     <div class="daily_form_bg">
       <form action="" id="daily_form">
-        <div class="Dform_title">
-          <button class="close">
-            <i class="xi-close xi-2x"></i>
-          </button>
-          <h3>일기장</h3>
-        </div>
-        <div class="Dform">
-          <div class="Dform_imgs">
-            <p>이미지를 드래그하여 순서를 편집할 수 있습니다.</p>
-            <ul class="Dform_imglist">
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6460.JPG" alt="dailyImg01">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="dailyImg02">
-              </li>
-              <li id="main">
-                <img src="../../static/image/daily/diary/IMG_6475.JPG" alt="dailyImg03">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6489.JPG" alt="dailyImg04">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="dailyImg05">
-              </li>
-              <li id="clickImg">
-                <img src="../../static/image/daily/diary/IMG_6496.JPG" alt="dailyImg06">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6505.JPG" alt="dailyImg07">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6510.JPG" alt="dailyImg08">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6577.JPG" alt="dailyImg09">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6651.JPG" alt="dailyImg10">
-              </li>
-              <li>
-                <input type="file" multiple id="moreImg"></input>
-                <label for="moreImg"><i class="xi-plus"></i></label>
-              </li>
-            </ul>
+        <div class="Dform_modal">
+          <div class="Dform_title">
+            <h3>일기장</h3>
+            <button class="close">close</button>
           </div>
-          <div class="Dform_input">
-            <div class="daily_days">
-              <ul class="days_tabSlide">
-                <li class="Dtab days_num1">
-                  <span>DAY1</span>
-                </li>
-                <li class="Dtab days_num2">
-                  <span>DAY2</span>
-                </li>
-                <li class="Dtab days_num3">
-                  <span>DAY3</span>
-                </li>
-                <li class="Dtab days_num4">
-                  <span>DAY4</span>
-                </li>
-                <li class="Dtab days_num5">
-                  <span>DAY5</span>
-                </li>
-                <li class="Dtab days_num6">
-                  <span>DAY6</span>
-                </li>
-              </ul>
+          <div class="Dform">
+            <div class="daily_imgs">
+              <img src="../../static/image/daily/icon/upload-b.png" alt="">
+              <p>클릭하여 파일을 선택하거나</p>
+              <p>드래그하여 파일을 업로드해주세요</p>
             </div>
-            <div class="daily_title">
-              <h3>제목(선택)</h3>
-              <input type="text" placeholder="제목을 작성해주세요">
+            <div class="daily_input">
+              <div class="daily_days">
+                <ul class="daily_days_slide">
+                  <li class="Dtab days_num1">
+                    <span>DAY1</span>
+                  </li>
+                  <li class="Dtab days_num2">
+                    <span>DAY2</span>
+                  </li>
+                  <li class="Dtab days_num3">
+                    <span>DAY3</span>
+                  </li>
+                  <li class="Dtab days_num4">
+                    <span>DAY4</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="daily_title">
+                <h3>제목(선택)</h3>
+                <input type="text" placeholder="제목을 작성해주세요">
+              </div>
+              <div class="daily_text">
+                <h3>메모</h3>
+                <textarea name="" id="" cols="30" rows="10" placeholder="일기를 작성해주세요"></textarea>
+              </div>
+              <div class="daily_files">
+                <h3>이미지 파일</h3>
+                <p class="fileP">이미지 파일 경로
+                  <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
+                </p>
+                <input type="radio" name="repImg" id="repImg">
+                <label for="repImg">대표이미지로 설정
+                  <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
+                </label>
+              </div>
             </div>
-            <div class="daily_text">
-              <h3>메모</h3>
-              <textarea name="" id="" cols="30" rows="10" placeholder="일기를 작성해주세요"></textarea>
-            </div>
-            <div class="daily_files">
-              <h3>이미지 파일</h3>
-              <p class="fileP">이미지 파일 경로
-                <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
-              </p>
-              <input type="radio" name="repImg" id="repImg">
-              <label for="repImg">대표이미지로 설정
-                <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
-              </label>
-            </div>
-            <button class="btn Dform_btn">저장하기</button>
           </div>
         </div>
+        <button class="btn daily_btn">저장하기</button>
       </form>
     </div>
     <!-- daily 일기화면(hover전) -->
