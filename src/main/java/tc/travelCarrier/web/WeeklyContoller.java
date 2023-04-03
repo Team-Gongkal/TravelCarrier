@@ -7,26 +7,27 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import tc.travelCarrier.domain.*;
+import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.service.WeeklyService;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 
 import static tc.travelCarrier.domain.Weekly.createWeekly;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/TravelCarrier")
 public class WeeklyContoller {
 
     private final WeeklyService weeklyService;
 
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model){
-        model.addAttribute("weeklyForm", new WeeklyForm());
+        //model.addAttribute("weeklyForm", new WeeklyForm());
         return "page/(t)weekly_form_css";
     }
 
@@ -36,7 +37,7 @@ public class WeeklyContoller {
      * @return : "weekly"+weeklyId (생성된 위클리의 ID)
      * */
     @PostMapping(value="/weeklyForm")
-    public String regist(@Valid WeeklyForm form, BindingResult result) throws IOException {
+    public String regist(@Valid WeeklyForm form, BindingResult result) throws Exception {
         HashSet<Integer> tmp= new HashSet<>();
         tmp.add(2);
         tmp.add(3);
@@ -63,8 +64,6 @@ public class WeeklyContoller {
                 status = OpenStatus.ME;
         }
 
-
-
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
                 tdate, new CrudDate(new Date(),null), status, form.getText(), form.getGowiths())
@@ -79,7 +78,7 @@ public class WeeklyContoller {
      * @return :
      * */
     @GetMapping("/weekly/{weeklyId}")
-    public String getWeekly(@PathVariable int weeklyId, Model model) {
+    public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         model.addAttribute("weekly",weekly);
         return "page/weekly";

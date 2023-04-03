@@ -50,6 +50,16 @@ public class Weekly {
     @OneToOne(mappedBy = "weekly", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private AttachWeekly attachWeekly;
 
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("weekly : ");
+        str.append("title=").append(title).append(", ");
+        str.append("nation=").append(nation).append(", ");
+        str.append("travelDate=").append(travelDate.getSDate()).append(" ~ ").append(travelDate.getEDate());
+        return str.toString();
+    }
+
     //==비즈니스로직==//
     // 위클리 등록하면 daily, gowiths, attachWeekly에 값 들어가는 동작 만드느건가?
     //재고수량처럼 데이터를 가지고 있는 엔티티쪽에 작성하는거래!

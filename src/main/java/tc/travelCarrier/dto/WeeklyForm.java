@@ -1,4 +1,4 @@
-package tc.travelCarrier.web;
+package tc.travelCarrier.dto;
 
 
 import lombok.Getter;
