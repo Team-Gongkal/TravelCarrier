@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.WeeklyForm;
+import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.WeeklyService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import static tc.travelCarrier.domain.Weekly.createWeekly;
 
@@ -24,17 +27,23 @@ import static tc.travelCarrier.domain.Weekly.createWeekly;
 public class WeeklyContoller {
 
     private final WeeklyService weeklyService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/weeklyForm")
-    public String getWeeklyForm(Model model){
-        //model.addAttribute("weeklyForm", new WeeklyForm());
+    public String getWeeklyForm(Model model) throws Exception {
+        User user = memberRepository.getUser(1);
+        //System.out.println("작성 위클리 갯수 : "+user.getWeeklys().size());
+        //System.out.println("팔로워 인원수 : "+user.getFollowers().size());
+        System.out.println(user.getFollowers().get(0).getFollower().getAttachUser().getThumbPath());
+        model.addAttribute("user", user);
         return "page/(t)weekly_form_css";
     }
+
 
     /**
      * 모달폼을 통해 위클리정보 저장
      * @param : WeeklyForm (폼정보)
-     * @return : "weekly"+weeklyId (생성된 위클리의 ID)
+     * @return : "redirect:/TravelCarrier/weekly/"+weeklyId
      * */
     @PostMapping(value="/weeklyForm")
     public String regist(@Valid WeeklyForm form, BindingResult result) throws Exception {
@@ -47,7 +56,6 @@ public class WeeklyContoller {
             return "error";
         }*/
 
-        TravelDate tdate = new TravelDate(form.getSdate(),form.getEdate());
 
         User user = new User();
         user.setId(1);
@@ -66,10 +74,11 @@ public class WeeklyContoller {
 
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
-                tdate, new CrudDate(new Date(),null), status, form.getText(), form.getGowiths())
+                new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
+                        status, form.getText(), form.getGowiths())
         );
 
-        return "redirect:/weekly/"+weeklyId;
+        return "redirect:/TravelCarrier/weekly/"+weeklyId;
     }
 
     /**
@@ -81,7 +90,7 @@ public class WeeklyContoller {
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         model.addAttribute("weekly",weekly);
-        return "page/weekly";
+        return "page/weekly_css";
     }
 
 

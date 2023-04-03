@@ -22,6 +22,12 @@ public class WeeklyService {
     @Value("${file.dir}")
     private String fileDir;
 
+    /**
+     * 팔로워 목록 조회
+     * */
+    public List<Follower> getFollowerList(User user) throws Exception {
+        return weeklyRepository.findFollowerList(user);
+    }
 
     /**
      * 위클리 등록
