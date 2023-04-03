@@ -12,6 +12,7 @@ import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -31,12 +32,14 @@ public class DailyController {
     public String getDaily(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
-        model.addAttribute("dailies", dailies);
-        model.addAttribute("weekly",weekly);
         System.out.println(weekly.toString());
+        Collections.sort(dailies);
         for(DailyDTO dto : dailies){
             System.out.println("dto : "+dto.toString());
         }
+
+        model.addAttribute("dailies", dailies);
+        model.addAttribute("weekly",weekly);
         return "page/(t)daily(modal)";
     }
 

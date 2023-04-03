@@ -21,15 +21,20 @@ public class Daily {
     @Column(name="DAILY_ID")
     private int id;
 
+
+    @Column(name="DAILY_DATE")
+    private String dailyDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="WEEKLY_ID")
     private Weekly weekly;
 
-    @JoinColumn(name="DAILY_DATE")
-    private String dailyDate;
-
     @OneToMany(mappedBy = "daily", cascade = CascadeType.ALL)
     private List<Kword> kwords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "daily", cascade = CascadeType.ALL)
+    private List<AttachDaily> attachDailies = new ArrayList<>();
+
 
 
 

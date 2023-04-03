@@ -32,8 +32,6 @@ public class WeeklyContoller {
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model) throws Exception {
         User user = memberRepository.getUser(1);
-        //System.out.println("작성 위클리 갯수 : "+user.getWeeklys().size());
-        //System.out.println("팔로워 인원수 : "+user.getFollowers().size());
         System.out.println(user.getFollowers().get(0).getFollower().getAttachUser().getThumbPath());
         model.addAttribute("user", user);
         return "page/(t)weekly_form_css";
@@ -93,6 +91,15 @@ public class WeeklyContoller {
         return "page/weekly_css";
     }
 
+    /**
+     * 키워드 저장
+     * @param : List<String>
+     * */
+    @PostMapping("/weekly/{weekltId}/saveKeyword")
+    public String saveKeyword(){
+
+        return "";
+    }
 
 
 }

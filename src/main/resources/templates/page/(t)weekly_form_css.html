@@ -59,19 +59,6 @@
   <!-- weekly form main 시작 -->
   <main id="weekly_form">
     <h1>만들어라 너의 일기장</h1>
-    <h1 th:text = "${user.name}">만들어라 너의 일기장</h1>
-    <ul>
-      <li th:each="f : ${user.followers}">
-        <p th:text="${f.follower.name}">이름</p>
-        <p th:text="${f.follower.id}">아이디</p>
-
-        <div th:if="${f.follower.attachUser != null}">
-          <p th:text="${f.follower.attachUser.thumbPath}">이미지주소</p>
-        </div>
-
-      </li>
-    </ul>
-
 
     <form action="/TravelCarrier/weeklyForm" method="post" enctype="multipart/form-data" name="weekly_form"
       class="weekly_form">
@@ -148,15 +135,10 @@
               <h3>동행인</h3>
               <!-- 보이는 부분 -->
               <ul class="sel_companion">
-                <li class="circle">
+                <li th:each="f : ${user.followers}" th:style="'background-image: url(' + ${f.follower.attachUser.thumbPath} + ');'" class="circle">
                   동행인 이미지
                 </li>
-                <li class="circle">
-                  동행인 이미지
-                </li>
-                <li class="circle">
-                  동행인 이미지
-                </li>
+
                 <li id="plus_companion">
                   <i class="xi-plus"></i>
                   <span>동행인 추가</span>

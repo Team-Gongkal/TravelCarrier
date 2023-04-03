@@ -14,4 +14,5 @@ public class AttachUser extends Attach{
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USER_ID")
     private User user;
+    
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class DailyDTO {
+public class DailyDTO implements Comparable<DailyDTO> {
     public DailyDTO() {}
     public DailyDTO(int attachNo, String dailyDate, int attachDailySort,
                     String attachDailyTitle, String attachDailyText, String attachThumb,
@@ -36,5 +36,15 @@ public class DailyDTO {
         str.append(", attachThumb=").append(attachThumb);
         str.append(", isThumb=").append(isThumb);
         return str.toString();
+    }
+
+    @Override
+    public int compareTo(DailyDTO dto) {
+        int result = this.dailyDate.substring(3)
+                        .compareTo(dto.dailyDate.substring(3));
+        if (result == 0) {
+            result = Integer.compare(this.attachDailySort, dto.attachDailySort);
+        }
+        return result;
     }
 }
