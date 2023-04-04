@@ -115,18 +115,23 @@
               </div>
               <div class="daily_files">
                 <h3>이미지 파일</h3>
-                <p class="fileP">이미지 파일 경로
+                <div class="filePath">
+                  <p>../../static/image/daily/icon/changeImg.svg</p>
                   <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
-                </p>
-                <input type="radio" name="repImg" id="repImg">
-                <label for="repImg">대표이미지로 설정
-                  <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
-                </label>
+                </div>
+              </div>
+              <div class="daily_mainImg">
+                <input type="radio" id="" name="mainImg">
+                <label for="mainImgSet">대표이미지로 설정</label>
+                <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
               </div>
             </div>
           </div>
         </div>
-        <button class="btn daily_btn">저장하기</button>
+        <div class="Dform_btn">
+          <button class="btn Dform_btn_del" type="reset"> 작성취소</button>
+          <button class="btn Dform_btn_save" type="submit">저장하기</button>
+        </div>
       </form>
     </div>
     <!--daily-form 데일리 입력 폼/ 모달창-->
@@ -214,15 +219,19 @@
             </div>
             <div class="daily_files">
               <h3>이미지 파일</h3>
-              <p class="filePath">../../static/image/daily/icon/changeImg.svg
-                <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
-              </p>
-              <input type="radio" name="repImg" id="repImg">
-              <label for="repImg">대표이미지로 설정
-                <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
-              </label>
+              <div class="filePath">
+                <p>../../static/image/daily/icon/changeImg.svg
+                  <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
+                </p>
+              </div>
+              <input type="radio" id="mainImgSet" name="mainImg">
+              <label for="mainImgSet">대표이미지로 설정</label>
+              <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
             </div>
-            <button class="btn Dform_btn">저장하기</button>
+            <div class="Dform_btn">
+              <button class="btn Dform_btn_del" type="reset"> 작성취소</button>
+              <button class="btn Dform_btn_save" type="submit">저장하기</button>
+            </div>
           </div>
         </div>
       </form>

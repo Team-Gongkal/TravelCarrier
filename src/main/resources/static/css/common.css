@@ -34,6 +34,7 @@
 /* color:#a0c1ca  button*/
 /* color: #f7f7f7 */
 /* background: #efeee9; */
+/* point-color: #ff931c */
 
 /* 
 common--------------------------------------------- */
@@ -127,7 +128,7 @@ button > img {
 }
 /* form > h3 */
 form h3 {
-  font-size: 1.2em;
+  font-size: 1rem;
   font-weight: 400;
-  margin-bottom: 0.8em;
+  margin-bottom: 0.8rem;
 }
