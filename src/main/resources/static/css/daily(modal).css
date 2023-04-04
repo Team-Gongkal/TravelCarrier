@@ -287,6 +287,9 @@ input[type="file"]#moreImg {
   flex-direction: column;
   justify-content: space-between;
 }
+.Dform_input > div > h3 {
+  margin-bottom: 0.4em;
+}
 /* days 스크롤 */
 div.daily_days {
   width: 100%;
@@ -344,12 +347,17 @@ p.filePath {
   background: #b3b3b360;
   border-radius: 0.2rem;
   position: relative;
+  font-weight: 200;
+  font-size: 0.8em;
+  padding: 0.8rem 1rem;
 }
 p.filePath img {
-  width: 5%;
+  width: 4%;
   max-width: 100%;
   height: auto;
-  vertical-align: middle;
+  opacity: 0.2;
+  cursor: pointer;
+  float: right;
 }
 /* 일기화면(호버전)--------------------*/
 .diary_noH {
