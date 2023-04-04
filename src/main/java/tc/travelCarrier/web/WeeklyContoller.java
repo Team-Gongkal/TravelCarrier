@@ -69,6 +69,7 @@ public class WeeklyContoller {
             case "private" :
                 status = OpenStatus.ME;
         }
+        System.out.println("날짜데이터!!"+form.getSdate()+form.getEdate());
 
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),

@@ -3,10 +3,9 @@ package tc.travelCarrier.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Embeddable
@@ -14,20 +13,18 @@ import java.util.Date;
 public class TravelDate {
 
     public TravelDate(){}
-
-/*    public TravelDate(Date sDate, Date eDate){
-        this.sDate = sDate;
-        this.eDate = eDate;
-    }*/
-    public TravelDate(String sDate, String eDate){
-        this.sDate = sDate;
-        this.eDate = eDate;
+    public TravelDate(String sDate, String eDate) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        this.sDate = formatter.parse(sDate);
+        this.eDate = formatter.parse(eDate);
     }
 
+    @Temporal(TemporalType.DATE)
     @Column(name="SDATE")
-    private String sDate;
+    private Date sDate;
+    @Temporal(TemporalType.DATE)
     @Column(name="EDATE")
-    private String eDate;
+    private Date eDate;
 
 
 }

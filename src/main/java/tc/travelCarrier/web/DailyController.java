@@ -40,7 +40,7 @@ public class DailyController {
 
         model.addAttribute("dailies", dailies);
         model.addAttribute("weekly",weekly);
-        return "page/(t)daily(modal)";
+        return "test/daily(modal)";
     }
 
     /**
