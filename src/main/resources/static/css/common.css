@@ -52,7 +52,7 @@ body {
   /* color: #525d76; */
   color: #353a52;
   -ms-overflow-style: none;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 body {
   padding: 0 0% 0 0.78%;
