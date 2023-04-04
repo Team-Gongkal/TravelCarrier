@@ -52,6 +52,7 @@ body {
   /* color: #525d76; */
   color: #353a52;
   -ms-overflow-style: none;
+  overflow: hidden;
 }
 body {
   padding: 0 0% 0 0.78%;
@@ -72,10 +73,11 @@ input,
 textarea,
 select,
 button {
-  font-family: "NanumSquareNeo-Variable";
+  font-family: "NanumSquareNeo";
   width: 100%;
   background: #f7f7f7;
   font-size: 0.8rem;
+  font-weight: 300;
   padding: 0.8rem;
   border: none;
   border-radius: 0.2rem;
