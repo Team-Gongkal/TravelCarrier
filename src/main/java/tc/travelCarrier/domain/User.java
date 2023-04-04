@@ -25,9 +25,12 @@ public class User {
     @Column(name="USER_NAME")
     private String name;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private AttachUser attachUser;
+
     @OneToMany(mappedBy = "user")
     private List<Weekly> weeklys = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private AttachUser attachUser;
+    @OneToMany(mappedBy = "user")
+    private List<Follower> followers = new ArrayList<>();
 }

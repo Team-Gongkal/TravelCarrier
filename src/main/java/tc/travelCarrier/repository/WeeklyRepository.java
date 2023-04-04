@@ -16,6 +16,17 @@ public class WeeklyRepository {
     private final EntityManager em;
 
     /**
+     * 팔로워 리스트 조회
+     * */
+    public List<Follower> findFollowerList(User user) {
+        String jpql = "select f from Follower f where f.user = :user";
+        List<Follower> followerList = em.createQuery(jpql, Follower.class)
+                    .setParameter("user", user)
+                    .getResultList();
+        return followerList;
+    }
+
+    /**
      * 새로운 위클리 저장
      * */
     public void save(Weekly weekly){;
@@ -40,4 +51,6 @@ public class WeeklyRepository {
                 .setParameter("user", user)
                 .getResultList();
     }
+
+
 }
