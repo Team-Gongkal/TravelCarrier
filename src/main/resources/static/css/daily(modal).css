@@ -77,7 +77,7 @@ main.daily {
 .sdaily_text p {
   padding: 0.5em 0;
   font-size: 0.9rem;
-
+  font-weight: 200;
   letter-spacing: 0.05rem;
   color: #525d76;
 }
@@ -99,7 +99,7 @@ main.daily {
 .writing span {
   display: block;
   padding-top: 50%;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 /* daily-form 데일리 입력 폼/ 모달--------------------------------------- */
@@ -157,6 +157,7 @@ main.daily {
   font-size: 0.9em;
   padding: 3% 3.5%;
   opacity: 50%;
+  font-weight: 100;
 }
 ul.Dform_imglist {
   width: 100%;
@@ -281,18 +282,33 @@ input[type="file"]#moreImg {
 .Dform_input {
   width: 50%;
 }
+/* days 스크롤 */
+div.daily_days {
+  overflow: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background-color: #525d76;
+}
+div.daily_days::-webkit-scrollbar {
+  display: none;
+}
 /* day 탭메뉴 */
 ul.days_tabSlide {
-  overflow-x: scroll;
+  width: 100%;
   display: flex;
+  border: 1px solid #000;
 }
+
 ul.days_tabSlide li.Dtab {
 }
 ul.days_tabSlide li.Dtab span {
-  display: 500;
+  cursor: pointer;
+  display: block;
   font-size: 1rem;
   padding: 0.5rem 2rem;
   border-bottom: 3px solid #a0c1ca;
+  font-weight: 500;
 }
 ul.days_tabSlide li.Dtab .Dtab {
   cursor: pointer;
