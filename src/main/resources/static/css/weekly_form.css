@@ -251,7 +251,7 @@ a.dateClick {
   font-weight: 400;
 }
 /* input */
-.weekly_form input[type="text"],
+/* .weekly_form input[type="text"],
 .weekly_form select,
 .weekly_form textarea {
   width: 100%;
@@ -262,7 +262,7 @@ a.dateClick {
   border-radius: 0.2rem;
   box-sizing: border-box;
   color: #353a52;
-}
+} */
 
 /* button */
 .weekly_form > button {

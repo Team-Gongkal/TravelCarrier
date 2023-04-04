@@ -38,6 +38,7 @@ main.daily {
 .diary_titlebox {
 }
 .Dform_title {
+  width: 100%;
   border-bottom: 1px solid #b3b3b3;
   box-sizing: border-box;
   padding: 1.5rem 0.5rem;
@@ -48,7 +49,8 @@ main.daily {
   font-size: 1.2rem;
   margin: 0;
 }
-.Dform_title button {
+.Dform_title button.close {
+  width: fit-content;
   background: none;
   border: none;
   cursor: pointer;
@@ -281,14 +283,19 @@ input[type="file"]#moreImg {
 }
 .Dform_input {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 /* days 스크롤 */
 div.daily_days {
+  width: 100%;
+  height: auto;
   overflow: auto;
   white-space: nowrap;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  background-color: #525d76;
+  position: relative;
 }
 div.daily_days::-webkit-scrollbar {
   display: none;
@@ -297,7 +304,7 @@ div.daily_days::-webkit-scrollbar {
 ul.days_tabSlide {
   width: 100%;
   display: flex;
-  border: 1px solid #000;
+  position: static;
 }
 
 ul.days_tabSlide li.Dtab {
@@ -307,12 +314,42 @@ ul.days_tabSlide li.Dtab span {
   display: block;
   font-size: 1rem;
   padding: 0.5rem 2rem;
-  border-bottom: 3px solid #a0c1ca;
   font-weight: 500;
+  border-bottom: 3px solid #b3b3b33d;
 }
 ul.days_tabSlide li.Dtab .Dtab {
   cursor: pointer;
   display: inline-block;
+}
+ul.days_tabSlide li.Dtab span.on {
+  border-bottom: 3px solid #a0c1ca;
+}
+/* input */
+.Dform input,
+.Dform textarea {
+  border: 1px solid #b3b3b3;
+}
+
+/* title 입력창 */
+.daily_title {
+}
+/* text 입력창 */
+.daily_text {
+}
+/* 이미지 경로 */
+.daily_files {
+}
+p.filePath {
+  width: 100%;
+  background: #b3b3b360;
+  border-radius: 0.2rem;
+  position: relative;
+}
+p.filePath img {
+  width: 5%;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
 }
 /* 일기화면(호버전)--------------------*/
 .diary_noH {
