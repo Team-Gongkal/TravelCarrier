@@ -108,7 +108,7 @@ main.daily {
 .daily_form_bg {
   width: 100vw;
   height: 100vh;
-  background: rgb(0, 0, 0, 0.7);
+  background: rgb(0, 0, 0, 0.5);
   position: absolute;
   top: 0;
   left: 0;
@@ -208,19 +208,19 @@ li#main::after {
   box-sizing: border-box;
   height: auto;
   position: absolute;
-  background: linear-gradient(to bottom, #fc4a1a, #f7b733);
+  background: #ff931c;
   letter-spacing: 0.1em;
   font-size: 0.8rem;
   font-weight: 200;
   color: #ffffff;
 }
 /*  선택이미지 */
-li#clickImg {
+li.clickImg {
   border: 1px solid #fff;
   box-sizing: border-box;
 }
 
-li#clickImg:after {
+li.clickImg:after {
   content: "쓰레기통";
   display: block;
   width: 100%;
@@ -334,7 +334,8 @@ ul.days_tabSlide li.Dtab span.on {
 /* input */
 .Dform input,
 .Dform textarea {
-  border: 1px solid #b3b3b3;
+  /* border: 0.1px solid #b3b3b3; */
+  box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
 }
 /* 이미지 경로 */
 div.filePath {
@@ -345,7 +346,7 @@ div.filePath p {
   width: 100%;
   box-sizing: border-box;
   padding: 0.8rem 1rem 0.5rem 1rem;
-  background: #b3b3b360;
+  background: rgba(179, 179, 179, 0.3);
   font-weight: 200;
   border-radius: 0.2rem;
   font-size: 0.8rem;

@@ -1,7 +1,7 @@
 main {
   width: 100%;
   height: 100%;
-  border-left: 1.5px solid #525d76;
+  border-left: 1.5px solid rgb(82, 93, 118, 0.5);
   /* margin-left: 0 2.37% 0 2.37%; */
   margin-left: 2.37%;
 }
@@ -11,7 +11,7 @@ main {
   font-weight: 400;
   padding: 1.5em 0;
   text-align: center;
-  border-bottom: 1.5px solid #525d76;
+  border-bottom: 1.5px solid rgb(82, 93, 118, 0.5);
   color: #525d76;
 }
 
@@ -31,6 +31,7 @@ main {
   height: auto;
   float: left;
   background: #f7f7f7;
+  box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
 }
 
 .thumbnail_text > p {
@@ -78,6 +79,7 @@ main {
 }
 .weekly_input > ul > li {
   margin-bottom: 2em;
+  position: relative;
 }
 /* 여행 국가 및 여행 기간 */
 .weekly_input > ul > li:nth-child(1),
@@ -96,15 +98,15 @@ main {
 }
 .period_flex {
   display: flex;
-}
-.dateSet {
-  background: #f7f7f7;
+  box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
 }
 .dateSet:nth-child(1) {
+  background: #f7f7f7;
   border-right: 2px solid #efeee9;
   border-radius: 0.2rem 0 0 0.2rem;
 }
 .dateSet:nth-child(2) {
+  background: #f7f7f7;
   border-radius: 0 0.2rem 0.2rem 0;
 }
 span.dateSet > input[type="text"] {
@@ -251,19 +253,15 @@ a.dateClick {
   font-weight: 400;
 }
 /* input */
-/* .weekly_form input[type="text"],
+.weekly_form input[type="text"],
 .weekly_form select,
 .weekly_form textarea {
-  width: 100%;
-  background: #f7f7f7;
-  font-size: 0.8rem;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 0.2rem;
-  box-sizing: border-box;
-  color: #353a52;
-} */
-
+  box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
+}
+/* 여행기간 border-left지우기 */
+.weekly_form .period .period_flex span.dateSet input[type="text"] {
+  box-shadow: none;
+}
 /* button */
 .weekly_form > button {
   position: absolute;
@@ -280,10 +278,87 @@ a.dateClick {
   vertical-align: sub;
 }
 
-.companion_popup {
+/* 동행인 추가 모달창 */
+.companion_modal_bg {
+  width: 100vw;
+  height: 100vh;
+  background: rgb(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* opacity: 0;
+  visibility: hidden; */
+  transition: all 1s;
+  z-index: 100;
+}
+.companion_modal_bg.show {
+  opacity: 100;
+  visibility: visible;
+}
+.companion_modal {
+  width: 30%;
+  height: 70%;
+  background: #efeee9;
+  padding: 1.5rem 2.5rem;
+  box-sizing: border-box;
+  border-radius: 0.3rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.companion_modal h3 {
+  margin-bottom: 0.8rem;
+}
+/* 아이디검색 */
+.id_search {
+  width: 100%;
+  position: relative;
+}
+.id_search input {
+  background: rgba(179, 179, 179, 0.3);
+}
+/* serch input 초기화 커스텀 변경 */
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration {
   display: none;
 }
-
+.id_search img {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  display: inline-block;
+}
+/* 친구 리스트 */
+.friendsList {
+}
+ul.checked_friends {
+}
+ul.checked_friends li {
+}
+ul.checked_friends li label {
+  border: 1px solid #000;
+  display: flex;
+}
+ul.checked_friends li label span:nth-last-child(1) {
+  border: 1px solid #000;
+  display: flex;
+}
+ul.checked_friends li label span:nth-last-child(2) {
+  border: 1px solid #000;
+  display: flex;
+}
+ul.checked_friends li label input {
+  border: 1px solid #000;
+  display: flex;
+}
+.companion_modal button {
+  cursor: pointer;
+}
 input[type="file"] {
   /* display: none; */
 }
