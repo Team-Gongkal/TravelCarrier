@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TravelCarrier</title>
 
-  <link rel="stylesheet" href="../../static/css/reset.css">
-  <link rel="stylesheet" href="../../static/css/common.css">
-  <link rel="stylesheet" href="../../static/css/header.css">
-  <link rel="stylesheet" href="../../static/css/main.css">
-  <link rel="stylesheet" href="../../static/css/weekly_form.css">
-  <link rel="stylesheet" href="../../static/css/weekly.css">
-  <!-- <link rel="stylesheet" href="../../static/css/daily.css"> -->
-  <link rel="stylesheet" href="../../static/css/daily(modal).css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/weekly_form.css">
+  <link rel="stylesheet" href="/css/weekly.css">
+  <!-- <link rel="stylesheet" htatic/css/daily.css"> -->
+  <link rel="stylesheet" href="/css/daily(modal).css">
 
   <!-- XEicon -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -35,7 +35,7 @@
         </div>
         <div class="logo">
           <a href="index.html">
-            <img src="../../static/image/header/logo/journal.png" alt="logo">
+            <img src="/image/header/logo/journal.png" alt="logo">
           </a>
         </div>
       </div>
@@ -51,7 +51,7 @@
   <!-- utill 유틸 -->
   <div class="utill_menu">
     <div class="notice">
-      <img src="../../static/image/header/icon/notification.png" alt="실시간 알림 아이콘">
+      <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
     </div>
     <div class="profile">
       <a href="#none"></a>
@@ -67,7 +67,7 @@
       </div>
       <div class="writing square rectL">
         <div class="circle">
-          <img src="../../static/image/daily/icon/pencil.png" alt="edit diary icon">
+          <img src="/image/daily/icon/pencil.png" alt="edit diary icon">
         </div>
         <span>글쓰기</span>
         <!-- <div class="square rectL rectW"> -->
@@ -84,7 +84,7 @@
           </div>
           <div class="Dform">
             <div class="daily_imgs">
-              <img src="../../static/image/daily/icon/upload-b.png" alt="">
+              <img src="/image/daily/icon/upload-b.png" alt="">
               <p>클릭하여 파일을 선택하거나</p>
               <p>드래그하여 파일을 업로드해주세요</p>
             </div>
@@ -116,7 +116,7 @@
               <div class="daily_files">
                 <h3>이미지 파일</h3>
                 <p class="fileP">이미지 파일 경로
-                  <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
+                  <img src="/image/daily/icon/changeImg.svg" alt="이미지변경">
                 </p>
                 <input type="radio" name="repImg" id="repImg">
                 <label for="repImg">대표이미지로 설정
@@ -142,37 +142,7 @@
           <div class="Dform_imgs">
             <p>이미지를 드래그하여 순서를 편집할 수 있습니다.</p>
             <ul class="Dform_imglist">
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6460.JPG" alt="dailyImg01">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="dailyImg02">
-              </li>
-              <li id="main">
-                <img src="../../static/image/daily/diary/IMG_6475.JPG" alt="dailyImg03">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6489.JPG" alt="dailyImg04">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="dailyImg05">
-              </li>
-              <li id="clickImg">
-                <img src="../../static/image/daily/diary/IMG_6496.JPG" alt="dailyImg06">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6505.JPG" alt="dailyImg07">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6510.JPG" alt="dailyImg08">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6577.JPG" alt="dailyImg09">
-              </li>
-              <li>
-                <img src="../../static/image/daily/diary/IMG_6651.JPG" alt="dailyImg10">
-              </li>
-              <li>
+              <li id="moreImgLi" >
                 <input type="file" multiple id="moreImg"></input>
                 <label for="moreImg"><i class="xi-plus"></i></label>
               </li>
@@ -214,8 +184,8 @@
             </div>
             <div class="daily_files">
               <h3>이미지 파일</h3>
-              <p class="filePath">../../static/image/daily/icon/changeImg.svg
-                <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
+              <p class="filePath">/image/daily/icon/changeImg.svg
+                <img src="/image/daily/icon/changeImg.svg" alt="이미지변경">
               </p>
               <input type="radio" name="repImg" id="repImg">
               <label for="repImg">대표이미지로 설정
@@ -230,35 +200,25 @@
     <!-- daily 일기화면(hover전) -->
     <div class="diary_noH">
       <div class="diary_titlebox">
-        <h1>PARIS</h1>
-        <p>기간 : 2023-03-28 ~ 2023-03-29</p>
+        <h1 th:text="${weekly.title}">TITLE</h1>
+        <p th:text = "'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}">기간 : - </p>
       </div>
       <div class="diary_slides">
         <ul class="diary_slide">
-          <li class="d_slide square sqr">
-            <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="">
-          </li>
-          <li class="d_slide square rectL">
-            <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="">
-          </li>
-          <li class="d_slide square rectL">
-            <img src="../../static/image/daily/diary/IMG_7219.JPG" alt="">
-          </li>
-          <li class="d_slide square rectW">
-            <img src="../../static/image/daily/diary/IMG_6489.JPG" alt="">
-          </li>
-          <li class="d_slide square sqr">
-            <img src="../../static/image/daily/diary/IMG_7935.JPG" alt="">
+          <li th:each="daily : ${dailies}" class="d_slide square sqr">
+            <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
           </li>
         </ul>
       </div>
       <div class="writing circle">
-        <img src="../../static/image/daily/icon/pencil.png" alt="edit daily">
+        <img src="/image/daily/icon/pencil.png" alt="edit daily">
       </div>
     </div>
 
     <!-- daily 일기화면(hover후) -->
 
   </main>
-  <script src="../../static/script/diary.js"></script>
+  <script src="/script/diary.js"></script>
+  <script src="/script/daily(modal).js"></script>
 </body>
+</html>
