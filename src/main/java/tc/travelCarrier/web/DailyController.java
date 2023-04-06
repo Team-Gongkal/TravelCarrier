@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.dto.DailyForm;
@@ -14,6 +15,7 @@ import tc.travelCarrier.service.WeeklyService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/TravelCarrier")
@@ -38,6 +40,11 @@ public class DailyController {
             System.out.println("dto : "+dto.toString());
         }
 
+        //일수 계산
+        long period = ((weekly.getTravelDate().getEDate().getTime()
+                        - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
+        System.out.println( period + " 일 차이");
+        model.addAttribute("period", period);
         model.addAttribute("dailies", dailies);
         model.addAttribute("weekly",weekly);
         return "test/daily(modal)";
@@ -48,8 +55,8 @@ public class DailyController {
      * @param : List<DailyForm>
      * @return : ajax로 해야되는데... getDaily()메소드로 받아오는거 그대로 받아와야됨
      * */
-    @PostMapping("/weekly/daily/create")
-    public String createDaily(@RequestBody List<DailyForm> formList) throws Exception{
+    @PostMapping("/weekly/daily/creates")
+    public String createDailys(@RequestBody List<DailyForm> formList) throws Exception{
 
         //dailyForm : day, file, title, text, sort, isThumb
         System.out.println("===========================================");
@@ -78,6 +85,16 @@ public class DailyController {
         }
         System.out.println("잘햇나 확인");
         return "success";
+    }
+
+    @PostMapping("/weekly/daily/create")
+    public void createDaily(@RequestPart("file") List<MultipartFile> files,
+                            @RequestPart("title") List<String> titles,
+                            @RequestPart("text") List<String> texts,
+                            @RequestPart("thumb") List<Integer> thumbs,
+                            @RequestParam("day") String day) {
+        // 받은 데이터를 처리하는 코드
+        System.out.println("길이!!!!!!!!!!!!!!!!!!!!!"+files.size());
     }
 }
 
