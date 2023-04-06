@@ -169,6 +169,7 @@ ul.Dform_imglist {
   overflow-y: scroll;
   padding: 0 0% 0 3.5%;
   box-sizing: border-box;
+  position: relative;
 }
 /* 스크롤바 디자인 */
 ul.Dform_imglist::-webkit-scrollbar {
@@ -200,7 +201,45 @@ ul.Dform_imglist li img {
   border: 1.5px solid #ffffff00;
   box-sizing: border-box;
 }
+/*  선택이미지 */
+ul.Dform_imglist li.clickImg img {
+  border: 1.5px solid #f7f7f7;
+  box-sizing: border-box;
+  display: block;
+}
 
+ul.Dform_imglist li.clickImg:before {
+  /* content: url(../image/daily/icon/trashcan-b.png); */
+  content: "";
+  background: url(../image/daily/icon/trashcan-b.png);
+  background-position: 50%, 50%;
+  background-repeat: no-repeat;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  transition: 0.2s;
+}
+ul.Dform_imglist li.clickImg:hover:before {
+  background: url(../image/daily/icon/trashcan-red.png);
+  background-position: 50%, 50%;
+  background-repeat: no-repeat;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+/* .delete_img {
+  width: 2rem;
+  height: 2rem;
+  background: url(../image/daily/icon/trash-can-b.png);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+} */
 /* 대표이미지 */
 li#main::after {
   content: "대표";
@@ -210,31 +249,14 @@ li#main::after {
   box-sizing: border-box;
   height: auto;
   position: absolute;
+  top: 0;
+  left: 0;
   background: #ff931c;
   letter-spacing: 0.1em;
   font-size: 0.8rem;
   font-weight: 200;
   color: #f7f7f7;
-}
-/*  선택이미지 */
-ul.Dform_imglist li.clickImg img {
-  border: 1.5px solid #f7f7f7;
-  box-sizing: border-box;
-}
-
-li.clickImg:after {
-  content: "쓰레기통";
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgb(0, 0, 0, 0.5);
-  text-align: center;
-  box-sizing: border-box;
-  padding-top: 45%;
+  z-index: 2;
 }
 
 /* 이미지 추가하기 버튼 */
@@ -348,7 +370,7 @@ div.filePath {
   width: 100%;
   margin-bottom: 0.6rem;
   box-sizing: border-box;
-  padding: 0.8rem 1rem 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   background: rgba(179, 179, 179, 0.3);
   border-radius: 0.2rem;
   display: flex;

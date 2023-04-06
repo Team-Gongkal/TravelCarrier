@@ -97,7 +97,7 @@
             <div class="daily_days">
               <ul class="days_tabSlide">
                 <li class="Dtab days_num1">
-                  <span class="on">DAY 1</span>
+                  <span class="on">DAY1</span>
                 </li>
                 <li th:each="i : ${#numbers.sequence(1, period - 1)}" class="Dtab days_num1">
                   <span th:text="'DAY' + ${i + 1}">DAY ?</span>
@@ -123,7 +123,7 @@
               </div>
               <input type="radio" id="mainImgSet" name="mainImg">
               <label for="mainImgSet">대표이미지로 설정</label>
-              <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
+              <b>i (대표이미지는 여행일별 대표 이미지를 의미합니다)</b>
             </div>
             <div class="Dform_btn">
               <button class="btn Dform_btn_del" type="reset"> 작성취소</button>

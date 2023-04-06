@@ -82,7 +82,7 @@
             <button class="close">close</button>
           </div>
           <div class="Dform">
-            <div class="daily_imgs">
+            <div class="daily_imgs" id="default_daily_imgs">
               <img src="../../static/image/daily/icon/upload-b.png" alt="">
               <p>클릭하여 파일을 선택하거나</p>
               <p>드래그하여 파일을 업로드해주세요</p>
@@ -156,7 +156,7 @@
               <li>
                 <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="dailyImg02">
               </li>
-              <li id="main">
+              <li id="main" class="clickImg">
                 <img src="../../static/image/daily/diary/IMG_6475.JPG" alt="dailyImg03">
               </li>
               <li>
@@ -165,7 +165,7 @@
               <li>
                 <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="dailyImg05">
               </li>
-              <li class="clickImg">
+              <li>
                 <img src="../../static/image/daily/diary/IMG_6496.JPG" alt="dailyImg06">
               </li>
               <li>
@@ -180,7 +180,6 @@
               <li>
                 <img src="../../static/image/daily/diary/IMG_6651.JPG" alt="dailyImg10">
               </li>
-
             </ul>
           </div>
           <div class="Dform_input">
@@ -229,7 +228,7 @@
               </div>
               <input type="radio" id="mainImgSet" name="mainImg">
               <label for="mainImgSet">대표이미지로 설정</label>
-              <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
+              <b>i (대표이미지는 여행일별 대표 이미지를 의미합니다)</b>
             </div>
             <div class="Dform_btn">
               <button class="btn Dform_btn_del" type="reset"> 작성취소</button>
