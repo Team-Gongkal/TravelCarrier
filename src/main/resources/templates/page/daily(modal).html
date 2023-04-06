@@ -70,7 +70,6 @@
           <img src="../../static/image/daily/icon/pencil.png" alt="edit diary icon">
         </div>
         <span>글쓰기</span>
-        <!-- <div class="square rectL rectW"> -->
       </div>
     </div>
 
@@ -147,6 +146,10 @@
           <div class="Dform_imgs">
             <p>이미지를 드래그하여 순서를 편집할 수 있습니다.</p>
             <ul class="Dform_imglist">
+              <li id="moreImgLi">
+                <input type="file" multiple id="moreImg"></input>
+                <label for="moreImg"><i class="xi-plus"></i></label>
+              </li>
               <li>
                 <img src="../../static/image/daily/diary/IMG_6460.JPG" alt="dailyImg01">
               </li>
@@ -177,10 +180,7 @@
               <li>
                 <img src="../../static/image/daily/diary/IMG_6651.JPG" alt="dailyImg10">
               </li>
-              <li>
-                <input type="file" multiple id="moreImg"></input>
-                <label for="moreImg"><i class="xi-plus"></i></label>
-              </li>
+
             </ul>
           </div>
           <div class="Dform_input">
@@ -221,8 +221,11 @@
               <h3>이미지 파일</h3>
               <div class="filePath">
                 <p>../../static/image/daily/icon/changeImg.svg
-                  <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
                 </p>
+                <input type="file" id="fileChange">
+                <label for="fileChange">
+                  <img src="../../static/image/daily/icon/changeImg.svg" alt="이미지변경">
+                </label>
               </div>
               <input type="radio" id="mainImgSet" name="mainImg">
               <label for="mainImgSet">대표이미지로 설정</label>
@@ -270,4 +273,5 @@
 
   </main>
   <script src="../../static/script/diary.js"></script>
+  <script src="/script/daily(modal).js"></script>
 </body>
