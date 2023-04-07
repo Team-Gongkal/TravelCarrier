@@ -70,7 +70,6 @@
           <img src="/image/daily/icon/pencil.png" alt="edit diary icon">
         </div>
         <span>글쓰기</span>
-        <!-- <div class="square rectL rectW"> -->
       </div>
     </div>
 
@@ -85,10 +84,20 @@
           <h3>일기장</h3>
         </div>
         <div class="Dform">
+          <div class="default_Dform_imgs">
+            <label>
+              <div>
+                <input type="file" multiple>
+                <img src="../../static/image/daily/icon/upload-b.png" alt="">
+                <p>클릭하여 파일을 선택하거나</p>
+                <p>드래그하여 파일을 업로드해주세요</p>
+              </div>
+            </label>
+          </div>
           <div class="Dform_imgs">
             <p>이미지를 드래그하여 순서를 편집할 수 있습니다.</p>
             <ul class="Dform_imglist">
-              <li id="moreImgLi" >
+              <li id="moreImgLi">
                 <input type="file" multiple id="moreImg"></input>
                 <label for="moreImg"><i class="xi-plus"></i></label>
               </li>
@@ -100,7 +109,7 @@
                 <li class="Dtab days_num1">
                   <span class="on">DAY1</span>
                 </li>
-                <li  th:each="i : ${#numbers.sequence(1, period - 1)}"  class="Dtab days_num1">
+                <li th:each="i : ${#numbers.sequence(1, period - 1)}" class="Dtab days_num1">
                   <span th:text="'DAY' + ${i + 1}">DAY ?</span>
                 </li>
               </ul>
@@ -115,15 +124,21 @@
             </div>
             <div class="daily_files">
               <h3>이미지 파일</h3>
-              <p class="filePath">/파일명.jpg</p>
-              <img src="/image/daily/icon/changeImg.svg" alt="이미지변경">
-
-              <input type="radio" name="repImg" id="repImg">
-              <label for="repImg">대표이미지로 설정
-                <b>i (대표이미지는 날짜별 대표 이미지를 의미합니다)</b>
-              </label>
+              <div class="filePath">
+                <p>/파일명.jpg</p>
+                <input type="file" id="fileChange">
+                <label for="fileChange">
+                  <img src="/image/daily/icon/changeImg.svg" alt="이미지변경아이콘">
+                </label>
+              </div>
+              <input type="radio" id="mainImgSet" name="mainImg">
+              <label for="mainImgSet">대표이미지로 설정</label>
+              <b>i (대표이미지는 여행일별 대표 이미지를 의미합니다)</b>
             </div>
-            <button class="btn Dform_btn">저장하기</button>
+            <div class="Dform_btn">
+              <button class="btn Dform_btn_del" type="reset"> 작성취소</button>
+              <button class="btn Dform_btn_save" type="submit">저장하기</button>
+            </div>
           </div>
         </div>
       </form>
@@ -132,7 +147,7 @@
     <div class="diary_noH">
       <div class="diary_titlebox">
         <h1 th:text="${weekly.title}">TITLE</h1>
-        <p th:text = "'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}">기간 : - </p>
+        <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}">기간 : - </p>
       </div>
       <div class="diary_slides">
         <ul class="diary_slide">
@@ -152,4 +167,5 @@
   <script src="/script/diary.js"></script>
   <script src="/script/daily(modal).js"></script>
 </body>
+
 </html>
