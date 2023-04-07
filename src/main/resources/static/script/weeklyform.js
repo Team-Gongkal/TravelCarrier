@@ -124,7 +124,7 @@ $(document).ready(function () {
   $("#plus_companion").on("click", function () {
     $(".companion_modal_bg").addClass("show");
   });
-  $(".companion_modal button").on("click", function () {
+  $(".companion_modal > button").on("click", function () {
     $(".companion_modal_bg").removeClass("show");
   });
 }); //스크립트 종료
