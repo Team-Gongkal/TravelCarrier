@@ -135,7 +135,9 @@
               <h3>동행인</h3>
               <!-- 보이는 부분 -->
               <ul class="sel_companion">
-                <li th:each="f : ${user.followers}" th:style="'background-image: url(' + ${f.follower.attachUser.thumbPath} + ');'" class="circle">
+                <li th:each="f : ${user.followers}"
+                    th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}"
+                    th:style="'background-image: url(' + ${f.follower.attachUser.thumbPath} + ');'" class="circle">
                   동행인 이미지
                 </li>
 
@@ -227,6 +229,8 @@
       <button type="submit" class="btn"> 저장하기 </button>
     </form>
   </main>
+
+  <script src="/script/(t)weekly_form_css.js"></script>
   <script>
     $(document).ready(function () {
       $.datepicker.setDefaults($.datepicker.regional['ko']);

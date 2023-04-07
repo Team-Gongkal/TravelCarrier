@@ -3,8 +3,8 @@
 //화면 로드되면 바로 click Day1 해주기
 var liIndex = "";
 //formData day정보와 함께 배열로 저장한다. [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
-var dataArr = [];
 //선택한 tap에 해당하는 formDataArr을 저장 [{file,title, text,thumb},{file,title, text,thumb},{file,title, text,thumb}]
+var dataArr = [];
 var selectArr = [];
 
 // function : 사진첨부시 동작 (by.서현)
@@ -143,40 +143,41 @@ $(document).on('click', 'div.daily_files img', function() {
 //저장시 ajax
 // dataArr : [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
 // formDataArr : [{formData},{file,title, text,thumb},{file,title, text,thumb}]
-$(document).on('click', 'button.Dform_btn', function() {
+$(document).on('click', 'button.Dform_btn', function(event) {
     event.preventDefault();
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/TravelCarrier/weekly/daily/create', true);
-
-  // Content-Type 헤더 설정
-  var boundary = '----WebKitFormBoundary' + new Date().getTime();
-  xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
-
-  // FormData 객체 생성
-  var formData = new FormData();
-  for (var i = 0; i < dataArr.length; i++) {
-    var day = dataArr[i].day[0];
-    var data = dataArr[i].data;
-    for (var j = 0; j < data.length; j++) {
-      var file = data[j].file;
-      var title = data[j].title;
-      var text = data[j].text;
-      var thumb = data[j].thumb;
-
-      formData.append(day + '_file_' + j, file);
-      formData.append(day + '_title_' + j, title);
-      formData.append(day + '_text_' + j, text);
-      formData.append(day + '_thumb_' + j, thumb);
-    }
-  }
-
   // 서버로 데이터 전송
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      // 요청이 성공적으로 처리된 경우에 대한 코드
+  //dataArr : [ {day,data}, {DAY1,formDataArr[0]},{DAY2,formDataArr[1]} ]
+  //data: [{file,title,text,thumb},{file,title,text,thumb}]
+
+    //url 구해두기
+    var currentUrl = window.location.href;
+    var match = currentUrl.match(/weekly\/(\d+)\/daily/);
+    var weekyId = match && match[1];
+    var url = `/TravelCarrier/weekly/${weekyId}/daily/create`;
+
+    for(var i = 0; i < dataArr.length; i++){
+        // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
+        var arr = dataArr[i];
+        for(var j = 0; j < arr.data.length; j++){
+            var formData = arr.data[j];
+            formData.append('day', arr.day);
+            formData.append('sort', j);
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log("Upload success");
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.error("Upload error");
+                    console.error(error);
+                }
+            });
+        }
     }
-  };
-  xhr.send(formData);
 
 });

@@ -3,6 +3,7 @@ package tc.travelCarrier.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import tc.travelCarrier.dto.DailyForm;
 
 import javax.persistence.*;
 
@@ -15,17 +16,13 @@ import static javax.persistence.FetchType.LAZY;
 public class AttachDaily extends Attach{
 
     public AttachDaily(){}
-    @Builder
-    public AttachDaily(int id, String attachTitle, String thumb, Daily daily,
-                       String title, String text, int sort, boolean isThumb){
-        this.id = id;
-        this.attachTitle = attachTitle;
-        this.thumbPath = thumb;
-        this.daily = daily;
-        this.title = title;
-        this.text = text;
-        this.sort = sort;
-        this.isThumb = isThumb;
+    public AttachDaily(String[] saveArr, DailyForm form){
+        this.attachTitle = saveArr[0];
+        this.thumbPath = saveArr[1];;
+        this.title = form.getTitle();
+        this.text = form.getText();
+        this.sort = form.getSort();
+        //this.isThumb = form.getThumb();
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -16,6 +16,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 @RequiredArgsConstructor
 @Service
@@ -88,34 +89,38 @@ public class AttachService {
      * 이미지 크기 리사이징(크기는 데일리 슬라이드에 대략 맞춤)
      * */
     private BufferedImage resizeImageFile(MultipartFile file) throws Exception {
-        // 이미지 읽어 오기
-        BufferedImage inputImage = ImageIO.read(file.getInputStream());
-        // 이미지 세로 가로 측정
-        int originWidth = inputImage.getWidth();
-        int originHeight = inputImage.getHeight();
-        // 변경할 길이
-        int newWidth = originWidth;
-        int newHeight = originHeight;
-        if(originWidth == originHeight) {
-            newWidth = 320;
-            newHeight = 320;
+        try (InputStream inputStream = file.getInputStream()){
+            // 이미지 읽어 오기
+            BufferedImage inputImage = ImageIO.read(file.getInputStream());
+            // 이미지 세로 가로 측정
+            int originWidth = inputImage.getWidth();
+            int originHeight = inputImage.getHeight();
+            // 변경할 길이
+            int newWidth = originWidth;
+            int newHeight = originHeight;
+            if(originWidth == originHeight) {
+                newWidth = 320;
+                newHeight = 320;
+            }
+            else if(originWidth > originHeight) {
+                int min = Math.min(originWidth/480,originHeight/320);
+                min = Math.max(min,1);
+                newWidth /= min;
+                newHeight /= min;
+            }
+            else if(originWidth < originHeight) {
+                int min = Math.min(originWidth/240,originHeight/320);
+                min = Math.max(min,1);
+                newWidth /= min;
+                newHeight /= min;
+            }
+            Image resizeImage = inputImage.getScaledInstance(newWidth, newHeight, Image.SCALE_FAST);
+            BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics graphics = newImage.getGraphics();
+            graphics.drawImage(resizeImage, 0, 0, null);
+            return newImage;
+        } catch (IOException e){
+            throw new Exception("Failed to resize image", e);
         }
-        else if(originWidth > originHeight) {
-            int min = Math.min(originWidth/480,originHeight/320);
-            min = Math.max(min,1);
-            newWidth /= min;
-            newHeight /= min;
-        }
-        else if(originWidth < originHeight) {
-            int min = Math.min(originWidth/240,originHeight/320);
-            min = Math.max(min,1);
-            newWidth /= min;
-            newHeight /= min;
-        }
-        Image resizeImage = inputImage.getScaledInstance(newWidth, newHeight, Image.SCALE_FAST);
-        BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics graphics = newImage.getGraphics();
-        graphics.drawImage(resizeImage, 0, 0, null);
-        return newImage;
     }
 }

@@ -37,4 +37,21 @@ public class DailyRepository {
         em.persist(attachDaily);
     }
 
+    // 데일리 아이디 검색
+    public Daily findByWeeklyAndDailyDate(Weekly weekly, String dailyDate){
+        String jpql = "select a from Daily a"
+                + " where a.weekly = :weekly"
+                + " and a.dailyDate = :dailyDate";
+        return em.createQuery(jpql, Daily.class)
+              .setParameter("weekly", weekly)
+              .setParameter("dailyDate", dailyDate)
+              .getSingleResult();
+    }
+    // 데일리 등록
+    public Daily saveNewDaily(Daily daily){
+        em.persist(daily);
+        em.flush();
+        return daily;
+    }
+
 }

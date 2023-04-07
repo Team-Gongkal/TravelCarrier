@@ -8,6 +8,7 @@ import tc.travelCarrier.domain.Daily;
 import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.repository.DailyRepository;
+import tc.travelCarrier.repository.WeeklyRepository;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class DailyService {
 
     private final DailyRepository dailyRepository;
+    private final WeeklyRepository weeklyRepository;
 
     /**
      * 해당 위클리의 데일리정보 가져오는 메소드
@@ -34,4 +36,18 @@ public class DailyService {
 
     }
 
+    //데일리 있으면 find, 없으면 등록후 find
+    public Daily getDaily(int weeklyId, String dailyDate){
+        Weekly weekly = weeklyRepository.findOne(weeklyId);
+        Daily daily =  dailyRepository.findByWeeklyAndDailyDate(weekly,dailyDate);
+        if(daily == null){
+            System.out.println("존재하지 않던 데일리이므로 새로 생성!!!");
+            Daily newDaily = new Daily();
+            newDaily.setWeekly(weekly);
+            newDaily.setDailyDate(dailyDate);
+            daily = dailyRepository.saveNewDaily(newDaily);
+        }
+        System.out.println("지금 데일리 아이디는 : " + daily.getId());
+        return daily;
+    }
 }
