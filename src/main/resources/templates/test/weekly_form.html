@@ -104,17 +104,17 @@
               <h3>공개여부</h3>
               <ul>
                 <li class="private">
-                  <input type="radio" name="status" value="private" checked id="private">
+                  <input type="radio" name="status" value="private" checked id="private" class="hide">
                   <label for="private"><img src="/image/weekly/icon/hide-b.png" alt="" class="weekly_icon">
                     비공개</label>
                 </li>
                 <li class="public">
-                  <input type="radio" name="status" value="public" id="public">
+                  <input type="radio" name="status" value="public" id="public" class="hide">
                   <label for="public"><img src="/image/weekly/icon/view-b.png" alt="" class="weekly_icon">
                     공개</label>
                 </li>
                 <li class="shareFriends">
-                  <input type="radio" name="status" value="shareFriends" id="shareFriends">
+                  <input type="radio" name="status" value="shareFriends" id="shareFriends" class="hide">
                   <label for="shareFriends"><img src="/image/weekly/icon/people-b.png" alt="" class="weekly_icon">
                     친구공개</label>
                 </li>
@@ -140,7 +140,7 @@
           </ul>
           <ul class="serch_friends">
             <li th:each="f : ${user.followers}" th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
-              <input type="checkbox" name="gowiths" value="yunah" th:id="'#' + ${f.follower.id}">
+              <input type="checkbox" name="gowiths" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
               <label th:for="'#' + ${f.follower.id}">
                 <span class="profile_circle circle">
                   <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"

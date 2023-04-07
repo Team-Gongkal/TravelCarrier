@@ -210,16 +210,6 @@ a.dateClick {
 .disclosure > ul > li {
   width: 100%;
 }
-.disclosure input[type="radio"] {
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  position: absolute;
-}
 .disclosure input[type="radio"] + label {
   display: inline-block;
   width: calc(270% / 3);
@@ -396,15 +386,7 @@ span.circle.profile_circle::after {
   font-weight: 400;
 }
 .friendsList ul li input[type="checkbox"] {
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
   flex: 1;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  position: absolute;
 }
 .friendsList ul li label:after {
   content: "";
