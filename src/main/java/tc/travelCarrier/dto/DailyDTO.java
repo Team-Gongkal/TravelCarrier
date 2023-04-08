@@ -15,7 +15,7 @@ public class DailyDTO implements Comparable<DailyDTO> {
         this.attachDailyTitle = attachDailyTitle;
         this.attachDailyText = attachDailyText;
         this.attachThumb = attachThumb.substring(81); //  ~/static 까지의 경로를 생략해준다.
-        this.isThumb = isThumb;
+        this.thumb = isThumb;
     }
     private int attachNo;
     private String dailyDate;
@@ -23,7 +23,7 @@ public class DailyDTO implements Comparable<DailyDTO> {
     private String attachDailyTitle;
     private String attachDailyText;
     private String attachThumb;
-    private boolean isThumb;
+    private boolean thumb;
 
     @Override
     public String toString() {
@@ -34,7 +34,7 @@ public class DailyDTO implements Comparable<DailyDTO> {
         str.append(", attachDailyTitle=").append(attachDailyTitle);
         str.append(", attachDailyText=").append(attachDailyText);
         str.append(", attachThumb=").append(attachThumb);
-        str.append(", isThumb=").append(isThumb);
+        str.append(", Thumb=").append(thumb);
         return str.toString();
     }
 

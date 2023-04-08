@@ -2,6 +2,7 @@ package tc.travelCarrier.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.With;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Entity
+@ToString
 @Getter @Setter
 public class Weekly {
 
@@ -41,7 +43,7 @@ public class Weekly {
     @Column(name="WEEKLY_TEXT")
     private String text;
 
-    @OneToMany(mappedBy = "weekly")
+    @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
     private List<Daily> dailys = new ArrayList<>();
 
     @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
@@ -69,6 +71,10 @@ public class Weekly {
     public void addGowith(Gowith gowith) {
         gowiths.add(gowith);
         gowith.setWeekly(this); //추가한걸 연관관계 주인인 파라미터 한테도!!
+    }
+    public void addDailies(Daily daily) {
+        dailys.add(daily);
+        daily.setWeekly(this); //이러면 dailys에 추가된 daily들에 weekly가 셋팅됨!!!
     }
 
 

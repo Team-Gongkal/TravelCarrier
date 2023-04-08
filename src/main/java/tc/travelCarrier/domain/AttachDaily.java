@@ -1,31 +1,20 @@
 package tc.travelCarrier.domain;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import tc.travelCarrier.dto.DailyForm;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
-
 @Entity
 @Table(name = "ATTACH_DAILY")
 @DiscriminatorValue("Daily")
-@Getter @Setter
+@Getter @Setter @ToString
 public class AttachDaily extends Attach{
 
-    public AttachDaily(){}
-    public AttachDaily(String[] saveArr, DailyForm form){
-        this.attachTitle = saveArr[0];
-        this.thumbPath = saveArr[1];;
-        this.title = form.getTitle();
-        this.text = form.getText();
-        this.sort = form.getSort();
-        //this.isThumb = form.getThumb();
-    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name="DAILY_ID")
     private Daily daily;
 
@@ -35,9 +24,24 @@ public class AttachDaily extends Attach{
     @Column(name = "ATTACH_DAILY_TEXT")
     private String text;
 
+
     @Column(name = "ATTACH_DAILY_SORT")
     private int sort;
 
     @Column(name = "ATTACH_THUMB")
-    private boolean isThumb;
+    private boolean thumb;
+
+    //생성메소드
+    
+    //연관관계메소드
+    public static AttachDaily createAttachDaily(DailyForm dailyForm){
+        AttachDaily attachDaily = new AttachDaily();
+        attachDaily.setAttachTitle(dailyForm.getNewFileName());
+        attachDaily.setThumbPath(dailyForm.getPath());
+        attachDaily.setTitle(dailyForm.getTitle());
+        attachDaily.setText(dailyForm.getText());
+        attachDaily.setSort(dailyForm.getSort());
+        attachDaily.setThumb(dailyForm.getThumb()!=0); //0이 아니면, 즉 1이면 true 반환
+        return attachDaily;
+    }
 }

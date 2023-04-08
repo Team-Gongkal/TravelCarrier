@@ -20,7 +20,7 @@ public class DailyRepository {
      * 해당 위클리의 모든 데일리 데이터 가져오기
      * */
     public List<DailyDTO> getAttachDaily(Weekly weekly){
-        String jpql = "select new tc.travelCarrier.dto.DailyDTO(a.id, b.dailyDate, a.sort, a.title, a.text, a.thumbPath, a.isThumb)"
+        String jpql = "select new tc.travelCarrier.dto.DailyDTO(a.id, b.dailyDate, a.sort, a.title, a.text, a.thumbPath, a.thumb)"
                 + " from AttachDaily a"
                 + " inner join a.daily b"
                 + " where b.weekly = :weekly";
@@ -30,12 +30,6 @@ public class DailyRepository {
         return result;
     }
 
-    /**
-     * 데일리폼을 저장하는 메소드
-     * */
-    public void save(AttachDaily attachDaily){
-        em.persist(attachDaily);
-    }
 
     // 데일리 아이디 검색
     public Daily findByWeeklyAndDailyDate(Weekly weekly, String dailyDate){
@@ -46,12 +40,6 @@ public class DailyRepository {
               .setParameter("weekly", weekly)
               .setParameter("dailyDate", dailyDate)
               .getSingleResult();
-    }
-    // 데일리 등록
-    public Daily saveNewDaily(Daily daily){
-        em.persist(daily);
-        em.flush();
-        return daily;
     }
 
 }

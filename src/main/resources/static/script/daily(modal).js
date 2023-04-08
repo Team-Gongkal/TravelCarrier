@@ -50,7 +50,7 @@ $(document).on('click', 'ul.Dform_imglist li img', function(event){
     liIndex = $('ul.Dform_imglist li').index($('li.clickImg'));
     $('div.daily_title input[type="text"]').val(selectArr[liIndex].get('title'));
     $('div.daily_text textarea').val(selectArr[liIndex].get('text'));
-    $('p.filePath').text(selectArr[liIndex].get('file').name);
+    $('div.daily_files p').text(selectArr[liIndex].get('file').name);
     if(selectArr[liIndex].get('thumb')==0){
         $('input[type="radio"]').prop('checked', false);
     } else if(selectArr[liIndex].get('thumb')==1){
@@ -143,7 +143,7 @@ $(document).on('click', 'div.daily_files img', function() {
 //저장시 ajax
 // dataArr : [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
 // formDataArr : [{formData},{file,title, text,thumb},{file,title, text,thumb}]
-$(document).on('click', 'button.Dform_btn', function(event) {
+$(document).on('click', 'button.Dform_btn_save', function(event) {
     event.preventDefault();
   // 서버로 데이터 전송
   //dataArr : [ {day,data}, {DAY1,formDataArr[0]},{DAY2,formDataArr[1]} ]
@@ -154,30 +154,38 @@ $(document).on('click', 'button.Dform_btn', function(event) {
     var match = currentUrl.match(/weekly\/(\d+)\/daily/);
     var weekyId = match && match[1];
     var url = `/TravelCarrier/weekly/${weekyId}/daily/create`;
-
+    var postData = new FormData();
     for(var i = 0; i < dataArr.length; i++){
         // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
+        // formDataArr : [{file,title,text,thumb},{file,title,text,thumb}]
         var arr = dataArr[i];
-        for(var j = 0; j < arr.data.length; j++){
-            var formData = arr.data[j];
-            formData.append('day', arr.day);
-            formData.append('sort', j);
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    console.log("Upload success");
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.error("Upload error");
-                    console.error(error);
-                }
-            });
+        var formDataArr = arr.data;
+
+        for (var j=0; j<formDataArr.length; j++) {
+          postData.append('files', formDataArr[j].get('file'));
+          postData.append('titles', formDataArr[j].get('title'));
+          postData.append('texts', formDataArr[j].get('text'));
+          postData.append('thumbs', formDataArr[j].get('thumb'));
+          postData.append('days', "DAY"+(i+1));
+          postData.append('sorts', j);
         }
+        // file끼리 모으고 {title,text,thumb}끼리 묶어서 얘넨 json으로 보내자
+        console.log("출발 전 : "+postData);
     }
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        data:  postData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            alert("성공해따아아아앙악");
+        },
+        error: function(error) {
+            console.error("응 실패 ㅋㅋ");
+            console.error(error);
+        }
+    });
 
 });

@@ -9,7 +9,9 @@ import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.AttachWeekly;
 import tc.travelCarrier.domain.Daily;
 import tc.travelCarrier.domain.Weekly;
+import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.repository.AttachRepository;
+import tc.travelCarrier.repository.WeeklyRepository;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,7 +19,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -26,14 +33,29 @@ public class AttachService {
     private String fileDir;
 
     private final AttachRepository attachRepository;
+    private final WeeklyRepository weeklyRepository;
 
     /**
      * 데일리 폼 저장하는 메소드
      * */
-    public String[] saveAttachDaily(MultipartFile file) throws Exception {
+    public String saveAttachDaily(Weekly weekly, Map<String, List<DailyForm>> dailyFormMap) throws Exception {
         //1.서버에 파일 저장
-        String[] saveArr = saveAttach(file,"daily");
-        return saveArr;
+        for (Map.Entry<String, List<DailyForm>> entry : dailyFormMap.entrySet()) {
+            String day = entry.getKey();
+            List<DailyForm> dfList = entry.getValue();
+            for (DailyForm form : dfList) {
+                //각 첨부파일을 서버에 저장
+                String[] saveArr = saveAttach(form.getFile(), "daily"); //{이름, 첨부파일경로}
+                form.setNewFileName(saveArr[0]);
+                form.setPath(saveArr[1]);
+            }
+            // DAY1에 대한 모든 첨부파일을 데일리 엔티티 세팅해서
+            // DB저장
+            weekly.addDailies(Daily.createDaily(day, dfList));
+        }
+        //DB에 저장
+        weeklyRepository.save(weekly);
+        return "success";
     }
 
     /**
@@ -42,10 +64,6 @@ public class AttachService {
     public int saveAttachWeekly(MultipartFile file, Weekly weekly) throws Exception {
         //1.서버에 파일 저장
         String[] saveArr = saveAttach(file,"weekly");
-
-        // 나중에 위클리를 파라미터로 받도록 하자!
-        //Weekly tmp = new Weekly();
-        //tmp.setId(2);
 
         //2.AttachWeekly 엔티티 생성해서 DB에도 저장
         AttachWeekly attachWeekly = AttachWeekly.builder()
@@ -117,10 +135,15 @@ public class AttachService {
             Image resizeImage = inputImage.getScaledInstance(newWidth, newHeight, Image.SCALE_FAST);
             BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
             Graphics graphics = newImage.getGraphics();
-            graphics.drawImage(resizeImage, 0, 0, null);
+            try {
+                graphics.drawImage(resizeImage, 0, 0, null);
+            } finally {
+                graphics.dispose(); // Graphics 객체 close
+            }
             return newImage;
         } catch (IOException e){
             throw new Exception("Failed to resize image", e);
         }
     }
+
 }

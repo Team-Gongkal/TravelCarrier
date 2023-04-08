@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.dto.DailyForm;
@@ -11,9 +12,7 @@ import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/TravelCarrier")
@@ -55,21 +54,28 @@ public class DailyController {
      * */
     @PostMapping("/weekly/{weeklyId}/daily/create")
     @ResponseBody
-    public String createDaily(@PathVariable("weeklyId") int weeklyId,
-                              @ModelAttribute DailyForm formData) throws Exception {
-        System.out.println(formData);
+    public String createDaily (@PathVariable("weeklyId") int weeklyId,
+                               @RequestParam("files") List<MultipartFile> fileList,
+                               @RequestParam("titles") List<String> titleList,
+                               @RequestParam("texts") List<String> textList,
+                               @RequestParam("days") List<String> dayList,
+                               @RequestParam("sorts") List<Integer> sortList,
+                               @RequestParam("thumbs") List<Integer> thumbList) throws Exception {
         System.out.println("===========================================");
-        //1.첨부파일을 서버에 저장
-        String[] saveArr = attachService.saveAttachDaily(formData.getFile());
-        //2.AttachWeekly 엔티티 생성해서 DB에도 저장
-        // daily -> attach 순으로 저장되어야함.. daily는 DAY의 종류만큼만 반복
-        // find를 통해 이미 존재하는지 찾고, daliy를 리턴받아서 attach 저장하면 되겠다!!
-        //Daily daily = dailyService.getDaily(weeklyId, formData.getDay());
+        //map 형태로 데이터 받기
+        //{DAY1, List<DailyForm>}
+        Map<String, List<DailyForm>> dailyMap = new HashMap<>();
+        for(int i=0; i<fileList.size(); i++){
+            String day = dayList.get(i);
+            List<DailyForm> dailyFormList = dailyMap.getOrDefault(day, new ArrayList<>());
+            DailyForm dailyForm = new DailyForm( fileList.get(i),  titleList.get(i), thumbList.get(i),
+                    textList.get(i), sortList.get(i) );
+            dailyFormList.add(dailyForm);
+            dailyMap.put(day, dailyFormList);
+        }
 
-
-        //dailyService.save(attachDaily);
-        System.out.println("잘햇나 확인");
-
+        Weekly weekly = weeklyService.findWeekly(weeklyId);
+        String result = attachService.saveAttachDaily(weekly,dailyMap);
         return "success";
     }
 }
