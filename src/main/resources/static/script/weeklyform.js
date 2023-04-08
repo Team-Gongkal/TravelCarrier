@@ -127,4 +127,21 @@ $(document).ready(function () {
   $(".companion_modal > button").on("click", function () {
     $(".companion_modal_bg").removeClass("show");
   });
+
+  // 선택된 동행인 우선 정렬
+  const checkboxes = document.querySelectorAll(
+    '.serch_friends input[type="checkbox"]'
+  );
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", (e) => {
+      const li = e.target.closest("li");
+      if (e.target.checked) {
+        document.querySelector(".checked_friends").appendChild(li);
+      } else {
+        document.querySelector(".serch_friends").appendChild(li);
+      }
+    });
+  });
+
+  // 선택된 동행인 3인 미리보기
 }); //스크립트 종료

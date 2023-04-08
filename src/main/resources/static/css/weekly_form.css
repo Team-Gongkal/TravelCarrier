@@ -210,16 +210,6 @@ a.dateClick {
 .disclosure > ul > li {
   width: 100%;
 }
-.disclosure input[type="radio"] {
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  position: absolute;
-}
 .disclosure input[type="radio"] + label {
   display: inline-block;
   width: calc(270% / 3);
@@ -289,25 +279,35 @@ a.dateClick {
   width: 25%;
   height: 75%;
   background: #efeee9;
-  padding: 1.5rem 2.5rem;
+  padding: 2rem 2.5rem;
   box-sizing: border-box;
   border-radius: 0.3rem;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .companion_modal h3 {
   margin-bottom: 0.8rem;
+  align-self: flex-start;
 }
 
 /* 아이디검색 */
 .id_search {
   width: 100%;
+  height: 3em;
+  height: fit-content;
   position: relative;
 }
 .id_search input {
+  width: 100%;
+  height: 100%;
   background: rgba(179, 179, 179, 0.3);
+  padding-right: 3rem;
 }
 /* serch input 초기화 커스텀 변경 */
 input::-webkit-search-decoration,
@@ -326,25 +326,38 @@ input::-webkit-search-results-decoration {
 }
 /* 친구 리스트 */
 .friendsList {
+  width: 100%;
+  height: fit-content;
+  overflow-y: scroll;
+  margin: 1.5rem 0 1.5rem 0;
+  position: relative;
 }
+/* 스크롤바 디자인 */
+.friendsList::-webkit-scrollbar {
+  width: 0.2em;
+}
+.friendsList::-webkit-scrollbar-thumb {
+  background: rgb(82, 93, 118, 0.3);
+  border-radius: 5px;
+}
+
 ul.checked_friends {
 }
-ul.checked_friends li {
+.friendsList ul li {
   width: 100%;
   height: fit-content;
 }
-ul.checked_friends li label {
+.friendsList ul li label {
   width: 100%;
   height: 3rem;
   display: flex;
   cursor: pointer;
   box-sizing: border-box;
-  border: 1px solid #000;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   position: relative;
 }
 
-ul.checked_friends li label span.profile_circle {
+.friendsList ul li label span.profile_circle {
   /* flex: 1; */
   width: 3rem;
   height: 0;
@@ -352,37 +365,30 @@ ul.checked_friends li label span.profile_circle {
   position: relative;
   padding-bottom: 3rem;
 }
-ul.checked_friends li label span.profile_circle img {
+.friendsList ul li label span.profile_circle img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
 }
-ul.checked_friends li label span.profile_circle:after {
+.friendsList ul li label span.profile_circle:after {
   content: "";
   display: block;
 }
 span.circle.profile_circle::after {
   padding-bottom: 0rem;
 }
-ul.checked_friends li label span:nth-child(2) {
-  border: 1px solid #000;
-  background: khaki; /*삭제*/
+.friendsList ul li label span.nickname {
+  padding: 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
 }
-ul.checked_friends li label input[type="checkbox"] {
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
+.friendsList ul li input[type="checkbox"] {
   flex: 1;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  position: absolute;
 }
-ul.checked_friends li label:after {
+.friendsList ul li label:after {
   content: "";
   position: absolute;
   top: 50%;
@@ -391,10 +397,19 @@ ul.checked_friends li label:after {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 100%;
-  background: lightblue;
+  border: 1px solid rgb(82, 93, 118, 0.3);
+}
+.friendsList ul li input[type="checkbox"]:checked + label:after {
+  content: "\2714";
+  color: #f7f7f7;
+  background: #a0c1ca;
+  padding: 0.3rem 0 0 0.3rem;
+  border: 1px solid transparent;
 }
 .companion_modal button {
-  cursor: pointer;
+  height: fit-content;
+  margin: 0rem 0;
+  text-align: center;
 }
 input[type="file"] {
   /* display: none; */
