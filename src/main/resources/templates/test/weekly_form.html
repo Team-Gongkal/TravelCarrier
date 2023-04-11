@@ -19,19 +19,20 @@
             <h3>썸네일</h3>
             <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
           </div>
-          <div class=" thumbnail_img ">
-            <div class="circle thumbnail_circle">
-              <img src="./image/main/thumbnails/IMG_5924.JPG" alt="main_thumbnail_img">
-            </div>
+          <div class=" thumbnail_img circle">
+            <img src="/image/main/thumbnails/IMG_5924.JPG" alt="main_thumbnail_img">
           </div>
           <div class="thumbnail_btn">
             <button class="btn white_btn" type="button">
-              <img class="weekly_icon" src="./image/weekly/icon/edit-image-b.png" alt="img change icon">
-              <input type="file" name="file"></input>
-              <span>이미지 변경</span>
+              <label for="thumbnail_change">
+                <img class="weekly_icon" src="/image/weekly/icon/edit-image-b.png" alt="img change icon">
+                <span>이미지 변경</span>
+                <input type="file" name="file" class="hide" id="thumbnail_change">
+              </label>
+              <!-- <span>이미지 변경</span> -->
             </button>
             <button class="btn white_btn" type="button">
-              <img class="weekly_icon" src="./image/weekly/icon/trash-can-b.png" alt="img delate icon">
+              <img class="weekly_icon" src="/image/weekly/icon/trash-can-b.png" alt="img delate icon">
               <span>이미지 삭제</span>
             </button>
           </div>
@@ -73,8 +74,7 @@
               <input name="title" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)">
             </div>
           </li>
-          <li>
-            <!-- 일기 작성-------------------------------- -->
+          <li><!-- 일기 작성-------------------------------- -->
             <div class="writing">
               <h3>추가글</h3>
               <textarea name="text" id="addText" cols="30" rows="10"
@@ -122,7 +122,6 @@
             </div>
           </li>
         </ul>
-
       </div>
       <button type="submit" class="btn"> 저장하기 </button>
     </form>
