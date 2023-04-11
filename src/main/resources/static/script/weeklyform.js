@@ -144,4 +144,10 @@ $(document).ready(function () {
   });
 
   // 선택된 동행인 3인 미리보기
+  $(".companion_modal > button").click(function () {
+    //확인 누를때마다 목록 받아와서 이미 수정되도록 하기
+    // $get("데이터 받아올 주소").done(function (date) {
+    //   console.log("실행");
+    // });
+  });
 }); //스크립트 종료

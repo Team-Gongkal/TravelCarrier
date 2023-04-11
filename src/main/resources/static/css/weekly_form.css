@@ -4,6 +4,7 @@ main {
   border-left: 1.5px solid rgb(82, 93, 118, 0.5);
   /* margin-left: 0 2.37% 0 2.37%; */
   margin-left: 2.37%;
+  overflow: hidden;
 }
 
 #weekly_form > h1 {
@@ -205,6 +206,7 @@ a.dateClick {
   width: 7em;
   border-radius: 100px;
   background: #f7f7f7;
+  color: #a0c1ca;
   text-indent: 0;
   text-align: center;
   line-height: 3em;
@@ -255,7 +257,7 @@ a.dateClick {
 }
 .disclosure input[type="radio"]:checked + label {
   border: 2px solid #a0c1ca;
-  background: #ffffff;
+  background: #f7f7f7;
   color: #a0c1ca;
   font-weight: 400;
 }
@@ -310,7 +312,7 @@ a.dateClick {
   background: #efeee9;
   padding: 2rem 2.5rem;
   box-sizing: border-box;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   position: absolute;
   top: 50%;
   left: 50%;
