@@ -1,4 +1,8 @@
-//li id에 main을 넣으면 대표사진, 클릭중인건 li의 class가 clickImg
+
+$(document).ready(function() {
+   //첫번째 탭 자동클릭
+   $('ul.days_tabSlide li:first').click();
+});
 
 //화면 로드되면 바로 click Day1 해주기
 var liIndex = "";
@@ -8,15 +12,13 @@ var dataArr = [];
 var selectArr = [];
 
 // function : 사진첨부시 동작 (by.서현)
-$(document).on('change', '#moreImg', function(event){
+$(document).on('change', '.attach', function(event){
     setDataArr(event);
     getCurrentDataArr();
-    drawThumbs(selectArr);
-
-    //처음 로드시엔 맨 처음요소 선택하게 하기..
+    drawThumbs();
+    //처음 로드시엔 맨 처음요소 선택하게 하기
     $('ul.Dform_imglist li:first img').click();
 });
-
 // function : 사진첨부시 dataArr 생성 (by.서현)
 function setDataArr(event){
     var formDataArr = selectArr;
@@ -43,25 +45,24 @@ function removeRightForm(){
 }
 // 사진 클릭이벤트
 $(document).on('click', 'ul.Dform_imglist li img', function(event){
-
     removeRightForm();
-
-    $(this).closest('li').attr('class','clickImg');
-    liIndex = $('ul.Dform_imglist li').index($('li.clickImg'));
-    $('div.daily_title input[type="text"]').val(selectArr[liIndex].get('title'));
-    $('div.daily_text textarea').val(selectArr[liIndex].get('text'));
-    $('div.daily_files p').text(selectArr[liIndex].get('file').name);
-    if(selectArr[liIndex].get('thumb')==0){
-        $('input[type="radio"]').prop('checked', false);
-    } else if(selectArr[liIndex].get('thumb')==1){
-        $('input[type="radio"]').prop('checked', true);
+    //만약 selectArr이 0, 즉 defailt가 떠있으면 실행 X
+    if(selectArr.length !== 0){
+        $(this).closest('li').attr('class','clickImg');
+        liIndex = $('ul.Dform_imglist li').index($('li.clickImg'));
+        $('div.daily_title input[type="text"]').val(selectArr[liIndex].get('title'));
+        $('div.daily_text textarea').val(selectArr[liIndex].get('text'));
+        $('div.daily_files p').text(selectArr[liIndex].get('file').name);
+        if(selectArr[liIndex].get('thumb')==0){
+            $('input[type="radio"]').prop('checked', false);
+        } else if(selectArr[liIndex].get('thumb')==1){
+            $('input[type="radio"]').prop('checked', true);
+        }
     }
 });
 
 //제목 수정시 바로 배열에 저장
 $(document).on('change', 'div.daily_title input', function(event){
-console.log(selectArr);
-console.log(liIndex);
     selectArr[liIndex].set('title', event.target.value);
 })
 //메모 수정시 바로 배열에 저장
@@ -90,7 +91,7 @@ $(document).on('click', 'ul.days_tabSlide li', function() {
     $('ul.days_tabSlide li span').removeClass('on');
     $(this).find('span').addClass('on');
     getCurrentDataArr();
-    drawThumbs(selectArr);
+    drawThumbs();
 
     //처음 로드시엔 맨 처음요소 선택하게 하기..(사진 없을경우 동작하지 않으므로 미리 없애놓자)
     removeRightForm();
@@ -103,42 +104,96 @@ function getCurrentDataArr(){
     // 클릭한 DAY 정보에 대한 data 셋팅
     var selectDay = $('span.on').text();
     selectArr = dataArr.find(item => item.day[0] === selectDay); //이게 데이터
-    if(selectArr !== undefined) selectArr = selectArr.data;
-    else selectArr = [];
-    console.log("a : "+selectArr);
+    if(selectArr !== undefined){
+        selectArr = selectArr.data;
+    }
+    else {
+        selectArr = [];
+    }
 }
 
 // function : formDataArr를 폼에 띄우기 (by.서현)
-function drawThumbs(selectArr){
+function drawThumbs(){
     //전체를 그리는 메소드이므로 그리기 전에 이전 데이터 싹 지우기
-    $('.Dform_imglist').empty();
-    for (const formData of selectArr) {
-         //맨뒤에 추가가 아니라 순서대로 화면에 로드만 하면됨
-         var img = $('<img>').attr('src', URL.createObjectURL(formData.get('file')));
-         //main인 데이터 이미 있으면 붙여줘야됨
-         if(formData.get('thumb')==0){
-            var li = $('<li>').append(img);
-         }else if(formData.get('thumb')==1){
-            var li = $('<li>').attr('id', 'main').append(img);
+    if(selectArr.length > 0){
+        $(".default_Dform_imgs").hide();
+        $(".Dform_imgs").show();
+        $('.Dform_imglist').empty();
+        var tmp = 0;
+        for (const formData of selectArr) {
+             //맨뒤에 추가가 아니라 순서대로 화면에 로드만 하면됨
+             var img = $('<img>').attr('src', URL.createObjectURL(formData.get('file')));
+             //main인 데이터 이미 있으면 붙여줘야됨
+             if(formData.get('thumb')==0){
+                var li = $('<li>').attr('data-index',tmp).append(img);
+             }else if(formData.get('thumb')==1){
+                var li = $('<li>').attr('id', 'main').attr('data-index',tmp).append(img);
+             }
+
+             $('.Dform_imglist').append(li);
+             tmp++;
          }
-         $('.Dform_imglist').append(li);
-     }
-     //추가버튼도 다시 생성
-    $('.Dform_imglist').append('<li id="moreImgLi" >'+
-               '<input type="file" multiple id="moreImg"></input>'+
-               '<label for="moreImg"><i class="xi-plus"></i></label>'+
-             '</li>');
+         //추가버튼도 다시 생성
+        $('.Dform_imglist').append('<li id="moreImgLi" >'+
+                   '<input type="file" multiple id="moreImg" class="attach"></input>'+
+                   '<label for="moreImg"><i class="xi-plus"></i></label>'+
+                 '</li>');
+    } else{
+        //만약 해당 탭에 아무 데이터가 없다면 default_Dform_imgs를 지워줘야한다.
+        $(".Dform_imgs").hide();
+        $(".default_Dform_imgs").show();
+    }
 }
 
 
 //이미지파일 수정
-$(document).on('click', 'div.daily_files img', function() {
-    alert("이미지 바꾸기!!!");
+$(document).on('change', '#fileChange', function(event) {
+    // 지금 선택중인 파일 요소를 찾아서 이 파일로 수정해야됨
+    // 현재 뿌려진 파일 배열 = selectArr, 그중에서도 선택된배열 = selectArr[liIndex]
+    var tmpIndex = liIndex;
+    var formData = new FormData();
+    formData.append('file', event.target.files[0]);
+    formData.append('title', "");
+    formData.append('text', "");
+    formData.append('thumb', 0);
+    selectArr[liIndex] = formData;
+    // 데이터 바꿨으니까 화면 리로드
+    // day 클릭한번, 이미지 클릭 한번
+    $('ul.days_tabSlide .on').click();
+    $('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
 });
 
-//이미지 순서 변경
-//이미지 삭제
 
+//이미지 삭제 : 선택된 이미지 한번더 클릭
+//sort는 전송시 인덱스를 넣어주는것이므로 이미지 삭제는 그냥 배열에서 없애주기만 하면됨!
+$(document).on('click', 'li.clickImg', function(event) {
+    var tmpIndex = liIndex;
+    if (confirm('삭제하시겠습니까?')) {
+        selectArr.splice(liIndex,1);
+        alert("삭제 완료되었습니다.");
+        $('ul.days_tabSlide .on').click();
+        $('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
+    }
+});
+
+
+//이미지 순서 변경
+$('ul.Dform_imglist').sortable({
+    appendTo: "ul.Dform_imglist",
+    items: "li:not(:last-child)",
+    update: function(event, ui) {
+           var newIndex = ui.item.index();
+           var oldIndex = ui.item.attr('data-index');
+           var item = selectArr[oldIndex];
+
+           selectArr.splice(oldIndex, 1); // 기존 위치에서 삭제
+           selectArr.splice(newIndex, 0, item); // 새 위치에 삽입
+
+            $('ul.Dform_imglist li').each(function(index) {
+              $(this).attr('data-index', index);
+            });
+        }
+});
 
 //저장시 ajax
 // dataArr : [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
