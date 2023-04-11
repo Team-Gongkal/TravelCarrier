@@ -15,7 +15,7 @@ var selectArr = [];
 $(document).on('change', '.attach', function(event){
     setDataArr(event);
     getCurrentDataArr();
-    drawThumbs(selectArr);
+    drawThumbs();
     //처음 로드시엔 맨 처음요소 선택하게 하기
     $('ul.Dform_imglist li:first img').click();
 });
@@ -33,7 +33,6 @@ function setDataArr(event){
     var obj = { day : [$('.days_tabSlide .on').text()],
                 data : formDataArr };
     dataArr.push(obj);
-    console.log("추가분 : "+obj.day+", "+obj.data);
 }
 
 // 오른쪽 폼(제목,메모,경로,대표) 비우기
@@ -47,7 +46,6 @@ function removeRightForm(){
 // 사진 클릭이벤트
 $(document).on('click', 'ul.Dform_imglist li img', function(event){
     removeRightForm();
-
     //만약 selectArr이 0, 즉 defailt가 떠있으면 실행 X
     if(selectArr.length !== 0){
         $(this).closest('li').attr('class','clickImg');
@@ -65,8 +63,6 @@ $(document).on('click', 'ul.Dform_imglist li img', function(event){
 
 //제목 수정시 바로 배열에 저장
 $(document).on('change', 'div.daily_title input', function(event){
-console.log(selectArr);
-console.log(liIndex);
     selectArr[liIndex].set('title', event.target.value);
 })
 //메모 수정시 바로 배열에 저장
@@ -95,7 +91,7 @@ $(document).on('click', 'ul.days_tabSlide li', function() {
     $('ul.days_tabSlide li span').removeClass('on');
     $(this).find('span').addClass('on');
     getCurrentDataArr();
-    drawThumbs(selectArr);
+    drawThumbs();
 
     //처음 로드시엔 맨 처음요소 선택하게 하기..(사진 없을경우 동작하지 않으므로 미리 없애놓자)
     removeRightForm();
@@ -117,22 +113,25 @@ function getCurrentDataArr(){
 }
 
 // function : formDataArr를 폼에 띄우기 (by.서현)
-function drawThumbs(selectArr){
+function drawThumbs(){
     //전체를 그리는 메소드이므로 그리기 전에 이전 데이터 싹 지우기
     if(selectArr.length > 0){
         $(".default_Dform_imgs").hide();
         $(".Dform_imgs").show();
         $('.Dform_imglist').empty();
+        var tmp = 0;
         for (const formData of selectArr) {
              //맨뒤에 추가가 아니라 순서대로 화면에 로드만 하면됨
              var img = $('<img>').attr('src', URL.createObjectURL(formData.get('file')));
              //main인 데이터 이미 있으면 붙여줘야됨
              if(formData.get('thumb')==0){
-                var li = $('<li>').append(img);
+                var li = $('<li>').attr('data-index',tmp).append(img);
              }else if(formData.get('thumb')==1){
-                var li = $('<li>').attr('id', 'main').append(img);
+                var li = $('<li>').attr('id', 'main').attr('data-index',tmp).append(img);
              }
+
              $('.Dform_imglist').append(li);
+             tmp++;
          }
          //추가버튼도 다시 생성
         $('.Dform_imglist').append('<li id="moreImgLi" >'+
@@ -148,13 +147,53 @@ function drawThumbs(selectArr){
 
 
 //이미지파일 수정
-$(document).on('click', 'div.daily_files img', function() {
-    alert("이미지 바꾸기!!!");
+$(document).on('change', '#fileChange', function(event) {
+    // 지금 선택중인 파일 요소를 찾아서 이 파일로 수정해야됨
+    // 현재 뿌려진 파일 배열 = selectArr, 그중에서도 선택된배열 = selectArr[liIndex]
+    var tmpIndex = liIndex;
+    var formData = new FormData();
+    formData.append('file', event.target.files[0]);
+    formData.append('title', "");
+    formData.append('text', "");
+    formData.append('thumb', 0);
+    selectArr[liIndex] = formData;
+    // 데이터 바꿨으니까 화면 리로드
+    // day 클릭한번, 이미지 클릭 한번
+    $('ul.days_tabSlide .on').click();
+    $('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
 });
 
-//이미지 순서 변경
-//이미지 삭제
 
+//이미지 삭제 : 선택된 이미지 한번더 클릭
+//sort는 전송시 인덱스를 넣어주는것이므로 이미지 삭제는 그냥 배열에서 없애주기만 하면됨!
+$(document).on('click', 'li.clickImg', function(event) {
+    var tmpIndex = liIndex;
+    if (confirm('삭제하시겠습니까?')) {
+        selectArr.splice(liIndex,1);
+        alert("삭제 완료되었습니다.");
+        $('ul.days_tabSlide .on').click();
+        $('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
+    }
+});
+
+
+//이미지 순서 변경
+$('ul.Dform_imglist').sortable({
+    appendTo: "ul.Dform_imglist",
+    items: "li:not(:last-child)",
+    update: function(event, ui) {
+           var newIndex = ui.item.index();
+           var oldIndex = ui.item.attr('data-index');
+           var item = selectArr[oldIndex];
+
+           selectArr.splice(oldIndex, 1); // 기존 위치에서 삭제
+           selectArr.splice(newIndex, 0, item); // 새 위치에 삽입
+
+            $('ul.Dform_imglist li').each(function(index) {
+              $(this).attr('data-index', index);
+            });
+        }
+});
 
 //저장시 ajax
 // dataArr : [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
