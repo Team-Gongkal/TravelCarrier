@@ -75,7 +75,7 @@ public class WeeklyContoller {
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         model.addAttribute("weekly",weekly);
-        return "page/weekly";
+        return "test/weekly";
     }
 
     /**
