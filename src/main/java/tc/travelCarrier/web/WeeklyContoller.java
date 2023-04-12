@@ -75,6 +75,8 @@ public class WeeklyContoller {
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         model.addAttribute("weekly",weekly);
+        System.out.println("위클이이이이이이이이이"+weekly.toString());
+        System.out.println("txet"+weekly.getText());
         return "test/weekly";
     }
 
