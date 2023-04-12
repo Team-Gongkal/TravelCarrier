@@ -352,6 +352,8 @@ article .longBox {
   justify-content: center;
   align-items: center;
   text-align: center;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .keyword_modal {
@@ -405,4 +407,8 @@ li.card span i {
 }
 .keyword_modal button {
   margin-top: 1.5rem;
+}
+.keyword_modal_bg.show {
+  opacity: 100;
+  visibility: visible;
 }
