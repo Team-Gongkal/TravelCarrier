@@ -11,7 +11,7 @@
   <!-- weekly form main 시작 -->
   <main id="weekly_form">
     <h1>만들어라 너의 일기장</h1>
-    <form action="/TravelCarrier/weeklyForm" method="post" enctype="multipart/form-data" name="weekly_form"
+    <form id="weeklyForm" action="" method="post" enctype="multipart/form-data" name="weekly_form"
       class="weekly_form">
       <div class="thumbnail">
         <div class="thumbnail_input">
@@ -19,8 +19,7 @@
             <h3>썸네일</h3>
             <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
           </div>
-          <div class=" thumbnail_img circle">
-            <img src="/image/main/thumbnails/IMG_5924.JPG" alt="main_thumbnail_img">
+          <div class="thumbnail_img circle">
           </div>
           <div class="thumbnail_btn">
             <button class="btn white_btn" type="button">
@@ -31,7 +30,7 @@
               </label>
               <!-- <span>이미지 변경</span> -->
             </button>
-            <button class="btn white_btn" type="button">
+            <button class="btn white_btn removeBtn" type="button">
               <img class="weekly_icon" src="/image/weekly/icon/trash-can-b.png" alt="img delate icon">
               <span>이미지 삭제</span>
             </button>
@@ -86,12 +85,7 @@
               <h3>동행인</h3>
               <!-- 보이는 부분 -->
               <ul class="sel_companion">
-                <li th:each="f,it : ${user.followers}"
-                  th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}"
-                  th:style="'background-image: url(' + ${f.follower.attachUser.thumbPath} + ');'"
-                  th:if="${it.index} &lt; 3" class="circle">
-                  동행인 이미지
-                </li>
+
                 <li id="plus_companion">
                   <i class="xi-plus"></i>
                   <span>동행인 추가</span>
@@ -123,7 +117,7 @@
           </li>
         </ul>
       </div>
-      <button type="submit" class="btn"> 저장하기 </button>
+      <button type="submit" class="btn saveBtn"> 저장하기 </button>
     </form>
     <!-- 동행인 추가 팝업 -->
     <div class="companion_modal_bg">
@@ -139,7 +133,7 @@
           </ul>
           <ul class="serch_friends">
             <li th:each="f : ${user.followers}" th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
-              <input type="checkbox" name="gowiths" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
+              <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
               <label th:for="'#' + ${f.follower.id}">
                 <span class="profile_circle circle">
                   <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
@@ -150,7 +144,7 @@
             </li>
           </ul>
         </div>
-        <button type="button" class="btn">확인</button>
+        <button type="button" class="btn goWithBtn">확인</button>
       </div>
     </div>
   </main>

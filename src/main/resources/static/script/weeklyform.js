@@ -145,3 +145,78 @@ $(document).ready(function () {
 
   // 선택된 동행인 3인 미리보기
 }); //스크립트 종료
+
+
+// 사진첨부시 미리보기를 생성하는 메소드 by서현
+$(document).on('change', '#thumbnail_change', function(event){
+    $('.thumbnail_img.circle').empty();
+    var file = event.target.files[0];
+    var img = $('<img>').attr('src', URL.createObjectURL(file));
+    $('.thumbnail_img.circle').append(img);
+});
+// 이미지 삭제버튼 메소드 by서현
+$(document).on('click', '.removeBtn', function(event) {
+    $('.thumbnail_img.circle').empty();
+});
+// 선택된 동행인을 폼에 저장하는 메소드 by서현
+$(document).on('click', '.goWithBtn', function(event) {
+  const companions = $('.checked_friends li');
+  const selCompanion = $('.sel_companion');
+
+  $('.sel_companion li:not(:last)').remove();
+
+  companions.each(function() {
+    const fid = $(this).data('fid');
+    const fname = $(this).data('fname');
+    const profileImg = $(this).find('.profile_circle img').attr('src');
+
+    const li = $('<li>').attr({
+      'data-fid': fid,
+      'data-fname': fname,
+      'name' : 'gowiths',
+      'style': `background-image: url(${profileImg})`
+    }).addClass('circle');
+
+    $('.sel_companion #plus_companion').before(li);
+  });
+});
+
+
+$("#weeklyForm").submit(function(event) {
+  event.preventDefault();
+  // nation file sdate edate title text gowiths[] status
+  var formData = new FormData();
+  formData.append( "file", $("#thumbnail_change")[0].files[0]);
+  formData.append("nation", $('select[name="nation"] option:selected').attr('value'));
+  formData.append("sdate",$('#sdate').val());
+  formData.append("edate",$('#edate').val());
+  if($('div.title input').val() === ""){
+    formData.append("title",$('select[name="nation"] option:selected').text());
+  }else{
+    formData.append("title",$('div.title input').val());
+  }
+  formData.append("text",$('#addText').val());
+
+  $('ul.sel_companion li:not(:last)').each(function() {
+    formData.append("gowiths[]",$(this).data('fid'));
+    console.log($(this).data('fid'));
+  });
+   console.log($("input[name='status']:checked").val());
+  formData.append("status",$("input[name='status']:checked").val());
+
+  $.ajax({
+    type: "POST",
+    url: "/TravelCarrier/weeklyForm",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(data) {
+      alert("성공");
+      window.location.href = "/TravelCarrier/weekly/"+data;
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      alert("실패");
+    }
+  });
+
+});
