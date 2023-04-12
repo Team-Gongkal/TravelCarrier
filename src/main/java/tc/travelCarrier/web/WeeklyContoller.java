@@ -4,15 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.WeeklyService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,9 +33,14 @@ public class WeeklyContoller {
         User user = memberRepository.getUser(1);
         System.out.println(user.getFollowers().get(0).getFollower().getAttachUser().getThumbPath());
         model.addAttribute("user", user);
-        return "page/(t)weekly_form_css";
+        return "test/weekly_form";
     }
 
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(OpenStatus.class, new OpenStatusEditor());
+    }
 
     /**
      * 모달폼을 통해 위클리정보 저장
@@ -44,32 +48,14 @@ public class WeeklyContoller {
      * @return : "redirect:/TravelCarrier/weekly/"+weeklyId
      * */
     @PostMapping(value="/weeklyForm")
-    public String regist(@Valid WeeklyForm form, BindingResult result) throws Exception {
-        HashSet<Integer> tmp= new HashSet<>();
-        tmp.add(2);
-        tmp.add(3);
-        form.setGowiths(tmp);
-
+    @ResponseBody
+    public Integer regist(@Valid WeeklyForm form, BindingResult result,
+                       @RequestParam("status") OpenStatus status) throws Exception {
 /*        if(result.hasErrors()) {
             return "error";
         }*/
-
-
         User user = new User();
         user.setId(1);
-
-        OpenStatus status = OpenStatus.ALL;;
-        switch(form.getStatus()) {
-            case "public" :
-                status = OpenStatus.ALL;
-                break;
-            case "shareFriends" :
-                status = OpenStatus.FOLLOW;
-                break;
-            case "private" :
-                status = OpenStatus.ME;
-        }
-        System.out.println("날짜데이터!!"+form.getSdate()+form.getEdate());
 
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
@@ -77,7 +63,7 @@ public class WeeklyContoller {
                         status, form.getText(), form.getGowiths())
         );
 
-        return "redirect:/TravelCarrier/weekly/"+weeklyId;
+        return weeklyId;
     }
 
     /**

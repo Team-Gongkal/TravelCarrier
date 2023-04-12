@@ -17,6 +17,6 @@ public class MainController {
     public String mainPage(Model model){
         Weekly weekly = new Weekly();
         model.addAttribute("weekly",weekly);
-        return "page/weekly_form";
+        return "page/main";
     }
 }

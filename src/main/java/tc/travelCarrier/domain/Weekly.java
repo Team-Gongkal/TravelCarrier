@@ -81,7 +81,7 @@ public class Weekly {
     //생성메소드
     public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, String nation,
                   TravelDate travelDate, CrudDate crudDate, OpenStatus status,
-                  String text, HashSet<Integer> gowithIds){
+                  String text, Integer[] gowithIds){
         System.out.println("+++createWeeklu+++");
         Weekly weekly = new Weekly();
         weekly.setUser(user);
