@@ -14,7 +14,7 @@
       <div class="longBox">
         <div class="weekly_edit">
           <a href="#none">
-            <img src="../../static/image/weekly/icon/setting.png" alt="위클리 수정">
+            <img src="/image/weekly/icon/setting.png" alt="위클리 수정">
           </a>
         </div>
         <div class="weekly_mainArtc">
@@ -22,21 +22,23 @@
             <h2 th:text="${weekly.title}">TITLE</h2>
           </div>
           <div class="weekly_period">
-            <h3>2022.10.24 - 2022.10.28</h3>
+            <!-- <h3 th:text="${weekly.travelDate.sDate} + '-' + ${weekly.travelDate.eDate}">2022.10.24 - 2022.10.28</h3> -->
+            <h3
+              th:text="${#dates.format(weekly.travelDate.sDate, 'yyyy.MM.dd')} + ' - ' + ${#dates.format(weekly.travelDate.eDate, 'yyyy.MM.dd')}">
+              2020.10.20 - 2020.10.21</h3>
           </div>
           <div class="weekly_addText">
-            <p>요래요래 여행하고옴 다시 가고 싶다 우앵웅앵
+            <p th:text="${weekly.text}"> 요래요래 여행하고옴 다시 가고 싶다 우앵웅앵
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident quia harum odio, reprehenderit ut a
               sunt ab nisi nobis laboriosam. Dicta aut odit reprehenderit animi ea asperiores tempore non sint.
             </p>
           </div>
-          <div class="weekly_with">
+          <div class=" weekly_with">
             <div class="weekly_companion">
               <span>with.</span>
               <ul class="sel_companion">
-                <!-- <li th:each="f,it : ${user.followers}"
-                  th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}"
-                  th:style="'background-image: url(' + ${f.follower.attachUser.thumbPath} + ');'"
+                <!-- <li th:each="w,it : ${weekly.gowiths}"
+                  th:style="'background-image: url(' + ${w.userID.attachUser.thumbPath} + ');'"
                   th:if="${it.index} &lt; 5" class="circle">
                   동행인 이미지
                 </li> -->
@@ -48,12 +50,20 @@
               </ul>
             </div>
             <div class="weekly_disclosure">
-              <span id="disclosure_checked"><img src="../../static/image/weekly/icon/view-n.png" alt="공개"></span>
-              <span><img src="../../static/image/weekly/icon/hide-n.png" alt="비공개"></span>
-              <span class=""><img src="../../static/image/weekly/icon/people-n.png" alt="친구공개"></span>
-              <!-- <span><img src="../../static/image/weekly/icon/view-n.png" alt="공개"></span>
-              <span><img src="../../static/image/weekly/icon/hide-n.png" alt="비공개"></span>
-              <span class=""><img src="../../static/image/weekly/icon/people-n.png" alt="친구공개"></span> -->
+              <span th:text="${weekly.status}"></span>
+              <!--  -->
+              <span id="disclosure_checked" th:if="${weekly.status == 'ALL'}">
+                <img src="/image/weekly/icon/view-n.png" alt="공개">
+              </span>
+              <span th:if="${weekly.status == 'ME'}">
+                <img src="/image/weekly/icon/hide-n.png" alt="비공개">
+              </span>
+              <span th:if="${weekly.status == 'FOLLOW'}">
+                <img src="/image/weekly/icon/people-n.png" alt="친구공개">
+              </span>
+              <!-- <span><img src="/image/weekly/icon/view-n.png" alt="공개"></span>
+              <span><img src="/image/weekly/icon/hide-n.png" alt="비공개"></span>
+              <span class=""><img src="/image/weekly/icon/people-n.png" alt="친구공개"></span> -->
             </div>
           </div>
         </div>
@@ -78,7 +88,7 @@
         </div>
       </div>
       <div class="longBox">
-        <a href="#">
+        <a href="http://localhost:8080/TravelCarrier/weekly/26/daily">
           <div class="plusBox w-rectL">
             <div class="plus_big">
               <span></span>
@@ -143,7 +153,7 @@
       <div class="longBox">
         <a href="#">
           <div class="w-sqr">
-            <img src="../../static/image/daily/diary/IMG_6489.JPG" alt="셋째날 3번사진">
+            <img src="/image/daily/diary/IMG_6489.JPG" alt="셋째날 3번사진">
           </div>
         </a>
       </div>
@@ -172,7 +182,7 @@
       <div class="longBox">
         <a href="#">
           <div class="w-rectW">
-            <img src="../../static/image/daily/diary/IMG_6757.JPG" alt="둘쨋날 2번사진">
+            <img src="/image/daily/diary/IMG_6757.JPG" alt="둘쨋날 2번사진">
           </div>
         </a>
       </div>
@@ -203,7 +213,7 @@
       <div class="longBox">
         <a href="#">
           <div class="w-rectL">
-            <img src="../../static/image/daily/diary/IMG_7422.JPG" alt="셋째날 3번사진">
+            <img src="/image/daily/diary/IMG_7422.JPG" alt="셋째날 3번사진">
           </div>
         </a>
       </div>
@@ -246,10 +256,10 @@
     <div class="keyword_modal_bg">
       <div class="keyword_modal">
         <div class="modal_title">
+          <h3>키워드 추가</h3>
           <button class="close">
             <i class="xi-close xi-2x"></i>
           </button>
-          <h3>키워드 추가</h3>
         </div>
         <div class="addKeyword">
           <input type="text" name="keyword" placeholder="키워드를 작성해주세요">
