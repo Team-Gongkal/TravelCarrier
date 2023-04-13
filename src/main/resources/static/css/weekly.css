@@ -362,7 +362,11 @@ article .longBox {
   background: #efeee9;
   border-radius: 0.5rem;
 }
-.keyword_modal .modal_title {
+.keyword_modal .modal_title button.close {
+  position: absolute;
+  vertical-align: middle;
+  top: -5px;
+  right: 1.5rem;
 }
 .addKeyword {
   padding: 0 3rem;

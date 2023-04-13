@@ -56,7 +56,7 @@ body {
   /* overflow: hidden; */
 }
 body {
-  padding: 0 0% 0 0.78%;
+  padding: 0 0% 0 1rem;
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
@@ -68,6 +68,8 @@ body::-webkit-scrollbar {
 }
 main {
   font-family: "NanumSquareNeo";
+  width: 100%;
+  height: 100%;
 }
 /* input Ui */
 input,
@@ -142,4 +144,20 @@ form h3 {
   font-size: 1rem;
   font-weight: 400;
   margin-bottom: 0.8rem;
+}
+/* modal - title/close btn UI */
+.modal_title h3 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0;
+}
+.modal_title button.close {
+  width: fit-content;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+
+  color: #b3b3b3;
 }

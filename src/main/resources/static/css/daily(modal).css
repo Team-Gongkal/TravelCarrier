@@ -43,24 +43,13 @@ main.daily {
   padding: 1.5rem 0.5rem;
   position: relative;
 }
-.modal_title h3 {
-  text-align: center;
-  font-size: 1.2rem;
-  margin: 0;
-}
-.modal_title button.close {
-  width: fit-content;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  position: absolute;
-  top: 30%;
-  right: 1.5rem;
-  color: #b3b3b3;
-}
+
 .Dform_title {
   border-bottom: 1px solid #b3b3b3;
+}
+.Dform_title button.close {
+  top: 30%;
+  right: 1.5rem;
 }
 /* 데일리 시작화면-------------------------------------------------- */
 .daily_start {

@@ -148,18 +148,19 @@
     <!-- daily 일기화면(hover전) -->
     <div class="diary_noH">
       <div class="diary_titlebox">
-        <h1 th:text="${weekly.title}">TITLE</h1>
-        <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}">기간 : - </p>
+        <h1 th:text="${weekly.title}">PARIS</h1>
+        <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
+          yyyy-mm-dd</p>
       </div>
       <div class="diary_slides">
         <ul class="diary_slide">
           <li th:each="daily : ${dailies}" class="d_slide square sqr">
-            <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
+            <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="">
           </li>
         </ul>
       </div>
       <div class="writing circle">
-        <img src="/image/daily/icon/pencil.png" alt="edit daily">
+        <img src="../../static/image/daily/icon/pencil.png" alt="edit daily">
       </div>
     </div>
 

@@ -48,7 +48,9 @@ $(document).ready(function () {
     ],
     dateFormat: "yy-mm-dd",
     shoMonthAfterYear: true,
+    showOtherMonths: true,
     yearRange: "1960:2023", //연도 범위
+    todayHighlight: true, //오늘 날짜 표시
     maxDate: 0, //선택할 수 있는 최소 날짜로 (0: 오늘 이후 날짜 선택 불가하도록 함)
     onClose: function (selectedDate) {
       //시작일(startDate) datepicker가 닫힐때
@@ -105,7 +107,9 @@ $(document).ready(function () {
     ],
     dateFormat: "yy-mm-dd",
     shoMonthAfterYear: true,
+    showOtherMonths: TransformStreamDefaultController,
     yearRange: "1960:2023", //연도 범위
+    todayHighlight: true, //오늘 날짜 표시
     maxDate: 0, //선택할 수 있는 최소 날짜로 (0: 오늘 이후 날짜 선택 불가하도록 함)
     onClose: function (selectedDate) {
       //시작일(startDate) datepicker가 닫힐때
