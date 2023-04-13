@@ -166,6 +166,14 @@
     <!-- daily 일기화면(hover후) -->
 
   </main>
+
+  <script th:inline="javascript">
+    var dailies = [[${dailies}]];
+
+
+
+  </script>
+
   <script src="/script/diary.js"></script>
   <script src="/script/daily(modal).js"></script>
 </body>

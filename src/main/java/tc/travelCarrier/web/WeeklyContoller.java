@@ -84,7 +84,7 @@ public class WeeklyContoller {
      * 키워드 저장
      * @param : List<String>
      * */
-    @PostMapping("/weekly/{weekltId}/saveKeyword")
+    @PostMapping("/weekly/{weeklyId}/saveKeyword")
     public String saveKeyword(){
 
         return "";

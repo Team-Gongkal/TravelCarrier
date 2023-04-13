@@ -1,3 +1,6 @@
+    for (let i = 0; i < dailies.length; i++) {
+      console.log(dailies[i].attachDailyTitle);
+    }
 
 $(document).ready(function() {
    //첫번째 탭 자동클릭
