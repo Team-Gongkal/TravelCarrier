@@ -1,13 +1,14 @@
 /* header--------------------------------------------- */
 header {
-  width: 1.56%;
+  width: 3.2rem;
   height: 98vh;
   /* (수정) 100% 다른 컴에서도 안되는지 확인 */
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  padding: 0.78%;
+  padding: 0.8rem;
+  box-sizing: border-box;
   background: #efeee9;
   border-right: 1.5px solid rgb(82, 93, 118, 0.5);
 }
