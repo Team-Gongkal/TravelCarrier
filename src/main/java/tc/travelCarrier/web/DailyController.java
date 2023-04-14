@@ -32,16 +32,9 @@ public class DailyController {
     public String getDaily(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
-        System.out.println(weekly.toString());
         Collections.sort(dailies);
-        for(DailyDTO dto : dailies){
-            System.out.println("dto : "+dto.toString());
-        }
-
         //일수 계산
-        long period = ((weekly.getTravelDate().getEDate().getTime()
-                        - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
-        System.out.println( period + " 일 차이");
+        long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
         model.addAttribute("period", period);
         model.addAttribute("dailies", dailies);
         model.addAttribute("weekly",weekly);

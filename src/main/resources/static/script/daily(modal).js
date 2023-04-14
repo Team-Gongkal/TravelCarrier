@@ -1,18 +1,42 @@
-    for (let i = 0; i < dailies.length; i++) {
-      console.log(dailies[i].attachDailyTitle);
-    }
+//화면 로드되면 바로 click Day1 해주기
+var liIndex = "";
+//formData day정보와 함께 배열로 저장한다. [ {DAY1,{file,title, text,thumb}},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
+//선택한 tap에 해당하는 formDataArr을 저장 [{file,title, text,thumb},{file,title, text,thumb},{file,title, text,thumb}]
+var selectArr = [];
+
+// dataArr 배열 초기화 (이전 데이터 존재하면 그걸로 초기화 해줘야함)
+var result = dailies.reduce(function(acc, curr) {
+  if (!acc[curr.dailyDate]) {
+    acc[curr.dailyDate] = [];
+  }
+  var daily = {
+    file: curr.attachThumb,
+    title: curr.attachDailyTitle,
+    text: curr.attachDailyText,
+    thumb: curr.Thumb ? 1:0,
+  };
+  acc[curr.dailyDate].push(daily);
+  return acc;
+}, {});
+var dataArr = Object.keys(result).map(function(key) {
+  return {
+    day: [key],
+    data: result[key].map(function(item) {
+      var formData = new FormData();
+      for (var key in item) {
+        formData.append(key, item[key]);
+      }
+      return formData;
+    })
+  };
+});
 
 $(document).ready(function() {
+   getCurrentDataArr();
+   drawThumbs();
    //첫번째 탭 자동클릭
    $('ul.days_tabSlide li:first').click();
 });
-
-//화면 로드되면 바로 click Day1 해주기
-var liIndex = "";
-//formData day정보와 함께 배열로 저장한다. [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
-//선택한 tap에 해당하는 formDataArr을 저장 [{file,title, text,thumb},{file,title, text,thumb},{file,title, text,thumb}]
-var dataArr = [];
-var selectArr = [];
 
 // function : 사진첨부시 동작 (by.서현)
 $(document).on('change', '.attach', function(event){
@@ -106,9 +130,9 @@ function getCurrentDataArr(){
     //탭이 바뀌면 왼쪽 미리보기도 싹 바뀌어야한다.
     // 클릭한 DAY 정보에 대한 data 셋팅
     var selectDay = $('span.on').text();
-    selectArr = dataArr.find(item => item.day[0] === selectDay); //이게 데이터
-    if(selectArr !== undefined){
-        selectArr = selectArr.data;
+    var selectedData = dataArr.find(item => item.day[0] === selectDay); //이게 데이터
+    if(selectedData  !== undefined){
+        selectArr = selectedData.data;
     }
     else {
         selectArr = [];
@@ -117,15 +141,23 @@ function getCurrentDataArr(){
 
 // function : formDataArr를 폼에 띄우기 (by.서현)
 function drawThumbs(){
+console.log("selectArr");
     //전체를 그리는 메소드이므로 그리기 전에 이전 데이터 싹 지우기
     if(selectArr.length > 0){
         $(".default_Dform_imgs").hide();
         $(".Dform_imgs").show();
         $('.Dform_imglist').empty();
         var tmp = 0;
+
         for (const formData of selectArr) {
+            var file = formData.get('file');
+
+            if (file instanceof File) {
              //맨뒤에 추가가 아니라 순서대로 화면에 로드만 하면됨
-             var img = $('<img>').attr('src', URL.createObjectURL(formData.get('file')));
+             var img = $('<img>').attr('src', URL.createObjectURL(file));
+            } else if(typeof file === 'string'){
+                var img = $('<img>').attr('src', file);
+            }
              //main인 데이터 이미 있으면 붙여줘야됨
              if(formData.get('thumb')==0){
                 var li = $('<li>').attr('data-index',tmp).append(img);
@@ -175,7 +207,7 @@ $(document).on('click', 'li.clickImg', function(event) {
         selectArr.splice(liIndex,1);
         alert("삭제 완료되었습니다.");
         $('ul.days_tabSlide .on').click();
-        $('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
+        //$('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
     }
 });
 
@@ -228,7 +260,6 @@ $(document).on('click', 'button.Dform_btn_save', function(event) {
           postData.append('sorts', j);
         }
         // file끼리 모으고 {title,text,thumb}끼리 묶어서 얘넨 json으로 보내자
-        console.log("출발 전 : "+postData);
     }
 
     $.ajax({

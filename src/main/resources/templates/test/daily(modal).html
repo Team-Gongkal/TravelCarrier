@@ -155,12 +155,12 @@
       <div class="diary_slides">
         <ul class="diary_slide">
           <li th:each="daily : ${dailies}" class="d_slide square sqr">
-            <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="">
+            <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
           </li>
         </ul>
       </div>
       <div class="writing circle">
-        <img src="../../static/image/daily/icon/pencil.png" alt="edit daily">
+        <img src="/image/daily/icon/pencil.png" alt="edit daily">
       </div>
     </div>
 
@@ -170,13 +170,11 @@
 
   <script th:inline="javascript">
     var dailies = [[${dailies}]];
-
-
-
   </script>
 
   <script src="/script/diary.js"></script>
   <script src="/script/daily(modal).js"></script>
 </body>
+
 
 </html>

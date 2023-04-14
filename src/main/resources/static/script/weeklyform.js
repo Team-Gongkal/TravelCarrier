@@ -155,6 +155,7 @@ $(document).on("change", "#thumbnail_change", function (event) {
   var img = $("<img>").attr("src", URL.createObjectURL(file));
   $(".thumbnail_img.circle").append(img);
 });
+
 // 이미지 삭제버튼 메소드 by서현
 $(document).on("click", ".removeBtn", function (event) {
   $(".thumbnail_img.circle").empty();

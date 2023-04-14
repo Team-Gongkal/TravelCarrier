@@ -2,8 +2,9 @@ package tc.travelCarrier.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class DailyDTO implements Comparable<DailyDTO> {
     public DailyDTO() {}
     public DailyDTO(int attachNo, String dailyDate, int attachDailySort,
@@ -25,18 +26,6 @@ public class DailyDTO implements Comparable<DailyDTO> {
     private String attachThumb;
     private boolean thumb;
 
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append("DailyDTO [attachNo=").append(attachNo);
-        str.append(", dailyDate=").append(dailyDate);
-        str.append(", attachDailySort=").append(attachDailySort);
-        str.append(", attachDailyTitle=").append(attachDailyTitle);
-        str.append(", attachDailyText=").append(attachDailyText);
-        str.append(", attachThumb=").append(attachThumb);
-        str.append(", Thumb=").append(thumb);
-        return str.toString();
-    }
 
     @Override
     public int compareTo(DailyDTO dto) {
