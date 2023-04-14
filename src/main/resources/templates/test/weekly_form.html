@@ -11,8 +11,7 @@
   <!-- weekly form main 시작 -->
   <main id="weekly_form">
     <h1>만들어라 너의 일기장</h1>
-    <form id="weeklyForm" action="" method="post" enctype="multipart/form-data" name="weekly_form"
-      class="weekly_form">
+    <form id="weeklyForm" action="" method="post" enctype="multipart/form-data" name="weekly_form" class="weekly_form">
       <div class="thumbnail">
         <div class="thumbnail_input">
           <div class="thumbnail_text">
@@ -56,12 +55,12 @@
               <!-- 여행 시작일 -->
               <div class="period_flex">
                 <span class="dateSet">
-                  <input name="sdate" type="text" id="sdate" placeholder="2022-03-21">
+                  <input name="sdate" type="text" id="sdate">
                   <a href="#none" class="btncalender dateClick">달력</a>
                 </span>
                 <!-- 여행 종료일 -->
                 <span class="dateSet">
-                  <input name="edate" type="text" id="edate" placeholder="2022-03-22">
+                  <input name="edate" type="text" id="edate">
                   <a href="#none" class="dateClick">달력</a>
                 </span>
               </div>
@@ -149,6 +148,18 @@
     </div>
   </main>
   <script src="/script/weeklyform.js"></script>
+  <script>
+    //여행기간 폼 placehorder 오늘날짜로 변경 - 윤아
+    var date = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formattedDate = date.toLocaleDateString('sv-SE', options).replace(/\./g, '-');
+    console.log(formattedDate);
+
+
+    document.getElementById("sdate").placeholder = formattedDate;
+    document.getElementById("edate").placeholder = formattedDate;
+
+  </script>
 </body>
 
 </html>

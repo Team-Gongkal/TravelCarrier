@@ -354,6 +354,7 @@ article .longBox {
   text-align: center;
   opacity: 0;
   visibility: hidden;
+  z-index: 100;
 }
 
 .keyword_modal {
@@ -391,16 +392,21 @@ article .longBox {
   vertical-align: middle;
   letter-spacing: 0.05em;
 }
-ul.keyword_card {
+.addKeyword > div > ul.keyword_card {
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
   border: 1px solid #000;
 }
 li.card {
   width: calc(100% / 4);
   display: inline-block;
+  float: left;
   border: 1px solid rgb(53, 58, 82, 0.3);
   padding: 0.8em;
   border-radius: 0.2rem;
   font-size: 0.8rem;
+  margin: 0.5rem;
 }
 li.card span {
   display: inline-block;
