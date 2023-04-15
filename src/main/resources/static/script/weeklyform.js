@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  // datepicker 설정 및 옵션 변경 - by윤아
   $.datepicker.setDefaults($.datepicker.regional["ko"]);
   $("#sdate").datepicker({
     // showOn: 'both',
@@ -117,14 +118,13 @@ $(document).ready(function () {
       $("#sdate").datepicker("option", "maxDate", selectedDate);
     },
   });
-  //Date Click
+  //input태그 옆의 이미지 클릭시 datepicker열기 - by윤아
   $(".dateClick").on("click", function (e) {
     $(e.target).prev("input").focus();
     console.log(e.target);
   });
-  //edate Click]
 
-  // 동행인 모달창--------------------------------------
+  // 동행인 선택 모달창 띄우기 - by윤아
   $("#plus_companion").on("click", function () {
     $(".companion_modal_bg").addClass("show");
   });
@@ -132,7 +132,7 @@ $(document).ready(function () {
     $(".companion_modal_bg").removeClass("show");
   });
 
-  // 선택된 동행인 우선 정렬
+  // 선택된 동행인 우선 정렬 - by윤아
   const checkboxes = document.querySelectorAll(
     '.serch_friends input[type="checkbox"]'
   );
