@@ -1,4 +1,4 @@
-// 시작 폼 모달창 버튼
+// 시작 폼 모달창 띄우기 - by윤아
 $(".writing").on("click", function () {
   $(".daily_form_bg").addClass("show");
 });
@@ -6,7 +6,7 @@ $(".daily_btn").on("click", function () {
   $(".daily_form_bg").removeClass("show");
 });
 
-//일기 슬라이드
+//daily 슬라이드 구현 - by윤아
 //client rolling banner
 window.onload = function () {
   var bannerLeft = 0;
