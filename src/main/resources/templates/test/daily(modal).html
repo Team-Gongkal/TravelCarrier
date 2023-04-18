@@ -156,6 +156,8 @@
         <ul class="diary_slide">
           <li th:each="daily : ${dailies}" class="d_slide square sqr">
             <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
+            <p th:text="${daily.attachDailyTitle}">타이틀</p>
+            <p th:text="${daily.attachDailyText}">텍스트</p>
           </li>
         </ul>
       </div>
