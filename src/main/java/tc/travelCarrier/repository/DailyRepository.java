@@ -32,6 +32,7 @@ public class DailyRepository {
 
 
     // 데일리 아이디 검색
+/*
     public Daily findByWeeklyAndDailyDate(Weekly weekly, String dailyDate){
         String jpql = "select a from Daily a"
                 + " where a.weekly = :weekly"
@@ -40,6 +41,11 @@ public class DailyRepository {
               .setParameter("weekly", weekly)
               .setParameter("dailyDate", dailyDate)
               .getSingleResult();
+    }
+*/
+
+    public Daily findDaily(int dailyId){
+        return em.find(Daily.class, dailyId);
     }
 
 }

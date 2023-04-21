@@ -7,16 +7,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import tc.travelCarrier.domain.*;
+import tc.travelCarrier.dto.KwordDTO;
+import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.WeeklyService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static tc.travelCarrier.domain.Weekly.createWeekly;
 
@@ -34,6 +33,11 @@ public class WeeklyContoller {
         System.out.println(user.getFollowers().get(0).getFollower().getAttachUser().getThumbPath());
         model.addAttribute("user", user);
         return "test/weekly_form";
+    }
+    @PostMapping("/weekly/saveKeyword")
+    @ResponseBody
+    public String saveKeywords(@RequestBody KwordDTO dto) throws Exception {
+        return weeklyService.saveKeyword(dto);
     }
 
 
@@ -75,20 +79,41 @@ public class WeeklyContoller {
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         model.addAttribute("weekly",weekly);
-        System.out.println("위클이이이이이이이이이"+weekly.toString());
-        System.out.println("txet"+weekly.getText());
+        long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
+        //model.addAttribute("period", period);
+
+        System.out.println("wwww"+weekly.toString()+", period : "+period);
+        // 각 데일리의 대표사진과 키워드들을 가져와야함, 그래프로 찾으면 탐색이 길어져 비효율적
+        // 따라서 dto를 만들어서 넣을것임
+        List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
+
+        Date sDate = weekly.getTravelDate().getSDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sDate);
+
+        //period만큼 비어있는 DAY 포함해주기
+        List<WeeklyDTO> allWdList = new ArrayList<>();
+        for(int p=1; p<=period; p++){
+            boolean flag = false;
+            for(WeeklyDTO wd : wdList){
+                if(wd.getDailyDate().equals("DAY"+p)) {
+                    allWdList.add(wd);
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag) {
+                cal.add(Calendar.DATE, p-1);
+                allWdList.add(new WeeklyDTO(p, cal.getTime()));
+            }
+        }
+
+
+        for(WeeklyDTO wd : allWdList){
+            System.out.println("allWdList : "+wd.toString());
+        }
+        model.addAttribute("allWdList", allWdList);
         return "test/weekly";
     }
-
-    /**
-     * 키워드 저장
-     * @param : List<String>
-     * */
-    @PostMapping("/weekly/{weeklyId}/saveKeyword")
-    public String saveKeyword(){
-
-        return "";
-    }
-
 
 }
