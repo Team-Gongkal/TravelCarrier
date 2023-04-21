@@ -69,27 +69,39 @@
         </div>
       </div>
     </article>
-    <div class="weekly_wrap">
+
+    <div th:each="wd,wdStat : ${allWdList}"class="weekly_wrap">
       <!-- 홀수 레이아웃 -->
-      <div class="shortBox_odd">
+      <div th:if="${wdStat.odd}" class="shortBox_odd">
         <div class="shortBox">
           <div class="dateBox">
             <div>
               <!-- 날짜 집어넣기 -->
-              <span>10.24</span>
-              <h1 class="travelDay_odd">01</h1>
+              <span th:text="${wd.realDate}">Date</span>
+              <h1 th:text="${wdStat.count < 10 ? '0' + wdStat.count : wdStat.count}" class="travelDay_odd">01</h1>
               <!-- 여행일 수 만큼 홀수 변수로 들어가게됨  -->
             </div>
           </div>
-          <div class="keywordBox">
-            <span>&#x2004;키워드 입력&#x2004;</span>
+
+
+          <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
+            <span th:if="${wd.dailyId != 0}" class="keyword" th:data-daily="${wd.dailyId}" >&#x2004;키워드 입력&#x2004;</span>
+            <span th:if="${wd.dailyId == 0}">&#x2004;daily를 먼저 작성해주세요&#x2004;</span>
           </div>
+
+          <div th:if="${wd.keywords != null and wd.keywords.size() > 0}" class="keywordBox">
+            <ul th:each="key : ${wd.keywords}">
+              <li class="keyword" th:text="${key}" th:data-daily="${wd.dailyId}">keyword</li>
+            </ul>
+          </div>
+
           <div class="moreBox">
             <a href="daily.html">more</a>
           </div>
         </div>
-        <div class="longBox">
-          <a href="http://localhost:8080/TravelCarrier/weekly/26/daily">
+
+        <div th:if="${wd.thumbPath == null}" class="longBox">
+          <a href="">
             <div class="plusBox w-rectL">
               <div class="plus_big">
                 <span></span>
@@ -98,127 +110,62 @@
             </div>
           </a>
         </div>
+
+        <div th:if="${wd.thumbPath != null}" class="longBox">
+          <a href="#">
+            <div>
+              <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
+            </div>
+          </a>
+        </div>
+
       </div>
+
       <!-- 짝수 레이아웃 -->
-      <div class="shortBox_even">
+      <div th:if="${wdStat.even}" class="shortBox_even">
         <div class="shortBox">
           <div class="moreBox">
             <a href="#none">more</a>
           </div>
-          <div class="keywordBox">
-            <!-- 키워드가 들어왔을 때 디자인 하기 -->
-            <ul>
-              <li>여행첫날</li>
-              <li>출발</li>
-              <li>뱅기에서 13시간</li>
-              <li>친절한 택시기사</li>
+
+          <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
+            <span th:if="${wd.dailyId != 0}" class="keyword" th:data-daily="${wd.dailyId}" >&#x2004;키워드 입력&#x2004;</span>
+            <span th:if="${wd.dailyId == 0}">&#x2004;daily를 먼저 작성해주세요&#x2004;</span>
+          </div>
+
+          <div th:if="${wd.keywords != null and wd.keywords.size() > 0}" class="keywordBox">
+            <ul th:each="key : ${wd.keywords}">
+              <li class="keyword" th:text="${key}" th:data-daily="${wd.dailyId}">keyword</li>
             </ul>
           </div>
+
           <div class="dateBox">
-            <span>10.25</span>
-            <h1 class="travelDay_even">02</h1>
-            <!-- 여행일 수 만큼 짝수 변수로 들어가게됨  -->
+            <span  th:text="${wd.realDate}" >Date</span>
+            <h1 th:text="${wdStat.count < 10 ? '0' + wdStat.count : wdStat.count}" class="travelDay_even">02</h1>
           </div>
         </div>
-        <div class="longBox">
-          <a href="#">
-            <div class="w-rectW">
-              <img src="/image/daily/diary/IMG_6475.JPG" alt="둘쨋날 2번사진">
+
+        <div th:if="${wd.thumbPath == null}" class="longBox">
+          <a href="">
+            <div class="plusBox w-rectL">
+              <div class="plus_big">
+                <span></span>
+                <span></span>
+              </div>
             </div>
           </a>
         </div>
-      </div>
-      <!-- 홀수 레이아웃 -->
-      <div class="shortBox_odd">
-        <div class="shortBox">
-          <div class="dateBox">
+
+        <div th:if="${wd.thumbPath != null}" class="longBox">
+          <a href="#">
             <div>
-              <!-- 날짜 집어넣기 -->
-              <span>10.26</span>
-              <h1 class="travelDay_odd">03</h1>
-              <!-- 여행일 수 만큼 홀수 변수로 들어가게됨  -->
-            </div>
-          </div>
-          <div class="keywordBox">
-            <ul>
-              <li>한인마트 털기</li>
-              <li>배고파</li>
-              <li>도둑아님</li>
-              <li>개비쌈</li>
-            </ul>
-          </div>
-          <div class="moreBox">
-            <a href="daily.html">more</a>
-          </div>
-        </div>
-        <div class="longBox">
-          <a href="#">
-            <div class="w-sqr">
-              <img src="/image/daily/diary/IMG_6489.JPG" alt="셋째날 3번사진">
+              <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
             </div>
           </a>
         </div>
+
       </div>
-      <!-- 짝수 레이아웃 -->
-      <div class="shortBox_even">
-        <div class="shortBox">
-          <div class="moreBox">
-            <a href="#none">more</a>
-          </div>
-          <div class="keywordBox">
-            <!-- 키워드가 들어왔을 때 디자인 하기 -->
-            <ul>
-              <li>여행첫날</li>
-              <li>출발</li>
-              <li>뱅기에서 13시간</li>
-              <li>친절한 택시기사</li>
-            </ul>
-          </div>
-          <div class="dateBox">
-            <span>10.26</span>
-            <h1 class="travelDay_even">04</h1>
-            <!-- 여행일 수 만큼 짝수 변수로 들어가게됨  -->
-          </div>
-        </div>
-        <div class="longBox">
-          <a href="#">
-            <div class="w-rectW">
-              <img src="/image/daily/diary/IMG_6757.JPG" alt="둘쨋날 2번사진">
-            </div>
-          </a>
-        </div>
-      </div>
-      <!-- 홀수 레이아웃 -->
-      <div class="shortBox_odd">
-        <div class="shortBox">
-          <div class="dateBox">
-            <div>
-              <!-- 날짜 집어넣기 -->
-              <span>10.27</span>
-              <h1 class="travelDay_odd">05</h1>
-              <!-- 여행일 수 만큼 홀수 변수로 들어가게됨  -->
-            </div>
-          </div>
-          <div class="keywordBox">
-            <ul>
-              <li>한인마트 털기</li>
-              <li>배고파</li>
-              <li>도둑아님</li>
-              <li>개비쌈</li>
-            </ul>
-          </div>
-          <div class="moreBox">
-            <a href="daily.html">more</a>
-          </div>
-        </div>
-        <div class="longBox">
-          <a href="#">
-            <div class="w-rectL">
-              <img src="/image/daily/diary/IMG_7422.JPG" alt="셋째날 3번사진">
-            </div>
-          </a>
-        </div>
-      </div>
+
     </div>
     <!-- 여행일 추가하기-->
     <div class="shortBox_even">
@@ -266,23 +213,11 @@
         <div class="addKeyword">
           <input type="text" name="keyword" placeholder="키워드를 작성해주세요">
           <div>
-            <p>등록된 키워드 <em>(키워드는 최대 5개까지 등록이 가능합니다)</em></p>
+            <p>등록된 키워드 <em>(키워드는 최대 9개까지 등록이 가능합니다)</em></p>
             <ul class="keyword_card">
-              <li class="card">키워드1
+              <!-- <li class="card">키워드5
                 <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">키워드2
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">키워드3
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">키워드4
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">키워드5
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -290,15 +225,17 @@
       </div>
     </div>
   </main>
-  <script>
-    //키워드 모달창 띄우기 -by윤아
-    $(".keywordBox > span").click(function () {
-      $(".keyword_modal_bg").addClass('show');
-    })
-    $(".close, .keyword_modal > button").click(function () {
-      $(".keyword_modal_bg").removeClass('show');
-    })
-  </script>
+
+
+  <script th:inline="javascript">
+    var all_keywords = [
+        [# th:each="wd : ${allWdList}"]
+            [[${wd.keywords}]],
+        [/]
+    ];
+</script>
+  <script src="/script/weekly.js"></script>
+
 </body>
 
 </html>

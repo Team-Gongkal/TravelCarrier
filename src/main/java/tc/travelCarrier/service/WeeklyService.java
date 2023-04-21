@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.*;
+import tc.travelCarrier.dto.KwordDTO;
+import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.repository.AttachRepository;
+import tc.travelCarrier.repository.DailyRepository;
+import tc.travelCarrier.repository.KwordRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 
 import java.util.List;
@@ -16,6 +20,8 @@ import java.util.List;
 public class WeeklyService {
 
     private final WeeklyRepository weeklyRepository;
+    private final DailyRepository dailyRepository;
+    private final KwordRepository kwordRepository;
     private final AttachRepository attachRepository;
     private final AttachService attachService;
 
@@ -51,6 +57,9 @@ public class WeeklyService {
      * 위클리 내용조회
      * */
     public Weekly findWeekly(int weeklyId) { return weeklyRepository.findOne(weeklyId);}
+    public List<WeeklyDTO> findWeeklyDto(int weeklyId){
+        return weeklyRepository.findWeeklyDto(weeklyId);
+    }
 
     /**
      * 위클리 수정
@@ -58,4 +67,14 @@ public class WeeklyService {
     /**
      * 위클리 삭제
      */
+
+    // 위클리 키워드 저장
+    public String saveKeyword(KwordDTO dto){
+        kwordRepository.deleteByDailyId(dto.getDailyId());
+        Daily daily = dailyRepository.findDaily(dto.getDailyId());
+        for(String kword : dto.getKwordList()){
+            kwordRepository.save(new Kword(daily,kword));
+        }
+        return "success";
+    }
 }

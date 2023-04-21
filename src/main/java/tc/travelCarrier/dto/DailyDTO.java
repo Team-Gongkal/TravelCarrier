@@ -27,6 +27,7 @@ public class DailyDTO implements Comparable<DailyDTO> {
     private boolean thumb;
 
 
+    //같은 DAY1의 데이터들이라면 sort번호 순으로 오름차순 정렬한다.
     @Override
     public int compareTo(DailyDTO dto) {
         int result = this.dailyDate.substring(3)

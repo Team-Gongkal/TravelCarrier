@@ -38,6 +38,11 @@ public class DailyController {
         model.addAttribute("period", period);
         model.addAttribute("dailies", dailies);
         model.addAttribute("weekly",weekly);
+        System.out.println("dailyDTO");
+        System.out.println("dailyDTO");
+        System.out.println("dailyDTO");
+        System.out.println(dailies.toString());
+        System.out.println("period"+period);
         return "test/daily(modal)";
     }
 

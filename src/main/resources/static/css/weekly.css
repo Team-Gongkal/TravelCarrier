@@ -292,18 +292,21 @@ article .longBox {
 .shortBox_even .longBox .w-rectL {
   width: 30vw;
 }
-.shortBox_odd .longBox .plusBox {
+.shortBox_odd .longBox .plusBox,
+.shortBox_even .longBox .plusBox {
   width: 30vw;
   height: 100%;
   position: relative;
   border: 1px solid rgb(53, 58, 82, 0.5);
   transition: 0.2s;
 }
-.shortBox_odd .longBox .plusBox:hover {
+.shortBox_odd .longBox .plusBox:hover,
+ .shortBox_even .longBox .plusBox:hover {
   background: rgb(247, 247, 247, 0.5);
   border: 1px solid #a0c1ca;
 }
-.shortBox_odd .longBox .plusBox:hover span {
+.shortBox_odd .longBox .plusBox:hover span,
+ .shortBox_even .longBox .plusBox:hover span{
   background: #a0c1ca;
 }
 .plusBox .plus_big {
