@@ -15,7 +15,7 @@ public class DailyDTO implements Comparable<DailyDTO> {
         this.attachDailySort = attachDailySort;;
         this.attachDailyTitle = attachDailyTitle;
         this.attachDailyText = attachDailyText;
-        this.attachThumb = attachThumb.substring(81); //  ~/static 까지의 경로를 생략해준다.
+        this.attachThumb = attachThumb.substring(86); //  ~/static 까지의 경로를 생략해준다.
         this.thumb = isThumb;
     }
     private int attachNo;

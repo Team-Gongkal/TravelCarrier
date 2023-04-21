@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가로스크롤 구현</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="../../static/css/slide-test.css">
+</head>
+
+<body>
+  <div class="section-group section-group--1">
+    <section class="section section--1">섹션01</section>
+    <section class="section section--2">섹션02</section>
+    <section class="section section--3">섹션03</section>
+    <section class="section section--4">섹션04</section>
+    <section class="section section--5">섹션05</section>
+  </div>
+  <div class="section-group section-group--horizontal-right section-group--2">
+    <section class="section section--1">섹션06</section>
+    <section class="section section--2">섹션07</section>
+    <section class="section section--3">섹션08</section>
+    <section class="section section--4">섹션09</section>
+    <section class="section section--5">섹션10</section>
+  </div>
+  <!-- <div class="section-group section-group--vertical-down section-group--3">
+    <section class="section section--1">섹션11</section>
+    <section class="section section--2">섹션12</section>
+    <section class="section section--3">섹션13</section>
+    <section class="section section--4">섹션14</section>
+    <section class="section section--5">섹션15</section>
+  </div> -->
+  <!-- <div class="section-group section-group--horizontal-left section-group--4">
+    <section class="section section--1">섹션16</section>
+    <section class="section section--2">섹션17</section>
+    <section class="section section--3">섹션18</section>
+    <section class="section section--4">섹션19</section>
+    <section class="section section--5">섹션20</section>
+  </div> -->
+  <!-- <div class="section-group section-group--5">
+    <section class="section section--1">섹션21</section>
+    <section class="section section--2">섹션22</section>
+    <section class="section section--3">섹션23</section>
+    <section class="section section--4">섹션24</section>
+    <section class="section section--5">섹션25</section>
+  </div> -->
+  <script>
+    //스크롤 트리거 플러그인 활성화
+    gsap.reisterPlugin(ScrollTrigger);
+
+    function SectionGroup__init() {
+      $('.section-group--horizontal-right').each(function (index, node) { //반복문을 사용하는 이유는 앞으로 같은 자식이 나오면 지금 작성하는 코드 하나로 다 끝장내버리겠다는 뜻
+        var $group = $(node); //section-group를 의미
+        var $section = $group.find("> . section");
+
+        gsap.to($section, {
+          xPercent: -100 * ($section.length - 1), //400%이동해라
+          ease: "none",
+          scrollTriggrt: {
+            trigger: $group,
+            start: "top top",
+            end: "+=" + ($section.length - 1) + "00%",
+            pin: true,
+            scrub: true,
+            markers: true
+          }
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>

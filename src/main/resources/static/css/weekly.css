@@ -1,9 +1,18 @@
 /* main 가로스크롤 */
 main.weekly_scroll {
+  overflow: hidden;
   overflow-x: scroll;
   display: flex;
+
+  /*스크롤바 숨김 */
+  -webkit-overflow-scrolling: touch; /*IOS기반 브라우저에서 스크롤 성능을 최적화함*/
+  scrollbar-width: none; /*Firefox와 IE/Edge에서 숨김*/
+  -ms-overflow-style: none; /*WebKit기반 브라우저에서 숨김*/
 }
 
+main.weekly_scroll::-webkit-scrollbar {
+  display: none;
+}
 /* weekly 디자인 시작 */
 .weekly_edit {
   /* float: right; */
@@ -362,7 +371,7 @@ article .longBox {
 
 .keyword_modal {
   width: 50%;
-  height: 50%;
+  height: fit-content;
   background: #efeee9;
   border-radius: 0.5rem;
 }
@@ -419,21 +428,20 @@ li.card {
   font-size: 0.8rem;
   text-align: start;
 }
-li.card span {
-  display: block;
+li.card span:nth-child(2) {
   float: right;
   opacity: 0.5;
   transition: 0.2s;
 }
-li.card span i {
+li.card span:nth-child(2) i {
   cursor: pointer;
   vertical-align: middle;
 }
-li.card span:hover {
+li.card span:nth-child(2):hover {
   opacity: 1;
 }
 .keyword_modal button {
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
 }
 .keyword_modal_bg.show {
   opacity: 100;

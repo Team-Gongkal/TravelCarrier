@@ -1,0 +1,47 @@
+body,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+.section-group > .section:nth-child(1) {
+  background: lightblue;
+}
+.section-group > .section:nth-child(2) {
+  background: lightcyan;
+}
+.section-group > .section:nth-child(3) {
+  background: lightslategrey;
+}
+.section-group > .section:nth-child(4) {
+  background: lightsteelblue;
+}
+.section-group > .section:nth-child(5) {
+  background: lightskyblue;
+}
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: bold;
+  letter-spacing: -0.4rem;
+  box-sizing: border-box;
+  border: 5px solid lightgray;
+}
+
+.section-group--horizontal-right {
+  display: flex;
+  flex-direction: row-reverse; /* 이걸 쓰면 10,9,8,7,6 순으로 정렬이 됨 */
+}
+.section-group--horizontal-right .section {
+  width: 100%;
+  flex-shrink: 0; /*신축성,,? 너비가 필요함*/
+}
