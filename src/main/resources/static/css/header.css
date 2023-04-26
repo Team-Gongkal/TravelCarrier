@@ -1,8 +1,7 @@
 /* header--------------------------------------------- */
 header {
   width: 3.2rem;
-  height: 98vh;
-  /* (수정) 100% 다른 컴에서도 안되는지 확인 */
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;

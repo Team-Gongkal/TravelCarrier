@@ -13,7 +13,7 @@
     <article id="top">
       <div class="longBox">
         <div class="weekly_edit">
-          <a href="#none">
+          <a href="">
             <img src="/image/weekly/icon/setting.png" alt="위클리 수정">
           </a>
         </div>
@@ -70,7 +70,7 @@
       </div>
     </article>
 
-    <div th:each="wd,wdStat : ${allWdList}"class="weekly_wrap">
+    <div th:each="wd,wdStat : ${allWdList}" class="weekly_wrap">
       <!-- 홀수 레이아웃 -->
       <div th:if="${wdStat.odd}" class="shortBox_odd">
         <div class="shortBox">
@@ -85,7 +85,7 @@
 
 
           <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
-            <span th:if="${wd.dailyId != 0}" class="keyword" th:data-daily="${wd.dailyId}" >&#x2004;키워드 입력&#x2004;</span>
+            <span th:if="${wd.dailyId != 0}" class="keyword" th:data-daily="${wd.dailyId}">&#x2004;키워드 입력&#x2004;</span>
             <span th:if="${wd.dailyId == 0}">&#x2004;daily를 먼저 작성해주세요&#x2004;</span>
           </div>
 
@@ -96,12 +96,12 @@
           </div>
 
           <div class="moreBox">
-            <a href="daily.html">more</a>
+            <a href="" class="daily_path">more</a>
           </div>
         </div>
 
         <div th:if="${wd.thumbPath == null}" class="longBox">
-          <a href="">
+          <a href="" class="daily_path">
             <div class="plusBox w-rectL">
               <div class="plus_big">
                 <span></span>
@@ -125,11 +125,11 @@
       <div th:if="${wdStat.even}" class="shortBox_even">
         <div class="shortBox">
           <div class="moreBox">
-            <a href="#none">more</a>
+            <a href="#none" class="daily_path">more</a>
           </div>
 
           <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
-            <span th:if="${wd.dailyId != 0}" class="keyword" th:data-daily="${wd.dailyId}" >&#x2004;키워드 입력&#x2004;</span>
+            <span th:if="${wd.dailyId != 0}" class="keyword" th:data-daily="${wd.dailyId}">&#x2004;키워드 입력&#x2004;</span>
             <span th:if="${wd.dailyId == 0}">&#x2004;daily를 먼저 작성해주세요&#x2004;</span>
           </div>
 
@@ -140,13 +140,13 @@
           </div>
 
           <div class="dateBox">
-            <span  th:text="${wd.realDate}" >Date</span>
+            <span th:text="${wd.realDate}">Date</span>
             <h1 th:text="${wdStat.count < 10 ? '0' + wdStat.count : wdStat.count}" class="travelDay_even">02</h1>
           </div>
         </div>
 
         <div th:if="${wd.thumbPath == null}" class="longBox">
-          <a href="">
+          <a href="" class="daily_path">
             <div class="plusBox w-rectL">
               <div class="plus_big">
                 <span></span>
@@ -228,13 +228,19 @@
 
 
   <script th:inline="javascript">
+    // var all_keywords = [
+    //   [# th: each = "wd, stat : ${allWdList}"]
+    //   [all_keywords.push([${ wd.keywords }])],
+    //   [/]
+    //   ];
+    // console.log(all_keywords);
     var all_keywords = [
-        [# th:each="wd : ${allWdList}"]
-            [[${wd.keywords}]],
-        [/]
-    ];
+      [# th: each = "wd : ${allWdList}"]
+      [[${ wd.keywords }]],
+      [/]
+      ];
     console.log(all_keywords);
-</script>
+  </script>
   <script src="/script/weekly.js"></script>
 
 </body>
