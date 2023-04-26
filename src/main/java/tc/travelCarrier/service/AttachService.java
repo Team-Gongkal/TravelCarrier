@@ -1,11 +1,20 @@
 package tc.travelCarrier.service;
 
+import com.drew.imaging.ImageMetadataReader;
+
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Directory;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
+
+import com.mortennobel.imagescaling.AdvancedResizeOp;
+import com.mortennobel.imagescaling.ResampleOp;
 import lombok.RequiredArgsConstructor;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.AttachWeekly;
 import tc.travelCarrier.domain.Daily;
 import tc.travelCarrier.domain.Weekly;
@@ -14,15 +23,16 @@ import tc.travelCarrier.repository.AttachRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+
+
 
 
 @RequiredArgsConstructor
@@ -103,16 +113,97 @@ public class AttachService {
         return saveArr;
     }
 
+    // 이미지 리사이징 - 고민이 더 필요할듯
+    private BufferedImage resizeImageFile(MultipartFile mFile) throws IOException {
+
+
+        File file = new File(System.getProperty("java.io.tmpdir") + mFile.getOriginalFilename());
+        mFile.transferTo(file);
+        // 회전
+        //file = turnImage(file);
+
+        BufferedImage readImage = turnImage(file);
+        int originWidth = readImage.getWidth();
+        int originHeight = readImage.getHeight();
+        System.out.println("=====================");
+        System.out.println("width : "+ originWidth+", height : "+ originHeight);
+        int newWidth = originWidth, newHeight = originHeight;
+        if(originWidth == originHeight) {
+            return Scalr.resize(readImage, 320, 320);
+        }
+        else if(originWidth > originHeight) {
+            // 가로가 길면 480x320
+            return Scalr.resize(readImage, 480, 320);
+        }
+        else if(originWidth < originHeight) {
+            // 세로가 길면 240x320
+            return Scalr.resize(readImage, 240, 320);
+        }
+
+        return readImage;
+    }
+
+    private BufferedImage turnImage(File imageFile) throws IOException {
+        // 원본 파일의 Orientation 정보를 읽는다.
+        int orientation = 1; // 회전정보, 1. 0도, 3. 180도, 6. 270도, 8. 90도 회전한 정보
+        int width = 0; // 이미지의 가로폭
+        int height = 0; // 이미지의 세로높이
+
+        Metadata metadata; // 이미지 메타 데이터 객체
+        Directory directory; // 이미지의 Exif 데이터를 읽기 위한 객체
+
+        try {
+            metadata = ImageMetadataReader.readMetadata(imageFile);
+            directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+            if(directory != null){
+                orientation = directory.getInt(ExifIFD0Directory.TAG_ORIENTATION); // 회전정보
+            }
+
+        }catch (Exception e) {
+            orientation=1;
+        }
+
+        System.out.println("orientation : "+orientation);
+        //imageFile
+        BufferedImage srcImg = ImageIO.read(imageFile);
+        // 회전 시킨다.
+        switch (orientation) {
+            case 6:
+                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_90, null);
+                break;
+            case 1:
+
+                break;
+            case 3:
+                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_180, null);
+                break;
+            case 8:
+                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_270, null);
+                break;
+
+            default:
+                orientation=1;
+                break;
+        }
+
+        return srcImg;
+    }
+
     /**
      * 이미지 크기 리사이징(크기는 데일리 슬라이드에 대략 맞춤)
      * */
-    private BufferedImage resizeImageFile(MultipartFile file) throws Exception {
+/*    private BufferedImage resizeImageFile(MultipartFile file) throws Exception {
+
         try (InputStream inputStream = file.getInputStream()){
             // 이미지 읽어 오기
             BufferedImage inputImage = ImageIO.read(file.getInputStream());
+
             // 이미지 세로 가로 측정
             int originWidth = inputImage.getWidth();
             int originHeight = inputImage.getHeight();
+
+            System.out.println("가로길이 : "+ originWidth +", 세로길이 : "+ originHeight);
+
             // 변경할 길이
             int newWidth = originWidth;
             int newHeight = originHeight;
@@ -144,6 +235,6 @@ public class AttachService {
         } catch (IOException e){
             throw new Exception("Failed to resize image", e);
         }
-    }
+    }*/
 
 }
