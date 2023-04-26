@@ -228,17 +228,9 @@
 
 
   <script th:inline="javascript">
-    // var all_keywords = [
-    //   [# th: each = "wd, stat : ${allWdList}"]
-    //   [all_keywords.push([${ wd.keywords }])],
-    //   [/]
-    //   ];
-    // console.log(all_keywords);
-    var all_keywords = [
-      [# th: each = "wd : ${allWdList}"]
-      [[${ wd.keywords }]],
-      [/]
-      ];
+
+    var all_keywords = [ [# th:each="wd : ${allWdList}"]
+            [[${wd.keywords}]],  [/] ];
     console.log(all_keywords);
   </script>
   <script src="/script/weekly.js"></script>
