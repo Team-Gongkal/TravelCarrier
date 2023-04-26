@@ -1,63 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TravelCarrier</title>
-
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/header.css">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/weekly_form.css">
-  <link rel="stylesheet" href="/css/weekly.css">
-  <!-- <link rel="stylesheet" htatic/css/daily.css"> -->
-  <link rel="stylesheet" href="/css/daily(modal).css">
-
-  <!-- XEicon -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-
-</head>
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
 
 <body>
-
-  <header>
-    <nav>
-      <div class="nav">
-        <div class="hamburger on">
-          <span></span>
-          <span></span>
-        </div>
-        <div class="logo">
-          <a href="index.html">
-            <img src="/image/header/logo/journal.png" alt="logo">
-          </a>
-        </div>
-      </div>
-      <div class="board_link">
-        <a href="">Board</a>
-      </div>
-      <div class="contact_link">
-        <a href="">Contact</a>
-      </div>
-    </nav>
-    <div class="navigation"></div>
-  </header>
-  <!-- utill 유틸 -->
-  <div class="utill_menu">
-    <div class="notice">
-      <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
-    </div>
-    <div class="profile">
-      <a href="#none"></a>
-    </div>
-  </div>
+  <th:block th:replace="fragments/header :: headerFragment"></th:block>
   <main class="daily">
     <!-- daily 시작화면 UI -->
     <div class="daily_start">
@@ -159,9 +107,10 @@
         <ul class="diary_slide">
           <li th:each="daily : ${dailies}" class="d_slide square sqr">
             <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
-            <!-- <p th:text="${daily.attachDailyTitle}">타이틀</p>
-            <p th:text="${daily.attachDailyText}">텍스트</p> -->
+            <p th:text="${daily.attachDailyTitle}">타이틀</p>
+            <p th:text="${daily.attachDailyText}">텍스트</p>
           </li>
+
         </ul>
       </div>
       <div class="writing circle">
@@ -203,7 +152,7 @@
     var dailies = [[${ dailies }]];
   </script>
 
-  <script src="/script/daily.js"></script>
+  <!-- <script src="/script/daily.js"></script> -->
   <script src="/script/daily(modal).js"></script>
 </body>
 

@@ -13,7 +13,7 @@
     <article id="top">
       <div class="longBox">
         <div class="weekly_edit">
-          <a href="#none">
+          <a href="">
             <img src="/image/weekly/icon/setting.png" alt="위클리 수정">
           </a>
         </div>
@@ -61,6 +61,9 @@
               <span th:if="${weekly.status == 'FOLLOW'}">
                 <img src="/image/weekly/icon/people-n.png" alt="친구공개">
               </span>
+              <!-- <span><img src="/image/weekly/icon/view-n.png" alt="공개"></span>
+              <span><img src="/image/weekly/icon/hide-n.png" alt="비공개"></span>
+              <span class=""><img src="/image/weekly/icon/people-n.png" alt="친구공개"></span> -->
             </div>
           </div>
         </div>
@@ -93,11 +96,12 @@
           </div>
 
           <div class="moreBox">
-            <a href="daily.html">more</a>
+            <a href="" class="daily_path">more</a>
           </div>
         </div>
-        <div class="longBox">
-          <a id="daily_path" href="http://localhost:8080/TravelCarrier/weekly/daily">
+
+        <div th:if="${wd.thumbPath == null}" class="longBox">
+          <a href="" class="daily_path">
             <div class="plusBox w-rectL">
               <div class="plus_big">
                 <span></span>
@@ -121,7 +125,7 @@
       <div th:if="${wdStat.even}" class="shortBox_even">
         <div class="shortBox">
           <div class="moreBox">
-            <a href="#none">more</a>
+            <a href="#none" class="daily_path">more</a>
           </div>
 
           <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
@@ -142,7 +146,7 @@
         </div>
 
         <div th:if="${wd.thumbPath == null}" class="longBox">
-          <a href="">
+          <a href="" class="daily_path">
             <div class="plusBox w-rectL">
               <div class="plus_big">
                 <span></span>
@@ -211,26 +215,9 @@
           <div>
             <p>등록된 키워드 <em>(키워드는 최대 9개까지 등록이 가능합니다)</em></p>
             <ul class="keyword_card">
-              <li class="card">
-                <span>키워드1</span>
+              <!-- <li class="card">키워드5
                 <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">
-                <span>키워드2</span>
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">
-                <span>키워드3</span>
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">
-                <span>키워드4</span>
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
-              <li class="card">
-                <span>키워드5</span>
-                <span class="card_del"><i class="xi-close"></i></span>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -238,12 +225,21 @@
       </div>
     </div>
   </main>
+
+
   <script th:inline="javascript">
+    // var all_keywords = [
+    //   [# th: each = "wd, stat : ${allWdList}"]
+    //   [all_keywords.push([${ wd.keywords }])],
+    //   [/]
+    //   ];
+    // console.log(all_keywords);
     var all_keywords = [
       [# th: each = "wd : ${allWdList}"]
       [[${ wd.keywords }]],
       [/]
       ];
+    console.log(all_keywords);
   </script>
   <script src="/script/weekly.js"></script>
 
