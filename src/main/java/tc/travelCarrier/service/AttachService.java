@@ -1,7 +1,5 @@
 package tc.travelCarrier.service;
-
 import com.drew.imaging.ImageMetadataReader;
-
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Directory;
 import com.drew.metadata.MetadataException;
@@ -129,15 +127,15 @@ public class AttachService {
         System.out.println("width : "+ originWidth+", height : "+ originHeight);
         int newWidth = originWidth, newHeight = originHeight;
         if(originWidth == originHeight) {
-            return Scalr.resize(readImage, 320, 320);
+            return Scalr.resize(readImage, 900, 900);
         }
         else if(originWidth > originHeight) {
             // 가로가 길면 480x320
-            return Scalr.resize(readImage, 480, 320);
+            return Scalr.resize(readImage, 1200, 900);
         }
         else if(originWidth < originHeight) {
             // 세로가 길면 240x320
-            return Scalr.resize(readImage, 240, 320);
+            return Scalr.resize(readImage, 600, 900);
         }
 
         return readImage;
