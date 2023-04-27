@@ -279,14 +279,14 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
 });
 
 //데일리 이미지 슬라이드 구현 - by윤아
-var slide_whidth = $('.diary_list').outerWidth()
+var slide_whidth = $('.diary_list').outerWidth() / 100
 console.log(slide_whidth) 
-// setInterval(function(){
-//   $('.diary_list').animate({marginLeft: "-=" + slide_whidth + "px"}),500,function(){
-    
-//   }
-// })
-
+setInterval(function(){
+  $('.diary_list').animate({marginLeft: "-=" + slide_whidth + "px"}),5000,function(){
+    $('.diary_list:first').appendTo('.diary_list');
+    $('.diary_list').css("margin-left", "0px")
+  }
+});
 // 시작 폼 모달창 띄우기 - by윤아
 $(".writing").on("click", function () {
   $(".daily_form_bg").addClass("show");
