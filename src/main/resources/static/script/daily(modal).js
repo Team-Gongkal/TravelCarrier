@@ -279,6 +279,15 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
   });
 });
 
+//데일리 이미지 슬라이드 구현 - by윤아
+var slide_whidth = $('.diary_list').outerWidth()
+console.log(slide_whidth) 
+// setInterval(function(){
+//   $('.diary_list').animate({marginLeft: "-=" + slide_whidth + "px"}),500,function(){
+    
+//   }
+// })
+
 // 시작 폼 모달창 띄우기 - by윤아
 $(".writing").on("click", function () {
   $(".daily_form_bg").addClass("show");
@@ -295,7 +304,7 @@ $(".d_slide").on("mouseenter", function (e) {
 
   //2. 백그라운드 바꾸기
   var img_src = e.target.src;
-  console.log(img_src);
+  console.log(e.target);
   $(".diary_noH").css({
     "background-image": `url(${img_src})`,
     "background-repeat": "no-repeat",
@@ -305,17 +314,18 @@ $(".d_slide").on("mouseenter", function (e) {
 
   //3.배경 어둡게
   $(".filter").addClass("on");
-
-  //4. 일기글 보이기
-  $(".diary_textbox").addClass("on");
+  $('.diary_viewport').addClass('hide');
+  // $(".diary_textbox").addClass("on");
 });
 
+//4. 일기글 보이기
 $(".d_slide").on("mouseleave", function (e) {
   //1. title, period 보이기
   $(".diary_titlebox").removeClass("hide");
 
   //2. 백그라운드 바꾸기
   var img_src = e.target.src;
+  //슬라이드 양끝 흐림효과
   $(".diary_noH").css({
     background: "#efeee9",
   });
@@ -325,4 +335,6 @@ $(".d_slide").on("mouseleave", function (e) {
 
   //4.일기 숨기기
   $(".diary_textbox").removeClass("on");
+  //슬라이드 양끝 흐림효과
+  $('.diary_viewport').removeClass('hide');
 });

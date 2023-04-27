@@ -103,45 +103,25 @@
         <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
           yyyy-mm-dd</p>
       </div>
-      <div class="diary_slides">
-        <ul class="diary_slide">
-          <li th:each="daily : ${dailies}" class="d_slide square sqr">
-            <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
-            <p th:text="${daily.attachDailyTitle}">타이틀</p>
-            <p th:text="${daily.attachDailyText}">텍스트</p>
-          </li>
-
-        </ul>
+      <div class="diary_viewport">
+        <div class="diary_slides">
+          <ul class="diary_list">
+            <li th:each="daily : ${dailies}" class="d_slide square sqr">
+              <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
+              <!-- <p th:text="${daily.attachDailyTitle}">타이틀</p>
+              <p th:text="${daily.attachDailyText}">텍스트</p> -->
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="writing circle">
         <img src="/image/daily/icon/pencil.png" alt="edit daily">
       </div>
       <div class="diary_textbox">
         <ul>
-          <!-- <li th:each="daily : ${dailies}">
+          <li th:each="daily : ${dailies}">
             <h6 th:text="${daily.attachDailyTitle}"></h6>
             <p th:text="${daily.attachDailyText}"></p>
-          </li> -->
-          <li>
-            <h6>Lorem ipsum dolor</h6>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae modi totam voluptates voluptate qui!
-              Quidem eum doloribus possimus laudantium nulla corrupti tempora, blanditiis nesciunt beatae, aut itaque
-              illo necessitatibus vero?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum vero reprehenderit fugit, molestiae, et ex
-              deserunt rerum sit eius incidunt ea dicta ipsa repellat eligendi cumque optio nihil iste commodi?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore cum illo fugit unde ratione, similique
-              expedita dignissimos sunt, earum iure non! Maxime, distinctio earum consequatur at corporis numquam et a!
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus assumenda cum pariatur nostrum, vero aut
-              quaerat iure, deserunt nulla impedit, in exercitationem obcaecati? Obcaecati sapiente ratione ullam nulla,
-              sit nostrum.
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt atque officiis a officia optio, sit ullam.
-              Ex mollitia nemo, officiis possimus expedita sint esse debitis veniam aperiam veritatis culpa maiores!
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus assumenda cum pariatur nostrum, vero aut
-              quaerat iure, deserunt nulla impedit, in exercitationem obcaecati? Obcaecati sapiente ratione ullam nulla,
-              sit nostrum.
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt atque officiis a officia optio, sit ullam.
-              Ex mollitia nemo, officiis possimus expedita sint esse debitis veniam aperiam veritatis culpa maiores!
-            </p>
           </li>
         </ul>
       </div>

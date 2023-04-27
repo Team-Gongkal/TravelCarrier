@@ -556,6 +556,10 @@ button.Dform_btn_del:hover {
     rgb(239, 238, 233)
   );
 }
+.diary_viewport.hide::before,
+.diary_viewport.hide::after{
+background: none;
+}
 .diary_slides {
   position: absolute;
   display: flex;
@@ -563,6 +567,7 @@ button.Dform_btn_del:hover {
 ul.diary_list {
   width: 120%;
   display: flex;
+  cursor: pointer;
 }
 @keyframes imgRolling {
   0% {
@@ -575,7 +580,6 @@ ul.diary_list {
 
 ul.diary_list > li {
   margin: 0 0.5rem;
-  cursor: pointer;
 }
 .diary_list img {
   width: 100%;
