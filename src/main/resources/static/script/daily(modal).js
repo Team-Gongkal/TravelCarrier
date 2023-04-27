@@ -13,11 +13,13 @@ var result = dailies.reduce(function (acc, curr) {
     file: curr.attachThumb,
     title: curr.attachDailyTitle,
     text: curr.attachDailyText,
-    thumb: curr.thumb ? 1 : 0
+    thumb: curr.thumb ? 1 : 0,
+    attachNo : curr.attachNo
   };
   acc[curr.dailyDate].push(daily);
   return acc;
 }, {});
+
 var dataArr = Object.keys(result).map(function (key) {
   return {
     day: [key],
@@ -55,6 +57,7 @@ function setDataArr(event) {
     formData.append("title", "");
     formData.append("text", "");
     formData.append("thumb", 0);
+    formData.append("attachNo", -1);
     formDataArr.push(formData);
   }
   var obj = { day: [$(".days_tabSlide .on").text()], data: formDataArr };
@@ -156,6 +159,7 @@ function drawThumbs() {
       } else if (typeof file === "string") {
         var img = $("<img>").attr("src", file);
       }
+
       //main인 데이터 이미 있으면 붙여줘야됨
       if (formData.get("thumb") == 0) {
         var li = $("<li>").attr("data-index", tmp).append(img);
@@ -165,7 +169,7 @@ function drawThumbs() {
           .attr("data-index", tmp)
           .append(img);
       }
-
+      li.attr("data-attachNo", formData.get("attachNo"));
       $(".Dform_imglist").append(li);
       tmp++;
     }
@@ -193,6 +197,7 @@ $(document).on("change", "#fileChange", function (event) {
   formData.append("title", "");
   formData.append("text", "");
   formData.append("thumb", 0);
+  formData.append("attachNo", -1);
   selectArr[liIndex] = formData;
   // 데이터 바꿨으니까 화면 리로드
   // day 클릭한번, 이미지 클릭 한번
@@ -241,9 +246,10 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
 
   //url 구해두기
   var currentUrl = window.location.href;
+
   var match = currentUrl.match(/weekly\/(\d+)\/daily/);
-  var weekyId = match && match[1];
-  var url = `/TravelCarrier/weekly/${weekyId}/daily/create`;
+  //var weekyId = match && match[1];
+  //var url = `/TravelCarrier/weekly/${weekyId}/daily/create`;
   var postData = new FormData();
   for (var i = 0; i < dataArr.length; i++) {
     // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
@@ -258,12 +264,13 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
       postData.append("thumbs", formDataArr[j].get("thumb"));
       postData.append("days", "DAY" + (i + 1));
       postData.append("sorts", j);
+      postData.append("attachNo", formDataArr[j].get("attachNo"));
     }
     // file끼리 모으고 {title,text,thumb}끼리 묶어서 얘넨 json으로 보내자
   }
 
   $.ajax({
-    url: url,
+    url: currentUrl+'/create',
     type: "POST",
     data: postData,
     processData: false,
