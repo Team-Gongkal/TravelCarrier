@@ -1,7 +1,5 @@
 package tc.travelCarrier.service;
-
 import com.drew.imaging.ImageMetadataReader;
-
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Directory;
 import com.drew.metadata.MetadataException;
@@ -129,15 +127,15 @@ public class AttachService {
         System.out.println("width : "+ originWidth+", height : "+ originHeight);
         int newWidth = originWidth, newHeight = originHeight;
         if(originWidth == originHeight) {
-            return Scalr.resize(readImage, 320, 320);
+            return Scalr.resize(readImage, 900, 900);
         }
         else if(originWidth > originHeight) {
             // 가로가 길면 480x320
-            return Scalr.resize(readImage, 480, 320);
+            return Scalr.resize(readImage, 1200, 900);
         }
         else if(originWidth < originHeight) {
             // 세로가 길면 240x320
-            return Scalr.resize(readImage, 240, 320);
+            return Scalr.resize(readImage, 600, 900);
         }
 
         return readImage;
@@ -189,52 +187,5 @@ public class AttachService {
         return srcImg;
     }
 
-    /**
-     * 이미지 크기 리사이징(크기는 데일리 슬라이드에 대략 맞춤)
-     * */
-/*    private BufferedImage resizeImageFile(MultipartFile file) throws Exception {
-
-        try (InputStream inputStream = file.getInputStream()){
-            // 이미지 읽어 오기
-            BufferedImage inputImage = ImageIO.read(file.getInputStream());
-
-            // 이미지 세로 가로 측정
-            int originWidth = inputImage.getWidth();
-            int originHeight = inputImage.getHeight();
-
-            System.out.println("가로길이 : "+ originWidth +", 세로길이 : "+ originHeight);
-
-            // 변경할 길이
-            int newWidth = originWidth;
-            int newHeight = originHeight;
-            if(originWidth == originHeight) {
-                newWidth = 320;
-                newHeight = 320;
-            }
-            else if(originWidth > originHeight) {
-                int min = Math.min(originWidth/480,originHeight/320);
-                min = Math.max(min,1);
-                newWidth /= min;
-                newHeight /= min;
-            }
-            else if(originWidth < originHeight) {
-                int min = Math.min(originWidth/240,originHeight/320);
-                min = Math.max(min,1);
-                newWidth /= min;
-                newHeight /= min;
-            }
-            Image resizeImage = inputImage.getScaledInstance(newWidth, newHeight, Image.SCALE_FAST);
-            BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-            Graphics graphics = newImage.getGraphics();
-            try {
-                graphics.drawImage(resizeImage, 0, 0, null);
-            } finally {
-                graphics.dispose(); // Graphics 객체 close
-            }
-            return newImage;
-        } catch (IOException e){
-            throw new Exception("Failed to resize image", e);
-        }
-    }*/
 
 }

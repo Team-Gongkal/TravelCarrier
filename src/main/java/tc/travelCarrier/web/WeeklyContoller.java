@@ -88,8 +88,8 @@ public class WeeklyContoller {
         List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
 
         Date sDate = weekly.getTravelDate().getSDate();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(sDate);
+        Calendar baseCal = Calendar.getInstance();
+        baseCal.setTime(sDate);
 
         //period만큼 비어있는 DAY 포함해주기
         List<WeeklyDTO> allWdList = new ArrayList<>();
@@ -103,6 +103,7 @@ public class WeeklyContoller {
                 }
             }
             if(!flag) {
+                Calendar cal = (Calendar) baseCal.clone();
                 cal.add(Calendar.DATE, p-1);
                 allWdList.add(new WeeklyDTO(p, cal.getTime()));
             }

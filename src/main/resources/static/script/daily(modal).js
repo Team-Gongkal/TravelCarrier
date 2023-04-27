@@ -13,7 +13,7 @@ var result = dailies.reduce(function (acc, curr) {
     file: curr.attachThumb,
     title: curr.attachDailyTitle,
     text: curr.attachDailyText,
-    thumb: curr.Thumb ? 1 : 0,
+    thumb: curr.thumb ? 1 : 0
   };
   acc[curr.dailyDate].push(daily);
   return acc;
@@ -65,9 +65,9 @@ function setDataArr(event) {
 function removeRightForm() {
   $('li[class="clickImg"]').removeAttr("class");
   $('div.daily_title input[type="text"]').val("");
-  $('div.daily_text input[type="textarea"]').val("");
+  $('div.daily_text textarea').val("");
   $('input[type="radio"]').prop("checked", false);
-  $("p.filePath").text("파일명.jpg");
+  $("div.filePath p").text("");
 }
 // 사진 클릭이벤트
 $(document).on("click", "ul.Dform_imglist li img", function (event) {
@@ -140,7 +140,6 @@ function getCurrentDataArr() {
 
 // function : formDataArr를 폼에 띄우기 (by.서현)
 function drawThumbs() {
-  console.log("selectArr");
   //전체를 그리는 메소드이므로 그리기 전에 이전 데이터 싹 지우기
   if (selectArr.length > 0) {
     $(".default_Dform_imgs").hide();
