@@ -104,14 +104,15 @@
           yyyy-mm-dd</p>
       </div>
       <div class="diary_slides">
-        <ul class="diary_slide">
-          <li th:each="daily : ${dailies}" class="d_slide square sqr">
+        <ul th:each="groupedDaily : ${groupedDailies}" th:class="${groupedDaily.key}" class="diary_slide">
+          <li th:each="daily : ${groupedDaily.value}" th:id="${daily.attachNo}" class="d_slide square sqr">
             <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
             <p th:text="${daily.attachDailyTitle}">타이틀</p>
             <p th:text="${daily.attachDailyText}">텍스트</p>
           </li>
 
         </ul>
+
       </div>
       <div class="writing circle">
         <img src="/image/daily/icon/pencil.png" alt="edit daily">

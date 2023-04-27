@@ -29,8 +29,7 @@ import java.util.UUID;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-
-
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -47,10 +46,13 @@ public class AttachService {
      * 데일리 폼 저장하는 메소드
      * */
     public String saveAttachDaily(Weekly weekly, Map<String, List<DailyForm>> dailyFormMap) throws Exception {
-        //1.서버에 파일 저장
+        //1.서버에 파일 저장 : attachNo가 -1인것만 저장
         for (Map.Entry<String, List<DailyForm>> entry : dailyFormMap.entrySet()) {
             String day = entry.getKey();
-            List<DailyForm> dfList = entry.getValue();
+            List<DailyForm> dfList = entry.getValue().stream()
+                    .filter(form -> form.getAttachNo() == -1)
+                    .collect(Collectors.toList());
+
             for (DailyForm form : dfList) {
                 //각 첨부파일을 서버에 저장
                 String[] saveArr = saveAttach(form.getFile(), "daily"); //{이름, 첨부파일경로}

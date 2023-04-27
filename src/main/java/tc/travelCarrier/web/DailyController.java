@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
+import tc.travelCarrier.dto.DailyDTOComparator;
 import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/TravelCarrier")
@@ -32,16 +34,27 @@ public class DailyController {
     public String getDaily(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
-        Collections.sort(dailies);
+        Collections.sort(dailies, new DailyDTOComparator());
+        System.out.println("sort된 dailies :"+dailies.toString());
+
+        Map<String, List<DailyDTO>> groupedDailies = new LinkedHashMap<>();
+        for (DailyDTO daily : dailies) {
+            String dailyDate = daily.getDailyDate();
+            List<DailyDTO> list = groupedDailies.getOrDefault(dailyDate, new ArrayList<>());
+            list.add(daily);
+            groupedDailies.put(dailyDate, list);
+        }
+        System.out.println("groupedDailies : "+groupedDailies.toString());
+
+
+
         //일수 계산
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
+
         model.addAttribute("period", period);
         model.addAttribute("dailies", dailies);
         model.addAttribute("weekly",weekly);
-        System.out.println("dailyDTO");
-        System.out.println("dailyDTO");
-        System.out.println("dailyDTO");
-        System.out.println(dailies.toString());
+        model.addAttribute("groupedDailies", groupedDailies);
         System.out.println("period"+period);
         return "test/daily(modal)";
     }
@@ -59,7 +72,8 @@ public class DailyController {
                                @RequestParam("texts") List<String> textList,
                                @RequestParam("days") List<String> dayList,
                                @RequestParam("sorts") List<Integer> sortList,
-                               @RequestParam("thumbs") List<Integer> thumbList) throws Exception {
+                               @RequestParam("thumbs") List<Integer> thumbList,
+                               @RequestParam("attachNo") List<Integer> attachNoList) throws Exception {
         System.out.println("===========================================");
         //map 형태로 데이터 받기
         //{DAY1, List<DailyForm>}
@@ -68,7 +82,7 @@ public class DailyController {
             String day = dayList.get(i);
             List<DailyForm> dailyFormList = dailyMap.getOrDefault(day, new ArrayList<>());
             DailyForm dailyForm = new DailyForm( fileList.get(i),  titleList.get(i), thumbList.get(i),
-                    textList.get(i), sortList.get(i) );
+                    textList.get(i), sortList.get(i), attachNoList.get(i) );
             dailyFormList.add(dailyForm);
             dailyMap.put(day, dailyFormList);
         }
