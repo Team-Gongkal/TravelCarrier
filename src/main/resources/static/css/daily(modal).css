@@ -21,8 +21,7 @@ main.daily {
   height: 20rem;
   border-radius: 1rem;
   overflow: hidden;
-  object-fit: cover;
-  box-shadow: 1px 01px 5px 0.1px #b3b3b3;
+  position: relative;
 }
 .sqr {
   width: 20rem;
@@ -352,7 +351,6 @@ ul.days_tabSlide li.Dtab span.on {
 /* input */
 .Dform input,
 .Dform textarea {
-  /* border: 0.1px solid #b3b3b3; */
   box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
 }
 /* 이미지 파일명 및 이미지 변경 */
@@ -520,10 +518,10 @@ button.Dform_btn_del:hover {
 .diary_viewport {
   width: 100%;
   height: 20rem;
-  border: 1px solid rgb(239, 238, 233);
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
+  display: flex;
 }
 /* 슬라이드 양 끝 흐림 효과 */
 .diary_viewport::before {
@@ -565,7 +563,6 @@ background: none;
   display: flex;
 }
 ul.diary_list {
-  width: 120%;
   display: flex;
   cursor: pointer;
 }
@@ -579,13 +576,19 @@ ul.diary_list {
 }
 
 ul.diary_list > li {
-  margin: 0 0.5rem;
+  margin-right : 1rem;
+  position: relative;
 }
-.diary_list img {
+.diary_list > li > img {
   width: 100%;
   height: auto;
+  min-height: 320px;
   max-width: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .diary_noH .circle {
