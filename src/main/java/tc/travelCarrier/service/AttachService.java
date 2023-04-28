@@ -29,7 +29,8 @@ import java.util.UUID;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.util.stream.Collectors;
+
+
 
 
 @RequiredArgsConstructor
@@ -45,14 +46,11 @@ public class AttachService {
     /**
      * 데일리 폼 저장하는 메소드
      * */
-    public String saveAttachDaily(Weekly weekly, Map<String, List<DailyForm>> dailyFormMap) throws Exception {
-        //1.서버에 파일 저장 : attachNo가 -1인것만 저장
+    public void saveAttachDaily(Weekly weekly, Map<String, List<DailyForm>> dailyFormMap) throws Exception {
+        //1.서버에 파일 저장
         for (Map.Entry<String, List<DailyForm>> entry : dailyFormMap.entrySet()) {
             String day = entry.getKey();
-            List<DailyForm> dfList = entry.getValue().stream()
-                    .filter(form -> form.getAttachNo() == -1)
-                    .collect(Collectors.toList());
-
+            List<DailyForm> dfList = entry.getValue();
             for (DailyForm form : dfList) {
                 //각 첨부파일을 서버에 저장
                 String[] saveArr = saveAttach(form.getFile(), "daily"); //{이름, 첨부파일경로}
@@ -60,12 +58,24 @@ public class AttachService {
                 form.setPath(saveArr[1]);
             }
             // DAY1에 대한 모든 첨부파일을 데일리 엔티티 세팅해서
-            // DB저장
-            weekly.addDailies(Daily.createDaily(day, dfList));
+            // DB저장 - 만약 이전에 해당 DAY가 있었으면 거기에 추가만 하면 됨..
+            boolean flag = false;
+            for(Daily d : weekly.getDailys()){
+                if(day.equals(d.getDailyDate())) {
+                    flag = true;
+                    d.updateAttachDailies(dfList);
+                    break;
+                }
+            }
+            if(!flag){
+                // 이전에 해당 DAY가 존재하지 않았다면
+                weekly.addDailies(Daily.createDaily(day, dfList));
+                //list를 만들어서 attachDaily넣어주고 이어준다.
+            }
+
         }
         //DB에 저장
         weeklyRepository.save(weekly);
-        return "success";
     }
 
     /**
@@ -84,6 +94,15 @@ public class AttachService {
         attachRepository.save(attachWeekly);
 
         return 1;
+    }
+
+
+    // attachNo를 삭제하는 메소드
+    public void deleteAttachDaily(List<Integer> deleteNos) {
+        for(int no : deleteNos){
+            attachRepository.deleteById(no);
+        }
+
     }
 
     /**

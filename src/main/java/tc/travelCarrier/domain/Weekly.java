@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.With;
+import tc.travelCarrier.dto.DailyForm;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @ToString
@@ -96,6 +94,7 @@ public class Weekly {
 
         return weekly;
     }
+
 
 
 }

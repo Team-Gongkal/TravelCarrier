@@ -1,6 +1,5 @@
 package tc.travelCarrier.web;
 
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +9,7 @@ import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.dto.DailyDTOComparator;
 import tc.travelCarrier.dto.DailyForm;
+import tc.travelCarrier.dto.FileOrPath;
 import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
@@ -73,23 +73,59 @@ public class DailyController {
                                @RequestParam("days") List<String> dayList,
                                @RequestParam("sorts") List<Integer> sortList,
                                @RequestParam("thumbs") List<Integer> thumbList,
-                               @RequestParam("attachNo") List<Integer> attachNoList) throws Exception {
+                               @RequestParam("attachNos") List<Integer> attachNoList,
+                               @RequestParam("dupdate") List<String> dupdateList,
+                               @RequestParam("deleteNos") List<Integer> deleteNos) throws Exception {
         System.out.println("===========================================");
-        //map 형태로 데이터 받기
-        //{DAY1, List<DailyForm>}
+        Weekly weekly = weeklyService.findWeekly(weeklyId);
+
+        //map 형태로 데이터 바인딩
         Map<String, List<DailyForm>> dailyMap = new HashMap<>();
         for(int i=0; i<fileList.size(); i++){
             String day = dayList.get(i);
             List<DailyForm> dailyFormList = dailyMap.getOrDefault(day, new ArrayList<>());
-            DailyForm dailyForm = new DailyForm( fileList.get(i),  titleList.get(i), thumbList.get(i),
-                    textList.get(i), sortList.get(i), attachNoList.get(i) );
+            DailyForm dailyForm = new DailyForm(fileList.get(i),  titleList.get(i), thumbList.get(i),
+                    textList.get(i), sortList.get(i), attachNoList.get(i), dupdateList.get(i));
             dailyFormList.add(dailyForm);
             dailyMap.put(day, dailyFormList);
         }
 
-        Weekly weekly = weeklyService.findWeekly(weeklyId);
-        String result = attachService.saveAttachDaily(weekly,dailyMap);
+
+        // 삭제로직 :deleteNos의 attachNo들을 삭제
+        attachService.deleteAttachDaily(deleteNos);
+
+        // 추가로직
+        Map<String, List<DailyForm>> newFileMap = getNewFileMap(dailyMap);
+        attachService.saveAttachDaily(weekly,newFileMap);
+
+        // 수정로직
+        System.out.println("수정할 파일 : "+dailyMap);
+        dailyService.updateAttachDaily(dailyMap);
+
+
+
         return "success";
     }
+
+    private Map<String, List<DailyForm>> getNewFileMap(Map<String, List<DailyForm>> dailyMap) {
+        Map<String, List<DailyForm>> newFileMap = new HashMap<>();
+        for (Map.Entry<String, List<DailyForm>> entry : dailyMap.entrySet()) {
+            List<DailyForm> dailyFormList = entry.getValue();
+            List<DailyForm> filteredList = new ArrayList<>();
+            // -1인 데이터를 찾아서 삭제
+            Iterator<DailyForm> iterator = dailyFormList.iterator();
+            while (iterator.hasNext()) {
+                DailyForm dailyForm = iterator.next();
+                if (dailyForm.getAttachNo() == -1) {
+                    iterator.remove();
+                    filteredList.add(dailyForm);
+                }
+            }
+            // 새로운 맵에 추가
+            newFileMap.put(entry.getKey(), filteredList);
+        }
+        return newFileMap;
+    }
+
 }
 

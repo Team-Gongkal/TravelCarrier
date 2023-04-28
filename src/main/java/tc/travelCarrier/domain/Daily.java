@@ -44,6 +44,17 @@ public class Daily {
         daily.setAttachDailies(daily.createAttachDailies(formList));
         return daily;
     }
+    
+    // 이미 존재하는 DAY의 경우 이전데이터에 dfList만 추가
+    public List<AttachDaily> updateAttachDailies(List<DailyForm> formList) {
+        List<AttachDaily> attachDailyList = attachDailies;
+        for(DailyForm form : formList) {
+            AttachDaily ad = AttachDaily.createAttachDaily(form);
+            ad.setDaily(this);
+            attachDailyList.add(ad);
+        }
+        return attachDailyList;
+    }
 
     private List<AttachDaily> createAttachDailies(List<DailyForm> formList) {
         List<AttachDaily> attachDailyList = new ArrayList<>();
@@ -54,6 +65,9 @@ public class Daily {
         }
         return attachDailyList;
     }
+
+
+
 
     //weekly에 dailys 추가했을때 daily에도 this로 weekly 셋탕
     //daily에 attach_dailys 추가했을때 attach_daily에도 this로 daily 셋팅

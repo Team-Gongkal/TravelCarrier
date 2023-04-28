@@ -23,6 +23,13 @@ public class AttachRepository {
         em.persist(attachDaily);
     }
 
+
     // 프로필 사진 저장
+    public void deleteById(int no) {
+        AttachDaily attachDaily = em.find(AttachDaily.class, no);
+        em.remove(attachDaily);
+    }
+
+
 
 }

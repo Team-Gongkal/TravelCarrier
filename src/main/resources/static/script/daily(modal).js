@@ -14,7 +14,8 @@ var result = dailies.reduce(function (acc, curr) {
     title: curr.attachDailyTitle,
     text: curr.attachDailyText,
     thumb: curr.thumb ? 1 : 0,
-    attachNo : curr.attachNo
+    attachNo : curr.attachNo,
+    dupdate : ""
   };
   acc[curr.dailyDate].push(daily);
   return acc;
@@ -58,10 +59,22 @@ function setDataArr(event) {
     formData.append("text", "");
     formData.append("thumb", 0);
     formData.append("attachNo", -1);
+    formData.append("dupdate", "");
     formDataArr.push(formData);
   }
-  var obj = { day: [$(".days_tabSlide .on").text()], data: formDataArr };
-  dataArr.push(obj);
+
+  var days = [$(".days_tabSlide .on").text()];
+  var obj = dataArr.find(function (item) {
+    return item.day[0] === days[0];
+  });
+  if (obj) {
+    obj.data = formDataArr;
+  } else {
+    console.log("이전에 데이터가 없네요")
+    var obj = { day: days, data: formDataArr };
+    dataArr.push(obj);
+  }
+
 }
 
 // 오른쪽 폼(제목,메모,경로,대표) 비우기
@@ -83,7 +96,15 @@ $(document).on("click", "ul.Dform_imglist li img", function (event) {
       selectArr[liIndex].get("title")
     );
     $("div.daily_text textarea").val(selectArr[liIndex].get("text"));
-    $("div.daily_files p").text(selectArr[liIndex].get("file").name);
+    if(selectArr[liIndex].get("file") instanceof File){
+     $("div.daily_files p").text(selectArr[liIndex].get("file").name);
+    }else{
+    const filePath = selectArr[liIndex].get("file");
+    const fileName = filePath.split("/").pop();
+    const dailyFileName = fileName.substring("daily/".length);
+     $("div.daily_files p").text(dailyFileName);
+    }
+
     if (selectArr[liIndex].get("thumb") == 0) {
       $('input[type="radio"]').prop("checked", false);
     } else if (selectArr[liIndex].get("thumb") == 1) {
@@ -125,7 +146,16 @@ $(document).on("click", "ul.days_tabSlide li", function () {
 
   //처음 로드시엔 맨 처음요소 선택하게 하기..(사진 없을경우 동작하지 않으므로 미리 없애놓자)
   removeRightForm();
-  $("ul.Dform_imglist li:first img").click();
+
+  console.log(selectArr.length);
+  if(liIndex !== ('ul.Dform_imglist li').length-1 ){
+    $('ul.Dform_imglist li').eq(liIndex).find('img').click();
+  }else {
+    alert("last");
+    $("ul.Dform_imglist li:last img").click();
+  }
+
+  //$("ul.Dform_imglist li:first img").click();
 });
 
 //현재 선택한 formDataArr을 전역변수 selectArr에 셋팅
@@ -139,6 +169,8 @@ function getCurrentDataArr() {
   } else {
     selectArr = [];
   }
+  console.log(dataArr);
+  console.log(selectArr);
 }
 
 // function : formDataArr를 폼에 띄우기 (by.서현)
@@ -149,7 +181,6 @@ function drawThumbs() {
     $(".Dform_imgs").show();
     $(".Dform_imglist").empty();
     var tmp = 0;
-
     for (const formData of selectArr) {
       var file = formData.get("file");
 
@@ -170,6 +201,7 @@ function drawThumbs() {
           .append(img);
       }
       li.attr("data-attachNo", formData.get("attachNo"));
+      li.attr("data-update", formData.get("dupdate"));
       $(".Dform_imglist").append(li);
       tmp++;
     }
@@ -194,10 +226,11 @@ $(document).on("change", "#fileChange", function (event) {
   var tmpIndex = liIndex;
   var formData = new FormData();
   formData.append("file", event.target.files[0]);
-  formData.append("title", "");
-  formData.append("text", "");
-  formData.append("thumb", 0);
-  formData.append("attachNo", -1);
+  formData.append("title", selectArr[liIndex].get("title"));
+  formData.append("text", selectArr[liIndex].get("text"));
+  formData.append("thumb", selectArr[liIndex].get("thumb"));
+  formData.append("attachNo", selectArr[liIndex].get("attachNo"));
+  formData.append("dupdate", "file");
   selectArr[liIndex] = formData;
   // 데이터 바꿨으니까 화면 리로드
   // day 클릭한번, 이미지 클릭 한번
@@ -207,13 +240,18 @@ $(document).on("change", "#fileChange", function (event) {
 
 //이미지 삭제 : 선택된 이미지 한번더 클릭
 //sort는 전송시 인덱스를 넣어주는것이므로 이미지 삭제는 그냥 배열에서 없애주기만 하면됨!
+var deleteArr = []; //삭제할 attachNo를 넣는 배열
 $(document).on("click", "li.clickImg", function (event) {
   var tmpIndex = liIndex;
   if (confirm("삭제하시겠습니까?")) {
+    //만약 attachNo=-1이면 그냥 삭제, attachNo!=-1이면 삭제배열에 attachNo 넣어두기
+    if(selectArr[liIndex].get('attachNo') !== "-1"){
+        deleteArr.push(selectArr[liIndex].get('attachNo'));
+    }
     selectArr.splice(liIndex, 1);
-    alert("삭제 완료되었습니다.");
     $("ul.days_tabSlide .on").click();
-    //$('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
+
+    //$('ul.Dform_imglist li').eq(liIndex).find('img').click();
   }
 });
 
@@ -240,49 +278,55 @@ $("ul.Dform_imglist").sortable({
 // formDataArr : [{formData},{file,title, text,thumb},{file,title, text,thumb}]
 $(document).on("click", "button.Dform_btn_save", function (event) {
   event.preventDefault();
+    //url 구해두기
+    var currentUrl = window.location.href;
+    var match = currentUrl.match(/weekly\/(\d+)\/daily/);
+
+
   // 서버로 데이터 전송
   //dataArr : [ {day,data}, {DAY1,formDataArr[0]},{DAY2,formDataArr[1]} ]
   //data: [{file,title,text,thumb},{file,title,text,thumb}]
-
-  //url 구해두기
-  var currentUrl = window.location.href;
-
-  var match = currentUrl.match(/weekly\/(\d+)\/daily/);
-  //var weekyId = match && match[1];
-  //var url = `/TravelCarrier/weekly/${weekyId}/daily/create`;
   var postData = new FormData();
+  console.log("===============================");
   for (var i = 0; i < dataArr.length; i++) {
     // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
     // formDataArr : [{file,title,text,thumb},{file,title,text,thumb}]
     var arr = dataArr[i];
     var formDataArr = arr.data;
-
     for (var j = 0; j < formDataArr.length; j++) {
+    if(formDataArr[j].get("file") instanceof File){
       postData.append("files", formDataArr[j].get("file"));
+    }else{
+      postData.append("files", new File([], 'tmp.txt', {type: 'text/plain', lastModified: Date.now()}));
+    }
       postData.append("titles", formDataArr[j].get("title"));
       postData.append("texts", formDataArr[j].get("text"));
       postData.append("thumbs", formDataArr[j].get("thumb"));
       postData.append("days", "DAY" + (i + 1));
       postData.append("sorts", j);
-      postData.append("attachNo", formDataArr[j].get("attachNo"));
+      postData.append("attachNos", formDataArr[j].get("attachNo"));
+      postData.append("dupdate", formDataArr[j].get("dupdate"));
     }
     // file끼리 모으고 {title,text,thumb}끼리 묶어서 얘넨 json으로 보내자
   }
 
+  postData.append("deleteNos", deleteArr);
+
   $.ajax({
-    url: currentUrl+'/create',
+    url: '/TravelCarrier/weekly/82/daily'+'/create',
     type: "POST",
     data: postData,
     processData: false,
     contentType: false,
     success: function (response) {
       alert("성공해따아아아앙악");
+      //바뀐 attachNo를 업데이트 해줘야함!!
     },
     error: function (error) {
-      console.error("응 실패 ㅋㅋ");
-      console.error(error);
+      alert("응 실패 ㅋㅋ"+error);
     },
   });
+
 });
 
 // 시작 폼 모달창 띄우기 - by윤아

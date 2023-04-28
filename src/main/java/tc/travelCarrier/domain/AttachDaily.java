@@ -44,4 +44,17 @@ public class AttachDaily extends Attach{
         attachDaily.setThumb(dailyForm.getThumb()!=0); //0이 아니면, 즉 1이면 true 반환
         return attachDaily;
     }
+
+    public void updateField(DailyForm form) {
+        title = form.getTitle();
+        text = form.getText();
+        sort = form.getSort();
+        if(form.getThumb() == 1) thumb = true;
+        else if(form.getThumb() ==0) thumb = false;
+    }
+
+    public void updateFile(String newTitle, String thumbPath) {
+        attachTitle = newTitle;
+        this.thumbPath = thumbPath;
+    }
 }
