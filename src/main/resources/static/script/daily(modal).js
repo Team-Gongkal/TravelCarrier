@@ -3,38 +3,42 @@ var liIndex = "";
 //formData day정보와 함께 배열로 저장한다. [ {DAY1,{file,title, text,thumb}},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
 //선택한 tap에 해당하는 formDataArr을 저장 [{file,title, text,thumb},{file,title, text,thumb},{file,title, text,thumb}]
 var selectArr = [];
+var dataArr = [];
 
-// dataArr 배열 초기화 (이전 데이터 존재하면 그걸로 초기화 해줘야함)
-var result = dailies.reduce(function (acc, curr) {
-  if (!acc[curr.dailyDate]) {
-    acc[curr.dailyDate] = [];
-  }
-  var daily = {
-    file: curr.attachThumb,
-    title: curr.attachDailyTitle,
-    text: curr.attachDailyText,
-    thumb: curr.thumb ? 1 : 0,
-    attachNo : curr.attachNo,
-    dupdate : ""
-  };
-  acc[curr.dailyDate].push(daily);
-  return acc;
-}, {});
-
-var dataArr = Object.keys(result).map(function (key) {
-  return {
-    day: [key],
-    data: result[key].map(function (item) {
-      var formData = new FormData();
-      for (var key in item) {
-        formData.append(key, item[key]);
+// 맨처음 dataArr 배열 초기화 (이전 데이터 존재하면 그걸로 초기화 해줘야함)
+function setFirst(dailies){
+    var result = dailies.reduce(function (acc, curr) {
+      if (!acc[curr.dailyDate]) {
+        acc[curr.dailyDate] = [];
       }
-      return formData;
-    }),
-  };
-});
+      var daily = {
+        file: curr.attachThumb,
+        title: curr.attachDailyTitle,
+        text: curr.attachDailyText,
+        thumb: curr.thumb ? 1 : 0,
+        attachNo : curr.attachNo,
+        dupdate : ""
+      };
+      acc[curr.dailyDate].push(daily);
+      return acc;
+    }, {});
+
+    dataArr = Object.keys(result).map(function (key) {
+      return {
+        day: [key],
+        data: result[key].map(function (item) {
+          var formData = new FormData();
+          for (var key in item) {
+            formData.append(key, item[key]);
+          }
+          return formData;
+        }),
+      };
+    });
+}
 
 $(document).ready(function () {
+  setFirst(dailies);
   getCurrentDataArr();
   drawThumbs();
   //첫번째 탭 자동클릭
@@ -146,19 +150,11 @@ $(document).on("click", "ul.days_tabSlide li", function () {
 
   //처음 로드시엔 맨 처음요소 선택하게 하기..(사진 없을경우 동작하지 않으므로 미리 없애놓자)
   removeRightForm();
-
-  console.log(selectArr.length);
-  if(liIndex !== ('ul.Dform_imglist li').length-1 ){
-    $('ul.Dform_imglist li').eq(liIndex).find('img').click();
-  }else {
-    alert("last");
-    $("ul.Dform_imglist li:last img").click();
-  }
-
-  //$("ul.Dform_imglist li:first img").click();
+  $("ul.Dform_imglist li:first img").click();
 });
 
 //현재 선택한 formDataArr을 전역변수 selectArr에 셋팅
+
 function getCurrentDataArr() {
   //탭이 바뀌면 왼쪽 미리보기도 싹 바뀌어야한다.
   // 클릭한 DAY 정보에 대한 data 셋팅
@@ -250,9 +246,19 @@ $(document).on("click", "li.clickImg", function (event) {
     }
     selectArr.splice(liIndex, 1);
     $("ul.days_tabSlide .on").click();
-
-    //$('ul.Dform_imglist li').eq(liIndex).find('img').click();
   }
+
+  console.log(tmpIndex); //tmp와 length 둘다 0부터 시작함
+  console.log($('ul.Dform_imglist li').length-1);
+  if(tmpIndex == $('ul.Dform_imglist li').length-1){
+    $("ul.Dform_imglist li").eq(tmpIndex-1).find('img').click();
+  }else if(tmpIndex == 0){
+    // 아무것도 하지않음
+  }
+  else{
+    $('ul.Dform_imglist li').eq(tmpIndex).find('img').click();
+   }
+
 });
 
 //이미지 순서 변경
@@ -318,9 +324,14 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
     data: postData,
     processData: false,
     contentType: false,
-    success: function (response) {
+    success: function (dailies) {
       alert("성공해따아아아앙악");
       //바뀐 attachNo를 업데이트 해줘야함!!
+       setFirst(dailies);
+       getCurrentDataArr();
+       drawThumbs();
+       //첫번째 탭 자동클릭
+       $("ul.days_tabSlide li:first").click();
     },
     error: function (error) {
       alert("응 실패 ㅋㅋ"+error);

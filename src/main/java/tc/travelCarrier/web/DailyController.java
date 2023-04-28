@@ -9,13 +9,11 @@ import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.dto.DailyDTOComparator;
 import tc.travelCarrier.dto.DailyForm;
-import tc.travelCarrier.dto.FileOrPath;
 import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/TravelCarrier")
@@ -35,7 +33,6 @@ public class DailyController {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
         Collections.sort(dailies, new DailyDTOComparator());
-        System.out.println("sort된 dailies :"+dailies.toString());
 
         Map<String, List<DailyDTO>> groupedDailies = new LinkedHashMap<>();
         for (DailyDTO daily : dailies) {
@@ -44,10 +41,6 @@ public class DailyController {
             list.add(daily);
             groupedDailies.put(dailyDate, list);
         }
-        System.out.println("groupedDailies : "+groupedDailies.toString());
-
-
-
         //일수 계산
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
 
@@ -66,7 +59,7 @@ public class DailyController {
      * */
     @PostMapping("/weekly/{weeklyId}/daily/create")
     @ResponseBody
-    public String createDaily (@PathVariable("weeklyId") int weeklyId,
+    public List<DailyDTO> createDaily (@PathVariable("weeklyId") int weeklyId,
                                @RequestParam("files") List<MultipartFile> fileList,
                                @RequestParam("titles") List<String> titleList,
                                @RequestParam("texts") List<String> textList,
@@ -76,9 +69,7 @@ public class DailyController {
                                @RequestParam("attachNos") List<Integer> attachNoList,
                                @RequestParam("dupdate") List<String> dupdateList,
                                @RequestParam("deleteNos") List<Integer> deleteNos) throws Exception {
-        System.out.println("===========================================");
         Weekly weekly = weeklyService.findWeekly(weeklyId);
-
         //map 형태로 데이터 바인딩
         Map<String, List<DailyForm>> dailyMap = new HashMap<>();
         for(int i=0; i<fileList.size(); i++){
@@ -93,18 +84,19 @@ public class DailyController {
 
         // 삭제로직 :deleteNos의 attachNo들을 삭제
         attachService.deleteAttachDaily(deleteNos);
-
         // 추가로직
         Map<String, List<DailyForm>> newFileMap = getNewFileMap(dailyMap);
         attachService.saveAttachDaily(weekly,newFileMap);
-
         // 수정로직
-        System.out.println("수정할 파일 : "+dailyMap);
         dailyService.updateAttachDaily(dailyMap);
 
+        // 응답
+        List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
+        Collections.sort(dailies, new DailyDTOComparator());
 
+        System.out.println(dailies);
 
-        return "success";
+        return dailies;
     }
 
     private Map<String, List<DailyForm>> getNewFileMap(Map<String, List<DailyForm>> dailyMap) {
