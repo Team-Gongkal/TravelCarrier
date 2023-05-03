@@ -116,43 +116,6 @@
         <div class="diary_viewport">
           <div class="diary_slides">
             <ul th:each="groupedDaily : ${groupedDailies}" th:class="${groupedDaily.key} + ' diary_list'"
-                class="diary_list">
-              <li th:each="daily : ${groupedDaily.value}" th:id="${daily.attachNo}" class="d_slide square">
-                <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
-              </li>
-            </ul>
-          </div>
-        </div>
-
-      <div class="writing circle">
-        <img src="/image/daily/icon/pencil.png" alt="edit daily">
-      </div>
-      <div class="diary_textbox">
-        <ul>
-          <li th:each="daily : ${dailies}">
-            <h6 th:text="${daily.attachDailyTitle}"></h6>
-            <p th:text="${daily.attachDailyText}"></p>
-          </li>
-        </ul>
-      <div class="center">
-        <div class="filter"></div>
-        <div class="diary_titlebox">
-          <h1 th:text="${weekly.title}">PARIS</h1>
-          <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
-            yyyy-mm-dd</p>
-          <div class="diary_textbox on">
-            <ul>
-              <li th:each="daily : ${dailies}">
-                <h6 th:text=" ${daily.attachDailyTitle}">
-                </h6>
-                <p th:text="${daily.attachDailyText}"></p>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="diary_viewport">
-          <div class="diary_slides">
-            <ul th:each="groupedDaily : ${groupedDailies}" th:class="${groupedDaily.key} + ' diary_list'"
               class="diary_list">
               <li th:each="daily : ${groupedDaily.value}" th:id="${daily.attachNo}" class="d_slide square">
                 <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
@@ -163,8 +126,50 @@
             </ul>
           </div>
         </div>
+
         <div class="writing circle">
           <img src="/image/daily/icon/pencil.png" alt="edit daily">
+        </div>
+        <div class="diary_textbox">
+          <ul>
+            <li th:each="daily : ${dailies}">
+              <h6 th:text="${daily.attachDailyTitle}"></h6>
+              <p th:text="${daily.attachDailyText}"></p>
+            </li>
+          </ul>
+          <div class="center">
+            <div class="filter"></div>
+            <div class="diary_titlebox">
+              <h1 th:text="${weekly.title}">PARIS</h1>
+              <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
+                yyyy-mm-dd</p>
+              <div class="diary_textbox on">
+                <ul>
+                  <li th:each="daily : ${dailies}">
+                    <h6 th:text=" ${daily.attachDailyTitle}">
+                    </h6>
+                    <p th:text="${daily.attachDailyText}"></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="diary_viewport">
+              <div class="diary_slides">
+                <ul th:each="groupedDaily : ${groupedDailies}" th:class="${groupedDaily.key} + ' diary_list'"
+                  class="diary_list">
+                  <li th:each="daily : ${groupedDaily.value}" th:id="${daily.attachNo}" class="d_slide square">
+                    <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
+                    <div class="reply_icon">
+                      <img src="/image/daily/icon/message.png" alt="댓글아이콘이미지">
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="writing circle">
+              <img src="/image/daily/icon/pencil.png" alt="edit daily">
+            </div>
+          </div>
         </div>
       </div>
     </div>

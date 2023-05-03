@@ -711,7 +711,8 @@ ul.diary_list > li {
   border-radius: 10px;
 }
 
-/* 댓글 UI */
+/* 댓글 UI
+------------------------------------------------------------------*/
 .reply_icon {
   width: 2.2rem;
   /* height: 2.5rem; */
