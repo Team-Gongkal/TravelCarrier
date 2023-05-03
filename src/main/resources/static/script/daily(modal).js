@@ -271,6 +271,10 @@ $(document).on("change", "#fileChange", function (event) {
 var deleteArr = []; //삭제할 attachNo를 넣는 배열
 $(document).on("click", "li.clickImg", function (event) {
   var tmpIndex = liIndex;
+
+  var isLast = false;
+  if (tmpIndex == selectArr.length - 1) { isLast = true; }
+
   if (confirm("삭제하시겠습니까?")) {
     //만약 attachNo=-1이면 그냥 삭제, attachNo!=-1이면 삭제배열에 attachNo 넣어두기
     if (selectArr[liIndex].get("attachNo") !== "-1") {
@@ -280,18 +284,9 @@ $(document).on("click", "li.clickImg", function (event) {
     $("ul.days_tabSlide .on").click();
   }
 
-  console.log(tmpIndex); //tmp와 length 둘다 0부터 시작함
-  console.log($("ul.Dform_imglist li").length - 1);
-  if (tmpIndex == $("ul.Dform_imglist li").length - 1) {
-    $("ul.Dform_imglist li")
-      .eq(tmpIndex - 1)
-      .find("img")
-      .click();
-  } else if (tmpIndex == 0) {
-    // 아무것도 하지않음
-  } else {
-    $("ul.Dform_imglist li").eq(tmpIndex).find("img").click();
-  }
+  //방금 삭제한게 마지막이면 마지막요소 클릭하도록
+  if(isLast) $("ul.Dform_imglist li").eq(selectArr.length-1).find("img").click();
+
 });
 
 //이미지 순서 변경
