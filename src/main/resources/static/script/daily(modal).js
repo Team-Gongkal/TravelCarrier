@@ -395,15 +395,17 @@ $(window).on("load", function () {
 
   //슬라이드의 너비 구하기
   var slide_width = $(".diary_slides").outerWidth();
-  console.log(slide_width); //5519
+  console.log(slide_width); //2120
 
   //슬라이드 복제하기 (clone-복제 / append-붙여넣기)
   let clone_slide = $(".diary_slides:first").clone();
   $(".diary_viewport").append(clone_slide);
 
   //위치값이 0,0이라 곂치지 않게 두 슬라이드의 위치 지정
-  $(".diary_slides:first").css("left", "0px");
-  $(".diary_slides:last").css("left", slide_width + "px");
+  $(".diary_slides").eq(0).css("left", "0px");
+  $(".diary_slides")
+    .eq(1)
+    .css("left", slide_width + "px");
 
   //이동 애니메이션 함수만들기
   function moving(x, slide) {
@@ -413,7 +415,7 @@ $(window).on("load", function () {
     if (slide_width + (left - x) <= 0) {
       slide.css("left", slide_width + "px");
     }
-    if ($(".diary_slides:first").outerWidth() + (left - x) <= 0) {
+    if ($(".diary_slides").eq(0).outerWidth() + (left - x) <= 0) {
       slide.css("left", slide_width + "px");
     }
   }
@@ -422,12 +424,12 @@ $(window).on("load", function () {
   var movingDistance = 1;
 
   var originMove = setInterval(() => {
-    moving(movingDistance, $(".diary_slides:first"));
-  }, parseInt(1000 / 10));
+    moving(movingDistance, $(".diary_slides").eq(0));
+  }, parseInt(1000 / 100));
 
   var cloneMove = setInterval(() => {
-    moving(movingDistance, $(".diary_slides:last"));
-  }, parseInt(1000 / 10));
+    moving(movingDistance, $(".diary_slides").eq(1));
+  }, parseInt(1000 / 100));
 
   //슬라이드 mouseleave시 슬라이드 재생
   $(".diary_slides").on("mouseleave", function () {
@@ -435,11 +437,11 @@ $(window).on("load", function () {
 
     setTimeout(function () {
       originMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides:first"));
-      }, parseInt(1000 / 10));
+        moving(movingDistance, $(".diary_slides").eq(0));
+      }, parseInt(1000 / 100));
       cloneMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides:last"));
-      }, parseInt(1000 / 10));
+        moving(movingDistance, $(".diary_slides").eq(1));
+      }, parseInt(1000 / 100));
     }, 0);
     // title, period 보이기
     $(".diary_titlebox").removeClass("hide");
