@@ -57,8 +57,13 @@ $(document).ready(function () {
               'alt': '사진표시할수없음'
             });
             newLi.append(newImg);
+            newLi.append(`<div class="reply_icon">
+                              <img src="/image/daily/icon/message.png" alt="댓글아이콘이미지">
+                            </div>`);
             newUl.append(newLi);
+
         }
+
         $('.diary_slides').append(newUl);
     }
 });
