@@ -411,13 +411,17 @@ $(window).on("load", function () {
   //이동 함수 적용하기
   var movingDistance = 1;
 
+
   var originMove = setInterval(() => {
     moving(movingDistance, $(".diary_slides:first"));
   }, parseInt(1000 / 10));
 
+
   var cloneMove = setInterval(() => {
     moving(movingDistance, $(".diary_slides:last"));
   }, parseInt(1000 / 10));
+
+
 
   //슬라이드 mouseleave시 슬라이드 재생
   $(".diary_slides").on("mouseleave", function () {
