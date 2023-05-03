@@ -53,6 +53,8 @@ $(document).ready(function () {
     for (var j = 0; j < dataArr[i].data.length; j++) {
       var newLi = $("<li>")
         .attr("id", dataArr[i].data[j].get("attachNo"))
+        .attr("data-text",dataArr[i].data[j].get("text"))
+        .attr("data-title",dataArr[i].data[j].get("title"))
         .addClass("d_slide square");
       var newImg = $("<img>").attr({
         src: dataArr[i].data[j].get("file"),
@@ -351,7 +353,6 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
 
   postData.append("deleteNos", deleteArr);
 
-  alert(extractedUrl + "/create");
   $.ajax({
     url: "/TravelCarrier/weekly/"+weeklyId+"/daily" + "/create",
     type: "POST",
