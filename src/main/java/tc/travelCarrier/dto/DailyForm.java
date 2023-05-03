@@ -19,26 +19,7 @@ public class DailyForm {
         this.attachNo = attachNo;
         this.dupdate = dupdate;
     }
-    /*public DailyForm(FileOrPath file, String title, Integer thumb,
-                     String text, Integer sort, Integer attachNo) {
-        //파일이면
-        if(file.getFile() != null && file.getPath() == null){
-            this.file = file.getFile();
-            this.title = title;
-            this.thumb = thumb;
-            this.text = text;
-            this.sort = sort;
-            this.attachNo = attachNo;
-        }else if(file.getFile() == null && file.getPath() != null){ //경로면
-            this.file = null;
-            this.title = title;
-            this.thumb = thumb;
-            this.text = text;
-            this.sort = sort;
-            this.attachNo = attachNo;
-        }
 
-    }*/
     public MultipartFile file;
     public String title;
     public Integer thumb;

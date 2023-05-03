@@ -76,7 +76,10 @@ public class DailyController {
             String day = dayList.get(i);
             List<DailyForm> dailyFormList = dailyMap.getOrDefault(day, new ArrayList<>());
             DailyForm dailyForm = new DailyForm(fileList.get(i),  titleList.get(i), thumbList.get(i),
-                    textList.get(i), sortList.get(i), attachNoList.get(i), dupdateList.get(i));
+                    textList.get(i),
+                    sortList.get(i),
+                    attachNoList.get(i),
+                    dupdateList.get(i));
             dailyFormList.add(dailyForm);
             dailyMap.put(day, dailyFormList);
         }

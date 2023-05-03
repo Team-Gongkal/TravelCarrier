@@ -17,7 +17,7 @@ function setFirst(dailies) {
       text: curr.attachDailyText,
       thumb: curr.thumb ? 1 : 0,
       attachNo: curr.attachNo,
-      dupdate: "",
+      dupdate: "notChange",
     };
     acc[curr.dailyDate].push(daily);
     return acc;
@@ -86,7 +86,7 @@ function setDataArr(event) {
     formData.append("text", "");
     formData.append("thumb", 0);
     formData.append("attachNo", -1);
-    formData.append("dupdate", "");
+    formData.append("dupdate", "notChange");
     formDataArr.push(formData);
   }
 
@@ -257,7 +257,7 @@ $(document).on("change", "#fileChange", function (event) {
   formData.append("text", selectArr[liIndex].get("text"));
   formData.append("thumb", selectArr[liIndex].get("thumb"));
   formData.append("attachNo", selectArr[liIndex].get("attachNo"));
-  formData.append("dupdate", "file");
+  formData.append("dupdate", "change");
   selectArr[liIndex] = formData;
   // 데이터 바꿨으니까 화면 리로드
   // day 클릭한번, 이미지 클릭 한번
