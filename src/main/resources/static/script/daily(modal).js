@@ -45,6 +45,24 @@ $(document).ready(function () {
   $("ul.days_tabSlide li:first").click();
 });
 
+// 슬라이드 셋팅
+$(document).ready(function () {
+    console.log(dataArr);
+    for(var i=0; i<dataArr.length; i++){
+        var newUl = $('<ul>').addClass(dataArr[i].day[0]+' diary_list');
+        for(var j=0; j<dataArr[i].data.length; j++){
+            var newLi = $('<li>').attr('id', dataArr[i].data[j].get('attachNo')).addClass('d_slide square');
+            var newImg = $('<img>').attr({
+              'src': dataArr[i].data[j].get('file'),
+              'alt': '사진표시할수없음'
+            });
+            newLi.append(newImg);
+            newUl.append(newLi);
+        }
+        $('.diary_slides').append(newUl);
+    }
+});
+
 // function : 사진첨부시 동작 (by.서현)
 $(document).on("change", ".attach", function (event) {
   setDataArr(event);
