@@ -119,6 +119,9 @@
               class="diary_list">
               <li th:each="daily : ${groupedDaily.value}" th:id="${daily.attachNo}" class="d_slide square">
                 <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
+                <div class="reply_icon">
+                  <img src="/image/daily/icon/message.png" alt="댓글아이콘이미지">
+                </div>
               </li>
             </ul>
           </div>
