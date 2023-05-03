@@ -710,3 +710,38 @@ ul.diary_list > li {
   background: rgb(239, 238, 233, 0.5);
   border-radius: 10px;
 }
+
+/* 댓글 UI
+------------------------------------------------------------------*/
+.reply_icon {
+  width: 2.2rem;
+  /* height: 2.5rem; */
+  position: absolute;
+  bottom: 0;
+  right: 0.5rem;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: 0.2s;
+}
+.reply_icon img {
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+}
+.reply_icon.on:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  right: -0px;
+  top: 1px;
+  width: calc(2.2rem / 2.8);
+  height: calc(2.2rem / 2.8);
+  background: #a0c1ca;
+  border-radius: 100%;
+}
+.reply_icon:hover {
+  opacity: 1;
+}
+.reply_icon.on {
+  opacity: 1;
+}
