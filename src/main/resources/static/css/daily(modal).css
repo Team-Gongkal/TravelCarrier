@@ -91,6 +91,7 @@ main.daily {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #a0c1ca;
+  transition: 0.3s;
 }
 .writing span {
   display: block;
