@@ -47,20 +47,22 @@ $(document).ready(function () {
 
 // 슬라이드 셋팅
 $(document).ready(function () {
-    console.log(dataArr);
-    for(var i=0; i<dataArr.length; i++){
-        var newUl = $('<ul>').addClass(dataArr[i].day[0]+' diary_list');
-        for(var j=0; j<dataArr[i].data.length; j++){
-            var newLi = $('<li>').attr('id', dataArr[i].data[j].get('attachNo')).addClass('d_slide square');
-            var newImg = $('<img>').attr({
-              'src': dataArr[i].data[j].get('file'),
-              'alt': '사진표시할수없음'
-            });
-            newLi.append(newImg);
-            newUl.append(newLi);
-        }
-        $('.diary_slides').append(newUl);
+  console.log(dataArr);
+  for (var i = 0; i < dataArr.length; i++) {
+    var newUl = $("<ul>").addClass(dataArr[i].day[0] + " diary_list");
+    for (var j = 0; j < dataArr[i].data.length; j++) {
+      var newLi = $("<li>")
+        .attr("id", dataArr[i].data[j].get("attachNo"))
+        .addClass("d_slide square");
+      var newImg = $("<img>").attr({
+        src: dataArr[i].data[j].get("file"),
+        alt: "사진표시할수없음",
+      });
+      newLi.append(newImg);
+      newUl.append(newLi);
     }
+    $(".diary_slides").append(newUl);
+  }
 });
 
 // function : 사진첨부시 동작 (by.서현)
@@ -384,8 +386,8 @@ $(window).on("load", function () {
   //이미지가 채 로드되기 전에 스크립트가 실행돼서 너비값이 제대로 측정되질 않음
 
   //슬라이드의 너비 구하기
-  var slide_width = $(".diary_slides").outerWidth(); //반올림값 3024
-  console.log(slide_width); //3023.8044
+  var slide_width = $(".diary_slides").outerWidth();
+  console.log(slide_width); //5519
 
   //슬라이드 복제하기 (clone-복제 / append-붙여넣기)
   let clone_slide = $(".diary_slides:first").clone();
