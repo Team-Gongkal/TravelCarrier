@@ -305,15 +305,16 @@ $("ul.Dform_imglist").sortable({
     });
   },
 });
-
+  //url 구해두기
+  var currentUrl = window.location.href;
+  var extractedUrl = currentUrl.match(/\/TravelCarrier\/weekly\/\d+\/daily(?:[^&]*)?/)[0];
+  console.log(extractedUrl);
 //저장시 ajax
 // dataArr : [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
 // formDataArr : [{formData},{file,title, text,thumb},{file,title, text,thumb}]
 $(document).on("click", "button.Dform_btn_save", function (event) {
   event.preventDefault();
-  //url 구해두기
-  var currentUrl = window.location.href;
-  var match = currentUrl.match(/weekly\/(\d+)\/daily/);
+
 
   // 서버로 데이터 전송
   //dataArr : [ {day,data}, {DAY1,formDataArr[0]},{DAY2,formDataArr[1]} ]
@@ -351,7 +352,8 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
   postData.append("deleteNos", deleteArr);
 
   $.ajax({
-    url: "/TravelCarrier/weekly/82/daily" + "/create",
+    //url: "/TravelCarrier/weekly/83/daily" + "/create",
+    url: extractedUrl + "/create",
     type: "POST",
     data: postData,
     processData: false,
