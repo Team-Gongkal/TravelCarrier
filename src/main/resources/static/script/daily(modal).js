@@ -358,6 +358,7 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
 
   postData.append("deleteNos", deleteArr);
 
+  alert(extractedUrl + "/create");
   $.ajax({
     //url: "/TravelCarrier/weekly/83/daily" + "/create",
     url: extractedUrl + "/create",
@@ -471,13 +472,14 @@ $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
   $(".filter").addClass("on");
   $(".diary_viewport").addClass("hide");
   // $(".diary_textbox").addClass("on");
+  $(".diary_noH .writing").hide();
 
   //3. 일기글 보이기
-  // 호버했을 때 그 요소의 아이디 가ㅓㅄ을 li의 아이디에 넣어주면 됨.
 
   $(".d_slide").on("mouseleave", function (e) {
     //2. 백그라운드 바꾸기
     var img_src = e.target.src;
+
     //슬라이드 양끝 흐림효과
     $(".diary_noH").css({
       background: "#efeee9",
@@ -490,6 +492,7 @@ $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
     // $(".diary_textbox").removeClass("on");
     //슬라이드 양끝 흐림효과
     $(".diary_viewport").removeClass("hide");
+    $(".diary_noH .writing").show();
   });
 });
 

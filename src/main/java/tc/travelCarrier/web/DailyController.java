@@ -70,13 +70,17 @@ public class DailyController {
                                @RequestParam("dupdate") List<String> dupdateList,
                                @RequestParam("deleteNos") List<Integer> deleteNos) throws Exception {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
+        System.out.println("타이틀 : "+weekly.getTitle());
         //map 형태로 데이터 바인딩
         Map<String, List<DailyForm>> dailyMap = new HashMap<>();
         for(int i=0; i<fileList.size(); i++){
             String day = dayList.get(i);
             List<DailyForm> dailyFormList = dailyMap.getOrDefault(day, new ArrayList<>());
             DailyForm dailyForm = new DailyForm(fileList.get(i),  titleList.get(i), thumbList.get(i),
-                    textList.get(i), sortList.get(i), attachNoList.get(i), dupdateList.get(i));
+                    textList.get(i), 
+                    sortList.get(i), 
+                    attachNoList.get(i), 
+                    dupdateList.get(i));
             dailyFormList.add(dailyForm);
             dailyMap.put(day, dailyFormList);
         }

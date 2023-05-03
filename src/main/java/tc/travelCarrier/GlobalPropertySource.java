@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 @Configuration
-@PropertySource("classpath:config.properties")
+@PropertySource("classpath:localConfig.properties")
 public class GlobalPropertySource {
 
     @Value("${spring.datasource.driverClassName}")
@@ -16,6 +16,7 @@ public class GlobalPropertySource {
     @Value("${spring.datasource.username}")
     private String username;
 
+    
     @Value("${spring.datasource.password}")
     private String password;
 
