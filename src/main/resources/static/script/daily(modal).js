@@ -273,7 +273,9 @@ $(document).on("click", "li.clickImg", function (event) {
   var tmpIndex = liIndex;
 
   var isLast = false;
-  if (tmpIndex == selectArr.length - 1) { isLast = true; }
+  if (tmpIndex == selectArr.length - 1) {
+    isLast = true;
+  }
 
   if (confirm("삭제하시겠습니까?")) {
     //만약 attachNo=-1이면 그냥 삭제, attachNo!=-1이면 삭제배열에 attachNo 넣어두기
@@ -285,8 +287,11 @@ $(document).on("click", "li.clickImg", function (event) {
   }
 
   //방금 삭제한게 마지막이면 마지막요소 클릭하도록
-  if(isLast) $("ul.Dform_imglist li").eq(selectArr.length-1).find("img").click();
-
+  if (isLast)
+    $("ul.Dform_imglist li")
+      .eq(selectArr.length - 1)
+      .find("img")
+      .click();
 });
 
 //이미지 순서 변경
