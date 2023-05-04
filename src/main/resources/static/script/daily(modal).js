@@ -53,6 +53,8 @@ $(document).ready(function () {
     for (var j = 0; j < dataArr[i].data.length; j++) {
       var newLi = $("<li>")
         .attr("id", dataArr[i].data[j].get("attachNo"))
+        .attr("data-text",dataArr[i].data[j].get("text"))
+        .attr("data-title",dataArr[i].data[j].get("title"))
         .addClass("d_slide square");
       var newImg = $("<img>").attr({
         src: dataArr[i].data[j].get("file"),
@@ -313,10 +315,8 @@ $("ul.Dform_imglist").sortable({
 });
 //url 구해두기
 var currentUrl = window.location.href;
-var extractedUrl = currentUrl.match(
-  /\/TravelCarrier\/weekly\/\d+\/daily(?:[^&]*)?/
-)[0];
-console.log(extractedUrl);
+var weeklyId = currentUrl.match(/weekly\/(\d+)\/daily/)[1];
+
 //저장시 ajax
 // dataArr : [ {DAY1,formDataArr[0]},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
 // formDataArr : [{formData},{file,title, text,thumb},{file,title, text,thumb}]
@@ -358,10 +358,8 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
 
   postData.append("deleteNos", deleteArr);
 
-  alert(extractedUrl + "/create");
   $.ajax({
-    //url: "/TravelCarrier/weekly/83/daily" + "/create",
-    url: extractedUrl + "/create",
+    url: "/TravelCarrier/weekly/"+weeklyId+"/daily" + "/create",
     type: "POST",
     data: postData,
     processData: false,
