@@ -69,7 +69,7 @@ article .longBox {
   overflow: hidden;
   white-space: normal;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   line-height: 1.5rem;
   font-weight: 200;
@@ -310,12 +310,12 @@ article .longBox {
   transition: 0.2s;
 }
 .shortBox_odd .longBox .plusBox:hover,
- .shortBox_even .longBox .plusBox:hover {
+.shortBox_even .longBox .plusBox:hover {
   background: rgb(247, 247, 247, 0.5);
   border: 1px solid #a0c1ca;
 }
 .shortBox_odd .longBox .plusBox:hover span,
- .shortBox_even .longBox .plusBox:hover span{
+.shortBox_even .longBox .plusBox:hover span {
   background: #a0c1ca;
 }
 .plusBox .plus_big {

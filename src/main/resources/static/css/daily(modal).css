@@ -563,7 +563,7 @@ button.Dform_btn_del:hover {
     rgb(239, 238, 233)
   );
 }
-.diary_viewport.hide::before {
+.diary_viewport.black::before {
   background: linear-gradient(
     to right,
     rgb(0, 0, 0, 0.8),
@@ -571,7 +571,7 @@ button.Dform_btn_del:hover {
     rgba(0, 0, 0, 0)
   );
 }
-.diary_viewport.hide::after {
+.diary_viewport.black::after {
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0),
@@ -655,26 +655,20 @@ ul.diary_list > li {
 /* 일기 */
 .diary_textbox {
   visibility: hidden;
-  display: none;
-  border: 1px solid #000;
+  width: 100%;
+  height: 25%;
+  position: absolute;
+  top: 20%;
+  display: flex;
+  justify-content: center;
 }
 .diary_textbox.on {
-  display: block;
   visibility: visible;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 .diary_textbox.on > ul {
   width: 80%;
-  height: 30%;
+  position: relative;
   text-align: center;
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .diary_textbox.on > ul > li {
@@ -682,26 +676,26 @@ ul.diary_list > li {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   color: #f7f7f7;
+  letter-spacing: 0.2em;
 }
 .diary_textbox.on h6 {
   width: 100%;
   flex: 1;
-  font-size: 1.2rem;
-  padding: 1rem 0;
+  font-size: 1rem;
+  padding: 1.5rem 0;
   box-sizing: border-box;
-  /* position: absolute;
-  top: 0;
-  left: 0; */
+  font-weight: 400;
 }
 .diary_textbox.on p {
+  height: 100%;
   flex: 10;
-  font-size: 1rem;
-  line-height: 1.3rem;
+  font-size: 0.8rem;
+  line-height: 1.8em;
   box-sizing: border-box;
-  padding: 1rem 0;
   overflow-y: scroll;
+  font-weight: 100;
+  padding: 00 1em;
 }
 /* 스크롤바 디자인 */
 .diary_textbox.on p::-webkit-scrollbar {
@@ -722,7 +716,7 @@ ul.diary_list > li {
   right: 0.5rem;
   cursor: pointer;
   opacity: 0.3;
-  transition: 0.2s;
+  visibility: hidden;
 }
 .reply_icon img {
   max-width: 100%;
@@ -739,10 +733,16 @@ ul.diary_list > li {
   height: calc(2.2rem / 2.8);
   background: #a0c1ca;
   border-radius: 100%;
+  /* 새로운 알림이 있을 때 적용, 삭제 */
 }
 .reply_icon:hover {
   opacity: 1;
 }
-.reply_icon.on {
-  opacity: 1;
+.reply_icon.show {
+  visibility: visible;
+}
+
+/* 댓글 모달창 */
+.reply_modal {
+  background: #000;
 }

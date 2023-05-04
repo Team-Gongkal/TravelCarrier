@@ -8,7 +8,7 @@
   <th:block th:replace="fragments/header :: headerFragment"></th:block>
   <main class="daily">
     <!-- daily 시작화면 UI -->
-    <div class="daily_start">
+    <div class="daily_start" style="display: none;">
       <div class="sdaily_text">
         <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
         </p>
@@ -103,15 +103,6 @@
           <h1 th:text="${weekly.title}">PARIS</h1>
           <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
             yyyy-mm-dd</p>
-          <div class="diary_textbox on">
-            <ul>
-              <li th:each="daily : ${dailies}">
-                <h6 th:text=" ${daily.attachDailyTitle}">
-                </h6>
-                <p th:text="${daily.attachDailyText}"></p>
-              </li>
-            </ul>
-          </div>
         </div>
         <div class="diary_viewport">
           <div class="diary_slides">
@@ -122,39 +113,42 @@
         </div>
         <div class="diary_textbox">
           <ul>
-            <li th:each="daily : ${dailies}">
-              <h6 th:text="${daily.attachDailyTitle}"></h6>
-              <p th:text="${daily.attachDailyText}"></p>
+            <li>
+              <h6>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </h6>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+                velit ex esse recusandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+                velit ex esse recusandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+                velit ex esse recusandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+                velit ex esse recusandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+                velit ex esse recusandae?
+              </p>
             </li>
           </ul>
-          <div class="filter"></div>
-          <div class="diary_titlebox">
-            <h1 th:text="${weekly.title}">PARIS</h1>
-            <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
-              yyyy-mm-dd</p>
-            <div class="diary_textbox on">
-              <ul>
-                <li th:each="daily : ${dailies}">
-                  <h6 th:text=" ${daily.attachDailyTitle}">
-                  </h6>
-                  <p th:text="${daily.attachDailyText}"></p>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="diary_viewport">
-            <div class="diary_slides">
-              <ul th:each="groupedDaily : ${groupedDailies}" th:class="${groupedDaily.key} + ' diary_list'"
-                class="diary_list">
-                <li th:each="daily : ${groupedDaily.value}" th:id="${daily.attachNo}" class="d_slide square">
-                  <img th:src="${daily.attachThumb}" src="/image/daily/diary/IMG_6493.JPG" alt="">
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="writing circle">
-            <img src="/image/daily/icon/pencil.png" alt="edit daily">
-          </div>
         </div>
       </div>
     </div>
