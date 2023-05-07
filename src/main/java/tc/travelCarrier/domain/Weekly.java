@@ -90,11 +90,11 @@ public class Weekly {
         weekly.setCrudDate(crudDate);
         weekly.setStatus(status);
         weekly.setText(text);
-        for(int i : gowithIds) weekly.addGowith(new Gowith(i));
+        if(gowithIds != null){
+            for(int i : gowithIds) weekly.addGowith(new Gowith(i));
+        }
 
         return weekly;
     }
-
-
 
 }
