@@ -25,9 +25,6 @@ public class WeeklyService {
     private final AttachRepository attachRepository;
     private final AttachService attachService;
 
-    @Value("${file.dir}")
-    private String fileDir;
-
     /**
      * 팔로워 목록 조회
      * */
@@ -39,8 +36,11 @@ public class WeeklyService {
      * 위클리 등록
      */
     public int register(MultipartFile file, Weekly weekly) throws Exception {
+        // 위클리 정보 저장
         weeklyRepository.save(weekly);
-        attachService.saveAttachWeekly(file,weekly);
+        // 파일저장
+        attachService.saveAttachWeekly(file, weekly);
+
         return weekly.getId();
     }
 

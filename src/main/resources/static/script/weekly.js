@@ -36,12 +36,29 @@ function openModal() {
 
 var url = window.location.href; //현재문서의 url가져오기
 
-// 사진 크기에 따라 클래스명 변경 - by.서현
+
 $(document).ready(function () {
   //위클리에서 데일리로 넘어가는 경로 설정 - by.윤아
   $(".daily_path").attr("href", url + "/daily");
   console.log(url);
 
+  // text 줄바꿈처리 - by.서현
+  // HTML 엔티티 변환 함수
+  function htmlentities(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+  // 태그 제거 및 HTML 엔티티 변환
+  var originText = $(".weekly_addText p").text();
+  var filteredText = htmlentities(originText);
+  var changeText = filteredText.replace(/\\n/g, "<br>");
+  $(".weekly_addText p").html(changeText);
+
+  // 사진 크기에 따라 클래스명 변경 - by.서현
   $(".longBox img").each(function (index) {
     const $img = $(this);
     const img = new Image();

@@ -61,6 +61,7 @@ public class WeeklyRepository {
                 "INNER JOIN a.daily b " +
                 "INNER JOIN b.weekly d " +
                 "WHERE a.thumb = 1 AND b.weekly.id = :weeklyId " +
+                //"WHERE b.weekly.id = :weeklyId " +
                 "GROUP BY b.id, b.dailyDate, a.thumbPath, d.travelDate.sDate";
         List<WeeklyDTO> result = em.createQuery(jpql, WeeklyDTO.class)
                 .setParameter("weeklyId", weeklyId)

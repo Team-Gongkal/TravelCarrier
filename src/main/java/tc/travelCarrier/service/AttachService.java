@@ -81,9 +81,16 @@ public class AttachService {
     /**
      * 위클리 폼 저장하는 메소드
      * */
-    public int saveAttachWeekly(MultipartFile file, Weekly weekly) throws Exception {
+    public void saveAttachWeekly(MultipartFile file, Weekly weekly) throws Exception {
         //1.서버에 파일 저장
-        String[] saveArr = saveAttach(file,"weekly");
+        String[] saveArr;
+        if(file != null) {
+            // 파일이 있을경우 서버에 저장후 DB 저장
+            saveArr = saveAttach(file,"weekly");
+        } else {
+            // 파일이 없을경우 서버저장 생략, 기본이미지 경로 DB에 저장
+            saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
+        }
 
         //2.AttachWeekly 엔티티 생성해서 DB에도 저장
         AttachWeekly attachWeekly = AttachWeekly.builder()
@@ -92,8 +99,6 @@ public class AttachService {
                 .weekly(weekly)
                 .build();
         attachRepository.save(attachWeekly);
-
-        return 1;
     }
 
 
@@ -121,7 +126,7 @@ public class AttachService {
         String newTitle = uuid+"."+extension;
 
         // 썸네일로 변환한 파일의 저장경로
-        String thumbPath = fileDir+folder+"/"+newTitle;
+        String thumbPath = fileDir+"user/"+folder+"/"+newTitle;
 
         // 이미지 저장
         boolean a = ImageIO.write(resizeImageFile(file), extension,
