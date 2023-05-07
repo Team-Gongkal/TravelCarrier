@@ -151,9 +151,9 @@ public class AttachService {
         int originHeight = readImage.getHeight();
         System.out.println("=====================");
         System.out.println("width : "+ originWidth+", height : "+ originHeight);
-        int newWidth = originWidth, newHeight = originHeight;
-        if(originWidth == originHeight) {
-            return Scalr.resize(readImage, 900, 900);
+/*        if(originWidth == originHeight) {
+            //return Scalr.resize(readImage, 900, 900);
+            return readImage;
         }
         else if(originWidth > originHeight) {
             // 가로가 길면 480x320
@@ -162,8 +162,13 @@ public class AttachService {
         else if(originWidth < originHeight) {
             // 세로가 길면 240x320
             return Scalr.resize(readImage, 600, 900);
+        }*/
+        if(originHeight > 900){
+            double aspectRatio = (double) originHeight / 900;
+            int newWidth = (int) Math.round(originWidth / aspectRatio);
+            int newHeight = (int) Math.round(originHeight / aspectRatio);
+            return Scalr.resize(readImage, newWidth, newHeight);
         }
-
         return readImage;
     }
 

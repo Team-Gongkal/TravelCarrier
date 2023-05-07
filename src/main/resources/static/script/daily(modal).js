@@ -524,14 +524,14 @@ $(document).ready(function () {
     const img = new Image();
     img.src = $(this).attr("src");
     img.onload = function () {
-      const width = img.width;
-      const height = img.height;
-      if (width > height) {
-        $img.parent().addClass("rectW");
-      } else if (height > width) {
-        $img.parent().addClass("rectL");
-      } else {
+      var ratio = img.width/ img.height;
+      console.log(ratio);
+      if (0.9<=ratio && ratio<=1.1) {
         $img.parent().addClass("sqr");
+      } else if (ratio<0.9) {
+        $img.parent().addClass("rectL");
+      } else if(1.1<ratio) {
+        $img.parent().addClass("rectW");
       }
     };
   });

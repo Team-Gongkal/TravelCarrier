@@ -63,15 +63,16 @@ $(document).ready(function () {
     const $img = $(this);
     const img = new Image();
     img.src = $(this).attr("src");
+    console.log("---------------");
     img.onload = function () {
-      const width = img.width;
-      const height = img.height;
-      if (width > height) {
-        $img.parent().addClass("w-rectW");
-      } else if (height > width) {
-        $img.parent().addClass("w-rectL");
-      } else {
+      var ratio = img.width/ img.height;
+      console.log(ratio);
+      if (0.9<=ratio && ratio<=1.1) {
         $img.parent().addClass("w-sqr");
+      } else if (ratio<0.9) {
+        $img.parent().addClass("w-rectL");
+      } else if(1.1<ratio) {
+        $img.parent().addClass("w-rectW");
       }
     };
   });
