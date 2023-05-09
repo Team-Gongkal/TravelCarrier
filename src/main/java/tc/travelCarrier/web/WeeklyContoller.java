@@ -55,16 +55,15 @@ public class WeeklyContoller {
     @ResponseBody
     public Integer regist(@Valid WeeklyForm form, BindingResult result,
                        @RequestParam("status") OpenStatus status) throws Exception {
-/*        if(result.hasErrors()) {
-            return "error";
-        }*/
+        if(result.hasErrors()) {
+            System.out.println("Validation Error");
+        }
         User user = new User();
         user.setId(1);
-
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
                 new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
-                        status, form.getText(), form.getGowiths())
+                        status, form.getText().replace("\n", "\\n"), form.getGowiths())
         );
 
         return weeklyId;
@@ -79,6 +78,7 @@ public class WeeklyContoller {
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         model.addAttribute("weekly",weekly);
+
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
         //model.addAttribute("period", period);
 

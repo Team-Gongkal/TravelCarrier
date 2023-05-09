@@ -36,25 +36,43 @@ function openModal() {
 
 var url = window.location.href; //현재문서의 url가져오기
 
-// 사진 크기에 따라 클래스명 변경 - by.서현
+
 $(document).ready(function () {
   //위클리에서 데일리로 넘어가는 경로 설정 - by.윤아
   $(".daily_path").attr("href", url + "/daily");
   console.log(url);
 
+  // text 줄바꿈처리 - by.서현
+  // HTML 엔티티 변환 함수
+  function htmlentities(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+  // 태그 제거 및 HTML 엔티티 변환
+  var originText = $(".weekly_addText p").text();
+  var filteredText = htmlentities(originText);
+  var changeText = filteredText.replace(/\\n/g, "<br>");
+  $(".weekly_addText p").html(changeText);
+
+  // 사진 크기에 따라 클래스명 변경 - by.서현
   $(".longBox img").each(function (index) {
     const $img = $(this);
     const img = new Image();
     img.src = $(this).attr("src");
+    console.log("---------------");
     img.onload = function () {
-      const width = img.width;
-      const height = img.height;
-      if (width > height) {
-        $img.parent().addClass("w-rectW");
-      } else if (height > width) {
-        $img.parent().addClass("w-rectL");
-      } else {
+      var ratio = img.width/ img.height;
+      console.log(ratio);
+      if (0.9<=ratio && ratio<=1.1) {
         $img.parent().addClass("w-sqr");
+      } else if (ratio<0.9) {
+        $img.parent().addClass("w-rectL");
+      } else if(1.1<ratio) {
+        $img.parent().addClass("w-rectW");
       }
     };
   });

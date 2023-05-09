@@ -57,6 +57,7 @@ $(document).ready(function () {
       //시작일(startDate) datepicker가 닫힐때
       //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
       $("#edate").datepicker("option", "minDate", selectedDate);
+      if($("#edate").val() != "") $("#periodValidation").text("");
     },
   });
   //end Date
@@ -116,6 +117,7 @@ $(document).ready(function () {
       //시작일(startDate) datepicker가 닫힐때
       //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
       $("#sdate").datepicker("option", "maxDate", selectedDate);
+      if($("#sdate").val() != "") $("#periodValidation").text("");
     },
   });
   //input태그 옆의 이미지 클릭시 datepicker열기 - by윤아
@@ -123,6 +125,8 @@ $(document).ready(function () {
     $(e.target).prev("input").focus();
     console.log(e.target);
   });
+
+
 
   // 동행인 선택 모달창 띄우기 - by윤아
   $("#plus_companion").on("click", function () {
@@ -187,6 +191,10 @@ $(document).on("click", ".goWithBtn", function (event) {
 
 $("#weeklyForm").submit(function (event) {
   event.preventDefault();
+
+  // 제출전 유효성 검사, false면 제출 X
+  if(!checkValidation()) return;
+
   // nation file sdate edate title text gowiths[] status
   var formData = new FormData();
   formData.append("file", $("#thumbnail_change")[0].files[0]);
@@ -205,9 +213,8 @@ $("#weeklyForm").submit(function (event) {
 
   $("ul.sel_companion li:not(:last)").each(function () {
     formData.append("gowiths[]", $(this).data("fid"));
-    console.log($(this).data("fid"));
   });
-  console.log($("input[name='status']:checked").val());
+
   formData.append("status", $("input[name='status']:checked").val());
 
   $.ajax({
@@ -224,4 +231,27 @@ $("#weeklyForm").submit(function (event) {
       alert("실패");
     },
   });
+});
+
+// 제출전 유효성 최종검사
+function checkValidation(){
+    // 날짜가 없을때만 제출 불가!
+    if( $("#sdate").val() == null ||  $("#edate").val() == null ||
+     $("#sdate").val() == undefined ||  $("#edate").val() == undefined ||
+     $("#sdate").val() == "" ||  $("#edate").val() == ""){
+        alert("날짜는 필수입력항목 입니다.");
+        return false;
+    }
+    return true;
+}
+// 글자수세기
+$('#addText').keyup(function (e){
+    var content = $(this).val();
+    $('#countText').html("("+content.length+" / 100)");    //글자수 실시간 카운팅
+
+    if (content.length > 100){
+        alert("최대 100자까지 입력 가능합니다.");
+        $(this).val(content.substring(0, 100));
+        $('#countText').html("(100 / 100)");
+    }
 });

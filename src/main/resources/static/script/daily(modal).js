@@ -153,7 +153,7 @@ $(document).on("change", "div.daily_text textarea", function (event) {
 //대표이미지 설정
 $(document).on("change", 'input[type="radio"]', function () {
   if ($(this).is(":checked")) {
-    //라디오버튼 체크되면 이전에 되어있던 id=main 없애고 mai이었던 배열도 thumb=0으로 바꿔야함
+    //라디오버튼 체크되면 이전에 되어있던 id=main 없애고 main이었던 배열도 thumb=0으로 바꿔야함
     var mainIndex = $("ul.Dform_imglist li").index($("li#main"));
     if (mainIndex !== -1) {
       selectArr[mainIndex].set("thumb", 0);
@@ -289,11 +289,13 @@ $(document).on("click", "li.clickImg", function (event) {
   }
 
   //방금 삭제한게 마지막이면 마지막요소 클릭하도록
-  if (isLast)
+  if (isLast && selectArr.length != 1) {
+    //but 요소가 단 한개라면 클릭 X
     $("ul.Dform_imglist li")
       .eq(selectArr.length - 1)
       .find("img")
       .click();
+  }
 });
 
 //이미지 순서 변경
@@ -313,6 +315,29 @@ $("ul.Dform_imglist").sortable({
     });
   },
 });
+
+// 썸네일 설정 안한 부분이 있는지 검사한다.
+function checkThumbnails(dataArr) {
+  var result = false;
+  for (var i = 0; i < dataArr.length; i++) {
+    var arr = dataArr[i];
+    var formDataArr = arr.data;
+    var flag = false;
+    for (var j = 0; j < formDataArr.length; j++) {
+      if (formDataArr[j].get("thumb") == 1) {
+        //해당 DAY에 썸네일이 있으면 flag=true;
+        flag = true;
+        break;
+      }
+    }
+    if (!flag) {
+      formDataArr[0].set("thumb", 1);
+      result = true;
+    }
+  }
+  console.log(result);
+  return result;
+}
 //url 구해두기
 var currentUrl = window.location.href;
 var weeklyId = currentUrl.match(/weekly\/(\d+)\/daily/)[1];
@@ -322,12 +347,15 @@ var weeklyId = currentUrl.match(/weekly\/(\d+)\/daily/)[1];
 // formDataArr : [{formData},{file,title, text,thumb},{file,title, text,thumb}]
 $(document).on("click", "button.Dform_btn_save", function (event) {
   event.preventDefault();
-
   // 서버로 데이터 전송
   //dataArr : [ {day,data}, {DAY1,formDataArr[0]},{DAY2,formDataArr[1]} ]
   //data: [{file,title,text,thumb},{file,title,text,thumb}]
   var postData = new FormData();
   console.log("===============================");
+  if (checkThumbnails(dataArr))
+    alert(
+      "대표이미지를 선택하지 않은 데일리가 있습니다.\n 자동으로 가장 첫 사진을 썸네일로 설정합니다."
+    );
   for (var i = 0; i < dataArr.length; i++) {
     // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
     // formDataArr : [{file,title,text,thumb},{file,title,text,thumb}]
@@ -533,14 +561,14 @@ $(document).ready(function () {
     const img = new Image();
     img.src = $(this).attr("src");
     img.onload = function () {
-      const width = img.width;
-      const height = img.height;
-      if (width > height) {
-        $img.parent().addClass("rectW");
-      } else if (height > width) {
-        $img.parent().addClass("rectL");
-      } else {
+      var ratio = img.width / img.height;
+      console.log(ratio);
+      if (0.9 <= ratio && ratio <= 1.1) {
         $img.parent().addClass("sqr");
+      } else if (ratio < 0.9) {
+        $img.parent().addClass("rectL");
+      } else if (1.1 < ratio) {
+        $img.parent().addClass("rectW");
       }
     };
   });
