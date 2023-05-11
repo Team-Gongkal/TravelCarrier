@@ -36,12 +36,9 @@ function openModal() {
 
 var url = window.location.href; //현재문서의 url가져오기
 
-
 $(document).ready(function () {
   //위클리에서 데일리로 넘어가는 경로 설정 - by.윤아
   $(".daily_path").attr("href", url + "/daily");
-  console.log(url);
-
   // text 줄바꿈처리 - by.서현
   // HTML 엔티티 변환 함수
   function htmlentities(str) {
@@ -76,6 +73,29 @@ $(document).ready(function () {
       }
     };
   });
+
+   // 수정모드 - 이전에 추가한 동행인목록 로드 -by.서현
+    sgowiths.forEach((fid) => {
+      $('li[data-fid="' + fid + '"] input[type="checkbox"]').prop('checked', true);
+    });
+    const checkboxes = document.querySelectorAll(
+        '.serch_friends input[type="checkbox"]:checked'
+    );
+    checkboxes.forEach((checkbox) => {
+      const li = checkbox.closest("li");
+      document.querySelector(".checked_friends").appendChild(li);
+
+       //이벤트 리스너 달아주기
+      checkbox.addEventListener("change", (e) => {
+        if (e.target.checked) {
+          document.querySelector(".checked_friends").appendChild(li);
+        } else {
+          document.querySelector(".serch_friends").appendChild(li);
+        }
+      });
+    });
+
+
 });
 
 // input 작성후 엔터시 키워드 추가 - by.서현
@@ -115,8 +135,8 @@ $(document).on("click", ".keyword", function () {
 
 // all_keywords[key_index]에 저장 - by.서현
 // [ [k1,k2,k3],[k4,k5,k6],[k7,k8,k9],[] ]
-$(document).on("click", ".btn", function (event) {
-  event.preventDefault();
+$(document).on("click", "#keyword_save", function (event) {
+  //event.preventDefault();
   const keyword_list = [];
   $(".keyword_card li").each(function () {
     keyword_list.push($(this).text().trim());
@@ -158,3 +178,60 @@ function updateKeyword(keyword_list) {
     keywordBox.append(span);
   }
 }
+
+$(".weekly_open").click(function(){
+    $(".weekly_modal_bg").addClass("show");
+});
+
+$(document).on("click", ".weekly_close", function () {
+    $(".weekly_modal_bg").removeClass("show");
+});
+
+var thumb_status = "ORIGIN"; //ORIGIN:원래파일 DELETE:파일삭제
+// 이미지 삭제버튼 메소드 by서현
+$(document).on("click", ".removeBtn", function (event) {
+  thumb_status = "DELETE";
+});
+
+$(document).on("click","#updateWeekly", function(event){
+  event.preventDefault();
+  console.log("/TravelCarrier/weekly/"+weeklyId+"/update");
+  // 제출전 유효성 검사, false면 제출 X
+  if(!checkValidation()) return;
+
+  // nation file sdate edate title text gowiths[] status
+  var formData = new FormData();
+  formData.append("file", $("#thumbnail_change")[0].files[0]);
+  formData.append(
+    "nation",
+    $('select[name="nation"] option:selected').attr("value")
+  );
+  formData.append("sdate", $("#sdate").val());
+  formData.append("edate", $("#edate").val());
+  if ($("div.title input").val() === "") {
+    formData.append("title", $('select[name="nation"] option:selected').text());
+  } else {
+    formData.append("title", $("div.title input").val());
+  }
+  formData.append("text", $("#addText").val());
+
+  $("#sc li:not(:last)").each(function () {
+    formData.append("gowiths[]", $(this).data("fid"));
+    console.log("fid: "+$(this).data("fid"));
+  });
+  formData.append("status", $("input[name='status']:checked").val());
+  formData.append("thumbStatus", thumb_status);
+  $.ajax({
+    type: "POST",
+    url: "/TravelCarrier/weekly/"+weeklyId+"/update",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      alert("성공");
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("실패");
+    },
+  });
+});

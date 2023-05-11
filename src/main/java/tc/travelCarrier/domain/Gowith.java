@@ -10,8 +10,8 @@ import javax.persistence.*;
 public class Gowith {
 
     public Gowith(){}
-    public Gowith(int userId){
-        this.userId = userId;
+    public Gowith(User user){
+        this.user = user;
     }
     @Id @GeneratedValue
     @Column(name = "GOWITH_NO")
@@ -21,8 +21,9 @@ public class Gowith {
     @JoinColumn(name = "WEEKLY_ID")
     private Weekly weekly;
 
-    @Column(name = "USER_ID")
-    private int userId; //탈퇴하면 동행인 안뜨는거 방지하기위해 연관관계X
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
 
 

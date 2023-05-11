@@ -17,6 +17,7 @@ import tc.travelCarrier.domain.AttachWeekly;
 import tc.travelCarrier.domain.Daily;
 import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.DailyForm;
+import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.AttachRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 
@@ -217,6 +218,29 @@ public class AttachService {
 
         return srcImg;
     }
+    // 위클리 썸네일을 수정
+    //FIle객체면 저장후업데이트,
+    // null이면 thumbStatus 확인해서 ORIGIN이면 냅두고 DELETE면 국가사진으로 변경
+    public void saveUpdateAttachWeekly(WeeklyForm form, Weekly weekly) throws Exception {
+        //1.서버에 파일 저장
+        String[] saveArr;
+        if(form.getFile() != null){
+            saveArr = saveAttach(form.getFile(),"weekly");
+        } else if(form.getThumbStatus().equals("DELETE")){
+            saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
+        } else{
+            return;
+        }
 
+        // 기존 AttachWeekly 삭제해주기
+
+        //2.AttachWeekly 엔티티 생성해서 DB에도 저장
+        AttachWeekly attachWeekly = AttachWeekly.builder()
+                .attachTitle(saveArr[0])
+                .thumb(saveArr[1])
+                .weekly(weekly)
+                .build();
+        weekly.setAttachWeekly(attachWeekly);
+    }
 
 }

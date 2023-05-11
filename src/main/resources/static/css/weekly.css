@@ -450,3 +450,38 @@ li.card span:nth-child(2):hover {
   opacity: 100;
   visibility: visible;
 }
+
+
+/* 위클리 모달창 */
+.weekly_modal_bg.show {
+  opacity: 100;
+  visibility: visible;
+}
+
+.weekly_modal_bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 200;
+}
+
+.weekly_modal {
+  background: #efeee9;
+/*  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;*/
+
+  width: 80%;
+  height: 80%;
+  border-radius: 0.5rem;
+}

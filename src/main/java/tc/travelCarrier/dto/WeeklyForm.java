@@ -40,6 +40,7 @@ public class WeeklyForm {
     @NotNull
     private OpenStatus status;
 
-
+    //수정할때 필요한 필드
+    private String thumbStatus;
 
 }
