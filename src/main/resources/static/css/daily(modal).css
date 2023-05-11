@@ -563,7 +563,7 @@ button.Dform_btn_del:hover {
     rgb(239, 238, 233)
   );
 }
-.diary_viewport.hide::before {
+.diary_viewport.black::before {
   background: linear-gradient(
     to right,
     rgb(0, 0, 0, 0.8),
@@ -571,7 +571,7 @@ button.Dform_btn_del:hover {
     rgba(0, 0, 0, 0)
   );
 }
-.diary_viewport.hide::after {
+.diary_viewport.black::after {
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0),
@@ -583,6 +583,7 @@ button.Dform_btn_del:hover {
   /* width: 100%; */
   position: absolute;
   display: flex;
+  overflow: hidden;
 }
 ul.diary_list {
   display: flex;
@@ -655,26 +656,20 @@ ul.diary_list > li {
 /* 일기 */
 .diary_textbox {
   visibility: hidden;
-  display: none;
-  border: 1px solid #000;
+  width: 100%;
+  height: 25%;
+  position: absolute;
+  top: 20%;
+  display: flex;
+  justify-content: center;
 }
 .diary_textbox.on {
-  display: block;
   visibility: visible;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 .diary_textbox.on > ul {
   width: 80%;
-  height: 30%;
+  position: relative;
   text-align: center;
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .diary_textbox.on > ul > li {
@@ -682,26 +677,26 @@ ul.diary_list > li {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   color: #f7f7f7;
+  letter-spacing: 0.2em;
 }
 .diary_textbox.on h6 {
   width: 100%;
   flex: 1;
-  font-size: 1.2rem;
-  padding: 1rem 0;
+  font-size: 1rem;
+  padding: 1.5rem 0;
   box-sizing: border-box;
-  /* position: absolute;
-  top: 0;
-  left: 0; */
+  font-weight: 400;
 }
 .diary_textbox.on p {
+  height: 100%;
   flex: 10;
-  font-size: 1rem;
-  line-height: 1.3rem;
+  font-size: 0.8rem;
+  line-height: 1.8em;
   box-sizing: border-box;
-  padding: 1rem 0;
   overflow-y: scroll;
+  font-weight: 100;
+  padding: 00 1em;
 }
 /* 스크롤바 디자인 */
 .diary_textbox.on p::-webkit-scrollbar {
@@ -722,7 +717,7 @@ ul.diary_list > li {
   right: 0.5rem;
   cursor: pointer;
   opacity: 0.3;
-  transition: 0.2s;
+  visibility: hidden;
 }
 .reply_icon img {
   max-width: 100%;
@@ -739,10 +734,238 @@ ul.diary_list > li {
   height: calc(2.2rem / 2.8);
   background: #a0c1ca;
   border-radius: 100%;
+  /* 새로운 알림이 있을 때 적용, 삭제 */
 }
 .reply_icon:hover {
   opacity: 1;
 }
-.reply_icon.on {
+.reply_icon.show {
+  visibility: visible;
+}
+
+/* 댓글 모달창 */
+.reply_modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+  visibility: hidden;
+  display: none;
+}
+.reply_modal.show {
+  visibility: visible;
+  display: flex;
+}
+.reply_modal > .reply_modal_bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(0, 0, 0, 0.8);
+}
+.reply_modal > .center {
+  width: 80%;
+  height: 90%;
+  display: flex;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.reply_modal button.close {
+  position: absolute;
+  top: 0;
+  right: 0%;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+  background: transparent;
+}
+.reply_img {
+  width: 40%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.reply_img img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+/* 댓글창 */
+.reply_screen {
+  width: 60%;
+  height: 100%;
+  position: relative;
+  z-index: 1000;
+  background: #dde5e8;
+  padding: 2.5rem;
+  box-sizing: border-box;
+}
+.reply_scroll {
+  width: 100%;
+  height: calc(100% - 2.5rem);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+}
+/* 스크롤바 디자인 */
+.reply_scroll::-webkit-scrollbar {
+  width: 0.3rem;
+}
+.reply_scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+}
+.reply {
+  margin: 2rem 0 3rem 0;
+  border-radius: 0.5rem;
+  background: #f7f7f7;
+}
+.reply:last-child {
+  margin-bottom: 0;
+}
+.comment,
+.recomment {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 0.4fr 2fr 0.5fr;
+  grid-template-areas:
+    "profile date date"
+    "profile text text"
+    "profile text text"
+    "profile btn  .";
+  align-items: stretch;
+  position: relative;
+}
+.recomment {
+  padding-top: 0;
+}
+.comment_profile {
+  grid-area: profile;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.comment_profile > div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: calc(100% - 1.63rem);
+  right: 1rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.recomment .comment_profile > div {
+  top: 0;
+  width: 2.8rem;
+  height: 2.8rem;
+}
+.comment_profile > div img {
+  width: 100%;
+  object-fit: cover;
+}
+.comment_date {
+  grid-area: date;
+  text-align: end;
+}
+.comment_date span {
+  color: #b3b3b3;
+  font-size: 0.6rem;
+  font-weight: 300;
+}
+.comment_textbox {
+  width: 100%;
+  height: 100%;
+  grid-area: text;
+  padding: 0 2rem 0 0.5rem;
+  box-sizing: border-box;
+}
+span.comment_id {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+p.comment_content {
+  width: 100%;
+  font-weight: 300;
+  padding: 0.8rem 0;
+  box-sizing: border-box;
+  line-height: 1.5rem;
+}
+.recomment span.comment_id {
+  font-size: 1rem;
+}
+.recomment p.comment_content {
+  font-size: 0.8rem;
+}
+.comment_btn {
+  grid-area: btn;
+  color: #b3b3b3;
+}
+.comment_btn span {
+  display: inline-block;
+  margin: 0 0.5rem 0.8rem 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.comment_btn span:hover {
+  color: #a0c1ca;
+}
+span.reply_id {
+  color: #617092;
+  font-weight: 500;
+}
+.recomment .comment_date {
+  border-top: 1px solid #b3b3b3;
+}
+.reply_screen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12.5%;
+  width: 2px;
+  height: 50%; /*슬라이드의 길이에 맞게 변경(js) - 삭제*/
+  background: #525d7634;
+}
+.reply_input {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  padding: 1rem 0 0.5rem 0;
+  box-sizing: border-box;
+}
+.reply_input input {
+  width: 100%;
+  height: 2.5rem;
+  display: inline-block;
+  background: #353a5215;
+  border-radius: 0.2rem 0 0 0.2rem;
+}
+.reply_input button {
+  display: inline-block;
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  background: #353a5215;
+  border-radius: 0 0.2rem 0.2rem 0;
+}
+.reply_input img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  opacity: 0.5;
+}
+.reply_input button:hover img {
   opacity: 1;
 }

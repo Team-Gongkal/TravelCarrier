@@ -53,8 +53,8 @@ $(document).ready(function () {
     for (var j = 0; j < dataArr[i].data.length; j++) {
       var newLi = $("<li>")
         .attr("id", dataArr[i].data[j].get("attachNo"))
-        .attr("data-text",dataArr[i].data[j].get("text"))
-        .attr("data-title",dataArr[i].data[j].get("title"))
+        .attr("data-text", dataArr[i].data[j].get("text"))
+        .attr("data-title", dataArr[i].data[j].get("title"))
         .addClass("d_slide square");
       var newImg = $("<img>").attr({
         src: dataArr[i].data[j].get("file"),
@@ -275,7 +275,9 @@ $(document).on("click", "li.clickImg", function (event) {
   var tmpIndex = liIndex;
 
   var isLast = false;
-  if (tmpIndex == selectArr.length - 1) { isLast = true; }
+  if (tmpIndex == selectArr.length - 1) {
+    isLast = true;
+  }
 
   if (confirm("삭제하시겠습니까?")) {
     //만약 attachNo=-1이면 그냥 삭제, attachNo!=-1이면 삭제배열에 attachNo 넣어두기
@@ -287,11 +289,13 @@ $(document).on("click", "li.clickImg", function (event) {
   }
 
   //방금 삭제한게 마지막이면 마지막요소 클릭하도록
-  if(isLast && selectArr.length != 1) {
+  if (isLast && selectArr.length != 1) {
     //but 요소가 단 한개라면 클릭 X
-    $("ul.Dform_imglist li").eq(selectArr.length-1).find("img").click();
+    $("ul.Dform_imglist li")
+      .eq(selectArr.length - 1)
+      .find("img")
+      .click();
   }
-
 });
 
 //이미지 순서 변경
@@ -313,26 +317,26 @@ $("ul.Dform_imglist").sortable({
 });
 
 // 썸네일 설정 안한 부분이 있는지 검사한다.
-function checkThumbnails(dataArr){
-    var result = false;
-    for (var i = 0; i < dataArr.length; i++) {
-        var arr = dataArr[i];
-        var formDataArr = arr.data;
-        var flag = false;
-        for (var j = 0; j < formDataArr.length; j++) {
-         if(formDataArr[j].get("thumb") == 1){
-            //해당 DAY에 썸네일이 있으면 flag=true;
-            flag = true;
-            break;
-         }
-        }
-        if(!flag) {
-            formDataArr[0].set("thumb",1);
-            result = true;
-        }
+function checkThumbnails(dataArr) {
+  var result = false;
+  for (var i = 0; i < dataArr.length; i++) {
+    var arr = dataArr[i];
+    var formDataArr = arr.data;
+    var flag = false;
+    for (var j = 0; j < formDataArr.length; j++) {
+      if (formDataArr[j].get("thumb") == 1) {
+        //해당 DAY에 썸네일이 있으면 flag=true;
+        flag = true;
+        break;
+      }
     }
-    console.log(result);
-    return result;
+    if (!flag) {
+      formDataArr[0].set("thumb", 1);
+      result = true;
+    }
+  }
+  console.log(result);
+  return result;
 }
 //url 구해두기
 var currentUrl = window.location.href;
@@ -348,7 +352,10 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
   //data: [{file,title,text,thumb},{file,title,text,thumb}]
   var postData = new FormData();
   console.log("===============================");
-  if(checkThumbnails(dataArr)) alert("대표이미지를 선택하지 않은 데일리가 있습니다.\n 자동으로 가장 첫 사진을 썸네일로 설정합니다.")
+  if (checkThumbnails(dataArr))
+    alert(
+      "대표이미지를 선택하지 않은 데일리가 있습니다.\n 자동으로 가장 첫 사진을 썸네일로 설정합니다."
+    );
   for (var i = 0; i < dataArr.length; i++) {
     // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
     // formDataArr : [{file,title,text,thumb},{file,title,text,thumb}]
@@ -380,7 +387,7 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
   postData.append("deleteNos", deleteArr);
 
   $.ajax({
-    url: "/TravelCarrier/weekly/"+weeklyId+"/daily" + "/create",
+    url: "/TravelCarrier/weekly/" + weeklyId + "/daily" + "/create",
     type: "POST",
     data: postData,
     processData: false,
@@ -411,22 +418,26 @@ $(".daily_btn").on("click", function () {
 //데일리 이미지 슬라이드 구현 - by윤아
 $(window).on("load", function () {
   //이미지가 채 로드되기 전에 스크립트가 실행돼서 너비값이 제대로 측정되질 않음
+  //슬라이드 호버 효과
 
   //슬라이드의 너비 구하기
   var slide_width = $(".diary_slides").outerWidth();
-  console.log(slide_width); //2120
+  console.log(
+    "비교 : 윈도우 :" + $(window).width() + "  /  슬라이드 :" + slide_width
+  );
+  //슬라이드 복제함수
+  function clone_slide() {
+    // 슬라이드 복제하기 (clone-복제 / append-붙여넣기)
+    let clone_slide = $(".diary_slides").eq(0).clone();
+    $(".diary_viewport").append(clone_slide);
 
-  //슬라이드 복제하기 (clone-복제 / append-붙여넣기)
-  let clone_slide = $(".diary_slides:first").clone();
-  $(".diary_viewport").append(clone_slide);
-
-  //위치값이 0,0이라 곂치지 않게 두 슬라이드의 위치 지정
-  $(".diary_slides").eq(0).css("left", "0px");
-  $(".diary_slides")
-    .eq(1)
-    .css("left", slide_width + "px");
-
-  //이동 애니메이션 함수만들기
+    //위치값이 0,0이라 곂치지 않게 두 슬라이드의 위치 지정
+    $(".diary_slides").eq(0).css("left", "0px");
+    $(".diary_slides")
+      .eq(1)
+      .css("left", slide_width + "px");
+  }
+  //슬라이드 이동함수
   function moving(x, slide) {
     let left = parseInt(slide.css("left"));
     slide.css("left", left - x + "px"); //이동
@@ -439,41 +450,81 @@ $(window).on("load", function () {
     }
   }
 
-  //이동 함수 적용하기
-  var movingDistance = 1;
+  // if문 실행
+  if (slide_width > $(window).width()) {
+    //슬라이드가 더 클경우
+    alert("복사하고 무브");
+    clone_slide();
+    var movingDistance = 1; //슬라이드 이동 거리
 
-  var originMove = setInterval(() => {
-    moving(movingDistance, $(".diary_slides").eq(0));
-  }, parseInt(1000 / 100));
+    //이동 함수 적용하기
+    var originMove = setInterval(() => {
+      moving(movingDistance, $(".diary_slides").eq(0));
+    }, parseInt(1000 / 100));
 
-  var cloneMove = setInterval(() => {
-    moving(movingDistance, $(".diary_slides").eq(1));
-  }, parseInt(1000 / 100));
+    var cloneMove = setInterval(() => {
+      moving(movingDistance, $(".diary_slides").eq(1));
+    }, parseInt(1000 / 100));
 
-  //슬라이드 mouseleave시 슬라이드 재생
-  $(".diary_slides").on("mouseleave", function () {
-    var movingDistance = 1;
+    //슬라이드 mouseleave시 슬라이드 재생
+    $(".diary_slides").on("mouseleave", function () {
+      var movingDistance = 1;
 
-    setTimeout(function () {
-      originMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides").eq(0));
-      }, parseInt(1000 / 100));
-      cloneMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides").eq(1));
-      }, parseInt(1000 / 100));
-    }, 0);
-    // title, period 보이기
-    $(".diary_titlebox").removeClass("hide");
-  });
+      setTimeout(function () {
+        originMove = setInterval(() => {
+          moving(movingDistance, $(".diary_slides").eq(0));
+        }, parseInt(1000 / 100));
+        cloneMove = setInterval(() => {
+          moving(movingDistance, $(".diary_slides").eq(1));
+        }, parseInt(1000 / 100));
+      }, 0);
+    });
 
-  //슬라이드 mouseenter시 슬라이드 정지
+    //슬라이드 mouseenter시 슬라이드 정지
+    $(".diary_slides").on("mousemove", function () {
+      clearInterval(originMove);
+      clearInterval(cloneMove);
+    });
+  } else {
+    alert("멈춰랏");
+  } //if문 마침
+  //브라우저 크기에 따른 슬라이드 동작유무
+  // $(window).resize(function () {
+  //   alert("사이즈가 바뀌었어요!!");
+  //   console.log(
+  //     "리사이징비교 : 윈도우 :" +
+  //       $(window).width() +
+  //       "  /  슬라이드 :" +
+  //       slide_width
+  //   );
+  // });
+
   $(".diary_slides").on("mousemove", function () {
-    clearInterval(originMove);
-    clearInterval(cloneMove);
     // title, period 숨기기
     $(".diary_titlebox").addClass("hide");
+    // 댓글 아이콘 활성화
+    $(".reply_icon").addClass("show");
+    //2.배경 어둡게
+    $(".filter").addClass("on");
+    $(".diary_viewport").addClass("black");
+    $(".diary_noH .writing").hide();
   });
-});
+  $(".diary_slides").on("mouseleave", function () {
+    // title, period 보이기
+    $(".diary_titlebox").removeClass("hide");
+    // 댓글 아이콘 비활성화
+    $(".reply_icon").removeClass("show");
+    //슬라이드 양끝 흐림효과
+    $(".diary_noH").css({
+      background: "#efeee9",
+    });
+    //3.배경 흐리게 제거
+    $(".filter").removeClass("on");
+    //슬라이드 양끝 흐림효과
+    $(".diary_viewport").removeClass("black");
+    $(".diary_noH .writing").show();
+  });
+}); //온로드 마침
 
 // daily 일기화면(hover) - by.윤아
 $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
@@ -489,31 +540,17 @@ $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
     "background-size": "cover",
   });
 
-  //2.배경 어둡게
-  $(".filter").addClass("on");
-  $(".diary_viewport").addClass("hide");
-  // $(".diary_textbox").addClass("on");
-  $(".diary_noH .writing").hide();
-
   //3. 일기글 보이기
+  $(".diary_textbox").addClass("on");
+  var diary_title = $(e.target).parent().data("title");
+  var diary_text = $(e.target).parent().data("text");
+
+  $(".diary_textbox h6").html(diary_title);
+  $(".diary_textbox p").html(diary_text);
 
   $(".d_slide").on("mouseleave", function (e) {
-    //2. 백그라운드 바꾸기
-    var img_src = e.target.src;
-
-    //슬라이드 양끝 흐림효과
-    $(".diary_noH").css({
-      background: "#efeee9",
-    });
-
-    //3.배경 흐리게 제거
-    $(".filter").removeClass("on");
-
     //4.일기 숨기기
-    // $(".diary_textbox").removeClass("on");
-    //슬라이드 양끝 흐림효과
-    $(".diary_viewport").removeClass("hide");
-    $(".diary_noH .writing").show();
+    $(".diary_textbox").removeClass("on");
   });
 });
 
@@ -524,18 +561,22 @@ $(document).ready(function () {
     const img = new Image();
     img.src = $(this).attr("src");
     img.onload = function () {
-      var ratio = img.width/ img.height;
+      var ratio = img.width / img.height;
       console.log(ratio);
-      if (0.9<=ratio && ratio<=1.1) {
+      if (0.9 <= ratio && ratio <= 1.1) {
         $img.parent().addClass("sqr");
-      } else if (ratio<0.9) {
+      } else if (ratio < 0.9) {
         $img.parent().addClass("rectL");
-      } else if(1.1<ratio) {
+      } else if (1.1 < ratio) {
         $img.parent().addClass("rectW");
       }
     };
   });
 });
+
+// $(".d_slide").click(function (e) {
+
+// });
 
 //텍스트 박스 안의 ID와  다이어리리스트 안의 ID가 같을 때
 
@@ -561,3 +602,13 @@ $(document).ready(function () {
 //     }
 //   }
 // }
+// 댓글 모달창 활성화 - by윤아
+$(".diary_viewport").on("click", ".d_slide > .reply_icon", function (e) {
+  $(".reply_modal").addClass("show");
+  var reply_img = e.target.src;
+  console.log("댓글 이미지" + e.target);
+  $(".reply_img img").attr("src", `${reply_img}`);
+});
+$(".reply_modal .close").click(function () {
+  $(".reply_modal").removeClass("show");
+});
