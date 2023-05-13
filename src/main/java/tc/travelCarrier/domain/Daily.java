@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter @ToString
+@Getter @Setter
 public class Daily {
 
     public Daily(){}

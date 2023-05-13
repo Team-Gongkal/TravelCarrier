@@ -4,13 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.With;
+import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.dto.DailyForm;
+import tc.travelCarrier.dto.WeeklyForm;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.text.ParseException;
 import java.util.*;
 
 @Entity
-@ToString
 @Getter @Setter
 public class Weekly {
 
@@ -42,23 +46,13 @@ public class Weekly {
     private String text;
 
     @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
-    private List<Daily> dailys = new ArrayList<>();
+    private List<Daily> dailys  = new ArrayList<>();
 
     @OneToMany(mappedBy = "weekly", cascade = CascadeType.ALL)
-    private List<Gowith> gowiths = new ArrayList<>();
+    private List<Gowith> gowiths  = new ArrayList<>();
 
     @OneToOne(mappedBy = "weekly", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private AttachWeekly attachWeekly;
-
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append("weekly : ");
-        str.append("title=").append(title).append(", ");
-        str.append("nation=").append(nation).append(", ");
-        str.append("travelDate=").append(travelDate.getSDate()).append(" ~ ").append(travelDate.getEDate());
-        return str.toString();
-    }
 
     //==비즈니스로직==//
     // 위클리 등록하면 daily, gowiths, attachWeekly에 값 들어가는 동작 만드느건가?
@@ -75,12 +69,18 @@ public class Weekly {
         daily.setWeekly(this); //이러면 dailys에 추가된 daily들에 weekly가 셋팅됨!!!
     }
 
-
+    //수정
+    public void updateWeekly(WeeklyForm form) throws ParseException {
+        this.title = form.getTitle();
+        this.text = form.getText();
+        this.nation = form.getNation();
+        this.travelDate = new TravelDate(form.getSdate(), form.getEdate());
+        //this.status = form.getStatus();
+    }
     //생성메소드
     public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, String nation,
                   TravelDate travelDate, CrudDate crudDate, OpenStatus status,
-                  String text, Integer[] gowithIds){
-        System.out.println("+++createWeeklu+++");
+                  String text, List<User> goWithList){
         Weekly weekly = new Weekly();
         weekly.setUser(user);
         weekly.setAttachWeekly(attachWeekly);
@@ -90,11 +90,19 @@ public class Weekly {
         weekly.setCrudDate(crudDate);
         weekly.setStatus(status);
         weekly.setText(text);
-        if(gowithIds != null){
-            for(int i : gowithIds) weekly.addGowith(new Gowith(i));
+
+        if(goWithList.size() != 0){
+            for(User gw : goWithList) {
+                weekly.addGowith(new Gowith(gw));
+            }
         }
 
         return weekly;
     }
 
+    public void updateGowith(User user) {
+        Gowith gw = new Gowith(user);
+        this.gowiths.add(gw);
+        gw.setWeekly(this);
+    }
 }

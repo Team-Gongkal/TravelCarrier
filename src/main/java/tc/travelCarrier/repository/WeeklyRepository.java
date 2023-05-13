@@ -99,4 +99,10 @@ public class WeeklyRepository {
         return "success";
     }
 
+    public void deleteGowith(Gowith gowith) {
+        em.remove(gowith);
+    }
+    public void deleteAttachWeekly(AttachWeekly thumb) {
+        em.remove(thumb);
+    }
 }

@@ -150,6 +150,8 @@ $(document).ready(function () {
       }
     });
   });
+
+
 });
 
 // 사진첨부시 미리보기를 생성하는 메소드 by서현
@@ -169,7 +171,8 @@ $(document).on("click", ".goWithBtn", function (event) {
   const companions = $(".checked_friends li");
   const selCompanion = $(".sel_companion");
 
-  $(".sel_companion li:not(:last)").remove();
+  //$(".sel_companion li:not(:last)").remove();
+  $(".sel_companion:first li:not(#plus_companion)").remove();
 
   companions.each(function () {
     const fid = $(this).data("fid");
@@ -212,6 +215,7 @@ $("#weeklyForm").submit(function (event) {
   formData.append("text", $("#addText").val());
 
   $("ul.sel_companion li:not(:last)").each(function () {
+  console.log($(this).data("fid"));
     formData.append("gowiths[]", $(this).data("fid"));
   });
 

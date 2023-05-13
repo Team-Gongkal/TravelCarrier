@@ -451,6 +451,9 @@ button.Dform_btn_del {
 button.Dform_btn_del:hover {
   color: red;
 }
+button.Dform_btn_disable {
+  background: rgb(128, 128, 128);
+}
 /* 이미지 추가 전의 모달창 디자인 */
 .default_Dform_imgs {
   width: 45%;

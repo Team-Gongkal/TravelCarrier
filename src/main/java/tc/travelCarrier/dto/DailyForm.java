@@ -12,9 +12,15 @@ public class DailyForm {
     public DailyForm(MultipartFile file, String title, Integer thumb,
                      String text, Integer sort, Integer attachNo, String dupdate) {
         this.file = file;
-        this.title = title;
+
+        if(!title.equals(" ")) this.title = title;
+        else this.title = "";
+
         this.thumb = thumb;
-        this.text = text;
+
+        if(!text.equals(" ")) this.text = text;
+        else this.text = "";
+
         this.sort = sort;
         this.attachNo = attachNo;
         this.dupdate = dupdate;

@@ -37,9 +37,10 @@ public class WeeklyForm {
 
     private Integer[] gowiths;
 
-    @NotNull
-    private OpenStatus status;
+/*    @NotNull
+    private OpenStatus status;*/
 
-
+    //수정할때 필요한 필드
+    private String thumbStatus;
 
 }

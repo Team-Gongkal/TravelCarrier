@@ -30,7 +30,6 @@ public class WeeklyContoller {
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model) throws Exception {
         User user = memberRepository.getUser(1);
-        System.out.println(user.getFollowers().get(0).getFollower().getAttachUser().getThumbPath());
         model.addAttribute("user", user);
         return "test/weekly_form";
     }
@@ -41,16 +40,14 @@ public class WeeklyContoller {
     }
 
 
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(OpenStatus.class, new OpenStatusEditor());
     }
 
-    /**
-     * 모달폼을 통해 위클리정보 저장
-     * @param : WeeklyForm (폼정보)
-     * @return : "redirect:/TravelCarrier/weekly/"+weeklyId
-     * */
+
+
     @PostMapping(value="/weeklyForm")
     @ResponseBody
     public Integer regist(@Valid WeeklyForm form, BindingResult result,
@@ -58,16 +55,21 @@ public class WeeklyContoller {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
-        User user = new User();
-        user.setId(1);
+        User user = memberRepository.getUser(1);
+
+        List<User> goWithList = new ArrayList<User>();
+        if(form.getGowiths() != null) {
+            for (int id : form.getGowiths()) goWithList.add(memberRepository.getUser(id));
+        }
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
                 new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
-                        status, form.getText().replace("\n", "\\n"), form.getGowiths())
+                        status, form.getText().replace("\n", "\\n"), goWithList)
         );
 
         return weeklyId;
     }
+
 
     /**
      * 선택한 여행의 위클리를 조회
@@ -77,7 +79,6 @@ public class WeeklyContoller {
     @GetMapping("/weekly/{weeklyId}")
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
-        model.addAttribute("weekly",weekly);
 
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
         //model.addAttribute("period", period);
@@ -109,12 +110,34 @@ public class WeeklyContoller {
             }
         }
 
-
         for(WeeklyDTO wd : allWdList){
             System.out.println("allWdList : "+wd.toString());
         }
+
+        User user = memberRepository.getUser(1);
+        model.addAttribute("user", user);
         model.addAttribute("allWdList", allWdList);
+        model.addAttribute("weekly",weekly);
         return "test/weekly";
+    }
+    @PostMapping("/weekly/{weeklyId}/update")
+    @ResponseBody
+    public void updateWeekly(@Valid WeeklyForm form, BindingResult result,
+                             @RequestParam("status") OpenStatus status,
+                             @PathVariable("weeklyId") int weeklyId) throws Exception {
+        if(result.hasErrors()) {
+            System.out.println("Validation Error");
+        }
+        System.out.println("썸네일?? : "+form.getFile());
+        System.out.println("상태?? : "+form.getThumbStatus());
+        return;
+        //weeklyService.updateWeekly(weeklyId, form);
+/*        weeklyService.register(form.getFile(),
+                createWeekly(user, null, form.getTitle(), form.getNation(),
+                        new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
+                        status, form.getText().replace("\n", "\\n"), form.getGowiths())
+        );*/
+
     }
 
 }

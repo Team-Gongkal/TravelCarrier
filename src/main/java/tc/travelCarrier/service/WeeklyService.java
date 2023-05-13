@@ -8,11 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.WeeklyDTO;
-import tc.travelCarrier.repository.AttachRepository;
-import tc.travelCarrier.repository.DailyRepository;
-import tc.travelCarrier.repository.KwordRepository;
-import tc.travelCarrier.repository.WeeklyRepository;
+import tc.travelCarrier.dto.WeeklyForm;
+import tc.travelCarrier.repository.*;
 
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
@@ -24,6 +24,7 @@ public class WeeklyService {
     private final KwordRepository kwordRepository;
     private final AttachRepository attachRepository;
     private final AttachService attachService;
+    private final MemberRepository memberRepository;
 
     /**
      * 팔로워 목록 조회
@@ -64,6 +65,29 @@ public class WeeklyService {
     /**
      * 위클리 수정
      */
+    public void updateWeekly(int weeklyId, WeeklyForm form) throws Exception {
+        // 위클리 정보 수정
+        Weekly weekly = findWeekly(weeklyId);
+        weekly.updateWeekly(form);
+
+        // 위클리 동행인 삭제
+        for (Gowith gowith : weekly.getGowiths()) {
+            weeklyRepository.deleteGowith(gowith);
+        }
+        weekly.getGowiths().clear();
+        // 위클리 동행인 변경
+        for(int id : form.getGowiths()){
+            User user = memberRepository.getUser(id);
+            weekly.updateGowith(user);
+        }
+
+        // 위클리 썸네일 변경
+        weeklyRepository.deleteAttachWeekly(weekly.getAttachWeekly());
+        weekly.setAttachWeekly(null);
+        attachService.saveUpdateAttachWeekly(form, weekly);
+
+    }
+
     /**
      * 위클리 삭제
      */
