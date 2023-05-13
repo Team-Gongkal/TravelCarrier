@@ -76,7 +76,7 @@ public class Weekly {
         this.text = form.getText();
         this.nation = form.getNation();
         this.travelDate = new TravelDate(form.getSdate(), form.getEdate());
-        this.status = form.getStatus();
+        //this.status = form.getStatus();
     }
     //생성메소드
     public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, String nation,

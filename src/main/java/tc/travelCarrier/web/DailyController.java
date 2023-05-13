@@ -1,8 +1,11 @@
 package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.*;
@@ -52,6 +55,7 @@ public class DailyController {
         return "test/daily(modal)";
     }
 
+
     /**
      * 데일리 폼작성 후 데일리정보 등록하는 메소드
      * @param :
@@ -59,9 +63,10 @@ public class DailyController {
      * */
     @PostMapping("/weekly/{weeklyId}/daily/create")
     @ResponseBody
-    public List<DailyDTO> createDaily (@PathVariable("weeklyId") int weeklyId,
+    public List<DailyDTO> createDaily (
+                               @PathVariable("weeklyId") int weeklyId,
                                @RequestParam("files") List<MultipartFile> fileList,
-                               @RequestParam("titles") List<String> titleList,
+                               @RequestParam(value="titles") List<String> titleList,
                                @RequestParam("texts") List<String> textList,
                                @RequestParam("days") List<String> dayList,
                                @RequestParam("sorts") List<Integer> sortList,
@@ -70,7 +75,6 @@ public class DailyController {
                                @RequestParam("dupdate") List<String> dupdateList,
                                @RequestParam("deleteNos") List<Integer> deleteNos) throws Exception {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
-        System.out.println("타이틀 : "+weekly.getTitle());
         //map 형태로 데이터 바인딩
         Map<String, List<DailyForm>> dailyMap = new HashMap<>();
         for(int i=0; i<fileList.size(); i++){
@@ -104,6 +108,7 @@ public class DailyController {
 
         return dailies;
     }
+
 
     private Map<String, List<DailyForm>> getNewFileMap(Map<String, List<DailyForm>> dailyMap) {
         Map<String, List<DailyForm>> newFileMap = new HashMap<>();

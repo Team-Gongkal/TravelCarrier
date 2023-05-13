@@ -58,8 +58,9 @@ public class WeeklyContoller {
         User user = memberRepository.getUser(1);
 
         List<User> goWithList = new ArrayList<User>();
-        for(int id : form.getGowiths()) goWithList.add(memberRepository.getUser(id));
-
+        if(form.getGowiths() != null) {
+            for (int id : form.getGowiths()) goWithList.add(memberRepository.getUser(id));
+        }
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
                 new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),

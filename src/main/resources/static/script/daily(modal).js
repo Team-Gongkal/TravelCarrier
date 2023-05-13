@@ -143,11 +143,11 @@ $(document).on("click", "ul.Dform_imglist li img", function (event) {
 });
 
 //제목 수정시 바로 배열에 저장
-$(document).on("change", "div.daily_title input", function (event) {
+$(document).on("input", "div.daily_title input", function (event) {
   selectArr[liIndex].set("title", event.target.value);
 });
 //메모 수정시 바로 배열에 저장
-$(document).on("change", "div.daily_text textarea", function (event) {
+$(document).on("input", "div.daily_text textarea", function (event) {
   selectArr[liIndex].set("text", event.target.value);
 });
 //대표이미지 설정
@@ -175,14 +175,13 @@ $(document).on("click", "ul.days_tabSlide li", function () {
 
   //처음 로드시엔 맨 처음요소 선택하게 하기..(사진 없을경우 동작하지 않으므로 미리 없애놓자)
   removeRightForm();
-
-  console.log(selectArr.length);
-  if (liIndex !== "ul.Dform_imglist li".length - 1) {
-    $("ul.Dform_imglist li").eq(liIndex).find("img").click();
+    $("ul.Dform_imglist li").eq(0).find("img").click();
+/*  if (liIndex != "ul.Dform_imglist li".length - 1) {
+    $("ul.Dform_imglist li").eq(0).find("img").click();
   } else {
     alert("last");
     $("ul.Dform_imglist li:last img").click();
-  }
+  }*/
 
   //$("ul.Dform_imglist li:first img").click();
 });
@@ -347,6 +346,16 @@ var weeklyId = currentUrl.match(/weekly\/(\d+)\/daily/)[1];
 // formDataArr : [{formData},{file,title, text,thumb},{file,title, text,thumb}]
 $(document).on("click", "button.Dform_btn_save", function (event) {
   event.preventDefault();
+  // 유효성검사
+  if(dataArr.length == 0) {
+    alert("저장할 사진이 없습니다!");
+    return;
+  }
+  // 버튼변화이벤트
+  var clickBtn = $(this);
+  $(clickBtn).attr("disabled", true);
+  $(clickBtn).toggleClass("Dform_btn_save Dform_btn_disable");
+  $(clickBtn).html("저장중..");
   // 서버로 데이터 전송
   //dataArr : [ {day,data}, {DAY1,formDataArr[0]},{DAY2,formDataArr[1]} ]
   //data: [{file,title,text,thumb},{file,title,text,thumb}]
@@ -373,8 +382,12 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
           })
         );
       }
-      postData.append("titles", formDataArr[j].get("title"));
-      postData.append("texts", formDataArr[j].get("text"));
+
+      if(formDataArr[j].get("title") == "") postData.append("titles", " ");
+      else postData.append("titles", formDataArr[j].get("title"));
+      if(formDataArr[j].get("text") == "") postData.append("texts", " ");
+      else postData.append("texts", formDataArr[j].get("text"));
+
       postData.append("thumbs", formDataArr[j].get("thumb"));
       postData.append("days", "DAY" + (i + 1));
       postData.append("sorts", j);
@@ -393,7 +406,10 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
     processData: false,
     contentType: false,
     success: function (dailies) {
-      alert("성공해따아아아앙악");
+        $(clickBtn).attr("disabled", false);
+        $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
+        $(clickBtn).html("저장하기");
+        alert("저장되었습니다.");
       //바뀐 attachNo를 업데이트 해줘야함!!
       setFirst(dailies);
       getCurrentDataArr();
@@ -402,6 +418,9 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
       $("ul.days_tabSlide li:first").click();
     },
     error: function (error) {
+        $(clickBtn).attr("disabled", false);
+        $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
+        $(clickBtn).html("저장하기");
       alert("응 실패 ㅋㅋ" + error);
     },
   });
