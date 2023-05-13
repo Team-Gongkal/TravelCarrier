@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.util.*;
 
 @Entity
-@ToString
 @Getter @Setter
 public class Weekly {
 
