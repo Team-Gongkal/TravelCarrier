@@ -758,6 +758,8 @@ ul.diary_list > li {
   display: none;
 }
 .reply_modal.show {
+  width: 100%;
+  height: 100%;
   visibility: visible;
   display: flex;
 }
@@ -771,7 +773,7 @@ ul.diary_list > li {
 }
 .reply_modal > .center {
   width: 80%;
-  height: 90%;
+  height: 85%;
   display: flex;
   border-radius: 1rem;
   overflow: hidden;
@@ -792,9 +794,11 @@ ul.diary_list > li {
   overflow: hidden;
 }
 .reply_img img {
+  width: 100%;
   max-width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 /* 댓글창 */
 .reply_screen {
@@ -805,10 +809,13 @@ ul.diary_list > li {
   background: #dde5e8;
   padding: 2.5rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .reply_scroll {
   width: 100%;
-  height: calc(100% - 2.5rem);
+  height: fit-content;
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
