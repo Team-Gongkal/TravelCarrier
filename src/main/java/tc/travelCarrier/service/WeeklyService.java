@@ -76,14 +76,15 @@ public class WeeklyService {
         }
         weekly.getGowiths().clear();
         // 위클리 동행인 변경
-        for(int id : form.getGowiths()){
-            User user = memberRepository.getUser(id);
-            weekly.updateGowith(user);
+        if(form.getGowiths() != null) {
+            for (int id : form.getGowiths()) {
+                User user = memberRepository.getUser(id);
+                weekly.updateGowith(user);
+            }
         }
-
         // 위클리 썸네일 변경
-        weeklyRepository.deleteAttachWeekly(weekly.getAttachWeekly());
-        weekly.setAttachWeekly(null);
+        //weeklyRepository.deleteAttachWeekly(weekly.getAttachWeekly());
+        //weekly.setAttachWeekly(null);
         attachService.saveUpdateAttachWeekly(form, weekly);
 
     }

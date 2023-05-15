@@ -101,6 +101,7 @@
                           <!-- 보이는 부분 -->
                           <ul class="sel_companion" id="sc">
                             <li th:each="w,it : ${weekly.gowiths}"
+                                th:data-name="${w.user.name}" th:data-fid="${w.user.id}"
                                 th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
                                 th:if="${it.index} &lt; 5" class="circle">
                               동행인 이미지
@@ -173,7 +174,6 @@
           </div>
         </div>
 
-
         <div class="weekly_mainArtc">
           <div class="weekly_title">
             <h2 th:text="${weekly.title}">TITLE</h2>
@@ -185,10 +185,10 @@
               2020.10.20 - 2020.10.21</h3>
           </div>
           <div class="weekly_addText">
-            <p th:text="${weekly.text}"> 요래요래 여행하고옴 다시 가고 싶다 우앵웅앵
+            <textarea th:text="${weekly.text}"> 요래요래 여행하고옴 다시 가고 싶다 우앵웅앵
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident quia harum odio, reprehenderit ut a
               sunt ab nisi nobis laboriosam. Dicta aut odit reprehenderit animi ea asperiores tempore non sint.
-            </p>
+            </textarea>
           </div>
           <div class=" weekly_with">
             <div class="weekly_companion">

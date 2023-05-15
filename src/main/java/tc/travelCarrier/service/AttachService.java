@@ -231,16 +231,9 @@ public class AttachService {
         } else{
             return;
         }
-
-        // 기존 AttachWeekly 삭제해주기
-
-        //2.AttachWeekly 엔티티 생성해서 DB에도 저장
-        AttachWeekly attachWeekly = AttachWeekly.builder()
-                .attachTitle(saveArr[0])
-                .thumb(saveArr[1])
-                .weekly(weekly)
-                .build();
-        weekly.setAttachWeekly(attachWeekly);
+        //2. 바뀐 경로로 저장
+        weekly.getAttachWeekly().setAttachTitle(saveArr[0]);
+        weekly.getAttachWeekly().setThumbPath(saveArr[1]);
     }
 
 }
