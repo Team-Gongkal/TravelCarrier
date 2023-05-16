@@ -52,7 +52,7 @@ $(document).ready(function () {
     var newUl = $("<ul>").addClass(dataArr[i].day[0] + " diary_list");
     for (var j = 0; j < dataArr[i].data.length; j++) {
       var newLi = $("<li>")
-        .attr("id", dataArr[i].data[j].get("attachNo"))
+        .attr("data-attachNo", dataArr[i].data[j].get("attachNo"))
         .attr("data-text", dataArr[i].data[j].get("text"))
         .attr("data-title", dataArr[i].data[j].get("title"))
         .addClass("d_slide square");
@@ -621,13 +621,3 @@ $(document).ready(function () {
 //     }
 //   }
 // }
-// 댓글 모달창 활성화 - by윤아
-$(".diary_viewport").on("click", ".d_slide > .reply_icon", function (e) {
-  $(".reply_modal").addClass("show");
-  var reply_img = e.target.src;
-  console.log("댓글 이미지" + e.target);
-  $(".reply_img img").attr("src", `${reply_img}`);
-});
-$(".reply_modal .close").click(function () {
-  $(".reply_modal").removeClass("show");
-});

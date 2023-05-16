@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.AttachWeekly;
 import tc.travelCarrier.domain.Daily;
 import tc.travelCarrier.domain.Weekly;
@@ -236,4 +237,8 @@ public class AttachService {
         weekly.getAttachWeekly().setThumbPath(saveArr[1]);
     }
 
+
+    public AttachDaily findAttachDaily(int attachNo){
+        return attachRepository.findAttachDaily(attachNo);
+    }
 }

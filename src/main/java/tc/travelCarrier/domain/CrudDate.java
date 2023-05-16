@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Embeddable
@@ -15,6 +17,12 @@ public class CrudDate {
         this.cdate = cdate;
         this.udate = udate;
     }
+    public CrudDate(String cdate, String udate) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        this.cdate = formatter.parse(cdate);
+        if(udate !=null) this.udate = formatter.parse(udate);
+    }
+
     @Column(name="CDATE")
     private Date cdate;
     @Column(name="UDATE")

@@ -22,6 +22,11 @@ public class AttachRepository {
     public void save(AttachDaily attachDaily){
         em.persist(attachDaily);
     }
+    // 데일리 사진 검색
+    public AttachDaily findAttachDaily(int id){
+        AttachDaily at = em.find(AttachDaily.class, id);
+        return at;
+    }
 
 
     // 프로필 사진 저장

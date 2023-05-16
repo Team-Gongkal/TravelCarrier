@@ -6,6 +6,7 @@ import lombok.ToString;
 import tc.travelCarrier.dto.DailyForm;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "ATTACH_DAILY")
@@ -30,6 +31,9 @@ public class AttachDaily extends Attach{
 
     @Column(name = "ATTACH_THUMB")
     private boolean thumb;
+
+    @OneToMany(mappedBy ="attachDaily", cascade = CascadeType.ALL)
+    private List<Reply> replyList;
 
     //생성메소드
     
