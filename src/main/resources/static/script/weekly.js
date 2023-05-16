@@ -229,6 +229,7 @@ $(document).on("click","#updateWeekly", function(event){
     contentType: false,
     success: function (data) {
       alert("성공");
+      location.replace('/TravelCarrier/weekly/'+data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("실패");

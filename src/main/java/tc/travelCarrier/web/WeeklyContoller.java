@@ -64,7 +64,7 @@ public class WeeklyContoller {
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
                 new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
-                        status, form.getText().replace("\n", "\\n"), goWithList)
+                        status, form.getText(), goWithList)
         );
 
         return weeklyId;
@@ -79,13 +79,7 @@ public class WeeklyContoller {
     @GetMapping("/weekly/{weeklyId}")
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
-
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
-        //model.addAttribute("period", period);
-
-        System.out.println("wwww"+weekly.toString()+", period : "+period);
-        // 각 데일리의 대표사진과 키워드들을 가져와야함, 그래프로 찾으면 탐색이 길어져 비효율적
-        // 따라서 dto를 만들어서 넣을것임
         List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
 
         Date sDate = weekly.getTravelDate().getSDate();
@@ -122,22 +116,15 @@ public class WeeklyContoller {
     }
     @PostMapping("/weekly/{weeklyId}/update")
     @ResponseBody
-    public void updateWeekly(@Valid WeeklyForm form, BindingResult result,
+    public int updateWeekly(@Valid WeeklyForm form, BindingResult result,
                              @RequestParam("status") OpenStatus status,
                              @PathVariable("weeklyId") int weeklyId) throws Exception {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
-        System.out.println("썸네일?? : "+form.getFile());
-        System.out.println("상태?? : "+form.getThumbStatus());
-        return;
-        //weeklyService.updateWeekly(weeklyId, form);
-/*        weeklyService.register(form.getFile(),
-                createWeekly(user, null, form.getTitle(), form.getNation(),
-                        new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
-                        status, form.getText().replace("\n", "\\n"), form.getGowiths())
-        );*/
+        weeklyService.updateWeekly(weeklyId, form);
 
+        return weeklyId;
     }
 
 }
