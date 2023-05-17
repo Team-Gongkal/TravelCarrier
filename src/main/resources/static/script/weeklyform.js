@@ -434,7 +434,7 @@ $(document).on("click", ".goWithBtn", function (event) {
   const selCompanion = $(".sel_companion");
 
   //$(".sel_companion li:not(:last)").remove();
-  $(".sel_companion:first li:not(#plus_companion)").remove();
+  $(".sel_companion:last li:not(#plus_companion)").remove();
 
   companions.each(function () {
     const fid = $(this).data("fid");
@@ -454,7 +454,7 @@ $(document).on("click", ".goWithBtn", function (event) {
   });
 });
 
-$("#weeklyForm").submit(function (event) {
+$(".weekly_saveBtn").click(function (event) {
   event.preventDefault();
 
   // 제출전 유효성 검사, false면 제출 X

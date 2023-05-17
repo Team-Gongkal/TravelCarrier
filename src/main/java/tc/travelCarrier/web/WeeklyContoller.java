@@ -112,6 +112,7 @@ public class WeeklyContoller {
         model.addAttribute("user", user);
         model.addAttribute("allWdList", allWdList);
         model.addAttribute("weekly",weekly);
+        System.out.println("띄어쓰기 : "+weekly.getText());
         return "test/weekly";
     }
     @PostMapping("/weekly/{weeklyId}/update")

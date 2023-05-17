@@ -497,3 +497,7 @@ li.card span:nth-child(2):hover {
 .weekly_modal_bg .addText textarea {
   height: 8em;
 }
+
+.updateWeekly {
+margin-bottom: 1.5rem;
+}

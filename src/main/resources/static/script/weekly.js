@@ -434,7 +434,7 @@ $(document).on("click", ".removeBtn", function (event) {
   thumb_status = "DELETE";
 });
 
-$(document).on("click","#updateWeekly", function(event){
+$(document).on("click",".updateWeekly", function(event){
   event.preventDefault();
   console.log("/TravelCarrier/weekly/"+weeklyId+"/update");
   // 제출전 유효성 검사, false면 제출 X
