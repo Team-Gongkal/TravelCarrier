@@ -12,10 +12,8 @@
   <main class="weekly_scroll">
     <article id="top">
       <div class="longBox">
-        <div class="weekly_edit">
-          <a href="" class="weekly_open" onclick="event.preventDefault()">
+        <div class="weekly_edit" onclick="event.preventDefault()">
             <img src="/image/weekly/icon/setting.png" alt="위클리 수정">
-          </a>
         </div>
 
         <div class="weekly_mainArtc">
@@ -33,10 +31,6 @@
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident quia harum odio, reprehenderit ut a
               sunt ab nisi nobis laboriosam. Dicta aut odit reprehenderit animi ea asperiores tempore non sint.
             </pre>
-            <p th:text="${weekly.text}"> 요래요래 여행하고옴 다시 가고 싶다 우앵웅앵
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident quia harum odio, reprehenderit ut a
-              sunt ab nisi nobis laboriosam. Dicta aut odit reprehenderit animi ea asperiores tempore non sint.
-            </p>
           </div>
           <div class=" weekly_with">
             <div class="weekly_companion">
@@ -106,7 +100,7 @@
         </div>
 
         <div th:if="${wd.thumbPath != null}" class="longBox">
-          <a href="#">
+          <a href="" class="daily_path">
             <div>
               <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
             </div>
@@ -119,7 +113,7 @@
       <div th:if="${wdStat.even}" class="shortBox_even">
         <div class="shortBox">
           <div class="moreBox">
-            <a href="#none" class="daily_path">more</a>
+            <a href="" class="daily_path">more</a>
           </div>
 
           <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
@@ -151,7 +145,7 @@
         </div>
 
         <div th:if="${wd.thumbPath != null}" class="longBox">
-          <a href="#">
+          <a href="" class="daily_path">
             <div>
               <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
             </div>
@@ -159,8 +153,8 @@
         </div>
 
       </div>
-
     </div>
+
     <!-- 여행일 추가하기-->
     <div class="shortBox_even">
       <div class="shortBox">
@@ -219,14 +213,15 @@
       </div>
     </div>
     <!-- 위클리 수정 모달 modal -->
-    <div class="weekly_modal_bg show">
+    <div class="weekly_modal_bg">
       <div class="weekly_modal">
-        <button class="close">
-          <i class="xi-close xi-2x"></i>
-        </button>
-        <div class="weekly_modal_context">
-          <div id="weekly_form">
-            <h1>위클리를 수정하세요</h1>
+        <div id="weekly_modal_form">
+            <div class="modal_title">
+              <h3>위클리를 수정하세요</h3>
+              <button class="close">
+                <i class="xi-close xi-2x"></i>
+              </button>
+            </div>
             <form id="weeklyForm" action="" method="post" enctype="multipart/form-data" name="weekly_form"
               class="weekly_form">
               <div class="thumbnail">
@@ -292,11 +287,11 @@
                     </div>
                   </li>
                   <li><!-- 일기 작성-------------------------------- -->
-                    <div class="writing">
+                    <div class="addText">
                       <h3>추가글</h3>
-                      <p id="countText">0 / 100</p>
                       <textarea name="text" id="addText" cols="30" rows="10" wrap="off"
                         placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요" th:text="${weekly.text}"></textarea>
+                        <span id="countText">(0/100)</span>
                     </div>
                   </li>
                   <li> <!-- 동행인--------------------------------------- -->
@@ -346,39 +341,36 @@
                 </ul>
               </div>
             </form>
+            <button type="submit" class="btn weekly_saveBtn"> 저장하기 </button>
             <!-- 동행인 추가 팝업 -->
             <div class="companion_modal_bg">
-              <div class="companion_modal">
-                <h3>아이디 검색</h3>
-                <div class="id_search">
-                  <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
-                  <img src="/image/weekly/icon/serch.svg" alt="serch icon">
-                </div>
-                <div class="friendsList">
-                  <ul class="checked_friends">
-
-                  </ul>
-                  <ul class="serch_friends">
-                    <li th:each="f : ${user.followers}"
-                      th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
-                      <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
-                      <label th:for="'#' + ${f.follower.id}">
-                        <span class="profile_circle circle">
-                          <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
-                            alt="프로필사진">
-                        </span>
-                        <span th:text="${f.follower.name}" class="nickname">닉네임</span>
-                      </label>
-                    </li>
-                  </ul>
-                </div>
-                <button type="button" class="btn goWithBtn">확인</button>
-              </div>
+          <div class="companion_modal">
+            <h3>아이디 검색</h3>
+            <div class="id_search">
+              <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
+              <img src="/image/weekly/icon/serch.svg" alt="serch icon">
             </div>
+            <div class="friendsList">
+              <ul class="checked_friends">
+
+              </ul>
+              <ul class="serch_friends">
+                <li th:each="f : ${user.followers}"
+                  th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
+                  <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
+                  <label th:for="'#' + ${f.follower.id}">
+                    <span class="profile_circle circle">
+                      <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
+                        alt="프로필사진">
+                    </span>
+                    <span th:text="${f.follower.name}" class="nickname">닉네임</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn goWithBtn">확인</button>
           </div>
-          <button class="weekly_save btn" id="updateWeekly"> 저장하기
-          </button>
-          <button class="weekly_close btn">취소하기</button>
+            </div>
         </div>
       </div>
     </div>
@@ -386,16 +378,16 @@
   </main>
   <script th:inline="javascript">
     var all_keywords = [
-      [# th: each = "wd : ${allWdList}"]
+      [# th:each = "wd : ${allWdList}"]
       [[${ wd.keywords }]],
       [/] 
       ];
     console.log(all_keywords);
 
-    var weeklyId = [[${ weekly.id }]];
+    var weeklyId = [[${weekly.id}]];
 
     var sgowiths = [
-      [# th: each = "gw : ${weekly.gowiths}"]
+      [# th:each = "gw : ${weekly.gowiths}"]
       [[${ gw.user.id }]],
       [/]
       ];
