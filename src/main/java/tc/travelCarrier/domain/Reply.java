@@ -5,18 +5,21 @@ import lombok.Setter;
 import tc.travelCarrier.dto.ReplyDTO;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Entity
 @Getter @Setter
 public class Reply {
     public Reply(){}
-    public Reply(AttachDaily ad, String text, User user, CrudDate cd){
+    public Reply(AttachDaily ad, String text, User user, CrudDate cd, Reply origin){
         //새댓글 등록
         this.attachDaily = ad;
         this.text = text;
         this.user = user;
         this.crudDate = cd;
+        this.origin = origin;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +48,9 @@ public class Reply {
     private List<Reply> replyList;
 
 
+    public void modify(String text, String udate) throws ParseException {
+        this.text = text;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        this.crudDate.setUdate(formatter.parse(udate));
+    }
 }

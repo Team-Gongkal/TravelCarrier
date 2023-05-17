@@ -5,231 +5,234 @@
 <th:block th:replace="fragments/head :: headFragment"></th:block>
 
 <body>
-  <th:block th:replace="fragments/header :: headerFragment"></th:block>
-  <main class="daily">
-    <!-- daily 시작화면 UI -->
-    <div class="daily_start" style="display: none;">
-      <div class="sdaily_text">
-        <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
-        </p>
-        <p>사진과 함께 남겨주세요</p>
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<main class="daily">
+  <!-- daily 시작화면 UI -->
+  <div class="daily_start" style="display: none;">
+    <div class="sdaily_text">
+      <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
+      </p>
+      <p>사진과 함께 남겨주세요</p>
+    </div>
+    <div class="writing square rectL">
+      <div class="circle">
+        <img src="/image/daily/icon/pencil.png" alt="edit diary icon">
       </div>
-      <div class="writing square rectL">
-        <div class="circle">
-          <img src="/image/daily/icon/pencil.png" alt="edit diary icon">
+      <span>글쓰기</span>
+    </div>
+  </div>
+
+  <!--daily-form 데일리 입력 폼/ 모달창-->
+  <div class="daily_form_bg">
+    <form action="" id="daily_form">
+      <div class="modal_title Dform_title">
+        <button class="close">
+          <i class="xi-close xi-2x"></i>
+        </button>
+        <h3>일기장</h3>
+      </div>
+      <div class="Dform">
+        <div class="default_Dform_imgs" style="display: none;">
+          <label>
+            <div>
+              <input type="file" class="attach" multiple>
+              <img src="/image/daily/icon/upload-b.png" alt="">
+              <p>클릭하여 파일을 선택하거나</p>
+              <p>드래그하여 파일을 업로드해주세요</p>
+            </div>
+          </label>
         </div>
-        <span>글쓰기</span>
+        <div class="Dform_imgs" style="display: none;">
+          <p>이미지를 드래그하여 순서를 편집할 수 있습니다.</p>
+          <div class="Dform_container">
+            <ul class="Dform_imglist">
+              <li id="moreImgLi">
+                <input type="file" multiple id="moreImg" class="attach">
+                <label for="moreImg"><i class="xi-plus"></i></label>
+              </li>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="Dform_input">
+          <div class="daily_days">
+            <ul class="days_tabSlide">
+              <li th:each="i : ${#numbers.sequence(1, period)}" class="Dtab days_num1">
+                <span th:text="'DAY' + ${i}">DAY ?</span>
+              </li>
+
+            </ul>
+          </div>
+          <div class="daily_title">
+            <h3>제목(선택)</h3>
+            <input type="text" placeholder="제목을 작성해주세요">
+          </div>
+          <div class="daily_text">
+            <h3>메모</h3>
+            <textarea name="" id="" cols="30" rows="10" placeholder="일기를 작성해주세요"></textarea>
+          </div>
+          <div class="daily_files">
+            <h3>이미지 파일</h3>
+            <div class="filePath">
+              <p>/파일명.jpg</p>
+              <input type="file" id="fileChange">
+              <label for="fileChange">
+                <img src="/image/daily/icon/changeImg.svg" alt="이미지변경아이콘">
+              </label>
+            </div>
+            <input type="radio" id="mainImgSet" name="mainImg">
+            <label for="mainImgSet">대표이미지로 설정</label>
+            <b>i (설정취소는 불가능하며, 다른사진을 클릭하여 변경이 가능합니다.)</b>
+          </div>
+          <div class="Dform_btn">
+            <button class="btn Dform_btn_del" type="reset"> 작성취소</button>
+            <button class="btn Dform_btn_save" type="submit">저장하기</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- daily 일기화면 -->
+  <div class="diary_noH">
+    <div class="center">
+      <div class="filter"></div>
+      <div class="diary_titlebox">
+        <h1 th:text="${weekly.title}">PARIS</h1>
+        <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
+          yyyy-mm-dd</p>
+      </div>
+      <div class="diary_viewport">
+        <div class="diary_slides">
+        </div>
+      </div>
+      <div class="writing circle">
+        <img src="/image/daily/icon/pencil.png" alt="edit daily">
+      </div>
+      <div class="diary_textbox">
+        <ul>
+          <li>
+            <h6>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </h6>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+              velit ex esse recusandae?
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+              velit ex esse recusandae?
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+              velit ex esse recusandae?
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+              velit ex esse recusandae?
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
+              perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
+              velit ex esse recusandae?
+            </p>
+          </li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <!--daily-form 데일리 입력 폼/ 모달창-->
-    <div class="daily_form_bg">
-      <form action="" id="daily_form">
-        <div class="modal_title Dform_title">
-          <button class="close">
-            <i class="xi-close xi-2x"></i>
+  <!-- daily 댓글UI -->
+  <div class="reply_modal">
+    <div class="reply_modal_bg"></div>
+    <div class="center">
+      <div class="reply_img">
+        <img src="/image/daily/diary/IMG_6493.jpg" alt="해당일기이미지">
+      </div>
+      <div class="reply_screen">
+        <div class="reply_scroll">
+          <div class="reply">
+            <!-- <div class="profile_circle"> -->
+            <div class="comment">
+              <div class="comment_profile">
+                <div>
+                  <img src="/image/user/profile/seohyun.jpg" alt="프로필01">
+                </div>
+              </div>
+              <div class="comment_date">
+                <span>2023-05-08</span>
+              </div>
+              <div class="comment_textbox">
+                <span class="comment_id">sieun</span>
+                <p class="comment_content">
+                  아니 나 나비고 발급받을 때 증명사진 없어서 여권사진 들고갔더니 목 댕걍하고 얼굴만 대문짝만하게 붙여줬잖어ㅜㅜㅜㅜ
+                </p>
+              </div>
+              <div class="comment_btn">
+                <span>수정하기</span>
+                <span>답글달기</span>
+              </div>
+            </div>
+            <div class="recomment">
+              <div class="comment_profile">
+                <div>
+                  <img src="/image/user/profile/zzangu.jpg" alt="프로필01">
+                </div>
+              </div>
+              <div class="comment_date">
+                <span>2023-05-08</span>
+              </div>
+              <div class="comment_textbox">
+                <span class="comment_id">Yung</span>
+                <p class="comment_content">
+                  <span class="reply_id">@Yung</span>
+                  ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+                </p>
+              </div>
+              <div class="comment_btn">
+                <span>수정하기</span>
+                <span>답글달기</span>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+
+
+        </div>
+        <div class="reply_input">
+          <div>
+            <p>댓글달기</p>
+          </div>
+          <input type="text" placeholder="댓글을 남겨주세요">
+          <button>
+            <img src="/image/daily/icon/send.png" alt="등록">
           </button>
-          <h3>일기장</h3>
         </div>
-        <div class="Dform">
-          <div class="default_Dform_imgs" style="display: none;">
-            <label>
-              <div>
-                <input type="file" class="attach" multiple>
-                <img src="/image/daily/icon/upload-b.png" alt="">
-                <p>클릭하여 파일을 선택하거나</p>
-                <p>드래그하여 파일을 업로드해주세요</p>
-              </div>
-            </label>
-          </div>
-          <div class="Dform_imgs" style="display: none;">
-            <p>이미지를 드래그하여 순서를 편집할 수 있습니다.</p>
-            <div class="Dform_container">
-              <ul class="Dform_imglist">
-                <li id="moreImgLi">
-                  <input type="file" multiple id="moreImg" class="attach">
-                  <label for="moreImg"><i class="xi-plus"></i></label>
-                </li>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="Dform_input">
-            <div class="daily_days">
-              <ul class="days_tabSlide">
-                <li th:each="i : ${#numbers.sequence(1, period)}" class="Dtab days_num1">
-                  <span th:text="'DAY' + ${i}">DAY ?</span>
-                </li>
-
-              </ul>
-            </div>
-            <div class="daily_title">
-              <h3>제목(선택)</h3>
-              <input type="text" placeholder="제목을 작성해주세요">
-            </div>
-            <div class="daily_text">
-              <h3>메모</h3>
-              <textarea name="" id="" cols="30" rows="10" placeholder="일기를 작성해주세요"></textarea>
-            </div>
-            <div class="daily_files">
-              <h3>이미지 파일</h3>
-              <div class="filePath">
-                <p>/파일명.jpg</p>
-                <input type="file" id="fileChange">
-                <label for="fileChange">
-                  <img src="/image/daily/icon/changeImg.svg" alt="이미지변경아이콘">
-                </label>
-              </div>
-              <input type="radio" id="mainImgSet" name="mainImg">
-              <label for="mainImgSet">대표이미지로 설정</label>
-              <b>i (설정취소는 불가능하며, 다른사진을 클릭하여 변경이 가능합니다.)</b>
-            </div>
-            <div class="Dform_btn">
-              <button class="btn Dform_btn_del" type="reset"> 작성취소</button>
-              <button class="btn Dform_btn_save" type="submit">저장하기</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <!-- daily 일기화면 -->
-    <div class="diary_noH">
-      <div class="center">
-        <div class="filter"></div>
-        <div class="diary_titlebox">
-          <h1 th:text="${weekly.title}">PARIS</h1>
-          <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
-            yyyy-mm-dd</p>
-        </div>
-        <div class="diary_viewport">
-          <div class="diary_slides">
-          </div>
-        </div>
-        <div class="writing circle">
-          <img src="/image/daily/icon/pencil.png" alt="edit daily">
-        </div>
-        <div class="diary_textbox">
-          <ul>
-            <li>
-              <h6>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </h6>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-                velit ex esse recusandae?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-                velit ex esse recusandae?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-                velit ex esse recusandae?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-                velit ex esse recusandae?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum voluptates odit architecto
-                perferendis, sint ea. Soluta est eveniet, similique unde voluptates eius at inventore, nemo aperiam
-                velit ex esse recusandae?
-              </p>
-            </li>
-          </ul>
-        </div>
+        <button class="close">
+          <i class="xi-close xi-2x"></i>
+        </button>
       </div>
     </div>
+  </div>
 
-    <!-- daily 댓글UI -->
-    <div class="reply_modal">
-      <div class="reply_modal_bg"></div>
-      <div class="center">
-        <div class="reply_img">
-          <img src="/image/daily/diary/IMG_6493.jpg" alt="해당일기이미지">
-        </div>
-        <div class="reply_screen">
-          <div class="reply_scroll">
-            <div class="reply">
-              <!-- <div class="profile_circle"> -->
-              <div class="comment">
-                <div class="comment_profile">
-                  <div>
-                    <img src="/image/user/profile/seohyun.jpg" alt="프로필01">
-                  </div>
-                </div>
-                <div class="comment_date">
-                  <span>2023-05-08</span>
-                </div>
-                <div class="comment_textbox">
-                  <span class="comment_id">sieun</span>
-                  <p class="comment_content">
-                    아니 나 나비고 발급받을 때 증명사진 없어서 여권사진 들고갔더니 목 댕걍하고 얼굴만 대문짝만하게 붙여줬잖어ㅜㅜㅜㅜ
-                  </p>
-                </div>
-                <div class="comment_btn">
-                  <span>수정하기</span>
-                  <span>답글달기</span>
-                </div>
-              </div>
-              <div class="recomment">
-                <div class="comment_profile">
-                  <div>
-                    <img src="/image/user/profile/zzangu.jpg" alt="프로필01">
-                  </div>
-                </div>
-                <div class="comment_date">
-                  <span>2023-05-08</span>
-                </div>
-                <div class="comment_textbox">
-                  <span class="comment_id">Yung</span>
-                  <p class="comment_content">
-                    <span class="reply_id">@Yung</span>
-                    ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-                  </p>
-                </div>
-                <div class="comment_btn">
-                  <span>수정하기</span>
-                  <span>답글달기</span>
-                </div>
-              </div>
-              <!-- </div> -->
-            </div>
+</main>
 
-
-          </div>
-          <div class="reply_input">
-            <input type="text" placeholder="댓글을 남겨주세요">
-            <button>
-              <img src="/image/daily/icon/send.png" alt="등록">
-            </button>
-          </div>
-          <button class="close">
-            <i class="xi-close xi-2x"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <script th:inline="javascript">
+<script th:inline="javascript">
     var dailies = [[${ dailies }]];
   </script>
 
-  <!-- <script src="/script/daily.js"></script> -->
-  <script src="/script/daily(modal).js"></script>
-  <script src="/script/reply.js"></script>
+<!-- <script src="/script/daily.js"></script> -->
+<script src="/script/daily(modal).js"></script>
+<script src="/script/reply.js"></script>
 </body>
 
 
