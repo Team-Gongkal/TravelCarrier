@@ -54,6 +54,14 @@ function appendReply(replyList){
 
 // 댓글 작성 이벤트 - by.서현
 $(".reply_input button").on("click", function(){
+    clickReplyBtn();
+});
+$('input').on("keydown", function() {
+  if (event.keyCode === 13) {
+    clickReplyBtn();
+  }
+});
+function clickReplyBtn(){
     var type = $(".reply_input p").text();
     if(type == "댓글달기") createReply(type);
     else if(type == "댓글수정") modifyReply();
@@ -63,12 +71,7 @@ $(".reply_input button").on("click", function(){
     $(".reply_input div").html("<p>댓글달기</p>");
     $(".cancel").remove();
     $(".reply_input input").val('');
-});
-$('input').on("keydown", function() {
-  if (event.keyCode === 13) {
-
-  }
-});
+}
 
 // 댓글 작성 유효성 검사 - by.서현
 function validReply(){
