@@ -1,12 +1,8 @@
 main#weekly_form {
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 #weekly_form > h1 {
-  width: 100%;
   font-size: 1em;
   font-weight: 400;
   padding: 1.5em 0;
@@ -18,13 +14,10 @@ main#weekly_form {
 .weekly_form {
   position: relative;
   width: fit-content;
-  height: 100%;
+  height: calc(100% - 4rem);
   padding: 2.5em 10%;
   box-sizing: border-box;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 .weekly_form > div {
   height: 90%;
@@ -153,12 +146,20 @@ a.dateClick {
   vertical-align: middle;
   position: relative;
 }
+/* 여행 제목 */
+.weekly_input > ul > li:nth-child(2) {
+}
+/* 여행 추가글 작성 */
+.weekly_input > ul > li:nth-child(3) {
+}
 /* 동행인 및 공개여부 */
 .weekly_input > ul > li:nth-child(4) {
   margin-bottom: 0em;
 }
 .companion {
   width: 40%;
+}
+.companion h3 {
 }
 .companion ul.sel_companion {
   width: 100%;
@@ -267,8 +268,12 @@ a.dateClick {
 }
 
 /* button */
-.weekly_saveBtn {
-margin-bottom: 1.5rem;
+.weekly_form > button {
+  position: absolute;
+  /* top: calc(100% + 2.5rem); */
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* icon 아이콘 */
@@ -361,6 +366,9 @@ input::-webkit-search-results-decoration {
   background: rgb(82, 93, 118, 0.3);
   border-radius: 5px;
 }
+
+ul.checked_friends {
+}
 .friendsList ul li {
   width: 100%;
   height: fit-content;
@@ -429,20 +437,7 @@ span.circle.profile_circle::after {
   margin: 0rem 0;
   text-align: center;
 }
-.addText textarea{
-  height: 11rem;
-}
-#countText{
-    display: block;
-    padding-top: 0;
-    font-weight: 300;
-    font-size: 0.7rem;
-    text-align: end;
-    color: #525d7693;
-}
 
-/* input 너비 설정 */
-.weekly_input>ul>li:nth-of-type(1){flex: 1;}
-.weekly_input>ul>li:nth-of-type(2){flex: 1;}
-.weekly_input>ul>li:nth-of-type(3){flex: 2;}
-.weekly_input>ul>li:nth-of-type(4){flex: 0.5;}
+input[type="file"] {
+  /* display: none; */
+}

@@ -175,8 +175,8 @@ $(document).on("click", "ul.days_tabSlide li", function () {
 
   //처음 로드시엔 맨 처음요소 선택하게 하기..(사진 없을경우 동작하지 않으므로 미리 없애놓자)
   removeRightForm();
-  $("ul.Dform_imglist li").eq(0).find("img").click();
-  /*  if (liIndex != "ul.Dform_imglist li".length - 1) {
+    $("ul.Dform_imglist li").eq(0).find("img").click();
+/*  if (liIndex != "ul.Dform_imglist li".length - 1) {
     $("ul.Dform_imglist li").eq(0).find("img").click();
   } else {
     alert("last");
@@ -347,7 +347,7 @@ var weeklyId = currentUrl.match(/weekly\/(\d+)\/daily/)[1];
 $(document).on("click", "button.Dform_btn_save", function (event) {
   event.preventDefault();
   // 유효성검사
-  if (dataArr.length == 0) {
+  if(dataArr.length == 0) {
     alert("저장할 사진이 없습니다!");
     return;
   }
@@ -383,9 +383,9 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
         );
       }
 
-      if (formDataArr[j].get("title") == "") postData.append("titles", " ");
+      if(formDataArr[j].get("title") == "") postData.append("titles", " ");
       else postData.append("titles", formDataArr[j].get("title"));
-      if (formDataArr[j].get("text") == "") postData.append("texts", " ");
+      if(formDataArr[j].get("text") == "") postData.append("texts", " ");
       else postData.append("texts", formDataArr[j].get("text"));
 
       postData.append("thumbs", formDataArr[j].get("thumb"));
@@ -406,10 +406,10 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
     processData: false,
     contentType: false,
     success: function (dailies) {
-      $(clickBtn).attr("disabled", false);
-      $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
-      $(clickBtn).html("저장하기");
-      alert("저장되었습니다.");
+        $(clickBtn).attr("disabled", false);
+        $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
+        $(clickBtn).html("저장하기");
+        alert("저장되었습니다.");
       //바뀐 attachNo를 업데이트 해줘야함!!
       setFirst(dailies);
       getCurrentDataArr();
@@ -418,9 +418,9 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
       $("ul.days_tabSlide li:first").click();
     },
     error: function (error) {
-      $(clickBtn).attr("disabled", false);
-      $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
-      $(clickBtn).html("저장하기");
+        $(clickBtn).attr("disabled", false);
+        $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
+        $(clickBtn).html("저장하기");
       alert("응 실패 ㅋㅋ" + error);
     },
   });
@@ -430,16 +430,32 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
 $(".writing").on("click", function () {
   $(".daily_form_bg").addClass("show");
 });
-$(".modal_title > .close").on("click", function () {
+$(".daily_btn").on("click", function () {
   $(".daily_form_bg").removeClass("show");
 });
 
 //데일리 이미지 슬라이드 구현 - by윤아
 $(window).on("load", function () {
+  //이미지가 채 로드되기 전에 스크립트가 실행돼서 너비값이 제대로 측정되질 않음
+  //슬라이드 호버 효과
+
+  //슬라이드의 너비 구하기
   var slide_width = $(".diary_slides").outerWidth();
   console.log(
     "비교 : 윈도우 :" + $(window).width() + "  /  슬라이드 :" + slide_width
   );
+  //슬라이드 복제함수
+  function clone_slide() {
+    // 슬라이드 복제하기 (clone-복제 / append-붙여넣기)
+    let clone_slide = $(".diary_slides").eq(0).clone();
+    $(".diary_viewport").append(clone_slide);
+
+    //위치값이 0,0이라 곂치지 않게 두 슬라이드의 위치 지정
+    $(".diary_slides").eq(0).css("left", "0px");
+    $(".diary_slides")
+      .eq(1)
+      .css("left", slide_width + "px");
+  }
   //슬라이드 이동함수
   function moving(x, slide) {
     let left = parseInt(slide.css("left"));
@@ -452,21 +468,14 @@ $(window).on("load", function () {
       slide.css("left", slide_width + "px");
     }
   }
+
+  // if문 실행
   if (slide_width > $(window).width()) {
+    //슬라이드가 더 클경우
     alert("복사하고 무브");
+    clone_slide();
+    var movingDistance = 1; //슬라이드 이동 거리
 
-    // 슬라이드 복제하기 (clone-복제 / append-붙여넣기)
-    let clone_slide = $(".diary_slides").eq(0).clone();
-    $(".diary_viewport").append(clone_slide);
-
-    //위치값이 0,0이라 곂치지 않게 두 슬라이드의 위치 지정
-    $(".diary_slides").eq(0).css("left", "0px");
-    $(".diary_slides")
-      .eq(1)
-      .css("left", slide_width + "px");
-
-    //이동 거리
-    var movingDistance = 1;
     //이동 함수 적용하기
     var originMove = setInterval(() => {
       moving(movingDistance, $(".diary_slides").eq(0));
@@ -476,48 +485,39 @@ $(window).on("load", function () {
       moving(movingDistance, $(".diary_slides").eq(1));
     }, parseInt(1000 / 100));
 
-    // mouseenter시 슬라이드 일시정지
+    //슬라이드 mouseleave시 슬라이드 재생
+    $(".diary_slides").on("mouseleave", function () {
+      var movingDistance = 1;
+
+      setTimeout(function () {
+        originMove = setInterval(() => {
+          moving(movingDistance, $(".diary_slides").eq(0));
+        }, parseInt(1000 / 100));
+        cloneMove = setInterval(() => {
+          moving(movingDistance, $(".diary_slides").eq(1));
+        }, parseInt(1000 / 100));
+      }, 0);
+    });
+
+    //슬라이드 mouseenter시 슬라이드 정지
     $(".diary_slides").on("mousemove", function () {
       clearInterval(originMove);
       clearInterval(cloneMove);
-      movingDistance = 0;
-    });
-
-    //mouseleave시 슬라이드 재생
-    $(".diary_slides").on("mouseleave", function () {
-      movingDistance = 1;
-      //이동 함수 적용하기
-      originMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides").eq(0));
-      }, parseInt(1000 / 100));
-
-      cloneMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides").eq(1));
-      }, parseInt(1000 / 100));
     });
   } else {
-  }
+    alert("멈춰랏");
+  } //if문 마침
+  //브라우저 크기에 따른 슬라이드 동작유무
+  // $(window).resize(function () {
+  //   alert("사이즈가 바뀌었어요!!");
+  //   console.log(
+  //     "리사이징비교 : 윈도우 :" +
+  //       $(window).width() +
+  //       "  /  슬라이드 :" +
+  //       slide_width
+  //   );
+  // });
 
-  // 댓글 모달창 활성화 - by윤아
-  $(".diary_viewport").on("click", ".d_slide > .reply_icon", function (e) {
-    $(".reply_modal").addClass("show");
-    var reply_img = $(e.target).parent().parent().find("img").attr("src");
-    $(".reply_img img").attr("src", `${reply_img}`);
-    $(".diary_noH .writing").hide();
-
-    // 댓글 모달창 세로선 자동 생성 및 길이 수정
-    var reply_height = $(".reply_scroll").height();
-    console.log("댓글 스크롤 길이" + reply_height);
-    $(".reply_screen::before").css("height", (reply_height / 80) * 100 + "%");
-  });
-
-  //댓글모달창비활성화
-  $(".reply_modal .close").click(function () {
-    $(".reply_modal").removeClass("show");
-    $(".diary_noH .writing").show();
-  });
-
-  //슬라이드 호버시
   $(".diary_slides").on("mousemove", function () {
     // title, period 숨기기
     $(".diary_titlebox").addClass("hide");
@@ -543,7 +543,7 @@ $(window).on("load", function () {
     $(".diary_viewport").removeClass("black");
     $(".diary_noH .writing").show();
   });
-});
+}); //온로드 마침
 
 // daily 일기화면(hover) - by.윤아
 $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
@@ -573,7 +573,7 @@ $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
   });
 });
 
-// 슬라이드 사진 크기에 따라 클래스명 변경 - by.서현
+// 사진 크기에 따라 클래스명 변경 - by.서현
 $(document).ready(function () {
   $(".d_slide > img").each(function (index) {
     const $img = $(this);
@@ -592,6 +592,10 @@ $(document).ready(function () {
     };
   });
 });
+
+// $(".d_slide").click(function (e) {
+
+// });
 
 //텍스트 박스 안의 ID와  다이어리리스트 안의 ID가 같을 때
 
