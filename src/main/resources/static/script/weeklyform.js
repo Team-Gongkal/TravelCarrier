@@ -127,8 +127,7 @@ $(document).ready(function () {
   });
 
 
-
-  // 동행인 선택 모달창 띄우기 - by윤아
+  // 동행인 선택 모달창 활성화 - by윤아
   $("#plus_companion").on("click", function () {
     $(".companion_modal_bg").addClass("show");
   });

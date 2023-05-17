@@ -36,9 +36,12 @@ main.daily {
 /* daily form----------------------------------- */
 .diary_titlebox {
   width: 100%;
-  height: fit-content;
+  height: 50%;
   visibility: visible;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .modal_title {
   width: 100%;
@@ -505,6 +508,7 @@ button.Dform_btn_disable {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 0.2s;
 }
 .diary_noH > .center {
   width: 100%;
@@ -533,8 +537,10 @@ button.Dform_btn_disable {
   overflow: hidden;
   position: relative;
   display: flex;
+  align-items: end;
   margin: 0 0 3rem 0;
 }
+
 /* 슬라이드 양 끝 흐림 효과 */
 .diary_viewport::before {
   content: "";
@@ -569,7 +575,7 @@ button.Dform_btn_disable {
 .diary_viewport.black::before {
   background: linear-gradient(
     to right,
-    rgb(0, 0, 0, 0.8),
+    black rgb(0, 0, 0, 0.8),
     rgba(0, 0, 0, 0.4),
     rgba(0, 0, 0, 0)
   );
@@ -638,24 +644,24 @@ ul.diary_list > li {
   visibility: hidden;
 }
 /* filter */
-.filter.on {
+.filter {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.05s;
 }
-.filter.on::before {
-  content: "";
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgb(0, 0, 0, 0.8);
+.filter.on {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  background-color: rgb(0, 0, 0, 0.8);
   backdrop-filter: blur(5px);
-  transition: 0.2s;
 }
+
 /* 일기 */
 .diary_textbox {
   visibility: hidden;
@@ -699,7 +705,7 @@ ul.diary_list > li {
   box-sizing: border-box;
   overflow-y: scroll;
   font-weight: 100;
-  padding: 00 1em;
+  padding: 0 1em;
 }
 /* 스크롤바 디자인 */
 .diary_textbox.on p::-webkit-scrollbar {
@@ -761,6 +767,8 @@ ul.diary_list > li {
   display: none;
 }
 .reply_modal.show {
+  width: 100%;
+  height: 100%;
   visibility: visible;
   display: flex;
 }
@@ -774,7 +782,7 @@ ul.diary_list > li {
 }
 .reply_modal > .center {
   width: 80%;
-  height: 90%;
+  height: 85%;
   display: flex;
   border-radius: 1rem;
   overflow: hidden;
@@ -783,6 +791,7 @@ ul.diary_list > li {
   position: absolute;
   top: 0;
   right: 0%;
+  z-index: 5;
   width: fit-content;
   height: fit-content;
   cursor: pointer;
@@ -795,26 +804,73 @@ ul.diary_list > li {
   overflow: hidden;
 }
 .reply_img img {
+  width: 100%;
   max-width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 /* 댓글창 */
-.reply_screen {
+.reply_right_wrap {
   width: 60%;
   height: 100%;
   position: relative;
   z-index: 1000;
   background: #dde5e8;
-  padding: 2.5rem;
+  padding: 0rem 2.5rem 1rem 2.5rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.reply_screen {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* 댓글창 양 끝 흐림 효과 */
+.reply_screen::before {
+  /*스크롤 생기면 활성화하기js - 삭제*/
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgb(221, 229, 232),
+    rgb(221, 229, 232, 0.8),
+    rgb(221, 229, 232, 0.5),
+    rgb(221, 229, 232, 0)
+  );
+}
+.reply_input::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 100%;
+  height: 1.5rem;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgb(221, 229, 232, 0),
+    rgb(221, 229, 232, 0.5),
+    rgb(221, 229, 232, 0.8),
+    rgb(221, 229, 232)
+  );
 }
 .reply_scroll {
   width: 100%;
-  height: calc(100% - 2.5rem);
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
+  padding-bottom: 1.5rem;
+  box-sizing: border-box;
 }
 /* 스크롤바 디자인 */
 .reply_scroll::-webkit-scrollbar {
@@ -901,6 +957,7 @@ span.comment_id {
 p.comment_content {
   width: 100%;
   font-weight: 300;
+  font-size: 0.9rem;
   padding: 0.8rem 0;
   box-sizing: border-box;
   line-height: 1.5rem;
@@ -929,28 +986,30 @@ span.reply_id {
   font-weight: 500;
 }
 .recomment .comment_date {
-  border-top: 1px solid #b3b3b3;
+  border-top: 1px solid #b3b3b33f;
 }
-.reply_screen::before {
+.reply_right_wrap::before {
   content: "";
   position: absolute;
   top: 0;
   left: 12.5%;
   width: 2px;
-  height: 50%; /*슬라이드의 길이에 맞게 변경(js) - 삭제*/
+  /*height: 50%; 슬라이드의 길이에 맞게 변경(js) - 삭제*/
   background: #525d7634;
 }
 .reply_input {
   width: 100%;
   height: 2rem;
   display: flex;
-  padding: 1rem 0 0.5rem 0;
-  box-sizing: border-box;
+  padding: 0rem 0 0.5rem 0;
+  position: relative;
 }
 .reply_input input {
   width: 100%;
   height: 2.5rem;
+  font-size: 0.9rem;
   display: inline-block;
+  box-sizing: border-box;
   background: #353a5215;
   border-radius: 0.2rem 0 0 0.2rem;
 }

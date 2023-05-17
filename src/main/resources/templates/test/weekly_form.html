@@ -51,7 +51,9 @@
             </div>
             <!-- 여행 기간 / script로 text -> date변환------------------------------- -->
             <div class="period">
-              <h3>여행 기간 <span id="periodValidation">✓ 날짜를 설정해주세요</span> </h3>
+              <h3>여행 기간 
+                <!-- <span id="periodValidation">✓ 날짜를 설정해주세요</span>  -->
+              </h3>
               <!-- 여행 시작일 -->
               <div class="period_flex">
                 <span class="dateSet">
@@ -73,10 +75,11 @@
             </div>
           </li>
           <li><!-- 일기 작성-------------------------------- -->
-            <div class="writing">
-              <h3>추가글</h3><p id="countText">0 / 100</p>
-              <textarea name="text" id="addText" cols="30" rows="10" wrap="off"
+            <div class="addText">
+              <h3>추가글 </h3>
+              <textarea name="text" id="addText" cols="30" wrap="off"
                 placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요"></textarea>
+                <span id="countText">(0/100)</span>
             </div>
           </li>
           <li> <!-- 동행인--------------------------------------- -->
@@ -117,8 +120,8 @@
           </li>
         </ul>
       </div>
-      <button type="submit" class="btn saveBtn"> 저장하기 </button>
     </form>
+    <button type="submit" class="btn weekly_saveBtn"> 저장하기 </button>
     <!-- 동행인 추가 팝업 -->
     <div class="companion_modal_bg">
       <div class="companion_modal">
