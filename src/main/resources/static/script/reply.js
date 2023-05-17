@@ -1,6 +1,7 @@
 // 댓글 모달창 활성화 - by윤아
 $(".diary_viewport").on("click", ".d_slide > .reply_icon", function (e) {
-    var attachNo = $(this).closest(".d_slide").data("attachno");
+    //var attachNo = $(this).closest(".d_slide").data("attachno");
+    var attachNo = $(this).siblings("img").data("attachno");
     var currentImg = $(this).siblings("img").attr("src");
     $(".reply_img img").attr("src", currentImg);
     $(".reply_img img").attr("data-attachNo",attachNo);
@@ -34,10 +35,10 @@ function appendReply(replyList){
     $('.reply_scroll').empty();
     console.log(replyList);
     $.each(replyList, function(index, obj) {
-        if(obj.origin == undefined || obj.origin == null || obj.origin == 0){
-            if(obj.udate == null) var date = obj.cdate;
-            else var date = obj.udate+" (수정됨)";
+        if(obj.udate == null) var date = obj.cdate;
+        else var date = obj.udate+" (수정됨)";
 
+        if(obj.origin == undefined || obj.origin == null || obj.origin == 0){
             var html = newReplyHtml(obj.thumbPath,date, obj.userName, obj.text,obj.replyId);
             $('.reply_scroll').append(html);
             $(".reply_input input").val('');
@@ -109,6 +110,7 @@ function createReply(type){
 
 // 댓글 수정 ajax - by.서현
 function modifyReply(){
+    if(!validReply()) return;
     // reply 수정 : replyId, text, udate
    var data = { replyId : $(".reply_input div span").text(),
                 text : $(".reply_input input").val(),

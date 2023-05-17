@@ -1,0 +1,20 @@
+@media (min-width: 1921px) and (max-width: 2560px) {
+  html{
+    font-size: 100%;/*16px*/
+  }}
+@media (min-width: 1537px) and (max-width: 1920px) {
+  html{
+    font-size:93.8%;/*15px*/
+  }}
+@media (min-width: 1367px) and (max-width: 1536px) {
+  html{
+    font-size: 87.5%;/*14px*/
+  }}
+@media (min-width: 1281px) and (max-width: 1366px) {
+  html{
+    font-size: 81.3%;/*13px*/
+  }}
+@media (max-width: 1281px) {
+  html{
+    font-size: 75.0%;/*12px*/
+  }}
