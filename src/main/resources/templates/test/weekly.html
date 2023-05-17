@@ -12,8 +12,166 @@
   <main class="weekly_scroll">
     <article id="top">
       <div class="longBox">
-        <div class="weekly_edit" onclick="event.preventDefault()">
+        <div class="weekly_edit">
+          <a href="" class="weekly_open" onclick="event.preventDefault()">
             <img src="/image/weekly/icon/setting.png" alt="위클리 수정">
+          </a>
+        </div>
+
+        <div class="weekly_modal_bg">
+          <div class="weekly_modal">
+            <div class="weekly_modal_context">
+
+              <div id="weekly_form">
+                <h1>위클리를 수정하세요</h1>
+                <form id="weeklyForm" action="" method="post" enctype="multipart/form-data" name="weekly_form" class="weekly_form">
+                  <div class="thumbnail">
+                    <div class="thumbnail_input">
+                      <div class="thumbnail_text">
+                        <h3>썸네일</h3>
+                        <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
+                      </div>
+                      <div class="thumbnail_img circle">
+                        <img th:src="${weekly.attachWeekly.thumbPath}" alt="오류"></img>
+                      </div>
+                      <div class="thumbnail_btn">
+                        <button class="btn white_btn" type="button">
+                          <label for="thumbnail_change">
+                            <img class="weekly_icon" src="/image/weekly/icon/edit-image-b.png" alt="img change icon">
+                            <span>이미지 변경</span>
+                            <input type="file" name="file" class="hide" id="thumbnail_change">
+                          </label>
+                          <!-- <span>이미지 변경</span> -->
+                        </button>
+                        <button class="btn white_btn removeBtn" type="button">
+                          <img class="weekly_icon" src="/image/weekly/icon/trash-can-b.png" alt="img delate icon">
+                          <span>이미지 삭제</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="weekly_input">
+                    <ul>
+                      <li> <!-- 국가 선택 / select:name = option:value----------------------------- -->
+                        <div class="country">
+                          <h3>여행 국가</h3>
+                          <select name="nation">
+                            <option id="0" th:selected="${weekly.nation == '82'}" value="82">KOREA</option>
+                            <option id="1" th:selected="${weekly.nation == '83'}" value="83">FRANCE</option>
+                            <option id="2" th:selected="${weekly.nation == '84'}" value="84">SPAIN</option>
+                            <option id="3" th:selected="${weekly.nation == '85'}" value="85">CHAINA</option>
+                          </select>
+
+                        </div>
+                        <!-- 여행 기간 / script로 text -> date변환------------------------------- -->
+                        <div class="period">
+                          <h3>여행 기간</h3>
+                          <!-- 여행 시작일 -->
+                          <div class="period_flex">
+                            <span class="dateSet">
+                              <input name="sdate" type="text" id="sdate" th:value="${weekly.travelDate.sDate}">
+                              <a href="#none" class="btncalender dateClick">달력</a>
+                            </span>
+                                        <!-- 여행 종료일 -->
+                                        <span class="dateSet">
+                              <input name="edate" type="text" id="edate" th:value="${weekly.travelDate.eDate}">
+                              <a href="#none" class="dateClick">달력</a>
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                      <li> <!-- 제목 입력-------------------------------- -->
+                        <div class="title">
+                          <h3>제목</h3>
+                          <input name="title" type="text"
+                                 placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)" th:value="${weekly.title}">
+                        </div>
+                      </li>
+                      <li><!-- 일기 작성-------------------------------- -->
+                        <div class="writing">
+                          <h3>추가글</h3><p id="countText">0 / 100</p>
+                          <textarea name="text" id="addText" cols="30" rows="10" wrap="off"
+                                    placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요"
+                                    th:text="${weekly.text}"></textarea>
+                        </div>
+                      </li>
+                      <li> <!-- 동행인--------------------------------------- -->
+                        <div class="companion">
+                          <h3>동행인</h3>
+                          <!-- 보이는 부분 -->
+                          <ul class="sel_companion" id="sc">
+                            <li th:each="w,it : ${weekly.gowiths}"
+                                th:data-name="${w.user.name}" th:data-fid="${w.user.id}"
+                                th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
+                                th:if="${it.index} &lt; 5" class="circle">
+                              동행인 이미지
+                            </li>
+                            <li id="plus_companion">
+                              <i class="xi-plus"></i>
+                              <span>동행인 추가</span>
+                            </li>
+                          </ul>
+
+                        </div>
+                        <!-- 공개여부------------------------------------ -->
+                        <div class="disclosure">
+                          <h3>공개여부</h3>
+                          <ul>
+
+                            <li class="public">
+                              <input type="radio" th:checked="${#strings.equals(weekly.status, 'ALL')}" name="status" value="public" id="public" class="hide">
+                              <label for="public"><img src="/image/weekly/icon/view-b.png" alt="" class="weekly_icon">
+                                공개</label>
+                            </li>
+                            <li class="shareFriends">
+                              <input type="radio" th:checked="${#strings.equals(weekly.status, 'FOLLOW')}" name="status" value="shareFriends" id="shareFriends" class="hide">
+                              <label for="shareFriends"><img src="/image/weekly/icon/people-b.png" alt="" class="weekly_icon">
+                                친구공개</label>
+                            </li>
+                            <li class="private">
+                              <input type="radio" th:checked="${#strings.equals(weekly.status, 'ME')}" name="status" value="private" id="private" class="hide">
+                              <label for="private"><img src="/image/weekly/icon/hide-b.png" alt="" class="weekly_icon">
+                                비공개</label>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+                <!-- 동행인 추가 팝업 -->
+                <div class="companion_modal_bg">
+                  <div class="companion_modal">
+                    <h3>아이디 검색</h3>
+                    <div class="id_search">
+                      <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
+                      <img src="/image/weekly/icon/serch.svg" alt="serch icon">
+                    </div>
+                    <div class="friendsList">
+                      <ul class="checked_friends">
+
+                      </ul>
+                      <ul class="serch_friends">
+                        <li th:each="f : ${user.followers}" th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
+                          <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
+                          <label th:for="'#' + ${f.follower.id}">
+                          <span class="profile_circle circle">
+                            <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
+                                 alt="프로필사진">
+                          </span>
+                            <span th:text="${f.follower.name}" class="nickname">닉네임</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                    <button type="button" class="btn goWithBtn">확인</button>
+                  </div>
+                </div>
+              </div>
+              <button class="weekly_save btn" id="updateWeekly"> 저장하기 </button>
+              <button class="weekly_close btn">취소하기</button>
+            </div>
+          </div>
         </div>
 
         <div class="weekly_mainArtc">
@@ -31,14 +189,18 @@
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident quia harum odio, reprehenderit ut a
               sunt ab nisi nobis laboriosam. Dicta aut odit reprehenderit animi ea asperiores tempore non sint.
             </pre>
+            <p th:text="${weekly.text}"> 요래요래 여행하고옴 다시 가고 싶다 우앵웅앵
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident quia harum odio, reprehenderit ut a
+              sunt ab nisi nobis laboriosam. Dicta aut odit reprehenderit animi ea asperiores tempore non sint.
+            </p>
           </div>
           <div class=" weekly_with">
             <div class="weekly_companion">
-              <span>with. </span>
+              <span>with.</span>
               <ul class="sel_companion">
                 <li th:each="w,it : ${weekly.gowiths}"
-                  th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'" th:if="${it.index} &lt; 5"
-                  class="circle">
+                  th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
+                  th:if="${it.index} &lt; 5" class="circle">
                   동행인 이미지
                 </li>
 
@@ -46,11 +208,11 @@
             </div>
             <div class="weekly_disclosure">
               <span th:text="${weekly.status}"></span>
-              <span id="disclosure_checked">
+              <!--  -->
+              <span id="disclosure_checked" >
                 <img th:if="${#strings.equals(weekly.status, 'ALL')}" src="/image/weekly/icon/view-n.png" alt="공개">
                 <img th:if="${#strings.equals(weekly.status, 'ME')}" src="/image/weekly/icon/hide-n.png" alt="비공개">
-                <img th:if="${#strings.equals(weekly.status, 'FOLLOW')}" src="/image/weekly/icon/people-n.png"
-                  alt="친구공개">
+                <img th:if="${#strings.equals(weekly.status, 'FOLLOW')}" src="/image/weekly/icon/people-n.png" alt="친구공개">
               </span>
             </div>
           </div>
@@ -100,7 +262,7 @@
         </div>
 
         <div th:if="${wd.thumbPath != null}" class="longBox">
-          <a href="" class="daily_path">
+          <a href="#">
             <div>
               <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
             </div>
@@ -113,7 +275,7 @@
       <div th:if="${wdStat.even}" class="shortBox_even">
         <div class="shortBox">
           <div class="moreBox">
-            <a href="" class="daily_path">more</a>
+            <a href="#none" class="daily_path">more</a>
           </div>
 
           <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
@@ -145,7 +307,7 @@
         </div>
 
         <div th:if="${wd.thumbPath != null}" class="longBox">
-          <a href="" class="daily_path">
+          <a href="#">
             <div>
               <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
             </div>
@@ -153,8 +315,8 @@
         </div>
 
       </div>
-    </div>
 
+    </div>
     <!-- 여행일 추가하기-->
     <div class="shortBox_even">
       <div class="shortBox">
@@ -212,169 +374,6 @@
         <button class="btn" id="keyword_save">저장하기</button>
       </div>
     </div>
-    <!-- 위클리 수정 모달 modal -->
-    <div class="weekly_modal_bg">
-      <div class="weekly_modal">
-        <div id="weekly_modal_form">
-            <div class="modal_title">
-              <h3>위클리를 수정하세요</h3>
-              <button class="close">
-                <i class="xi-close xi-2x"></i>
-              </button>
-            </div>
-            <form id="weeklyForm" action="" method="post" enctype="multipart/form-data" name="weekly_form"
-              class="weekly_form">
-              <div class="thumbnail">
-                <div class="thumbnail_input">
-                  <div class="thumbnail_text">
-                    <h3>썸네일</h3>
-                    <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
-                  </div>
-                  <div class="thumbnail_img circle">
-                    <img th:src="${weekly.attachWeekly.thumbPath}" alt="오류"></img>
-                  </div>
-                  <div class="thumbnail_btn">
-                    <button class="btn white_btn" type="button">
-                      <label for="thumbnail_change">
-                        <img class="weekly_icon" src="/image/weekly/icon/edit-image-b.png" alt="img change icon">
-                        <span>이미지 변경</span>
-                        <input type="file" name="file" class="hide" id="thumbnail_change">
-                      </label>
-                      <!-- <span>이미지 변경</span> -->
-                    </button>
-                    <button class="btn white_btn removeBtn" type="button">
-                      <img class="weekly_icon" src="/image/weekly/icon/trash-can-b.png" alt="img delate icon">
-                      <span>이미지 삭제</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="weekly_input">
-                <ul>
-                  <li> <!-- 국가 선택 / select:name = option:value----------------------------- -->
-                    <div class="country">
-                      <h3>여행 국가</h3>
-                      <select name="nation">
-                        <option id="0" th:selected="${weekly.nation == '82'}" value="82">KOREA</option>
-                        <option id="1" th:selected="${weekly.nation == '83'}" value="83">FRANCE</option>
-                        <option id="2" th:selected="${weekly.nation == '84'}" value="84">SPAIN</option>
-                        <option id="3" th:selected="${weekly.nation == '85'}" value="85">CHAINA</option>
-                      </select>
-
-                    </div>
-                    <!-- 여행 기간 / script로 text -> date변환------------------------------- -->
-                    <div class="period">
-                      <h3>여행 기간</h3>
-                      <!-- 여행 시작일 -->
-                      <div class="period_flex">
-                        <span class="dateSet">
-                          <input name="sdate" type="text" id="sdate" th:value="${weekly.travelDate.sDate}">
-                          <a href="#none" class="btncalender dateClick">달력</a>
-                        </span>
-                        <!-- 여행 종료일 -->
-                        <span class="dateSet">
-                          <input name="edate" type="text" id="edate" th:value="${weekly.travelDate.eDate}">
-                          <a href="#none" class="dateClick">달력</a>
-                        </span>
-                      </div>
-                    </div>
-                  </li>
-                  <li> <!-- 제목 입력-------------------------------- -->
-                    <div class="title">
-                      <h3>제목</h3>
-                      <input name="title" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)"
-                        th:value="${weekly.title}">
-                    </div>
-                  </li>
-                  <li><!-- 일기 작성-------------------------------- -->
-                    <div class="addText">
-                      <h3>추가글</h3>
-                      <textarea name="text" id="addText" cols="30" rows="10" wrap="off"
-                        placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요" th:text="${weekly.text}"></textarea>
-                        <span id="countText">(0/100)</span>
-                    </div>
-                  </li>
-                  <li> <!-- 동행인--------------------------------------- -->
-                    <div class="companion">
-                      <h3>동행인</h3>
-                      <!-- 보이는 부분 -->
-                      <ul class="sel_companion" id="sc">
-                        <li th:each="w,it : ${weekly.gowiths}"
-                          th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
-                          th:if="${it.index} &lt; 5" class="circle">
-                          동행인 이미지
-                        </li>
-                        <li id="plus_companion">
-                          <i class="xi-plus"></i>
-                          <span>동행인 추가</span>
-                        </li>
-                      </ul>
-
-                    </div>
-                    <!-- 공개여부------------------------------------ -->
-                    <div class="disclosure">
-                      <h3>공개여부</h3>
-                      <ul>
-
-                        <li class="public">
-                          <input type="radio" th:checked="${#strings.equals(weekly.status, 'ALL')}" name="status"
-                            value="public" id="public" class="hide">
-                          <label for="public"><img src="/image/weekly/icon/view-b.png" alt="" class="weekly_icon">
-                            공개</label>
-                        </li>
-                        <li class="shareFriends">
-                          <input type="radio" th:checked="${#strings.equals(weekly.status, 'FOLLOW')}" name="status"
-                            value="shareFriends" id="shareFriends" class="hide">
-                          <label for="shareFriends"><img src="/image/weekly/icon/people-b.png" alt=""
-                              class="weekly_icon">
-                            친구공개</label>
-                        </li>
-                        <li class="private">
-                          <input type="radio" th:checked="${#strings.equals(weekly.status, 'ME')}" name="status"
-                            value="private" id="private" class="hide">
-                          <label for="private"><img src="/image/weekly/icon/hide-b.png" alt="" class="weekly_icon">
-                            비공개</label>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </form>
-            <button type="submit" class="btn weekly_saveBtn"> 저장하기 </button>
-            <!-- 동행인 추가 팝업 -->
-            <div class="companion_modal_bg">
-          <div class="companion_modal">
-            <h3>아이디 검색</h3>
-            <div class="id_search">
-              <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
-              <img src="/image/weekly/icon/serch.svg" alt="serch icon">
-            </div>
-            <div class="friendsList">
-              <ul class="checked_friends">
-
-              </ul>
-              <ul class="serch_friends">
-                <li th:each="f : ${user.followers}"
-                  th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
-                  <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
-                  <label th:for="'#' + ${f.follower.id}">
-                    <span class="profile_circle circle">
-                      <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
-                        alt="프로필사진">
-                    </span>
-                    <span th:text="${f.follower.name}" class="nickname">닉네임</span>
-                  </label>
-                </li>
-              </ul>
-            </div>
-            <button type="button" class="btn goWithBtn">확인</button>
-          </div>
-            </div>
-        </div>
-      </div>
-    </div>
-
   </main>
   <script th:inline="javascript">
     var all_keywords = [

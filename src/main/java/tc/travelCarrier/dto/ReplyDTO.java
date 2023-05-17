@@ -27,7 +27,7 @@ public class ReplyDTO {
         this.replyId = replyId;
         if(originReply != null){
             this.origin = originReply.getId();
-            this.originName = originReply.getOrigin().getUser().getName();
+            this.originName = originReply.getUser().getName();
         }
     }
 

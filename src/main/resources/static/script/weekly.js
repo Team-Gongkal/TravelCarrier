@@ -1,3 +1,8 @@
+// 키워드 모달창 띄우기 - by.윤아
+/*$(document).on("click", ".keyword", function () {
+  openModal();
+});*/
+
 $(document).on("click", ".close", function () {
   closeModal();
 });
@@ -19,12 +24,11 @@ function openModal() {
     var keyword_list = all_keywords[key_index];
     $.each(keyword_list, function (index, text) {
       // 등록된 키워드 세팅
-      var newKeyword = $("<li></li>").addClass("card");
-      var textspan = $("<span>").text(text);
+      var newKeyword = $("<li></li>").addClass("card").text(text);
       var span = $("<span>")
         .addClass("card_del")
         .append($("<i>").addClass("xi-close"));
-      newKeyword.append(textspan);
+      newKeyword.append(span);
       $(".keyword_card").append(newKeyword);
     });
   }
@@ -105,7 +109,7 @@ $('input[name="keyword"]').on("keydown", function (event) {
       var myKeyword = $('input[name="keyword"]').val();
       var $li = $(
         '<li class="card">' +
-        '<span>'+ myKeyword +'</span>'+
+          myKeyword +
           '<span class="card_del"><i class="xi-close"></i></span></li>'
       );
       $(".keyword_card").append($li);
@@ -175,15 +179,13 @@ function updateKeyword(keyword_list) {
   }
 }
 
-//위클리 수정 모달 활성화
-  $(".weekly_edit").on("click", function () {
+$(".weekly_open").click(function(){
     $(".weekly_modal_bg").addClass("show");
-  });
-  $(".modal_title > .close").on("click", function () {
+});
+
+$(document).on("click", ".weekly_close", function () {
     $(".weekly_modal_bg").removeClass("show");
-  });
-
-
+});
 
 var thumb_status = "ORIGIN"; //ORIGIN:원래파일 DELETE:파일삭제
 // 이미지 삭제버튼 메소드 by서현

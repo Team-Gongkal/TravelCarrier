@@ -51,7 +51,6 @@ body {
   background: #efeee9;
   font-family: "Signika Negative", sans-serif;
   /* color: #525d76; */
-  font-size: 100%;
   color: #353a52;
   -ms-overflow-style: none;
   overflow: hidden;
@@ -80,9 +79,9 @@ button {
   font-family: "NanumSquareNeo";
   width: 100%;
   background: #f7f7f7;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 300;
-  padding: 1rem;
+  padding: 0.8rem;
   border: none;
   border-radius: 0.2rem;
   box-sizing: border-box;
@@ -92,11 +91,6 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-}
-textarea{
-  resize: none;
-  overflow: visible;
-  line-height: 1.5em;
 }
 /* input hide */
 input.hide {
@@ -164,5 +158,6 @@ form h3 {
   cursor: pointer;
   padding: 0;
   position: absolute;
+
   color: #b3b3b3;
 }
