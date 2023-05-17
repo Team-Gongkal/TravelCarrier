@@ -44,7 +44,7 @@ function appendReply(replyList){
             $(".reply_input input").val('');
         } else{
             // 대댓글달기
-            var targetDiv = $(`div[data-reply=${obj.origin}]`);
+            var targetDiv = $(`div[data-reply=${obj.origin}]`).parent();
             var recommentHtml = newReCommentHtml(obj.thumbPath,date, obj.userName, obj.text,obj.replyId, obj.originName);
             targetDiv.append(recommentHtml);
             $(".reply_input input").val('');
@@ -135,8 +135,8 @@ function modifyReply(){
 // 댓글 append 틀 - by.서현
 function newReplyHtml(img, date, name, comment, replyId){
     var html = `
-    <div class="reply" data-reply="${replyId}">
-      <div class="comment">
+    <div class="reply" >
+      <div class="comment rep" data-reply="${replyId}">
         <div class="comment_profile">
           <div>
             <img src="${img}" alt="프로필사진">
@@ -162,7 +162,7 @@ function newReplyHtml(img, date, name, comment, replyId){
 // 대댓글
 function newReCommentHtml(img, date, name, comment, replyId, originName){
     var html = `
-      <div class="recomment" data-reply="${replyId}">
+      <div class="recomment rep" data-reply="${replyId}">
         <div class="comment_profile">
           <div>
             <img src="${img}" alt="프로필01">
@@ -179,8 +179,8 @@ function newReCommentHtml(img, date, name, comment, replyId, originName){
           </p>
         </div>
         <div class="comment_btn">
-          <span>수정하기</span>
-          <span>답글달기</span>
+          <span class="mod_rep">수정하기</span>
+          <span class="re_rep">답글달기</span>
         </div>
       </div>
     `;
@@ -194,19 +194,21 @@ $(document).on("click", ".cancel", function(e) {
 });
 // 수정버튼 클릭 이벤트 - by.서현
 $(document).on("click", ".mod_rep", function(e) {
-    var $comment = $(this).closest(".reply");
+    var $comment = $(this).closest(".rep");
+    console.log($comment);
     $(".cancel").remove();
     $(".reply_input input").val('');
     $comment.find(".comment_btn").append("<span class='cancel'>수정취소</span>");
     var origin = $comment.data("reply");
-    var content = $comment.find(".comment_content").text();
+    //var content = $comment.find(".comment_content").text();
+    var content = $comment.find(".comment_content").clone().children().remove().end().text().trim();
     $(".reply_input div").html("<p>댓글수정</p> <span>"+origin+"</span>");
     $(".reply_input input").val(content);
 });
 
 // 답글 작성 이벤트  - by.서현
 $(document).on("click", ".re_rep", function(e) {
-    var $comment = $(this).closest(".reply");
+    var $comment = $(this).closest(".rep");
     $(".cancel").remove();
     $(".reply_input input").val('');
     $comment.find(".comment_btn").append("<span class='cancel'>답글취소</span>");
