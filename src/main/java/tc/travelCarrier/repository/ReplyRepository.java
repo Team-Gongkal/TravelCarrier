@@ -11,12 +11,7 @@ import javax.persistence.EntityManager;
 public class ReplyRepository {
     private final EntityManager em;
 
-    public int save(Reply reply){
+    public void save(Reply reply){
         em.persist(reply);
-        return reply.getId();
-    }
-
-    public Reply findReply(int replyId){
-        return em.find(Reply.class, replyId);
     }
 }
