@@ -1,0 +1,135 @@
+.daily_more {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+}
+.daily_more ul {
+  position: relative;
+}
+.daily_more ul li.diary_daily {
+  width: 100%;
+  height: 100vh;
+  background-repeat: repeat;
+  background-size: contain;
+  background-position: center center;
+  position: relative;
+}
+li.diary_daily:nth-child(1) {
+  background: url(../../static/image/daily/diary/IMG_6472.JPG);
+}
+li.diary_daily > .daily_main_img {
+  width: 100%;
+  height: 100%;
+}
+li.diary_daily > .daily_main_img img {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  display: inline-block;
+}
+li.diary_daily:nth-child(2) {
+  background: url(../../static/image/daily/diary/IMG_6510.JPG);
+}
+li.diary_daily:nth-child(2) > .diary_daily_bg {
+  background: url(../../static/image/daily/diary/IMG_6510.JPG);
+}
+li.diary_daily:nth-child(3) {
+  background: url(../../static/image/daily/diary/IMG_7889.JPG);
+}
+li.diary_daily:nth-child(4) {
+  background: url(../../static/image/daily/diary/IMG_7219.JPG);
+}
+
+/* filter */
+li.diary_daily::before,
+li.diary_daily > .daily_main_img::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  pointer-events: auto;
+  background-color: rgb(0, 0, 0, 0.3);
+}
+li.diary_daily:nth-child(1) > img:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  pointer-events: auto;
+  background-color: rgb(0, 0, 0, 0.3);
+}
+
+/* 일기 */
+.diary_textbox_more {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 15%;
+  text-align: center;
+  flex-direction: column;
+  color: #f7f7f7;
+  letter-spacing: 0.2em;
+}
+.diary_textbox_more h6 {
+  width: 80%;
+  font-size: 1.5rem;
+  padding: 2rem 0 2rem 0;
+  box-sizing: border-box;
+  font-weight: 400;
+}
+.diary_textbox_more p {
+  width: 60%;
+  height: 5rem;
+  font-size: 1.2rem;
+  line-height: 2em;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  overscroll-behavior-y: auto;
+  font-weight: 300;
+  z-index: 0;
+}
+/* 댓글창 양 끝 흐림 효과 */
+/*.diary_textbox_more p.on::before {
+ 스크롤 생기면 활성화하기js - 삭제
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  z-index: 1;
+  backdrop-filter: blur(1px);
+}*/
+/* .diary_textbox_more p.on::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+  width: 100%;
+  height: 2rem;
+  z-index: 1;
+  backdrop-filter: blur(1px);
+} */
+/* 스크롤바 디자인 */
+.diary_textbox_more p::-webkit-scrollbar {
+  /* width: 0.3rem; */
+  width: 0rem;
+}
+.diary_textbox_more p::-webkit-scrollbar-thumb {
+  background: rgb(239, 238, 233, 0.5);
+  border-radius: 10px;
+}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+<body>
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<main class="daily_details">
+    <!-- daily 일기화면 -->
+    <div class="daily_more">
+        <ul>
+            <li class="diary_daily">
+                <div class="daily_main_img">
+                    <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="">
+                </div>
+                <div class="diary_textbox_more">
+                    <h6>1일차</h6>
+                    <p class="on">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque et consectetur sequi ullam officia
+                        possimus, aut illum nobis unde! Modi ratione vero earum veniam possimus ea, nulla laborum. Eligendi,
+                        delectus.
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id earum sit quam alias eveniet adipisci
+                        repellendus impedit hic cum laudantium ullam, ipsum modi ratione ea aut expedita tenetur minus at.
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos, quibusdam suscipit. Cumque ipsum quo hic
+                        odio natus, quos consectetur obcaecati blanditiis, eveniet explicabo eius quam dolores itaque est nisi
+                        iure?
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam tenetur ut magni delectus fugiat! Quo
+                        velit quod id veniam accusamus, commodi earum sint, tempora placeat asperiores autem ex est facilis!
+                        <br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum neque cum enim illum sit officia
+                        libero excepturi obcaecati perspiciatis minus accusamus, odio distinctio laboriosam nostrum nisi
+                        veritatis, asperiores omnis odit.
+                    </p>
+                </div>
+            </li>
+            <li class="diary_daily">
+                <div class="daily_main_img">
+                    <img src="../../static/image/daily/diary/IMG_6510.JPG" alt="">
+                </div>
+                <div class="diary_textbox_more">
+                    <h6>2일차</h6>
+                    <p class="on">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque et consectetur
+                    </p>
+                </div>
+            </li>
+            <li class="diary_daily">
+                <div class="daily_main_img">
+                    <img src="../../static/image/daily/diary/IMG_7889.JPG" alt="">
+                </div>
+                <div class="diary_textbox_more">
+                    <h6>3일차</h6>
+                    <p class="on">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque et consectetur
+                    </p>
+                </div>
+            </li>
+            <li class="diary_daily">
+                <div class="daily_main_img">
+                    <img src="../../static/image/daily/diary/IMG_7219.JPG" alt="">
+                </div>
+                <div class="diary_textbox_more">
+                    <h6>4일차</h6>
+                    <p class="on">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque et consectetur
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque et consectetur
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque et consectetur
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque et consectetur
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- daily 댓글UI -->
+    <div class="reply_modal">
+        <div class="reply_modal_bg"></div>
+        <div class="center">
+            <div class="reply_img">
+                <img src="../../static../../static/image/daily/diary/IMG_6493.jpg" alt="해당일기이미지">
+            </div>
+            <div class="reply_right_wrap">
+                <div class="reply_screen">
+                    <div class="reply_scroll">
+                        <div class="reply">
+                            <!-- <div class="profile_circle"> -->
+                            <div class="comment">
+                                <div class="comment_profile">
+                                    <div>
+                                        <img src="../../static../../static/image/user/profile/seohyun.jpg" alt="프로필01">
+                                    </div>
+                                </div>
+                                <div class="comment_date">
+                                    <span>2023-05-08</span>
+                                </div>
+                                <div class="comment_textbox">
+                                    <span class="comment_id">sieun</span>
+                                    <p class="comment_content">
+                                        아니 나 나비고 발급받을 때 증명사진 없어서 여권사진 들고갔더니 목 댕걍하고 얼굴만 대문짝만하게 붙여줬잖어ㅜㅜㅜㅜ
+                                    </p>
+                                </div>
+                                <div class="comment_btn">
+                                    <span>수정하기</span>
+                                    <span>답글달기</span>
+                                </div>
+                            </div>
+                            <div class="recomment">
+                                <div class="comment_profile">
+                                    <div>
+                                        <img src="../../static../../static/image/user/profile/zzangu.jpg" alt="프로필01">
+                                    </div>
+                                </div>
+                                <div class="comment_date">
+                                    <span>2023-05-08</span>
+                                </div>
+                                <div class="comment_textbox">
+                                    <span class="comment_id">Yung</span>
+                                    <p class="comment_content">
+                                        <span class="reply_id">@Yung</span>
+                                        ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+                                    </p>
+                                </div>
+                                <div class="comment_btn">
+                                    <span>수정하기</span>
+                                    <span>답글달기</span>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                        <div class="reply">
+                            <div class="comment">
+                                <div class="comment_profile">
+                                    <div>
+                                        <img src="../../static../../static/image/user/profile/sieun.png" alt="프로필02">
+                                    </div>
+                                </div>
+                                <div class="comment_date">
+                                    <span>2023-05-08</span>
+                                </div>
+                                <div class="comment_textbox">
+                                    <span class="comment_id">sieun</span>
+                                    <p class="comment_content">
+                                        여 파리 지하철 지린내는 좀 안녕하신가?
+                                    </p>
+                                </div>
+                                <div class="comment_btn">
+                                    <span>수정하기</span>
+                                    <span>답글달기</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reply">
+                            <div class="comment">
+                                <div class="comment_profile">
+                                    <div>
+                                        <img src="../../static../../static/image/user/profile/seohyun.jpg" alt="프로필01">
+                                    </div>
+                                </div>
+                                <div class="comment_date">
+                                    <span>2023-05-08</span>
+                                </div>
+                                <div class="comment_textbox">
+                                    <span class="comment_id">sieun</span>
+                                    <p class="comment_content">
+                                        아니 나 나비고 발급받을 때 증명사진 없어서 여권사진 들고갔더니 목 댕걍하고 얼굴만 대문짝만하게 붙여줬잖어ㅜㅜㅜㅜ
+                                    </p>
+                                </div>
+                                <div class="comment_btn">
+                                    <span>수정하기</span>
+                                    <span>답글달기</span>
+                                </div>
+                            </div>
+                            <div class="recomment">
+                                <div class="comment_profile">
+                                    <div>
+                                        <img src="../../static../../static/image/user/profile/zzangu.jpg" alt="프로필01">
+                                    </div>
+                                </div>
+                                <div class="comment_date">
+                                    <span>2023-05-08</span>
+                                </div>
+                                <div class="comment_textbox">
+                                    <span class="comment_id">Yung</span>
+                                    <p class="comment_content">
+                                        <span class="reply_id">@Yung</span>
+                                        ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+                                    </p>
+                                </div>
+                                <div class="comment_btn">
+                                    <span>수정하기</span>
+                                    <span>답글달기</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reply">
+                            <div class="comment">
+                                <div class="comment_profile">
+                                    <div>
+                                        <img src="../../static../../static../../static/image/user/profile/sieun.png" alt="프로필02">
+                                    </div>
+                                </div>
+                                <div class="comment_date">
+                                    <span>2023-05-08</span>
+                                </div>
+                                <div class="comment_textbox">
+                                    <span class="comment_id">sieun</span>
+                                    <p class="comment_content">
+                                        여 파리 지하철 지린내는 좀 안녕하신가?
+                                    </p>
+                                </div>
+                                <div class="comment_btn">
+                                    <span>수정하기</span>
+                                    <span>답글달기</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reply_input">
+                    <input type="text" placeholder="댓글을 남겨주세요">
+                    <button>
+                        <img src="../../static../../static/image/daily/icon/send.png" alt="">
+                    </button>
+                </div>
+                <button class="close">
+                    <i class="xi-close xi-2x"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</main>
+<script th:inline="javascript">
+    var dailies = [[${ dailies }]];
+  </script>
+
+<!-- <script src="/script/daily.js"></script> -->
+<script src="/script/daily(modal).js"></script>
+</body>
+
+
+</html>
