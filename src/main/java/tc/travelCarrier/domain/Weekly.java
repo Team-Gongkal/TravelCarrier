@@ -70,12 +70,12 @@ public class Weekly {
     }
 
     //수정
-    public void updateWeekly(WeeklyForm form) throws ParseException {
+    public void updateWeekly(WeeklyForm form, OpenStatus status) throws ParseException {
         this.title = form.getTitle();
         this.text = form.getText();
         this.nation = form.getNation();
         this.travelDate = new TravelDate(form.getSdate(), form.getEdate());
-        //this.status = form.getStatus();
+        this.status = status;
     }
     //생성메소드
     public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, String nation,
