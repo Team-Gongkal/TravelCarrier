@@ -56,11 +56,14 @@ $(document).ready(function () {
         //.attr("id", dataArr[i].data[j].get("attachNo"))
         .attr("data-text", dataArr[i].data[j].get("text"))
         .attr("data-title", dataArr[i].data[j].get("title"))
-        .addClass("d_slide square");
+        .addClass("d_slide square sqr");
       var newImg = $("<img>").attr({
         src: dataArr[i].data[j].get("file"),
-        "data-attachNo" : dataArr[i].data[j].get("attachNo"),
         alt: "사진표시할수없음",
+        "data-attachNo": dataArr[i].data[j].get("attachNo"),
+      });
+      newImg.on("error", function() {
+        $(this).attr("src", "/image/daily/icon/changeImg.svg");
       });
       newLi.append(newImg);
       newLi.append(`<div class="reply_icon">
@@ -584,6 +587,7 @@ $(document).ready(function () {
     img.onload = function () {
       var ratio = img.width / img.height;
       console.log(ratio);
+      $img.parent().removeClass("sqr");
       if (0.9 <= ratio && ratio <= 1.1) {
         $img.parent().addClass("sqr");
       } else if (ratio < 0.9) {
