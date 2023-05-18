@@ -61,12 +61,13 @@ article .longBox {
 }
 .weekly_addText textarea {
   width: 100%;
-  height: 7rem;
-  line-height: 1.5rem;
+  height: auto;
+  line-height: 1.5em;
+  letter-spacing: 0.2em;
   font-weight: 200;
   font-size: 0.8rem;
   padding: 0;
-  overflow-y:scroll;
+  /* overflow-y:scroll; */
   background: #efeee9;
 }
 .weekly_addText textarea::-webkit-scrollbar {

@@ -720,7 +720,6 @@ ul.diary_list > li {
 ------------------------------------------------------------------*/
 .reply_icon {
   width: 2.2rem;
-  /* height: 2.5rem; */
   position: absolute;
   bottom: 0;
   right: 0.5rem;
@@ -781,7 +780,6 @@ ul.diary_list > li {
   background: rgb(0, 0, 0, 0.8);
 }
 .reply_modal > .center {
-  width: 80%;
   height: 85%;
   display: flex;
   border-radius: 1rem;
@@ -798,7 +796,7 @@ ul.diary_list > li {
   background: transparent;
 }
 .reply_img {
-  width: 40%;
+  width: fit-content;
   height: 100%;
   position: relative;
   overflow: hidden;
@@ -812,7 +810,7 @@ ul.diary_list > li {
 }
 /* 댓글창 */
 .reply_right_wrap {
-  width: 60%;
+  width: ;
   height: 100%;
   position: relative;
   z-index: 1000;

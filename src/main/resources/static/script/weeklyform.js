@@ -497,7 +497,9 @@ $(".weekly_saveBtn").click(function (event) {
       alert("실패");
     },
   });
-});
+
+// 추가할곳
+  });
 
 // 제출전 유효성 최종검사
 function checkValidation(){

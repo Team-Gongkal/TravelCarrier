@@ -241,12 +241,12 @@ $(document).on("click","#updateWeekly", function(event){
 });
 */
 
+
+// 모달 비활성화 - by.서현
 $(document).on("click", ".close", function () {
   closeModal();
 });
-
 console.log(url);
-// 모달 비활성화 - by.서현
 function closeModal() {
   $(".keyword_modal_bg").removeClass("show");
   $(".keyword_card").empty();
@@ -427,8 +427,6 @@ function updateKeyword(keyword_list) {
     $(".weekly_modal_bg").removeClass("show");
   });
 
-
-
 var thumb_status = "ORIGIN"; //ORIGIN:원래파일 DELETE:파일삭제
 // 이미지 삭제버튼 메소드 by서현
 $(document).on("click", ".removeBtn", function (event) {
@@ -478,3 +476,11 @@ $(document).on("click",".updateWeekly", function(event){
     },
   });
 });
+
+//addText textarea높이 유동적으로 조절
+  var addTextHeight = $('.weekly_addText textarea').p  ('scrollHeight');
+  var htmlfont = parseFloat($('html').css('font-size'));
+  var rem = 5 * htmlfont; //rem을 px로 변환
+  if(addTextHeight >= rem){
+    $('.weekly_addText textarea').css('height','6rem');
+  };
