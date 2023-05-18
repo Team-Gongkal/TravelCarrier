@@ -817,6 +817,7 @@ ul.diary_list > li {
   position: relative;
   z-index: 1000;
   background: #dde5e8;
+  /* background: #efeee9; */
   padding: 0rem 2.5rem 1rem 2.5rem;
   box-sizing: border-box;
   display: flex;
