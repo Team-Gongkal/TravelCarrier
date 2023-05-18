@@ -39,13 +39,13 @@ function appendReply(replyList){
         else var date = obj.udate+" (수정됨)";
 
         if(obj.origin == undefined || obj.origin == null || obj.origin == 0){
-            var html = newReplyHtml(obj.thumbPath,date, obj.userName, obj.text,obj.replyId);
+            var html = newReplyHtml(obj.thumbPath,date, obj.userName, obj.text,obj.replyId, obj.ddate);
             $('.reply_scroll').append(html);
             $(".reply_input input").val('');
         } else{
             // 대댓글달기
             var targetDiv = $(`div[data-reply=${obj.origin}]`).parent();
-            var recommentHtml = newReCommentHtml(obj.thumbPath,date, obj.userName, obj.text,obj.replyId, obj.originName);
+            var recommentHtml = newReCommentHtml(obj.thumbPath,date, obj.userName, obj.text,obj.replyId, obj.originName, obj.ddate);
             targetDiv.append(recommentHtml);
             $(".reply_input input").val('');
         }
@@ -136,8 +136,23 @@ function modifyReply(){
 }
 
 // 댓글 append 틀 - by.서현
-function newReplyHtml(img, date, name, comment, replyId){
-    var html = `
+function newReplyHtml(img, date, name, comment, replyId, ddate){
+    var html;
+    if(ddate != undefined || ddate != null ) {
+        html = `
+        <div class="reply" >
+          <div class="comment rep" data-reply="${replyId}">
+            <div class="comment_date">
+            </div>
+            <div class="comment_textbox">
+              <p class="comment_content">삭제된 댓글입니다.</p>
+            </div>
+
+          </div>
+        </div>
+        `;
+    } else {
+    html = `
     <div class="reply" >
       <div class="comment rep" data-reply="${replyId}">
         <div class="comment_profile">
@@ -160,12 +175,26 @@ function newReplyHtml(img, date, name, comment, replyId){
       </div>
     </div>
     `;
-
+    }
     return html;
 };
 // 대댓글
-function newReCommentHtml(img, date, name, comment, replyId, originName){
-    var html = `
+function newReCommentHtml(img, date, name, comment, replyId, originName, ddate){
+    var html;
+    if(ddate != undefined || ddate != null ) {
+    html = `
+      <div class="recomment rep" data-reply="${replyId}">
+        <div class="comment_date">
+        </div>
+        <div class="comment_textbox">
+          <p class="comment_content">
+            삭제된 댓글입니다.
+          </p>
+        </div>
+      </div>
+    `;
+    } else {
+    html = `
       <div class="recomment rep" data-reply="${replyId}">
         <div class="comment_profile">
           <div>
@@ -185,10 +214,11 @@ function newReCommentHtml(img, date, name, comment, replyId, originName){
         <div class="comment_btn">
           <span class="mod_rep">수정하기</span>
           <span class="re_rep">답글달기</span>
+          <span class="del_btn">삭제하기</span>
         </div>
       </div>
     `;
-
+    }
     return html;
 };
 // 답글/수정 취소 이벤트 - by.서현
@@ -203,10 +233,10 @@ $(document).on("click", ".mod_rep", function(e) {
     $(".cancel").remove();
     $(".reply_input input").val('');
     $comment.find(".comment_btn").append("<span class='cancel'>수정취소</span>");
-    var origin = $comment.data("reply");
+    var reply = $comment.data("reply");
     //var content = $comment.find(".comment_content").text();
     var content = $comment.find(".comment_content").clone().children().remove().end().text().trim();
-    $(".reply_input div").html("<p>댓글수정</p> <span>"+origin+"</span>");
+    $(".reply_input div").html("<p>댓글수정</p> <span>"+reply+"</span>");
     $(".reply_input input").val(content);
 });
 
@@ -216,7 +246,37 @@ $(document).on("click", ".re_rep", function(e) {
     $(".cancel").remove();
     $(".reply_input input").val('');
     $comment.find(".comment_btn").append("<span class='cancel'>답글취소</span>");
-    var origin = $comment.data("reply");
+    var reply = $comment.data("reply");
     var name = $comment.find(".comment_id").text();
-    $(".reply_input div").html("<p>@"+name+"</p> <span>"+origin+"</span>");
+    $(".reply_input div").html("<p>@"+name+"</p> <span>"+reply+"</span>");
+});
+
+// 삭제 이벤트  - by.서현
+$(document).on("click", ".del_btn", function(e) {
+    var $comment = $(this).closest(".rep");
+    var reply = $comment.data("reply");
+
+   var data = { replyId : reply,
+                ddate : $.datepicker.formatDate('yy-mm-dd', new Date()) };
+
+    if (confirm(reply+"번 댓글을 삭제하시겠습니까?")) {
+     $.ajax({
+       type: "POST",
+       url: "/TravelCarrier/reply/delete",
+       data: JSON.stringify(data),
+       contentType: 'application/json',
+       success: function (resp) {
+         alert("삭제되었습니다.");
+         var attachNo = $(".reply_img img").attr("data-attachNo");
+         currentReplyList(attachNo);
+       },
+       error: function (jqXHR, textStatus, errorThrown) {
+         alert("댓글 삭제 실패");
+       }
+     });
+
+    }
+
+
+
 });
