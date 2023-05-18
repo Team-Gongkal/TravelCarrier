@@ -94,7 +94,9 @@ article .longBox {
   overflow: hidden;
   position: relative;
 }
-
+#companion_more{
+  background: url(../image/weekly/icon/view-more.png);
+}
 .weekly_companion > ul.sel_companion li:nth-child(1) {
   background: url(../image/weekly/friendList/friend1.png);
 }

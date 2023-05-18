@@ -155,6 +155,7 @@ function newReplyHtml(img, date, name, comment, replyId){
         <div class="comment_btn">
           <span class="mod_rep">수정하기</span>
           <span class="re_rep">답글달기</span>
+          <span class="del_btn">삭제하기</span>
         </div>
       </div>
     </div>
