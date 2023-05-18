@@ -268,6 +268,7 @@ function openModal() {
         .addClass("card_del")
         .append($("<i>").addClass("xi-close"));
       newKeyword.append(textspan);
+      newKeyword.append(span);
       $(".keyword_card").append(newKeyword);
     });
   }
@@ -409,6 +410,8 @@ function updateKeyword(keyword_list) {
     $.each(keyword_list, function (index, text) {
       var ul = $("<ul>");
       var li = $("<li>").addClass("keyword").text(text);
+/*        var span = $("<span>").addClass("card_del").html('<i class="xi-close"></i>');
+        li.append(span);*/
       ul.append(li);
       keywordBox.append(ul);
     });
