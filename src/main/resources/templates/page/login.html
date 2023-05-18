@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelCarrier</title>
+
+    <link rel="stylesheet" href="../../static/css/reset.css">
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <link rel="stylesheet" href="../../static/css/header.css">
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="../../static/css/weekly.css">
+    <link rel="stylesheet" href="../../static/css/weekly_form.css">
+    <link rel="stylesheet" href="../../static/css/daily(modal).css">
+    <link rel="stylesheet" href="../../static/css/daily_more.css">
+    <link rel="stylesheet" href="../../static/css/login.css">
+
+    <!-- XEicon -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <div class="nav">
+            <div class="hamburger on">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="../../static../../static/image/header/logo/journal.png" alt="logo">
+                </a>
+            </div>
+        </div>
+        <div class="board_link">
+            <a href="">Board</a>
+        </div>
+        <div class="contact_link">
+            <a href="">Contact</a>
+        </div>
+    </nav>
+    <div class="navigation"></div>
+</header>
+<!-- utill 유틸 -->
+<div class="utill_menu">
+    <div class="notice">
+        <img src="../../static../../static/image/header/icon/notification.png" alt="실시간 알림 아이콘">
+    </div>
+    <div class="profile">
+        <a href="#none"></a>
+    </div>
+</div>
+<main id="login_page_wrap">
+  <div class="login">
+    <form>
+      <div class="id">
+        <label for="">아이디</label>
+        <input type="text" placeholder="아이디를 입력해주세요" title="아이디" />
+      </div>
+      <div class="pw">
+        <label for="">비밀번호</label>
+        <input type="password" placeholder="비밀번호를 입력해주세요" title="비밀번호" />
+      </div>
+      <button type="submit">로그인</button>
+    </form>
+  </div>
+  <script src="../../static/script/login.js"></script>
+</main>
+</body>

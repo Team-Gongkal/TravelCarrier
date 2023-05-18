@@ -595,6 +595,7 @@ button.Dform_btn_disable {
   overflow: hidden;
 }
 ul.diary_list {
+  width: 100%;
   display: flex;
   cursor: pointer;
 }
@@ -614,13 +615,14 @@ ul.diary_list > li {
 .diary_list > li > img {
   width: 100%;
   height: auto;
-  min-height: 320px;
   max-width: 100%;
+  min-height: 320px;
   object-fit: cover;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: block;
 }
 
 .diary_noH .circle {

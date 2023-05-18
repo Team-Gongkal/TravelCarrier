@@ -481,7 +481,7 @@ $(document).on("click",".updateWeekly", function(event){
 });
 
 //addText textarea높이 유동적으로 조절
-  var addTextHeight = $('.weekly_addText textarea').p  ('scrollHeight');
+  var addTextHeight = $('.weekly_addText textarea').prop('scrollHeight');
   var htmlfont = parseFloat($('html').css('font-size'));
   var rem = 5 * htmlfont; //rem을 px로 변환
   if(addTextHeight >= rem){
