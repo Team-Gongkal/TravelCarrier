@@ -140,24 +140,22 @@ article .longBox {
   justify-content: end;
 }
 .weekly_disclosure span {
-  width: 100%;
+  width: fit-content;
   height: 100%;
   display: inline-block;
-  margin: 0.5rem 0 0 0.5rem;
   opacity: 0.2;
   font-size: 0.8rem;
-  text-align: end;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.weekly_disclosure span:nth-child(1) {
+  text-align: end;
 }
 .weekly_disclosure span img {
   width: 1.5rem;
   max-width: 100%;
   display: block;
   height: auto;
+  margin-left: 0.5rem;
 }
 #disclosure_checked {
   opacity: 1;

@@ -43,7 +43,15 @@
               </ul>
             </div>
             <div class="weekly_disclosure">
-              <span th:text="${weekly.status}"></span>
+              <span th:if="${#strings.equals(weekly.status, 'ALL')}">
+                PUBLIC
+              </span>
+              <span th:if="${#strings.equals(weekly.status, 'ME')}">
+                PRIVATE
+              </span>
+              <span th:if="${#strings.equals(weekly.status, 'FOLLOW')}">
+                FOLLOW
+              </span>
               <span id="disclosure_checked">
                 <img th:if="${#strings.equals(weekly.status, 'ALL')}" src="/image/weekly/icon/view-n.png" alt="공개">
                 <img th:if="${#strings.equals(weekly.status, 'ME')}" src="/image/weekly/icon/hide-n.png" alt="비공개">
