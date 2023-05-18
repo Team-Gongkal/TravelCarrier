@@ -203,7 +203,8 @@
           <div>
             <p>등록된 키워드 <em>(키워드는 최대 5개까지 등록이 가능합니다)</em></p>
             <ul class="keyword_card">
-              <!-- <li class="card">키워드5
+              <!-- <li class="card">
+                <span>키워드5</span>
               <span class="card_del"><i class="xi-close"></i></span>
             </li> -->
             </ul>
@@ -379,16 +380,16 @@
   </main>
   <script th:inline="javascript">
     var all_keywords = [
-      [# th: each = "wd : ${allWdList}"]
+      [# th:each = "wd : ${allWdList}"]
       [[${ wd.keywords }]],
       [/] 
       ];
     console.log(all_keywords);
 
-    var weeklyId = [[${ weekly.id }]];
+    var weeklyId = [[${weekly.id}]];
 
     var sgowiths = [
-      [# th: each = "gw : ${weekly.gowiths}"]
+      [# th:each = "gw : ${weekly.gowiths}"]
       [[${ gw.user.id }]],
       [/]
       ];

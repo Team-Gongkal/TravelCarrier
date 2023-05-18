@@ -421,6 +421,7 @@ function updateKeyword(keyword_list) {
 //위클리 수정 모달 활성화
   $(".weekly_edit").on("click", function () {
     $(".weekly_modal_bg").addClass("show");
+    console.log('모달활성화')
   });
   $(".modal_title > .close").on("click", function () {
     $(".weekly_modal_bg").removeClass("show");

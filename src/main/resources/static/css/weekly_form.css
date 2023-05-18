@@ -26,9 +26,8 @@ main#weekly_form {
   align-items: center;
   justify-content: space-between;
 }
-.weekly_form > div {
-  height: 90%;
-  border-radius: 1em;
+.weekly_form > div.thumbnail_input {
+  height: 100%;
   position: relative;
   box-sizing: border-box;
 }
@@ -39,6 +38,7 @@ main#weekly_form {
   background: #f7f7f7;
   box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
   padding: 2.5rem;
+  border-radius: 1em;
 }
 .thumbnail_input {
   display: flex;

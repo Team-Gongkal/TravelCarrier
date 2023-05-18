@@ -485,6 +485,10 @@ li.card span:nth-child(2):hover {
   box-sizing: border-box;
   overflow: hidden;
 }
+.weekly_modal_bg .weekly_form .thumbnail{
+  padding: 2.5rem;
+  margin-left: 2.5rem;
+}
 .weekly_modal_bg .modal_title {
   position: relative;
   border-bottom: 1px solid #b3b3b3;
@@ -505,7 +509,6 @@ li.card span:nth-child(2):hover {
   box-sizing: border-box;
   overflow: hidden;
 }
-
 .updateWeekly {
   margin-bottom: 1.5rem;
 }
