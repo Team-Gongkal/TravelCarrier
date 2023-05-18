@@ -77,7 +77,8 @@
 
           <div th:if="${wd.keywords != null and wd.keywords.size() > 0}" class="keywordBox">
             <ul th:each="key : ${wd.keywords}">
-              <li class="keyword" th:text="${key}" th:data-daily="${wd.dailyId}">keyword</li>
+              <li class="keyword" th:text="${key}" th:data-daily="${wd.dailyId}">keyword
+                <span class="card_del"><i class="xi-close"></i></span></li>
             </ul>
           </div>
 

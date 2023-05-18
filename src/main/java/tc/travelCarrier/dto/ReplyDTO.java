@@ -12,13 +12,14 @@ import java.util.Date;
 @Getter @Setter @ToString
 public class ReplyDTO {
     public ReplyDTO(){}
-    public ReplyDTO(int attachNo, String text, Date cdate, Date udate,
+    public ReplyDTO(int attachNo, String text, Date cdate, Date udate, Date ddate,
                     Reply originReply, User user, int replyId){
         this.attachNo = attachNo;
         this.text = text;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         this.cdate = format.format(cdate);
         if(udate != null) this.udate = format.format(udate);
+        if(ddate != null) this.ddate = format.format(ddate);
 
         this.userName = user.getName();
         this.thumbPath = user.getAttachUser().getThumbPath();
@@ -44,5 +45,8 @@ public class ReplyDTO {
     private int userId;
     private int replyId;
     private String originName;
+
+    //삭제필드
+    private String ddate;
 
 }

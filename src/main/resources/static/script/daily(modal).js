@@ -47,6 +47,7 @@ $(document).ready(function () {
 
 // 슬라이드 셋팅
 $(document).ready(function () {
+  console.log("우무티티티");
   console.log(dataArr);
    var newUl = $("<ul>").addClass("diary_list");
   for (var i = 0; i < dataArr.length; i++) {

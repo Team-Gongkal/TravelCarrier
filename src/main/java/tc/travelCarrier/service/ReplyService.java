@@ -25,6 +25,11 @@ public class ReplyService {
         reply.modify(dto.getText(), dto.getUdate());
     }
 
+    public void deleteReply(ReplyDTO dto) throws ParseException {
+        Reply reply = replyRepository.findReply(dto.getReplyId());
+        reply.getCrudDate().setDdateReply(dto.getDdate());
+    }
+
     public Reply getReply(int replyId) {
         return replyRepository.findReply(replyId);
     }

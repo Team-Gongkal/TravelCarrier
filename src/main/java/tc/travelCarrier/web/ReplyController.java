@@ -58,6 +58,7 @@ public class ReplyController {
                     r.getText(),
                     r.getCrudDate().getCdate(),
                     r.getCrudDate().getUdate(),
+                    r.getCrudDate().getDdate(),
                     r.getOrigin(),
                     r.getUser(),
                     r.getId()
@@ -70,5 +71,10 @@ public class ReplyController {
     public void modifyReply(@RequestBody ReplyDTO dto) throws Exception {
         // replyId, text, udate가 들어온다.
         replyService.modifyReply(dto);
+    }
+    @PostMapping("/reply/delete")
+    public void deleteReply(@RequestBody ReplyDTO dto) throws Exception {
+        // replyId, text, udate가 들어온다.
+        replyService.deleteReply(dto);
     }
 }

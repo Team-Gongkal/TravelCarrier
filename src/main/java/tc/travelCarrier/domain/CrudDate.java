@@ -27,4 +27,11 @@ public class CrudDate {
     private Date cdate;
     @Column(name="UDATE")
     private Date udate;
+    @Column(name="DDATE")
+    private Date ddate;
+
+    public void setDdateReply(String ddate) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        this.ddate = formatter.parse(ddate);
+    }
 }
