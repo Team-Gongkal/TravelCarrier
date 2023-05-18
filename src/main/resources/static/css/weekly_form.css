@@ -4,7 +4,9 @@ main#weekly_form {
   flex-direction: column;
   align-items: center;
 }
-
+main#weekly_form div{
+  box-sizing: border-box;
+}
 #weekly_form > h1 {
   width: 100%;
   font-size: 1em;
@@ -34,6 +36,7 @@ main#weekly_form {
 /* 썸네일 thumbnail------------------------- */
 .thumbnail {
   width: calc(33% + 5rem);
+  height: 100%;
   float: left;
   background: #f7f7f7;
   box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
@@ -108,7 +111,7 @@ main#weekly_form {
   justify-content: space-between;
 }
 .weekly_input > ul > li {
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
   position: relative;
 }
 /* 여행 국가 및 여행 기간 */
@@ -153,6 +156,10 @@ a.dateClick {
   vertical-align: middle;
   position: relative;
 }
+/* 추가글 입력 */
+.weekly_input > ul > li:nth-child(3){
+  margin-bottom: 1rem;
+}
 /* 동행인 및 공개여부 */
 .weekly_input > ul > li:nth-child(4) {
   margin-bottom: 0em;
@@ -188,7 +195,7 @@ a.dateClick {
   text-indent: 0;
   text-align: center;
   line-height: 3em;
-  border: 2px solid rgb(53, 58, 82, 0.3);
+  border: 1px solid rgb(53, 58, 82, 0.3);
   cursor: pointer;
   transition: 0.2s;
   overflow: hidden;
@@ -240,7 +247,7 @@ a.dateClick {
   padding: 0.85rem 0rem;
   position: relative;
   cursor: pointer;
-  border: 2px solid rgb(53, 58, 82, 0.3);
+  border: 1px solid rgb(53, 58, 82, 0.3);
   border-radius: 100px;
   text-align: center;
   vertical-align: text-bottom;
@@ -250,7 +257,7 @@ a.dateClick {
   font-weight: 400;
 }
 .disclosure input[type="radio"]:checked + label {
-  border: 2px solid #a0c1ca;
+  border: 1px solid #a0c1ca;
   background: #f7f7f7;
   color: #a0c1ca;
   font-weight: 400;
@@ -289,7 +296,6 @@ margin-bottom: 1.5rem;
   left: 0;
   opacity: 0;
   visibility: hidden;
-  transition: 0.3s;
   z-index: 100;
 }
 .companion_modal_bg.show {

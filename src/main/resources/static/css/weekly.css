@@ -20,7 +20,7 @@ main.weekly_scroll::-webkit-scrollbar {
   top: 0.5rem;
   display: block;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.1s;
   opacity: 0.2;
 }
 .weekly_edit img {
@@ -381,6 +381,7 @@ article .longBox {
   opacity: 0;
   visibility: hidden;
   z-index: 100;
+  transition: 0.2s;
 }
 .keyword_modal {
   width: 50%;
@@ -470,6 +471,8 @@ li.card span:nth-child(2):hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  transition: 0.2s;
 }
 .weekly_modal {
   background: #efeee9;
@@ -486,8 +489,8 @@ li.card span:nth-child(2):hover {
   overflow: hidden;
 }
 .weekly_modal_bg .weekly_form .thumbnail{
-  padding: 2.5rem;
   margin-left: 2.5rem;
+  height: auto;
 }
 .weekly_modal_bg .modal_title {
   position: relative;
@@ -501,13 +504,41 @@ li.card span:nth-child(2):hover {
 .weekly_modal_bg .addText textarea {
   height: 8em;
 }
-.weekly_modal_bg .weekly_form {
-  position: relative;
-  width: fit-content;
-  height: calc(100% - 4rem);
-  padding: 2.5em 5%;
-  box-sizing: border-box;
+.weekly_modal_bg .weekly_modal_form .companion_modal_bg{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.weekly_modal_bg #plus_companion {
+  border-radius: 100px;
+  background: #f7f7f7;
+  text-indent: 0;
+  text-align: center;
+  line-height: 3em;
+  border: 1px solid rgb(53, 58, 82, 0.3);
+  cursor: pointer;
+  transition: 0.2s;
   overflow: hidden;
+  color: rgb(53, 58, 82, 0.5);
+  position: relative;
+}
+.weekly_modal_bg #plus_companion:hover {
+  
+}
+.weekly_modal_bg #plus_companion > i {
+  vertical-align: sub;
+  display: inline-block;
+  font-size: 1em;
+}
+.weekly_modal_bg #plus_companion > span {
+  display: inline;
+  font-size: 0.6em;
+  font-weight: 400;
+  display: none;
+}
+.weekly_modal_bg #plus_companion:hover span,
+.weekly_modal_bg #plus_companion:hover i {
+  display: inline-block;
 }
 .updateWeekly {
   margin-bottom: 1.5rem;

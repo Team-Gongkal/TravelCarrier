@@ -41,7 +41,6 @@
                   class="circle">
                   동행인 이미지
                 </li>
-
               </ul>
             </div>
             <div class="weekly_disclosure">
@@ -303,7 +302,7 @@
                       <li th:each="w,it : ${weekly.gowiths}"
                         th:attr="data-fid=${w.user.id}, data-fname=${w.user.name}, name='gowiths'"
                         th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
-                        th:if="${it.index} &lt; 5" class="circle">
+                        th:if="${it.index} &lt; 3" class="circle">
                         동행인 이미지
                       </li>
                       <li id="plus_companion">
@@ -342,37 +341,36 @@
               </ul>
             </div>
           </form>
-          <!--        <button type="submit" class="btn weekly_saveBtn"> 저장하기 </button>-->
           <button type="submit" class="btn updateWeekly"> 저장하기 </button>
-          <!-- 동행인 추가 팝업 -->
-          <div class="companion_modal_bg">
-            <div class="companion_modal">
-              <h3>아이디 검색</h3>
-              <div class="id_search">
-                <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
-                <img src="/image/weekly/icon/serch.svg" alt="serch icon">
-              </div>
-              <div class="friendsList">
-                <ul class="checked_friends">
-
-                </ul>
-                <ul class="serch_friends">
-                  <li th:each="f : ${user.followers}"
-                    th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
-                    <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
-                    <label th:for="'#' + ${f.follower.id}">
-                      <span class="profile_circle circle">
-                        <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
-                          alt="프로필사진">
-                      </span>
-                      <span th:text="${f.follower.name}" class="nickname">닉네임</span>
-                    </label>
-                  </li>
-                </ul>
-              </div>
-              <button type="button" class="btn goWithBtn">확인</button>
-            </div>
+        </div>
+      </div>
+      <!-- 동행인 추가 팝업 -->
+      <div class="companion_modal_bg">
+        <div class="companion_modal">
+          <h3>아이디 검색</h3>
+          <div class="id_search">
+            <input type="search" placeholder="이름 또는 아이디를 입력해주세요">
+            <img src="/image/weekly/icon/serch.svg" alt="serch icon">
           </div>
+          <div class="friendsList">
+            <ul class="checked_friends">
+
+            </ul>
+            <ul class="serch_friends">
+              <li th:each="f : ${user.followers}"
+                th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
+                <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
+                <label th:for="'#' + ${f.follower.id}">
+                  <span class="profile_circle circle">
+                    <img th:src="${f.follower.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
+                      alt="프로필사진">
+                  </span>
+                  <span th:text="${f.follower.name}" class="nickname">닉네임</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+          <button type="button" class="btn goWithBtn">확인</button>
         </div>
       </div>
     </div>

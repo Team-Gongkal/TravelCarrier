@@ -111,7 +111,7 @@ input.hide {
 }
 /* button UI */
 button.btn {
-  width: calc(11 * 1rem);
+  width: 11vw;
   padding: 0.85rem;
   font-weight: 300;
   color: #f7f7f7;
@@ -151,12 +151,14 @@ form h3 {
   font-weight: 400;
   margin-bottom: 0.8rem;
 }
-/* modal - title/close btn UI */
+
 .modal_title h3 {
   text-align: center;
   font-size: 1.2rem;
   margin: 0;
 }
+
+/* modal - title/close btn UI */
 .modal_title button.close {
   width: fit-content;
   background: none;
@@ -164,5 +166,9 @@ form h3 {
   cursor: pointer;
   padding: 0;
   position: absolute;
-  color: #b3b3b3;
+  color: rgb(53, 58, 82, 0.2);
+  transition: 0.1s;
+}
+.modal_title button.close:hover{
+  color: #353a52;
 }
