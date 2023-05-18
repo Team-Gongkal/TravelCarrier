@@ -19,4 +19,8 @@ public class ReplyRepository {
     public Reply findReply(int replyId){
         return em.find(Reply.class, replyId);
     }
+
+    public void remove(Reply reply) {
+        em.remove(reply);
+    }
 }

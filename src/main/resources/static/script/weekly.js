@@ -463,6 +463,7 @@ $(document).on("click",".updateWeekly", function(event){
     console.log("fid: "+$(this).data("fid"));
   });
   formData.append("status", $("input[name='status']:checked").val());
+  console.log("status : " + formData.get("status"));
   formData.append("thumbStatus", thumb_status);
   $.ajax({
     type: "POST",

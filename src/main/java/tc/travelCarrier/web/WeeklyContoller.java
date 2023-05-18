@@ -123,7 +123,7 @@ public class WeeklyContoller {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
-        weeklyService.updateWeekly(weeklyId, form);
+        weeklyService.updateWeekly(weeklyId, form, status);
 
         return weeklyId;
     }

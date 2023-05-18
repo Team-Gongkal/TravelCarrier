@@ -65,10 +65,10 @@ public class WeeklyService {
     /**
      * 위클리 수정
      */
-    public void updateWeekly(int weeklyId, WeeklyForm form) throws Exception {
+    public void updateWeekly(int weeklyId, WeeklyForm form, OpenStatus status) throws Exception {
         // 위클리 정보 수정
         Weekly weekly = findWeekly(weeklyId);
-        weekly.updateWeekly(form);
+        weekly.updateWeekly(form, status);
 
         // 위클리 동행인 삭제
         for (Gowith gowith : weekly.getGowiths()) {
