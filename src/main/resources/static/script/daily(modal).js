@@ -48,8 +48,8 @@ $(document).ready(function () {
 // 슬라이드 셋팅
 $(document).ready(function () {
   console.log(dataArr);
+   var newUl = $("<ul>").addClass("diary_list");
   for (var i = 0; i < dataArr.length; i++) {
-    var newUl = $("<ul>").addClass(dataArr[i].day[0] + " diary_list");
     for (var j = 0; j < dataArr[i].data.length; j++) {
       var newLi = $("<li>")
         //.attr("id", dataArr[i].data[j].get("attachNo"))
