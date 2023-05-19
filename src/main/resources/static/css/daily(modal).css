@@ -1006,10 +1006,6 @@ span.reply_id {
   box-sizing: border-box;
   border-bottom: 1px solid #f7f7f783;
 }
-.reply_input div.tag_name span {
-  width: 100%;
-  display: block;
-}
 .reply_input div.reply_inputText {
   display: flex;
   width: 100%;
@@ -1052,4 +1048,7 @@ span.reply_id {
 }
 .reply_input button:hover img {
   opacity: 1;
+}
+.reply_num {
+  display: none;
 }

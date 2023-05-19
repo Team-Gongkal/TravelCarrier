@@ -6,6 +6,7 @@ $(".diary_viewport").on("click", ".d_slide > .reply_icon", function (e) {
   $(".reply_img img").attr("src", currentImg);
   $(".reply_img img").attr("data-attachNo", attachNo);
   $(".reply_modal").addClass("show");
+  $(".reply_inputText textarea").focus();
   currentReplyList(attachNo);
 });
 
@@ -264,6 +265,7 @@ $(document).on("click", ".cancel", function (e) {
   $(".reply_input div.tag_name").html("<span>댓글달기</span>");
   $(".cancel").remove();
   $(".reply_inputText textarea").val("");
+  $(".reply_inputText textarea").focus();
 });
 // 수정버튼 클릭 이벤트 - by.서현
 $(document).on("click", ".mod_btn", function (e) {
@@ -286,6 +288,7 @@ $(document).on("click", ".mod_btn", function (e) {
     "<span>댓글수정</span> <span class=" + "reply_num" + ">" + reply + "</span>"
   );
   $(".reply_input textarea").val(content);
+  $(".reply_inputText textarea").focus();
 });
 
 // 답글 작성 이벤트  - by.서현
@@ -306,6 +309,7 @@ $(document).on("click", ".re_btn", function (e) {
       reply +
       "</span>"
   );
+  $(".reply_inputText textarea").focus();
 });
 
 // 삭제 이벤트  - by.서현
