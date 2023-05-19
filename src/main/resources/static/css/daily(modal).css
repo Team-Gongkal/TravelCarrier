@@ -812,15 +812,16 @@ ul.diary_list > li {
 }
 /* 댓글창 */
 .reply_right_wrap {
-  width: ;
+  max-width: 30rem;
+  min-width: 25rem;
   height: 100%;
   position: relative;
   z-index: 1000;
   background: #dde5e8;
-  /* background: #efeee9; */
-  padding: 0rem 2.5rem 1rem 2.5rem;
+  padding: 1rem 0;
   box-sizing: border-box;
   display: flex;
+  align-items: stretch;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -831,23 +832,6 @@ ul.diary_list > li {
   overflow: hidden;
 }
 /* 댓글창 양 끝 흐림 효과 */
-.reply_screen::before {
-  /*스크롤 생기면 활성화하기js - 삭제*/
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2rem;
-  z-index: 1;
-  background: linear-gradient(
-    to bottom,
-    rgb(221, 229, 232),
-    rgb(221, 229, 232, 0.8),
-    rgb(221, 229, 232, 0.5),
-    rgb(221, 229, 232, 0)
-  );
-}
 .reply_input::before {
   content: "";
   position: absolute;
@@ -865,7 +849,7 @@ ul.diary_list > li {
   );
 }
 .reply_scroll {
-  width: 100%;
+  width: auto;
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -878,13 +862,15 @@ ul.diary_list > li {
   width: 0.3rem;
 }
 .reply_scroll::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgba(53, 58, 82, 0.3);
   border-radius: 10px;
 }
 .reply {
-  margin: 2rem 0 3rem 0;
+  margin: 1rem 2rem 0rem 2rem;
+  box-sizing: border-box;
   border-radius: 0.5rem;
   background: #f7f7f7;
+  letter-spacing: 0.05em;
 }
 .reply:last-child {
   margin-bottom: 0;
@@ -893,10 +879,10 @@ ul.diary_list > li {
 .recomment {
   width: 100%;
   height: 100%;
-  padding: 0.5rem;
+  padding: 0rem 0.5rem 0.5rem 0.5rem;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 0.4fr 2fr 0.5fr;
+  grid-template-columns: auto 2fr 0.5fr;
   grid-template-areas:
     "profile date date"
     "profile text text"
@@ -907,28 +893,27 @@ ul.diary_list > li {
 }
 .recomment {
   padding-top: 0;
+  padding-left: 2rem;
 }
 .comment_profile {
   grid-area: profile;
   position: relative;
   width: 100%;
   height: 100%;
+  padding: 0.5rem;
 }
 .comment_profile > div {
   width: 100%;
   height: 100%;
-  position: absolute;
-  bottom: calc(100% - 1.63rem);
-  right: 1rem;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
   border-radius: 100%;
   overflow: hidden;
 }
 .recomment .comment_profile > div {
   top: 0;
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 .comment_profile > div img {
   width: 100%;
@@ -937,31 +922,35 @@ ul.diary_list > li {
 .comment_date {
   grid-area: date;
   text-align: end;
+  padding-top: 0.5rem;
 }
 .comment_date span {
+  display: block;
   color: #b3b3b3;
-  font-size: 0.6rem;
+  font-size: 0.3rem;
   font-weight: 300;
 }
 .comment_textbox {
   width: 100%;
   height: 100%;
   grid-area: text;
-  padding: 0 2rem 0 0.5rem;
+  padding: 0 0.5rem;
   box-sizing: border-box;
 }
 span.comment_id {
   display: block;
-  font-size: 1.2rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0em;
 }
 p.comment_content {
-  width: 100%;
+  width: inherit;
   font-weight: 300;
   font-size: 0.9rem;
   padding: 0.8rem 0;
   box-sizing: border-box;
   line-height: 1.5rem;
+  white-space: wrap;
 }
 .recomment span.comment_id {
   font-size: 1rem;
@@ -975,7 +964,7 @@ p.comment_content {
 }
 .comment_btn span {
   display: inline-block;
-  margin: 0 0.5rem 0.8rem 0.5rem;
+  margin: 0 0.3em 0.8em 0.3em;
   font-size: 0.8rem;
   cursor: pointer;
 }
@@ -996,38 +985,70 @@ span.reply_id {
   left: 12.5%;
   width: 2px;
   /*height: 50%; 슬라이드의 길이에 맞게 변경(js) - 삭제*/
-  background: #525d7634;
 }
 .reply_input {
+  width: inherit;
+  height: fit-content;
+  box-sizing: border-box;
+  position: relative;
+  background: #525d7634;
+  margin: 0 2rem;
+  border-radius: 0.5rem;
+}
+.reply_input div.tag_name {
   width: 100%;
-  height: 2rem;
+  height: fit-content;
+  font-size: 0.8em;
+  color: #f7f7f7;
+  font-weight: 200;
+  text-align: center;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #f7f7f783;
+}
+.reply_input div.tag_name span {
+  width: 100%;
+  display: block;
+}
+.reply_input div.reply_inputText {
   display: flex;
-  padding: 0rem 0 0.5rem 0;
+  width: 100%;
+  box-sizing: border-box;
   position: relative;
 }
-.reply_input input {
-  width: 100%;
-  height: 2.5rem;
-  font-size: 0.9rem;
-  display: inline-block;
+.reply_input textarea {
+  height: 100%;
+  font-size: 1rem;
+  line-height: 1em;
+  max-height: 2rem;
   box-sizing: border-box;
-  background: #353a5215;
-  border-radius: 0.2rem 0 0 0.2rem;
+  background: transparent;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 1rem;
+  padding: 0;
+}
+/* 스크롤바 디자인 */
+.reply_input textarea::-webkit-scrollbar {
+  width: 0.3rem;
+}
+.reply_input textarea::-webkit-scrollbar-thumb {
+  background: rgba(53, 58, 82, 0.3);
+  border-radius: 10px;
 }
 .reply_input button {
-  display: inline-block;
+  display: block;
   cursor: pointer;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 10%;
+  height: auto;
   padding: 0.5rem;
-  background: #353a5215;
-  border-radius: 0 0.2rem 0.2rem 0;
+  background: transparent;
 }
 .reply_input img {
   width: 100%;
   max-width: 100%;
   height: auto;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 .reply_input button:hover img {
   opacity: 1;

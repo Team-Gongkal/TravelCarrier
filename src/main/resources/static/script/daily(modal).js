@@ -35,8 +35,20 @@ function setFirst(dailies) {
       }),
     };
   });
+  test();
 }
-
+function test() {
+  for (var i = 0; i < dataArr.length; i++) {
+    for (var j = 0; j < dataArr[i].data.length; j++) {
+      console.log(
+        dataArr[i].data[j].get("text"),
+        dataArr[i].data[j].get("title"),
+        dataArr[i].data[j].get("file"),
+        dataArr[i].data[j].get("attachNo")
+      );
+    }
+  }
+}
 $(document).ready(function () {
   setFirst(dailies);
   getCurrentDataArr();
@@ -49,7 +61,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   console.log("우무티티티");
   console.log(dataArr);
-   var newUl = $("<ul>").addClass("diary_list");
+  var newUl = $("<ul>").addClass("diary_list");
   for (var i = 0; i < dataArr.length; i++) {
     for (var j = 0; j < dataArr[i].data.length; j++) {
       var newLi = $("<li>")
@@ -62,7 +74,7 @@ $(document).ready(function () {
         alt: "사진표시할수없음",
         "data-attachNo": dataArr[i].data[j].get("attachNo"),
       });
-      newImg.on("error", function() {
+      newImg.on("error", function () {
         $(this).attr("src", "/image/daily/icon/changeImg.svg");
       });
       newLi.append(newImg);
@@ -502,25 +514,6 @@ $(window).on("load", function () {
     });
   } else {
   }
-
-  // 댓글 모달창 활성화 - by윤아
-  $(".diary_viewport").on("click", ".d_slide > .reply_icon", function (e) {
-    $(".reply_modal").addClass("show");
-    var reply_img = $(e.target).parent().parent().find("img").attr("src");
-    $(".reply_img img").attr("src", `${reply_img}`);
-    $(".diary_noH .writing").hide();
-
-    // 댓글 모달창 세로선 자동 생성 및 길이 수정
-    var reply_height = $(".reply_scroll").height();
-    console.log("댓글 스크롤 길이" + reply_height);
-    $(".reply_screen::before").css("height", (reply_height / 80) * 100 + "%");
-  });
-
-  //댓글모달창비활성화
-  $(".reply_modal .close").click(function () {
-    $(".reply_modal").removeClass("show");
-    $(".diary_noH .writing").show();
-  });
 
   //슬라이드 호버시
   $(".diary_slides").on("mousemove", function () {

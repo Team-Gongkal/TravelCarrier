@@ -93,10 +93,11 @@ textarea:focus,
 select:focus {
   outline: none;
 }
-textarea{
+textarea {
   resize: none;
   overflow: visible;
   line-height: 1.5em;
+  box-sizing: border-box;
 }
 /* input hide */
 input.hide {
@@ -169,6 +170,6 @@ form h3 {
   color: rgb(53, 58, 82, 0.2);
   transition: 0.1s;
 }
-.modal_title button.close:hover{
+.modal_title button.close:hover {
   color: #353a52;
 }
