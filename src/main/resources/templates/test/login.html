@@ -22,10 +22,10 @@
           <!--<label for="">비밀번호</label>-->
           <input name="password" id="password" type="password" placeholder="비밀번호를 입력해주세요" title="비밀번호" />
         </div>
-        <div class="remember_me">
+<!--        <div class="remember_me">
           <input id="remember_me" name="remember_me" type="checkbox" />
           <label for="remember_me">Remember Password</label>
-        </div>
+        </div>-->
 
         <button onclick="login_submit()" type="submit">로그인</button>
       </form>
@@ -34,8 +34,7 @@
 
   <script>
   function login_submit() {
-    event.preventDefault();
-    console.log("버튼이 클릭되었습니다!");
+
   }
   function fnSubmit() {
     $("#login_form").submit();
