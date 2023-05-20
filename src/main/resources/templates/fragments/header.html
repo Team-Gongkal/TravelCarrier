@@ -30,8 +30,8 @@
       <div class="notice">
         <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
       </div>
-      <div class="profile">
-        <a href="#none"></a>
+      <div class="profile"  th:if="${user}" th:style="'background-image: url(' + ${user.attachUser.thumbPath} + ')'" ></div>
+      <a href="#none"></a>
       </div>
     </div>
   </th:block>

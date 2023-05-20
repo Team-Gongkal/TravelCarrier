@@ -3,11 +3,13 @@ package tc.travelCarrier.web;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.CrudDate;
 import tc.travelCarrier.domain.Reply;
+import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.ReplyDTO;
 import tc.travelCarrier.repository.MemberRepository;
@@ -37,10 +39,14 @@ public class ReplyController {
         if(dto.getOrigin() != 0) originReply = replyService.getReply(dto.getOrigin());
         else originReply = null;
 
+        //로그인한 유저의 정보
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = memberRepository.findUserById(activeUser.getId());
+
         int replyId = replyService.saveReply(new Reply(
                 attachService.findAttachDaily(dto.getAttachNo()),
                 dto.getText(),
-                memberRepository.getUser(1),
+                user,
                 new CrudDate(dto.getCdate(), dto.getUdate()),
                 originReply
         ));

@@ -2,6 +2,7 @@ package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.dto.DailyDTOComparator;
 import tc.travelCarrier.dto.DailyForm;
+import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
@@ -26,6 +28,7 @@ public class DailyController {
     private final DailyService dailyService;
     private final WeeklyService weeklyService;
     private final AttachService attachService;
+    private final MemberRepository memberRepository;
 
     /**
      * 데일리페이지 : 데일리정보 가져오기 + 위클리의 제목과날짜 세팅
@@ -47,11 +50,15 @@ public class DailyController {
         //일수 계산
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
 
+        //로그인한 유저의 정보
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = memberRepository.findUserById(activeUser.getId());
+        model.addAttribute("user", user);
+
         model.addAttribute("period", period);
         model.addAttribute("dailies", dailies);
         model.addAttribute("weekly",weekly);
         model.addAttribute("groupedDailies", groupedDailies);
-        System.out.println("period"+period);
         return "test/daily(modal)";
     }
 
@@ -103,8 +110,6 @@ public class DailyController {
         // 응답
         List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
         Collections.sort(dailies, new DailyDTOComparator());
-
-        System.out.println(dailies);
 
         return dailies;
     }
