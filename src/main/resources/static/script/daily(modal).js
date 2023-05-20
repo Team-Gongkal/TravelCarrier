@@ -35,20 +35,8 @@ function setFirst(dailies) {
       }),
     };
   });
-  test();
 }
-function test() {
-  for (var i = 0; i < dataArr.length; i++) {
-    for (var j = 0; j < dataArr[i].data.length; j++) {
-      console.log(
-        dataArr[i].data[j].get("text"),
-        dataArr[i].data[j].get("title"),
-        dataArr[i].data[j].get("file"),
-        dataArr[i].data[j].get("attachNo")
-      );
-    }
-  }
-}
+
 $(document).ready(function () {
   setFirst(dailies);
   getCurrentDataArr();
@@ -454,9 +442,12 @@ $(".modal_title > .close").on("click", function () {
 //데일리 이미지 슬라이드 구현 - by윤아
 $(window).on("load", function () {
   var slide_width = $(".diary_slides").outerWidth();
+  var sec_slide = $("li.d_slide").eq(1);
   console.log(
     "비교 : 윈도우 :" + $(window).width() + "  /  슬라이드 :" + slide_width
   );
+  console.log(sec_slide);
+
   //슬라이드 이동함수
   function moving(x, slide) {
     let left = parseInt(slide.css("left"));
@@ -470,17 +461,7 @@ $(window).on("load", function () {
     }
   }
   if (slide_width > $(window).width()) {
-    alert("복사하고 무브");
-
-    // 슬라이드 복제하기 (clone-복제 / append-붙여넣기)
-    let clone_slide = $(".diary_slides").eq(0).clone();
-    $(".diary_viewport").append(clone_slide);
-
-    //위치값이 0,0이라 곂치지 않게 두 슬라이드의 위치 지정
-    $(".diary_slides").eq(0).css("left", "0px");
-    $(".diary_slides")
-      .eq(1)
-      .css("left", slide_width + "px");
+    alert("무브 무브");
 
     //이동 거리
     var movingDistance = 1;
@@ -489,14 +470,9 @@ $(window).on("load", function () {
       moving(movingDistance, $(".diary_slides").eq(0));
     }, parseInt(1000 / 100));
 
-    var cloneMove = setInterval(() => {
-      moving(movingDistance, $(".diary_slides").eq(1));
-    }, parseInt(1000 / 100));
-
     // mouseenter시 슬라이드 일시정지
     $(".diary_slides").on("mousemove", function () {
       clearInterval(originMove);
-      clearInterval(cloneMove);
       movingDistance = 0;
     });
 
@@ -507,12 +483,7 @@ $(window).on("load", function () {
       originMove = setInterval(() => {
         moving(movingDistance, $(".diary_slides").eq(0));
       }, parseInt(1000 / 100));
-
-      cloneMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides").eq(1));
-      }, parseInt(1000 / 100));
     });
-  } else {
   }
 
   //슬라이드 호버시
@@ -559,11 +530,6 @@ $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
 
   //3. 일기글 보이기
   $(".diary_textbox").addClass("on");
-  var diary_title = $(e.target).parent().data("title");
-  var diary_text = $(e.target).parent().data("text");
-
-  $(".diary_textbox h6").html(diary_title);
-  $(".diary_textbox p").html(diary_text);
 
   $(".d_slide").on("mouseleave", function (e) {
     //4.일기 숨기기
@@ -616,3 +582,43 @@ $(document).ready(function () {
 //     }
 //   }
 // }
+
+//슬라이드 호버시 텍스트 바꿔주기 -by윤아
+$(document).ready(function () {
+  $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
+    var hover_attachNo = $(e.target).data("attachno");
+    //console.log("호버");
+    console.log(hover_attachNo); //숫자로 잘 출력됨
+
+    function making_slideArray() {
+      var diary_attachNo = []; //비어있는 ARRAY배열 생성
+      for (var i = 0; i < dataArr.length; i++) {
+        for (var j = 0; j < dataArr[i].data.length; j++) {
+          var diaryData = {
+            text: dataArr[i].data[j].get("text"),
+            title: dataArr[i].data[j].get("title"),
+            file: dataArr[i].data[j].get("file"),
+            attachNo: dataArr[i].data[j].get("attachNo"),
+          }; //onject자료형으로 생성
+          diary_attachNo.push(diaryData); //비어있는 array자료형 안에 담아주기
+        }
+      }
+      return diary_attachNo; // 결과값
+    }
+
+    var made_slideArray = making_slideArray(); //결과 변수에 담아주기
+    //console.log("결과");
+    //console.log(made_slideArray); //(5) [{…}, {…}, {…}, {…}, {…}] 예시 출력
+
+    function find_attachNo(num) {
+      return num.attachNo == hover_attachNo;
+    } //array 안에 object 자료형이 있을 때 해당 배열 찾기
+
+    var hover_data = made_slideArray.find(find_attachNo);
+    //console.log(hover_data); // {text: '텍스트.', title: '난쟁이01', file: 'd41e22a73e52.jpg', attachNo: '203'} 출력예시
+    //이제 text꺼내서 html에 붙여넣어주면 됨
+    //console.log(hover_data.title); //난쟁이01
+    $(".diary_textbox ul li h6").text(hover_data.title);
+    $(".diary_textbox ul li p").text(hover_data.text);
+  });
+});

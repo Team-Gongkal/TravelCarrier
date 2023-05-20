@@ -542,29 +542,26 @@ button.Dform_btn_disable {
 }
 
 /* 슬라이드 양 끝 흐림 효과 */
+.diary_viewport::after,
 .diary_viewport::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
   width: 2rem;
   height: 100%;
   z-index: 1;
+}
+.diary_viewport::before {
+  left: 0;
   background: linear-gradient(
-    to right,
-    rgb(239, 238, 233),
+    to left,
+    rgb(239, 238, 233, 0),
     rgb(239, 238, 233, 0.5),
-    rgb(239, 238, 233, 0)
+    rgb(239, 238, 233)
   );
 }
 .diary_viewport::after {
-  content: "";
-  position: absolute;
-  top: 0;
   right: 0;
-  width: 2rem;
-  height: 100%;
-  z-index: 1;
   background: linear-gradient(
     to right,
     rgb(239, 238, 233, 0),
@@ -572,22 +569,25 @@ button.Dform_btn_disable {
     rgb(239, 238, 233)
   );
 }
+.diary_viewport.black::after {
+  background: linear-gradient(
+    to left,
+    rgb(0, 0, 0, 1),
+    rgb(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0)
+  ) !important;
+}
 .diary_viewport.black::before {
   background: linear-gradient(
     to right,
-    black rgb(0, 0, 0, 0.8),
+    rgb(0, 0, 0, 1),
+    rgb(0, 0, 0, 0.8),
     rgba(0, 0, 0, 0.4),
     rgba(0, 0, 0, 0)
-  );
+  ) !important;
 }
-.diary_viewport.black::after {
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.4),
-    rgb(0, 0, 0, 0.8)
-  );
-}
+
 .diary_slides {
   /* width: 100%; */
   position: absolute;
