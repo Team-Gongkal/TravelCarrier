@@ -27,6 +27,10 @@
     </header>
     <!-- utill 유틸 -->
     <div class="utill_menu">
+      <form class="logout" method="get" action="/member/logout" id="logoutForm">
+        <button onclick="confirmLogout(event)" type="button">Logout</button>
+      </form>
+
       <div class="notice">
         <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
       </div>
@@ -34,6 +38,17 @@
       <a href="#none"></a>
       </div>
     </div>
+
+  <script>
+  function confirmLogout(event) {
+    event.preventDefault(); // 폼 제출 방지
+
+    if (confirm("로그아웃하시겠습니까?")) {
+      document.getElementById("logoutForm").submit(); // 폼 제출
+    }
+  }
+  </script>
+
   </th:block>
 
   </html>

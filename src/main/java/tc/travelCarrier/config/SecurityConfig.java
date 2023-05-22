@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 URL
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 URL
                 .logoutSuccessUrl("/TravelCarrier/member/login") // 성공시 리턴 URL
                 .invalidateHttpSession(true) // 인증정보를 지우하고 세션을 무효화
                 .deleteCookies("JSESSIONID", "remember-me") // JSESSIONID, remember-me 쿠키 삭제

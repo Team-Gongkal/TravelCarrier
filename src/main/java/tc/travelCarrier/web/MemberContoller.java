@@ -1,13 +1,19 @@
 package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.WeeklyService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,7 +28,6 @@ public class MemberContoller {
                               @RequestParam(value="exception", required = false) String exception){
         model.addAttribute("error",error);
         model.addAttribute("exception",exception);
-        System.out.println("GET 접근 : "+error + ", "+exception);
         return "test/login";
     }
 
@@ -36,5 +41,6 @@ public class MemberContoller {
         memberRepository.save(user);
         return "test/login";
     }
+
 
 }

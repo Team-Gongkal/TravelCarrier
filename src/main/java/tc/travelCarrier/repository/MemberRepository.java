@@ -9,10 +9,6 @@ import javax.persistence.EntityManager;
 
 @Repository
 public interface MemberRepository extends JpaRepository<User, Integer> {
-/*    public User getUser(int userId){
-        return em.find(User.class, userId);
-    }*/
-
     public User findUserById(int userId);
     public User findUserByEmail(String email);
 }
