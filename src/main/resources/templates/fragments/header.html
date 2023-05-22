@@ -30,11 +30,10 @@
       <div class="notice">
         <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
       </div>
-      <div class="profile circle">
-        <a href="#none">
-          <img src="/image/header/profile.jpg" alt="프로필사진">
-        </a>
-      </div>
+      <div class="profile circle" th:if="${user}"
+        th:style="'background-image: url(' + ${user.attachUser.thumbPath} + ')'"></div>
+      <a href="#none"></a>
+    </div>
     </div>
     <div class="utill_notice">
       <div class="option_notice"></div>

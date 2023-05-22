@@ -1,6 +1,7 @@
 package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,24 +30,18 @@ public class WeeklyContoller {
 
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model) throws Exception {
-        User user = memberRepository.getUser(1);
+        //로그인한 유저의 정보
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = memberRepository.findUserById(activeUser.getId());
         model.addAttribute("user", user);
+
         return "test/weekly_form";
     }
-    @PostMapping("/weekly/saveKeyword")
-    @ResponseBody
-    public String saveKeywords(@RequestBody KwordDTO dto) throws Exception {
-        return weeklyService.saveKeyword(dto);
-    }
-
-
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(OpenStatus.class, new OpenStatusEditor());
     }
-
-
 
     @PostMapping(value="/weeklyForm")
     @ResponseBody
@@ -55,11 +50,13 @@ public class WeeklyContoller {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
-        User user = memberRepository.getUser(1);
+        //로그인한 유저의 정보
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = memberRepository.findUserById(activeUser.getId());
 
         List<User> goWithList = new ArrayList<User>();
         if(form.getGowiths() != null) {
-            for (int id : form.getGowiths()) goWithList.add(memberRepository.getUser(id));
+            for (int id : form.getGowiths()) goWithList.add(memberRepository.findUserById(id));
         }
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
@@ -108,7 +105,10 @@ public class WeeklyContoller {
             System.out.println("allWdList : "+wd.toString());
         }
 
-        User user = memberRepository.getUser(1);
+        //로그인한 유저의 정보
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = memberRepository.findUserById(activeUser.getId());
+
         model.addAttribute("user", user);
         model.addAttribute("allWdList", allWdList);
         model.addAttribute("weekly",weekly);
@@ -127,5 +127,14 @@ public class WeeklyContoller {
 
         return weeklyId;
     }
+
+    @PostMapping("/weekly/saveKeyword")
+    @ResponseBody
+    public String saveKeywords(@RequestBody KwordDTO dto) throws Exception {
+        return weeklyService.saveKeyword(dto);
+    }
+
+
+
 
 }

@@ -3,11 +3,13 @@ package tc.travelCarrier.web;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.CrudDate;
 import tc.travelCarrier.domain.Reply;
+import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.ReplyDTO;
 import tc.travelCarrier.repository.MemberRepository;
@@ -28,6 +30,7 @@ public class ReplyController {
     private final AttachService attachService;
     private final MemberRepository memberRepository;
 
+    // 댓글/답글 등록 로직
     @PostMapping("/reply/create")
     public int createReply(@RequestBody ReplyDTO dto) throws Exception {
         // origin=0이면 댓글, 1이상이면 답글
@@ -37,15 +40,21 @@ public class ReplyController {
         if(dto.getOrigin() != 0) originReply = replyService.getReply(dto.getOrigin());
         else originReply = null;
 
+        //로그인한 유저의 정보
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = memberRepository.findUserById(activeUser.getId());
+
         int replyId = replyService.saveReply(new Reply(
                 attachService.findAttachDaily(dto.getAttachNo()),
                 dto.getText(),
-                memberRepository.getUser(1),
+                user,
                 new CrudDate(dto.getCdate(), dto.getUdate()),
                 originReply
         ));
         return replyId;
     }
+
+    // 댓글목록 조회 로직
     @GetMapping("/reply/{attachNo}")
     public List<ReplyDTO> getReplyList(@PathVariable("attachNo") int attachNo) throws Exception {
         AttachDaily ad = attachService.findAttachDaily(attachNo);
@@ -67,11 +76,14 @@ public class ReplyController {
         return replyDTOList;
     }
 
+    // 댓글/답글 수정 로직
     @PostMapping("/reply/modify")
     public void modifyReply(@RequestBody ReplyDTO dto) throws Exception {
         // replyId, text, udate가 들어온다.
         replyService.modifyReply(dto);
     }
+
+    // 댓글/답글 삭제 로직
     @PostMapping("/reply/delete")
     public void deleteReply(@RequestBody ReplyDTO dto) throws Exception {
         // replyId, text, udate가 들어온다.

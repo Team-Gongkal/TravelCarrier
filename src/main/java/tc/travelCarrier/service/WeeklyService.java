@@ -78,7 +78,7 @@ public class WeeklyService {
         // 위클리 동행인 변경
         if(form.getGowiths() != null) {
             for (int id : form.getGowiths()) {
-                User user = memberRepository.getUser(id);
+                User user = memberRepository.findUserById(id);
                 weekly.updateGowith(user);
             }
         }
