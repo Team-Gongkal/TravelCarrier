@@ -100,7 +100,7 @@ header > nav {
 
 /* 유틸메뉴---------------------------------------- */
 .utill_menu {
-  width: 6%;
+  width: fit-content;
   height: auto;
   position: absolute;
   right: 0.78%;
@@ -111,14 +111,16 @@ header > nav {
 }
 .notice,
 .profile {
-  width: 44%;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 100%;
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
+  box-shadow: 1px 1px 4px rgba(53, 58, 82, 0.3);
 }
 .notice {
-  background-color: rgb(255, 255, 255, 0.2);
+  background-color: rgb(255, 255, 255, 0.3);
   cursor: pointer;
   transition: 0.2s;
 }
@@ -136,22 +138,148 @@ header > nav {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.notice:hover {
-  background-color: rgb(255, 255, 255, 0.3);
-}
 .profile {
-  background: url(../image/header/profile.jpg) no-repeat center center;
-  background-size: cover;
   box-shadow: 1px 1px 1px rgba(53, 58, 82, 0.2);
+  margin-left: 1rem;
 }
 .profile > a {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 100%;
-  background: #000;
-  position: absolute;
+}
+.profile > a:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.profile > a > img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+/* 실시간 알림--------------------------------------------------- */
+.utill_notice {
+  width: 22vw;
+  height: 100%;
+  background: #efeee9;
+  position: fixed;
   top: 0;
-  left: 0;
-  opacity: 0;
+  right: -22vw;
+  box-sizing: border-box;
+  z-index: 50;
+  background: #f7f7f7;
+  font-family: "NanumSquareNeo";
+  font-weight: 200;
+  font-size: 0.9rem;
+  color: #353a52;
+  letter-spacing: 0.05em;
+  line-height: 1.2em;
+  transition: 0.5s;
+}
+.utill_notice.show {
+  /* animation-name: show; */
+  right: 0vw;
+  transition: 0.5s;
+}
+.update_notice {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+.notice_del i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.update_notice h6 {
+  height: 3.5rem;
+  font-weight: 400;
+  padding: 1.75rem 1rem 0.5rem 1rem;
+  box-sizing: border-box;
+}
+.update_notice h6 i {
+  cursor: pointer;
+  padding: 0 0rem 0 0;
+}
+
+.update_notice ul {
+  width: 100%;
+  height: calc(100% - 3.5rem);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+/* 스크롤바 디자인 */
+.update_notice ul::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.update_notice ul::-webkit-scrollbar-thumb {
+  background: rgba(53, 58, 82, 0.3);
+  border-radius: 10px;
+}
+.update_notice ul li {
+  border-bottom: 1px solid rgb(53, 58, 82, 0.2);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 2.5rem auto 1rem;
+  grid-template-areas:
+    "profile textbox del"
+    "profile textbox del"
+    "profile date del";
+  padding: 1.5rem 0.5rem 1.5rem 1.5rem;
+  position: relative;
+}
+.update_notice h6 {
+  border-bottom: 1px solid rgb(53, 58, 82, 0.2);
+}
+.notice_profile {
+  width: 2.5rem;
+  height: 2.5rem;
+  grid-area: profile;
+  box-shadow: 1px 1px 4px rgba(53, 58, 82, 0.508);
+}
+.notice_profile img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+}
+.notice_textbox {
+  grid-area: textbox;
+  padding: 0rem 0.5rem;
+}
+.notice_textbox p {
+}
+.notice_textbox p a.notice_name {
+  color: #525d76;
+  font-weight: 400;
+  transition: 0.1s; /*삭제 전체에 트렌지션 주기;*/
+}
+.notice_textbox p a.notice_writing {
+  color: #ff931c;
+  font-weight: 400;
+  transition: 0.1s;
+}
+.notice_textbox p a:hover {
+  background-color: #efeee9;
+}
+.notice_textbox span.update_date {
+  display: block;
+  grid-area: date;
+  font-size: 0.7rem;
+  color: #b3b3b3;
+  margin-top: 1em;
+  font-weight: 200;
+}
+.notice_textbox span.update_date i {
+  vertical-align: middle;
+}
+.notice_del {
+  grid-area: del;
+  cursor: pointer;
+  position: absolute;
+  bottom: 90%;
+  right: 0;
+  padding: 0;
 }

@@ -34,8 +34,163 @@
       <div class="notice">
         <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
       </div>
-      <div class="profile"  th:if="${user}" th:style="'background-image: url(' + ${user.attachUser.thumbPath} + ')'" ></div>
+      <div class="profile circle" th:if="${user}"
+        th:style="'background-image: url(' + ${user.attachUser.thumbPath} + ')'"></div>
       <a href="#none"></a>
+    </div>
+    </div>
+    <div class="utill_notice">
+      <div class="option_notice"></div>
+      <div class="update_notice">
+        <h6> <i class="xi-angle-right"></i>최근 업데이트</h6>
+        <ul>
+          <li class="notice_addFriend">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/bokyung.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 팔로우를 요청했습니다.
+              </p>
+              <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_beFriend">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/dohyun.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 회원님을 팔로우합니다.
+              </p>
+              <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_tag">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/jjang.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a>에 회원님을
+                태그했습니다.
+              </p>
+              <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_comment">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/seohyun.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 글에 댓글을
+                남겼습니다.
+              </p>
+              <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_recomment">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/human.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 댓글에 답댓글을
+                남겼습니다.
+              </p>
+              <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_addFriend">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/bokyung.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 팔로우를 요청했습니다.
+              </p>
+              <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_beFriend">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/dohyun.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 회원님을 팔로우합니다.
+              </p>
+              <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_tag">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/jjang.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a>에 회원님을
+                태그했습니다.
+              </p>
+              <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_comment">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/seohyun.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 글에 댓글을
+                남겼습니다.
+              </p>
+              <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+          <li class="notice_recomment">
+            <div class="notice_profile circle">
+              <img src="/image/user/profile/human.jpg" alt="프로필 이미지">
+            </div>
+            <div class="notice_textbox">
+              <p>
+                <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 댓글에 답댓글을
+                남겼습니다.
+              </p>
+              <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+            </div>
+            <button class="notice_del">
+              <i class="xi-close"></i>
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
 
