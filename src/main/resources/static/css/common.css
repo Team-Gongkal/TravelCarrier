@@ -140,6 +140,7 @@ button > img {
   border-radius: 100%;
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
 }
 .circle:after {
   content: "";
