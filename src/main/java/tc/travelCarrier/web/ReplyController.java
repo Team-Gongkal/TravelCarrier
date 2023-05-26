@@ -3,6 +3,7 @@ package tc.travelCarrier.web;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,9 @@ import tc.travelCarrier.service.ReplyService;
 import tc.travelCarrier.service.WeeklyService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +35,7 @@ public class ReplyController {
 
     // 댓글/답글 등록 로직
     @PostMapping("/reply/create")
-    public int createReply(@RequestBody ReplyDTO dto) throws Exception {
+    public ResponseEntity<Map<String, Object>> createReply(@RequestBody ReplyDTO dto) throws Exception {
         // origin=0이면 댓글, 1이상이면 답글
         //원댓글 찾기
         System.out.println(dto.toString());
@@ -51,7 +54,18 @@ public class ReplyController {
                 new CrudDate(dto.getCdate(), dto.getUdate()),
                 originReply
         ));
-        return replyId;
+
+        // 글 작성자
+        User weeklyUser = attachService.findAttachDaily(dto.getAttachNo()).getDaily().getWeekly().getUser();
+
+        //replyId, sender, receiver
+        Map<String, Object> response = new HashMap<>();
+        response.put("replyId", replyId);
+        response.put("sender", user.getId()); //방금 댓글 작성한사람
+        if(originReply == null) response.put("receiver", weeklyUser.getId()); //댓글일경우 알림받는사람 : 글쓴이
+        else response.put("receiver", originReply.getUser().getId()); //답댓일경우 알림받는사람 : 원댓글 작성자
+
+        return ResponseEntity.ok(response);
     }
 
     // 댓글목록 조회 로직

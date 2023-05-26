@@ -51,3 +51,39 @@ function validCheck() {
         });
         return bEmpty;
 }
+
+/*
+  $("#password").on("keyup", function(e){
+    if(e.key == "Enter") fnSubmit();
+  });
+*/
+
+
+
+/*
+  $("#loginBtn").on("click", function(e){
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "/TravelCarrier/login/action",
+      data : {
+                username : $("#username").val(),
+                password : $("#password").val()
+      			},
+      beforeSend : function(xhr){
+                      		xhr.setRequestHeader(header, token);
+                      	},
+      success: function (response) {
+        sessionStorage.setItem('username', $("#username").val());
+        alert("로그인 성공 : "+response);
+        notification();
+        //location.href="/TravelCarrier/";
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert("로그인 실패 : "+textStatus);
+      }
+    });
+  });
+*/

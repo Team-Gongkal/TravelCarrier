@@ -38,6 +38,12 @@ dependencies {
 
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 
+	// 웹소켓 관련 설
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// 문자열비교
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'

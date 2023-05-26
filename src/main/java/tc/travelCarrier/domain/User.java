@@ -27,6 +27,13 @@ public class User implements UserDetails {
         this.name = name;
     }
 
+    @Builder
+    public User(String email, AttachUser attachUser, String name){
+        this.email = email;
+        this.attachUser = attachUser;
+        this.name = name;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="USER_ID")
     private int id;

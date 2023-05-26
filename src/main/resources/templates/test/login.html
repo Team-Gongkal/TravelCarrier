@@ -15,35 +15,23 @@
             <p th:text="${exception}" class="alert"></p>
           </div>
         <div class="id">
-          <!--<label for="">이메일</label>-->
+          <label for="username">이메일</label>
           <input name="username" id="username" type="text" placeholder="이메일을 입력해주세요" title="아이디" />
         </div>
         <div class="pw">
-          <!--<label for="">비밀번호</label>-->
+          <label for="password">비밀번호</label>
           <input name="password" id="password" type="password" placeholder="비밀번호를 입력해주세요" title="비밀번호" />
         </div>
-<!--        <div class="remember_me">
-          <input id="remember_me" name="remember_me" type="checkbox" />
-          <label for="remember_me">Remember Password</label>
-        </div>-->
-
-        <button onclick="login_submit()" type="submit">로그인</button>
+        <div>
+          <label for="remember-me" style="color : black">Remember Password</label>
+          <input id="remember-me" name="remember-me" type="checkbox" />
+        </div>
+        <div id="noti"> </div>
+        <button id="loginBtn" type="submit">로그인</button>
       </form>
     </div>
+
   </main>
-
-  <script>
-  function login_submit() {
-
-  }
-  function fnSubmit() {
-    $("#login_form").submit();
-  }
-  $("#password").on("keyup", function(e){
-    if(e.key == "Enter") fnSubmit();
-  });
-  </script>
-
   <script src="/script/login.js"></script>
 
 

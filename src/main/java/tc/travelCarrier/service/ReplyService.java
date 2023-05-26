@@ -1,14 +1,21 @@
 package tc.travelCarrier.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import tc.travelCarrier.domain.Reply;
+import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.ReplyDTO;
+import tc.travelCarrier.repository.MemberRepository;
+import tc.travelCarrier.repository.NotificationRepository;
 import tc.travelCarrier.repository.ReplyRepository;
+import tc.travelCarrier.web.NotificationController;
 
 import javax.persistence.EntityManager;
 import java.text.ParseException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,10 +23,18 @@ import java.text.ParseException;
 public class ReplyService {
 
     private final ReplyRepository replyRepository;
+    private final MemberRepository memberRepository;
+    private final NotificationService notificationService;
+
     private final EntityManager em;
+
     public int saveReply(Reply reply){
-        return replyRepository.save(reply);
+        int replyId = replyRepository.save(reply);
+        notificationService.saveReplyNotification(reply);
+        return replyId;
     }
+
+
 
     public void modifyReply(ReplyDTO dto) throws ParseException {
         Reply reply = replyRepository.findReply(dto.getReplyId());
