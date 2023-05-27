@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/",
                         "/TravelCarrier/member/login/**",
                         "/TravelCarrier/member/sign/**",
-                        "/js/**", "/css/**", "/image/**").permitAll() // 해당 경로들은 접근을 허용
+                        "/script/**", "/css/**", "/image/**").permitAll() // 해당 경로들은 접근을 허용
                 .anyRequest() // 다른 모든 요청은
                 .authenticated() // 인증된 유저만 접근을 허용
                 .and()
