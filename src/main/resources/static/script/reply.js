@@ -3,11 +3,11 @@ $(".diary_viewport").on("click", ".d_slide > .reply_icon", function (e) {
   //var attachNo = $(this).closest(".d_slide").data("attachno");
   var attachNo = $(this).siblings("img").data("attachno");
   var currentImg = $(this).siblings("img").attr("src");
+  currentReplyList(attachNo);
   $(".reply_img img").attr("src", currentImg);
   $(".reply_img img").attr("data-attachNo", attachNo);
   $(".reply_modal").addClass("show");
   $(".reply_inputText textarea").focus();
-  currentReplyList(attachNo);
 });
 
 // 댓글 모달창 세로선 자동 생성 및 길이 수정
@@ -108,7 +108,8 @@ function validReply() {
 // 새 댓글 등록 ajax - by.서현
 function createReply(type) {
   if (!validReply()) return;
-
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
   // 댓글이면 origin값이 "", 대댓글이면 origin값이 원댓글Id
   if (type == "댓글달기") var originVal = "";
   else if (type.charAt(0) == "@")
@@ -128,16 +129,19 @@ function createReply(type) {
     url: "/TravelCarrier/reply/create",
     data: JSON.stringify(data),
     contentType: "application/json",
-    success: function (replyId) {
-      console.log("성공 " + replyId);
+    success: function (resp) {
+      console.log("성공");
       var attachNo = $(".reply_img img").attr("data-attachNo");
       currentReplyList(attachNo);
+
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("댓글달기실패");
     },
   });
 }
+
 
 // 댓글 수정 ajax - by.서현
 function modifyReply() {
