@@ -5,47 +5,191 @@
 <th:block th:replace="fragments/head :: headFragment"></th:block>
 
 <body>
-  <th:block th:replace="fragments/header :: headerFragment"></th:block>
-
-  <main id="login_page_wrap">
-    <div class="login">
-      <form id="login_form" action="/login/action" method="post">
-
-          <div th:if="${error}" class="alert">
-            <p th:text="${exception}" class="alert"></p>
+  <header class="login_header">
+    <div class="login_logo">
+      <a href="#none">
+        <!-- <img src="" alt=""> -->
+        로고
+      </a>
+    </div>
+    <div class="login_quick">
+      <span class="quick_login">
+        <a href="#none">
+          login</a>
+      </span>
+      <span class="quick_signup">
+        <a href="#none">
+          sign up</a>
+      </span>
+    </div>
+  </header>
+  <main id="start">
+    <!-- 시작 화면 -->
+    <section id="starting_page">
+      <div class="start_bg">
+        <img src="/image/login/main/nick-dunlap-3xpalrYpiwo-unsplash.jpg" alt="메인이미지1">
+      </div>
+      <div class="start_title">
+        <p>
+          <span>TRAVEL</span>
+          <span>CARRIER</span>
+        </p>
+      </div>
+    </section>
+    <!-- 간단한 홈페이지 설명 -->
+    <section id="explanation">
+      <div class="explain">
+        <p>
+          여행을 트래블 캐리어에 담아보세요
+        </p>
+      </div>
+      <div class="gally">
+        <div id="example_main_video">
+          <video src="/image/login/example/sea.mp4" autoplay muted>
+            비디오를 지원하지 않는 브라우저입니다.
+          </video>
+        </div>
+        <div class="example_img_wrap">
+          <div class="example_img_left example_img_left1">
+            <div>
+              <img src="/image/login/example/ex1.jpg" alt="">
+            </div>
           </div>
-        <div class="id">
-          <!--<label for="">이메일</label>-->
-          <input name="username" id="username" type="text" placeholder="이메일을 입력해주세요" title="아이디" />
+          <div class="example_img_left example_img_left2">
+            <div>
+              <img src="/image/login/example/ex2.jpg" alt="">
+            </div>
+            <div>
+              <img src="/image/login/example/ex3.jpg" alt="">
+            </div>
+          </div>
+          <div class="example_img_main">
+            <div>
+              <img src="" alt="">
+            </div>
+          </div>
+          <div class="example_img_right example_img_right1">
+            <div>
+              <img src="/image/login/example/ex5.jpg" alt="">
+            </div>
+            <div>
+              <img src="/image/login/example/ex6.jpg" alt="">
+            </div>
+          </div>
+          <div class="example_img_right example_img_right2">
+            <div>
+              <img src="/image/login/example/ex4.jpg" alt="">
+            </div>
+          </div>
         </div>
-        <div class="pw">
-          <!--<label for="">비밀번호</label>-->
-          <input name="password" id="password" type="password" placeholder="비밀번호를 입력해주세요" title="비밀번호" />
+      </div>
+    </section>
+    <!-- 메인 로그인 및 회원가입 -->
+    <section id="login_and_signup">
+      <div class="lns_title">
+        <p>
+          <span>Travel</span>
+          <span><img src="/image/login/main/erath.svg" alt="지구모양"></span>
+        </p>
+        <span>Carrier</span>
+      </div>
+      <div class="lns_thumbnail">
+        <div>
+          <img src="/image/login/example/main_v4_1.png" alt="홈페이지썸네일">
         </div>
-<!--        <div class="remember_me">
-          <input id="remember_me" name="remember_me" type="checkbox" />
-          <label for="remember_me">Remember Password</label>
-        </div>-->
+      </div>
+      <div class="lns_signup">
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iusto aspernatur consectetur, illo incidunt
+          beatae, placeat cum fuga quis at corrupti? Atque ipsa expedita sapiente vero magni officiis quidem
+          reprehenderit!
+        </p>
+        <div class="lns_signup_account">
+          <div class="lns_signup_email">
+            <form action="">
+              <input type="email" name="" id="" placeholder="email address">
+              <button>sign up</button>
+            </form>
+          </div>
+          <div class="lns_signin_with">
+            <a href="#구글">
+              <i class="xi-google"></i>
+              <span>Google</span>
+            </a>
+            <a href="#카카오">
+              <i class="xi-kakaotalk"></i>
+              <span>Kakao</span>
+            </a>
+            <a href="#네이버">
+              <i class="xi-naver"></i>
+              <span>Naver</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="login_wrap">
+      <div>
+        <div class="welcome_text">
+          <p>가입하셈요</p>
+        </div>
+        <div class=" login">
+          <form id="login_form" action="/login/action" method="post">
+            <h3>login</h3>
+            <!-- <div th:if="${error}" class="alert">
+              <p th:text="${exception}" class="alert"></p>
+            </div> -->
+            <div class="login_id">
+              <label for="">이메일</label>
+              <input name="username" id="username" type="text" placeholder="이메일을 입력해주세요" title="아이디" />
+            </div>
+            <div class="login_pw">
+              <label for="">비밀번호</label>
+              <input name="password" id="password" type="password" placeholder="비밀번호를 입력해주세요" title="비밀번호" />
+            </div>
+            <div class="remember_me">
+              <label for="remember_me">
+                <input id="remember_me" name="remember_me" type="checkbox" />
+                로그인 유지하기</label>
+            </div>
 
-        <button onclick="login_submit()" type="submit">로그인</button>
-      </form>
+            <button onclick="login_submit()" type="submit">로그인</button>
+          </form>
+          <div class="lns_signup_with">
+            <a href="#구글">
+              <i class="xi-google"></i>
+              <span>Google</span>
+            </a>
+            <a href="#카카오">
+              <i class="xi-kakaotalk"></i>
+              <span>Kakao</span>
+            </a>
+            <a href="#네이버">
+              <i class="xi-naver"></i>
+              <span>Naver</span>
+            </a>
+          </div>
+        </div>
+        <button class="close">
+          <i class="xi-close"></i>
+        </button>
+      </div>
     </div>
   </main>
 
   <script>
-  function login_submit() {
+    function login_submit() {
 
-  }
-  function fnSubmit() {
-    $("#login_form").submit();
-  }
-  $("#password").on("keyup", function(e){
-    if(e.key == "Enter") fnSubmit();
-  });
+    }
+    function fnSubmit() {
+      $("#login_form").submit();
+    }
+    $("#password").on("keyup", function (e) {
+      if (e.key == "Enter") fnSubmit();
+    });
   </script>
 
   <script src="/script/login.js"></script>
-
 
 
 </body>

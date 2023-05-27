@@ -23,7 +23,7 @@ $(document).ready(function () {
     }
   });
 
-/*  //빈칸있을 경우 경고창띄우기
+  /*  //빈칸있을 경우 경고창띄우기
   $("button[type=submit]").click(function chkValue() {
     // 필수입력사항에 누락이 있으면 진행금지
     if (!validCheck()) return;
@@ -32,22 +32,29 @@ $(document).ready(function () {
 });
 
 function validCheck() {
-        // 공통입력폼내의 모든 입력오브젝트
-        var inputObjs = $("form input");
-        // 미입력여부(경우에 따라 사용)
-        var bEmpty = true;
-        var focus;
+  // 공통입력폼내의 모든 입력오브젝트
+  var inputObjs = $("form input");
+  // 미입력여부(경우에 따라 사용)
+  var bEmpty = true;
+  var focus;
 
-        // 각 오브젝트에 대해 입력체크
-        inputObjs.each(function (index) {
-          if ($(this).val() == "") {
-            focus = $(this);
-            bEmpty = false;
+  // 각 오브젝트에 대해 입력체크
+  inputObjs.each(function (index) {
+    if ($(this).val() == "") {
+      focus = $(this);
+      bEmpty = false;
 
-            alert($(this).attr("title") + "를 입력해주세요.");
-            focus.focus();
-
-          }
-        });
-        return bEmpty;
+      alert($(this).attr("title") + "를 입력해주세요.");
+      focus.focus();
+    }
+  });
+  return bEmpty;
 }
+
+// 로그인 모달창 활성화 및 비활성화 -by윤아
+$(".quick_login").click(function () {
+  $("#login_wrap").addClass("show");
+});
+$("#login_wrap > div > button.close").click(function () {
+  $("#login_wrap").removeClass("show");
+});

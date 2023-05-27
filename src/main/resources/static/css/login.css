@@ -1,64 +1,501 @@
-#login_page_wrap{
+/* 공통 */
+#start {
+  font-family: "NanumSquareNeo";
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#start section {
+}
+/* 헤더------------------------------------------------ */
+.login_header {
+  width: 100%;
+  height: 3rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: transparent;
+  padding: 0 3rem 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  mix-blend-mode: difference;
+}
+.login_header > div {
+  box-sizing: border-box;
+}
+.login_header span {
+  display: inline-block;
+  margin: 0.5rem 0 0 1rem;
+}
+.quick_signup {
+  border: 1px solid rgb(247, 247, 247, 0.5);
+  border-radius: 3px;
+}
+.login_header div span a {
+  display: block;
+  color: #f7f7f7;
+  font-weight: 200;
+  width: 100%;
+  padding: 0.5rem;
+  opacity: 0.5;
+}
+.login_header div span a:hover {
+  color: #f7f7f7;
+  opacity: 1;
+}
+.quick_signup:hover {
+  border: 1px solid rgb(247, 247, 247);
+}
+.login_logo {
+  margin: 0.5rem 0 0 2rem;
+}
+/* 시작화면---------------------------------------- */
+#starting_page {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.login {
-  width: 50%;
+.start_bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.start_bg::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(0, 0, 0, 0.2);
+}
+.start_bg img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+.start_title {
+  font-size: 30vh;
+  color: #f7f7f7;
+  margin-bottom: 0.5em;
+  font-weight: 300;
+  text-align: center;
+  position: relative;
+}
+.start_title.on {
+  transform: translate(-50%, -50%);
+  font-size: 3vh;
+}
+.start_title span {
+  display: block;
 }
 
-.login form {}
+/* 간단한 홈페이지 설명---------------------------------------- */
+#explanation {
+  position: relative;
+}
+#explanation .explain {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+#explanation .explain p {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 400;
+}
+.gally {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  box-sizing: border-box;
+}
+#example_main_video {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#example_main_video video {
+  width: 100%;
+  height: 100%;
+  clip-path: inset(20% 35% 20% 35% round 20px);
+}
+.example_img_wrap {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 5vh;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-areas: "left1 left2 main right1 right2";
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+  grid-gap: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 2rem;
+}
+.example_img_left1 {
+  grid-area: left1;
+}
+.example_img_left2 {
+  grid-area: left2;
+}
+.example_img_main {
+  grid-area: main;
+}
+.example_img_right1 {
+  grid-area: right1;
+}
+.example_img_right2 {
+  grid-area: right2;
+}
+.example_img_wrap div.example_img_left,
+.example_img_wrap div.example_img_right {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  filter: brightness(0.8);
+}
+.example_img_wrap > div > div {
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
 
-.login>form>div {
+.example_img_wrap div img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+/* 메인 로그인 및 회원가입-------------------------------------------------- */
+#login_and_signup {
+  width: 100vw;
+  height: 100vh;
+  padding: 3rem 5rem;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 40% 60%;
+  position: relative;
+  background: url(/image/login/main/arrow.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 30% 30%;
+}
+#login_and_signUp span {
+}
+.lns_title {
+  grid-column: span 2;
+  font-size: 20vh;
+  font-weight: 400;
+}
+.lns_title p {
+  width: 100%;
+  height: 50%;
+}
+.lns_title span {
+  display: inline-block;
+}
+.lns_title > span {
+  width: 100%;
+  text-align: end;
+}
+.lns_title p span img {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  font-size: 20vh;
+  font-weight: 400;
+  vertical-align: middle;
+  opacity: 30%;
+}
+.lns_thumbnail {
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+.lns_thumbnail div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 2rem 8rem 0 0rem;
+  box-sizing: border-box;
+}
+.lns_thumbnail div img {
+  object-fit: cover;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+.lns_signup {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  box-sizing: border-box;
+  padding: 2rem 0 0rem 5rem;
+  position: relative;
+}
+.lns_signup p {
+  text-align: end;
+  line-height: 1.5em;
+  letter-spacing: 0.05rem;
+  position: relative;
+  font-weight: 200;
+  font-size: 1.1rem;
+}
+.lns_signup {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.lns_signup_account {
+  box-sizing: border-box;
+  position: relative;
+}
+.lns_signup_email {
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  padding-top: 0;
+}
+.lns_signup_email form {
+  width: 100%;
+  height: 3rem;
+  overflow: hidden;
+  float: right;
+}
+.lns_signup_email form input {
+  width: 60%;
+  height: 100%;
+  float: left;
+  font-size: 1.1rem;
+  padding: 1.1rem;
+}
+.lns_signup_email form button {
+  width: 40%;
+  height: 100%;
+  cursor: pointer;
+  background: #353a52;
+  color: #fefefe;
+  transition: 0.2s;
+  font-size: 1.1rem;
+  border-radius: 0 0.2rem 0.2rem 0;
+  padding: 0;
+}
+.lns_signup_email form button:hover {
+  background: #525d76;
+}
+.lns_signin_with,
+.lns_signup_with {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(53, 58, 82, 0.5);
+  padding-top: 2rem;
+  position: relative;
+}
+.lns_signin_with a,
+.lns_signup_with a {
+  display: inline-block;
+  font-size: 1.1rem;
+  border: 1px solid rgba(53, 58, 82, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.9rem 2.2rem;
+  transition: 0.2s;
+}
+.lns_signin_with a i,
+.lns_signup_with a i {
+  vertical-align: middle;
+}
+.lns_signin_with a span,
+.lns_signup_with a span {
+  vertical-align: middle;
+  font-weight: 200;
+}
+.lns_signin_with:before,
+.lns_signup_with:before {
+  content: "Or sign up with";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  display: block;
+  padding: 0 1em;
+  background: #efeee9;
+  color: rgba(53, 58, 82, 0.5);
+}
+.lns_signup_with:before {
+  content: "Or sign in with";
+}
+.lns_signin_with a:nth-child(1):hover,
+.lns_signup_with a:nth-child(1) {
+  background: #4285f4;
+  color: #f7f7f7;
+  border: 1px solid #f7f7f7;
+}
+.lns_signin_with a:nth-child(2):hover,
+.lns_signup_with a:nth-child(2) {
+  background: #371e1d;
+  color: #fae100;
+}
+.lns_signin_with a:nth-child(3):hover,
+.lns_signup_with a:nth-child(3) {
+  background: #2db400;
+  color: #f7f7f7;
+  border: 1px solid #f7f7f7;
+}
+
+/* login 모달-------------------------------------------- */
+#login_wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s;
+}
+#login_wrap.show {
+  visibility: visible;
+  opacity: 1;
+}
+#login_wrap::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.8;
+}
+#login_wrap > div > button.close {
+  cursor: pointer;
+  width: fit-content;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border: 0;
+  background: transparent;
+  color: #353a52;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#login_wrap > div {
+  width: 70%;
+  height: 80%;
+  background: #fff;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+}
+.welcome_text {
+  flex: 1;
+  padding: 5rem 4.5rem;
+  box-sizing: border-box;
+}
+.login {
+  flex: 1;
+  background: #efeee9;
+  position: relative;
+  padding: 4.5rem 4.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.login form {
+}
+.login form h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 3rem;
+}
+
+.login > form > div {
   position: relative;
 }
 
-.login form>div>label {
-  font-size: 13px;
-  margin-bottom: 0.3em;
+.login form > div > label {
+  font-size: 1rem;
   display: block;
-  color: transparent;
-  font-weight: 500;
-  transition: 0.5s;
-  position: absolute;
-  top: 0px;
-  left: 0;
-}
-
-.login>form>div>label.on {
-  position: absolute;
-  top: -18px;
-  left: 0;
-  color: #051957;
+  font-weight: 300;
+  color: rgba(53, 58, 82, 0.5);
   margin-bottom: 0.5em;
 }
 
 .login form div input {
-  width: 100%;
-  height: 64px;
-  outline: none;
-  margin-bottom: 2em;
-  border: 1px solid #d9d9d9;
-  padding: 15px 20px;
-  font-size: 18px;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
 }
-
+.remember_me {
+}
+.login > form > div.remember_me > label {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: rgba(53, 58, 82);
+  margin-bottom: 0em;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.login > form > div.remember_me input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  display: inline-block;
+  background: #efeee9;
+  accent-color: #525d76;
+  cursor: pointer;
+  vertical-align: inherit;
+  margin: 0rem;
+}
+.login > form > div.remember_me input[type="checkbox"]:checked {
+  width: 1.2rem;
+  height: 1.2rem;
+  display: inline-block;
+  background: #efeee9 !important;
+}
 .login form button {
   cursor: pointer;
-  width: 100%;
-  padding: 18px 20px;
-  font-size: 20px;
-  font-weight: 500;
-  border: 0;
-  background-color: #052957;
-  color: #fefefe;
-  margin-top: 0.5em;
-  margin-bottom: 2em;
-  transition: 0.4s;
+  font-size: 1.1rem;
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  transition: 0.2s;
+  border-radius: 0.5em;
+  background-color: #353a52;
+  /* background-color: #f7f7f7; 고민중 삭제 */
+  color: #f7f7f7;
 }
-
-.login form button:hover {
-  background-color: #0f497f;
+#login_wrap button:hover {
+  background-color: #525d76;
 }

@@ -49,7 +49,8 @@ body {
   width: 100%;
   height: 100%;
   background: #efeee9;
-  font-family: "Signika Negative", sans-serif;
+  /* font-family: "Signika Negative", sans-serif; */
+  font-family: "NanumSquareNeo";
   /* color: #525d76; */
   font-size: 100%;
   color: #353a52;
@@ -66,7 +67,7 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-main {
+main:not(#start) {
   font-family: "NanumSquareNeo";
   width: 100%;
   height: 100%;
@@ -82,7 +83,7 @@ button {
   background: #f7f7f7;
   font-size: 0.9rem;
   font-weight: 300;
-  padding: 1rem;
+  padding: 1em;
   border: none;
   border-radius: 0.2rem;
   box-sizing: border-box;
