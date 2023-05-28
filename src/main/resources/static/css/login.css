@@ -1,12 +1,18 @@
-/* 공통 */
-#start {
+main#start_page {
   font-family: "NanumSquareNeo";
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
+#start {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 #start section {
+  width: 100%;
+  height: 100%;
 }
 /* 헤더------------------------------------------------ */
 .login_header {
@@ -51,14 +57,17 @@
   margin: 0.5rem 0 0 2rem;
 }
 /* 시작화면---------------------------------------- */
-#starting_page {
-  width: 100%;
-  height: 100%;
+section#starting_page {
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 105;
 }
 .start_bg {
   width: 100%;
@@ -85,19 +94,66 @@
   object-position: center center;
 }
 .start_title {
-  font-size: 30vh;
+  font-size: 27vh;
   color: #f7f7f7;
-  margin-bottom: 0.5em;
   font-weight: 300;
   text-align: center;
   position: relative;
+  padding-top: 0.2em;
 }
-.start_title.on {
-  transform: translate(-50%, -50%);
-  font-size: 3vh;
+.start_title button {
+  margin-bottom: 0.5em;
+  background: transparent;
+  border: 1px solid #f7f7f7;
+  border-radius: 0.5rem;
+  color: #f7f7f7;
+  width: 30%;
+}
+.start_title button:hover {
+  background: #00000074;
+}
+#starting_page.hide {
+  animation: starting_page;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: 1.5s;
+}
+@keyframes starting_page {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%;
+  }
 }
 .start_title span {
   display: block;
+  opacity: 0;
+}
+.start_title.on span {
+  display: block;
+  opacity: 0;
+  animation: tit;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+.start_title.on span:nth-child(1) {
+  animation-duration: 0.1s;
+  animation-delay: 0s;
+}
+
+.start_title.on span:nth-child(2) {
+  animation-duration: 0.1s;
+  animation-delay: 0.6s;
+}
+
+@keyframes tit {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* 간단한 홈페이지 설명---------------------------------------- */
@@ -105,12 +161,11 @@
   position: relative;
 }
 #explanation .explain {
-  height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;
   position: sticky;
-  top: 0;
+  top: 4rem;
   left: 0;
 }
 #explanation .explain p {
@@ -124,15 +179,32 @@
   position: relative;
   box-sizing: border-box;
 }
+.example_img_wrap.show {
+  animation: starting_page2;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
+}
+@keyframes starting_page2 {
+  0% {
+    opacity: 0;
+    top: 100%;
+  }
+  100% {
+    opacity: 1;
+    top: 50%;
+  }
+}
 #example_main_video {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: auto;
   position: relative;
 }
 #example_main_video video {
   width: 100%;
   height: 100%;
-  clip-path: inset(20% 35% 20% 35% round 20px);
+  clip-path: inset(23% 35% round 20px);
 }
 .example_img_wrap {
   width: 100%;
@@ -144,9 +216,11 @@
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
   grid-gap: 2rem;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 0 2rem;
+  opacity: 0;
 }
 .example_img_left1 {
   grid-area: left1;
@@ -173,6 +247,13 @@
   flex-direction: column;
   justify-content: space-around;
   filter: brightness(0.8);
+  position: absolute;
+}
+.example_img_left {
+  left: 0;
+}
+.example_img_right {
+  right: 0;
 }
 .example_img_wrap > div > div {
   width: 100%;
