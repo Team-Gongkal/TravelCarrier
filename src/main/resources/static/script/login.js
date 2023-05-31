@@ -95,14 +95,6 @@ $(window).on("load", function () {
   });
 });
 
-// 로그인 모달창 활성화 및 비활성화 -by윤아
-$(".quick_login").click(function () {
-  $("#login_wrap").addClass("show");
-});
-$("#login_wrap > div > button.close").click(function () {
-  $("#login_wrap").removeClass("show");
-});
-
 // 원페이지 스크롤 구현 - by 윤아
 let num = 0; //첫페이지에서 스크롤되는 횟수(첫페이지 동영상 크기 변환) -스크롤을 할 때마다 증가하며 그에 따라서 비디오의 크기가 변한다
 let idx = 0; //첫페이지에서 다음페이지로 넘어갈 때부터 카운트 되는 스크롤 횟수(페이지 이동을 하기위한 변수)- num이 일정 숫자에 달하면 (= 비디오가 화면을 꽉 채우게 되는 수치) 증가가 멈추며, idx가 증가하게 된다.
@@ -115,36 +107,50 @@ const lastPage = document.querySelectorAll("#start section").length;
 $(window).on("mousewheel DOMMouseScroll", function (e) {
   delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
 
+  //스크롤을 내리면 idx변화 시키기 idx는 첫페이지와 마지막 페이지에 다달으먄 동작을 멈추도록 하고 만약 idx가 2일경우에 스크롤을 위로 내리거나 올리면 num이 변화하며 비디오의 크기가 줄었다가 커지도록 구현하는게 좋을 것 같ㄷ,근데 이때는 스크롤을 내려도 idx의 값은 변화가 있으면 안됨.
+
   if (delta < 0) {
-    //스크롤을 아래로 내렸을 때
-    if (!(num == 13)) {
+    if (idx === 0 && num <= 9) {
       num++;
       console.log(num);
-    }
-    if (num <= 12) {
-      mainVideo.style.clipPath = `inset(${23 - num * 2}% ${
-        35 - num * 3
+      mainVideo.style.clipPath = `inset(${25 - num * 2}% ${
+        38 - num * 3
       }% round 20px)`;
-      gally.style = `grid-template-columns : 1fr 1fr ${num}fr 1fr 1fr`;
+      gally.style = `grid-template-columns : 1fr 1fr ${2 + num}fr 1fr 1fr`;
       gally.style.width = `${100 + num * 5}%`;
-      // 비주얼 컨텐츠 영역의 넓이가 변하도록 스타일 조정(커짐)
-    } else if (num == 13 && idx < lastPage) {
+      $("#explanation").css("background", `rgba(0, 0, 0, ${1 / num})`);
+      // 비주얼 컨텐츠 영역의 넓이가 변하도록 스타일 조정(커짐
+    } else if (num === 10 && idx < lastPage) {
       idx++;
       console.log("최종" + idx);
     }
-  } else {
-    // if (idx > 0) {
-    //   idx--;
-    //   console.log("-" + idx);
-    // }
-    if (idx == 1 && num > 0) {
-      num--;
-      mainVideo.style.clipPath = `inset(${23 - num}% ${35 - num}% round 20px)`;
-      gally.style = `grid-template-columns : 1fr 1fr ${num}fr 1fr 1fr`;
-      gally.style.width = `${100 + num * 5}%`;
+    switch (num) {
+      case 5:
+        $("#explanation .explain").addClass("on");
+        $("#explanation .explain").removeClass("reverse");
+        break;
+    }
+  } else if (delta > 0) {
+    if (idx !== 0 && num > 9) {
+      idx--;
+    } else if (idx === 0 && num > 0) {
+      mainVideo.style.clipPath = `inset(${27 - num * 2}% ${
+        41 - num * 3
+      }% round 20px)`;
+      gally.style = `grid-template-columns : 1fr 1fr ${1 + num}fr 1fr 1fr`;
+      gally.style.width = `${95 + num * 5}%`;
       console.log(num);
+      num--;
+      $("#explanation").css("background", `rgba(0, 0, 0, ${1 / num})`);
+    }
+    switch (num) {
+      case 5:
+        $("#explanation .explain").addClass("reverse");
+        $("#explanation .explain").removeClass("on");
+        break;
     }
   }
+
   $("html,body")
     .stop()
     .animate(
@@ -153,4 +159,13 @@ $(window).on("mousewheel DOMMouseScroll", function (e) {
       },
       1000
     );
+  console.log($(window).height() * idx);
+});
+
+// 로그인 모달창 활성화 및 비활성화 -by윤아
+$(".quick_login").click(function () {
+  $("#login_wrap").addClass("show");
+});
+$("#login_wrap > div > button.close").click(function () {
+  $("#login_wrap").removeClass("show");
 });

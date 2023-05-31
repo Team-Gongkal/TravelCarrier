@@ -8,11 +8,11 @@ main#start_page {
   position: absolute;
   top: 0;
   left: 0;
+  background: #efeee9;
 }
 
 #start section {
   width: 100%;
-  height: 100%;
 }
 /* 헤더------------------------------------------------ */
 .login_header {
@@ -159,19 +159,64 @@ section#starting_page {
 /* 간단한 홈페이지 설명---------------------------------------- */
 #explanation {
   position: relative;
+  background: rgb(0, 0, 0, 1);
+  transition: 1s;
 }
 #explanation .explain {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: sticky;
-  top: 4rem;
-  left: 0;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
 }
 #explanation .explain p {
-  font-size: 1.2rem;
+  font-size: 2rem;
   text-align: center;
-  font-weight: 400;
+  font-weight: 200;
+  color: #f7f7f7;
+  margin-bottom: 0.5em;
+}
+#explanation .explain.on {
+  animation: ex-on;
+  animation-iteration-count: 1;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+}
+#explanation .explain.reverse {
+  animation: ex-rev;
+  animation-iteration-count: 1;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes ex-on {
+  0% {
+    top: 70%;
+    opacity: 0;
+  }
+  100% {
+    top: 50%;
+    opacity: 0.8;
+  }
+}
+@keyframes ex-rev {
+  0% {
+    top: 50%;
+    opacity: 0.8;
+  }
+  100% {
+    top: 70%;
+    opacity: 0;
+  }
+}
+@keyframes explain-hide {
+  0% {
+    top: 50%;
+    opacity: 0.8;
+  }
+  100% {
+    top: 70%;
+    opacity: 0;
+  }
 }
 .gally {
   width: 100%;
@@ -198,13 +243,20 @@ section#starting_page {
 }
 #example_main_video {
   width: 100vw;
-  height: auto;
+  height: 100vh;
   position: relative;
+  overflow: hidden;
+  filter: brightness(0.8);
 }
 #example_main_video video {
-  width: 100%;
-  height: 100%;
-  clip-path: inset(23% 35% round 20px);
+  width: 120%;
+  height: 120%;
+  clip-path: inset(25% 38% round 20px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 1s;
 }
 .example_img_wrap {
   width: 100%;
@@ -221,6 +273,7 @@ section#starting_page {
   transform: translate(-50%, -50%);
   padding: 0 2rem;
   opacity: 0;
+  transition: all 1s;
 }
 .example_img_left1 {
   grid-area: left1;
