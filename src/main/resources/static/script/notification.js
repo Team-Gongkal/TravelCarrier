@@ -85,7 +85,7 @@ function commentHtml(data) {
           </div>
           <div class="notice_textbox">
             <p>
-              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="#none" class="notice_writing">${data.title}</a> 글에 댓글을
+              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="http://localhost:8080/TravelCarrier${data.url}" class="notice_writing">${data.title}</a> 글에 댓글을
               남겼습니다.
             </p>
             <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>
@@ -107,7 +107,7 @@ function recommentHtml(data) {
           </div>
           <div class="notice_textbox">
             <p>
-              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="#none" class="notice_writing">${data.title}</a> 댓글에 답댓글을
+              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="http://localhost:8080/TravelCarrier${data.url}" class="notice_writing">${data.title}</a> 댓글에 답댓글을
               남겼습니다.
             </p>
             <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>

@@ -58,17 +58,20 @@ public class NotificationService {
         //(User sender, User receiver, String notificationType, String content, Boolean isRead)
         String type;
         User receiver;
+        String url;
         if(reply.getOrigin() == null) {
             type = "comment";
             receiver = reply.getAttachDaily().getDaily().getWeekly().getUser();
+            url = "/weekly/"+reply.getAttachDaily().getDaily().getWeekly().getId()+"/daily";
         } else {
             type = "recomment";
             receiver = reply.getOrigin().getUser();
+            url = "/weekly/"+reply.getOrigin().getAttachDaily().getDaily().getWeekly().getId()+"/daily";
         }
 
         // 본인이 본인글에 작성할땐 알림X
         if(receiver.getId() != sender.getId()) {
-            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type).cdate(reply.getCrudDate().getCdate()).title(reply.getAttachDaily().getDaily().getWeekly().getTitle()).url("").isRead(false).build();
+            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type).cdate(reply.getCrudDate().getCdate()).title(reply.getAttachDaily().getDaily().getWeekly().getTitle()).url(url).isRead(false).build();
             notificationRepository.save(notification);
             sendEmitter(reply, receiver);
         }
