@@ -7,7 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -40,21 +42,47 @@ public class NotificationController {
 
     @GetMapping(value = "/TravelCarrier/notification")
     public ResponseEntity<List<NotificationDTO>> getNotification() {
-        List<Notification> list = notificationService.findNotificationByUserId();
+        List<Notification> list = notificationService.findNotificationByUserIdAndRead();
         // sender와 receiver의 User 그자체(email,thumbPath,닉네임)
         // id와 isread와 content까지
         // 시간, 제목, url도 필요!!!
         List<NotificationDTO> dtoList = new ArrayList<NotificationDTO>();
         for(Notification nt : list){
             User sender = nt.getSender();
-            User receiver = nt.getReceiver();
-            if( nt.getNotificationType().equals("comment") || nt.getNotificationType().equals("recomment") ){
-                dtoList.add(NotificationDTO.builder().type(nt.getNotificationType()).id(nt.getId()).senderName(sender.getName()).senderThumbPath(sender.getAttachUser().getThumbPath())
-                        .isRead(nt.getIsRead()).url(nt.getUrl())
-                        .time(nt.getCdate()).title(nt.getTitle()).build());
+            if( nt.getNotificationType().equals("comment") || nt.getNotificationType().equals("recomment") || nt.getNotificationType().equals("gowith")  ){
+                dtoList.add(
+                        NotificationDTO.builder()
+                                .type(nt.getNotificationType())
+                                .id(nt.getId())
+                                .senderName(sender.getName())
+                                .senderThumbPath(sender.getAttachUser().getThumbPath())
+                                .isRead(nt.getIsRead())
+                                .url(nt.getUrl())
+                                .time(nt.getCdate())
+                                .title(nt.getTitle())
+                                .build());
+            }else if( nt.getNotificationType().equals("f_req") || nt.getNotificationType().equals("f_com") ){
+                dtoList.add(
+                        NotificationDTO.builder()
+                                .type(nt.getNotificationType())
+                                .id(nt.getId())
+                                .senderName(sender.getName())
+                                .senderThumbPath(sender.getAttachUser().getThumbPath())
+                                .isRead(nt.getIsRead())
+                                .url(nt.getUrl())
+                                .time(nt.getCdate())
+                                .build());
             }
         }
+
+
         return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping(value = "/TravelCarrier/notification/{notificationId}")
+    public ResponseEntity deleteNotification(@PathVariable("notificationId") Long notificationId) {
+        notificationService.deleteNotification(notificationId);
+        return ResponseEntity.ok(null);
     }
 
 }

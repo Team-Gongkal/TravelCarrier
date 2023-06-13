@@ -44,10 +44,19 @@ public class NotificationService {
         return sseEmitter;
     }
 
-    public List<Notification> findNotificationByUserId() {
+    public List<Notification> findNotificationByUserIdAndRead() {
         User suser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User activeUser = memberRepository.findUserById(suser.getId());
-        return notificationRepository.findByReceiver(activeUser);
+        // 읽음처리
+        List<Notification> list = notificationRepository.findByReceiver(activeUser);
+        for(Notification notification : list) notification.setIsRead(true);
+        // 알림목록 리턴
+        return list;
+    }
+
+    // 알림 삭제
+    public void deleteNotification(Long notificationId) {
+        notificationRepository.deleteById(notificationId);
     }
     public void saveReplyNotification(Reply reply) {
         //AttachDaily ad, String text, User user, CrudDate cd, Reply origin
@@ -86,4 +95,5 @@ public class NotificationService {
             NotificationController.sseEmitters.remove(receiver.getId());
         }
     }
+
 }
