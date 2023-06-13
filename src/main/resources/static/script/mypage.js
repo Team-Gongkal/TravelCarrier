@@ -4,7 +4,7 @@ var contents = $(".userProfile_scroll > ul");
 var count = tab.length;
 var $scroll = $(".userProfile_left");
 
-function 탭열기(i) {
+function open(i) {
   tab.removeClass("on");
   tab.eq(i).addClass("on");
   contents.removeClass("show");
@@ -13,9 +13,20 @@ function 탭열기(i) {
 }
 for (let i = 0; i < count; i++) {
   tab.eq(i).click(function () {
-    탭열기(i);
+    open(i);
   });
 }
+
+//계정관리 모달창 활성화 - by 윤아
+$("#edit_profile").on("click", function () {
+  $(".edit_profile").addClass("show");
+});
+
+$(".edit_profile ul li")
+  .last()
+  .on("click", function () {
+    $(".edit_profile").removeClass("show");
+  });
 
 //스크롤 변화에 따른 top높이 설정 - by윤아
 addEventListener("mousewheel", (e) => {

@@ -86,7 +86,8 @@
           <div th:if="${wd.keywords != null and wd.keywords.size() > 0}" class="keywordBox">
             <ul th:each="key : ${wd.keywords}">
               <li class="keyword" th:text="${key}" th:data-daily="${wd.dailyId}">keyword
-                <span class="card_del"><i class="xi-close"></i></span></li>
+                <span class="card_del"><i class="xi-close"></i></span>
+              </li>
             </ul>
           </div>
 
@@ -229,7 +230,7 @@
     </div>
 
     <!-- 키워드 모달 modal -->
-    <div class="keyword_modal_bg">
+    <div class="keyword_modal_bg modal_bg">
       <div class="keyword_modal">
         <div class="modal_title">
           <h3>키워드 추가</h3>
@@ -253,7 +254,7 @@
       </div>
     </div>
     <!-- 위클리 수정 모달 modal -->
-    <div class="weekly_modal_bg">
+    <div class="weekly_modal_bg modal_bg">
       <div class="weekly_modal">
         <div id="weekly_modal_form">
           <div class="modal_title">
@@ -397,8 +398,7 @@
 
             </ul>
             <ul class="serch_friends">
-              <li th:each="f : ${user.followers}"
-                th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
+              <li th:each="f : ${user.followers}" th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
                 <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
                 <label th:for="'#' + ${f.follower.id}">
                   <span class="profile_circle circle">

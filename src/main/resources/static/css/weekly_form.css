@@ -4,7 +4,7 @@ main#weekly_form {
   flex-direction: column;
   align-items: center;
 }
-main#weekly_form div{
+main#weekly_form div {
   box-sizing: border-box;
 }
 #weekly_form > h1 {
@@ -157,7 +157,7 @@ a.dateClick {
   position: relative;
 }
 /* 추가글 입력 */
-.weekly_input > ul > li:nth-child(3){
+.weekly_input > ul > li:nth-child(3) {
   margin-bottom: 1rem;
 }
 /* 동행인 및 공개여부 */
@@ -275,7 +275,7 @@ a.dateClick {
 
 /* button */
 .weekly_saveBtn {
-margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 /* icon 아이콘 */
@@ -290,7 +290,7 @@ margin-bottom: 1.5rem;
 .companion_modal_bg {
   width: 100vw;
   height: 100vh;
-  background: rgb(0, 0, 0, 0.5);
+  background: rgb(0, 0, 0, 0.8);
   position: absolute;
   top: 0;
   left: 0;
@@ -354,7 +354,7 @@ input::-webkit-search-results-decoration {
 /* 친구 리스트 */
 .friendsList {
   width: 100%;
-  height: fit-content;
+  height: 100%;
   overflow-y: scroll;
   margin: 1.5rem 0 1.5rem 0;
   position: relative;
@@ -434,21 +434,30 @@ span.circle.profile_circle::after {
   height: fit-content;
   margin: 0rem 0;
   text-align: center;
+  justify-items: end;
 }
-.addText textarea{
+.addText textarea {
   height: 11rem;
 }
-#countText{
-    display: block;
-    padding-top: 0;
-    font-weight: 300;
-    font-size: 0.7rem;
-    text-align: end;
-    color: #525d7693;
+#countText {
+  display: block;
+  padding-top: 0;
+  font-weight: 300;
+  font-size: 0.7rem;
+  text-align: end;
+  color: #525d7693;
 }
 
 /* input 너비 설정 */
-.weekly_input>ul>li:nth-of-type(1){flex: 1;}
-.weekly_input>ul>li:nth-of-type(2){flex: 1;}
-.weekly_input>ul>li:nth-of-type(3){flex: 2;}
-.weekly_input>ul>li:nth-of-type(4){flex: 0.5;}
+.weekly_input > ul > li:nth-of-type(1) {
+  flex: 1;
+}
+.weekly_input > ul > li:nth-of-type(2) {
+  flex: 1;
+}
+.weekly_input > ul > li:nth-of-type(3) {
+  flex: 2;
+}
+.weekly_input > ul > li:nth-of-type(4) {
+  flex: 0.5;
+}

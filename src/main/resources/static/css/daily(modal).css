@@ -106,13 +106,13 @@ main.daily {
 .daily_form_bg {
   width: 100vw;
   height: 100vh;
-  background: rgb(0, 0, 0, 0.5);
+  background: rgb(0, 0, 0, 0.8);
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
   visibility: hidden;
-  transition: all 1s;
+  transition:  0.5s;
   z-index: 100;
 }
 .daily_form_bg.show {

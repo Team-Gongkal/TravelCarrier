@@ -516,12 +516,13 @@ section#starting_page {
   opacity: 0;
   visibility: hidden;
   transition: 0.2s;
+  background: rgb(0, 0, 0, 0.8);
 }
 #login_wrap.show {
   visibility: visible;
   opacity: 1;
 }
-#login_wrap::before {
+/* #login_wrap::before {
   content: "";
   position: absolute;
   display: block;
@@ -530,8 +531,8 @@ section#starting_page {
   top: 0;
   left: 0;
   background: #000;
-  opacity: 0.8;
-}
+  opacity: 0.5;
+} */
 #login_wrap > div > button.close {
   cursor: pointer;
   width: fit-content;
