@@ -40,6 +40,7 @@
   top: 0;
   left: 0;
   color: #efeee9;
+  transition: 0.3s;
 }
 div.textbox {
   position: absolute;
@@ -78,7 +79,8 @@ p.travel_city {
   visibility: visible;
   opacity: 0;
   animation-name: textbox;
-  animation-duration: 0.7s;
+  animation-duration: 0.1s;
+  animation-delay: 0.3s;
   animation-fill-mode: forwards;
 }
 @keyframes textbox{
