@@ -117,7 +117,7 @@ header > nav {
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
-  box-shadow: 1px 1px 4px rgba(53, 58, 82, 0.3);
+  box-shadow: 1px 1px 2px rgba(53, 58, 82, 0.2);
 }
 .notice {
   background-color: rgb(255, 255, 255, 0.3);
@@ -139,8 +139,11 @@ header > nav {
   transform: translate(-50%, -50%);
 }
 .profile {
-  box-shadow: 1px 1px 1px rgba(53, 58, 82, 0.2);
+  box-shadow: 1px 1px 2px rgba(53, 58, 82, 0.2);
   margin-left: 1rem;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 .profile > a {
   display: block;
