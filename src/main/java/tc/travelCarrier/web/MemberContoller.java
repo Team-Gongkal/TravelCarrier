@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.User;
+import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.repository.MemberRepository;
+import tc.travelCarrier.repository.WeeklyRepository;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/TravelCarrier")
 public class MemberContoller {
 
     private final MemberRepository memberRepository;
+    private final WeeklyRepository weeklyRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/member/login")
@@ -58,7 +63,48 @@ public class MemberContoller {
 
         // 마이페이지
     @GetMapping("/member/mypage")
-    public String myPage(){
+    public String myPage(Model model){
+/*      본인 프로필(이메일, 프로필사진, 이름, 배경사진) : profile
+        내 다이어리(썸네일, 제목, 기간, 링크) : diaryList
+        태그된 다이어리 (썸네일, 제목, 기간, 글작성자, 링크) : tagDiaryList
+        친구목록 (친구이름, 친구프사, 친구배사, 친구프로필링크) : followers
+        */
+        User suser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User activeUser = memberRepository.findUserById(suser.getId());
+
+        model.addAttribute("profile",activeUser);
+        // 이메일 : profile.email, 프사 : profile.attachUser.thumbPath, 이름 : profile.name, 배경사진 : profile.attachUserBackground.thumbPath
+
+        model.addAttribute("diaryList",activeUser.getWeeklys());
+        // (반복문 필요 : 각 요소를 diary로) 썸네일 : diary.attachWeekly.thumbPath,
+        // 제목 : diary.title, 기간 : diary.travelDate.sDate ~ diary.travelDate.eDate, 링크 : "TravelCarrier/weekly/"+diary.id
+
+        model.addAttribute("tagDiaryList", weeklyRepository.getTagWeeklys(activeUser));
+        // (반복문 필요 : 각 요소를 diary로) 썸네일 : diary.attachWeekly.thumbPath,
+        // 제목 : diary.title, 기간 : diary.travelDate.sDate ~ diary.travelDate.eDate, 링크 : "TravelCarrier/weekly/"+diary.id
+
+        model.addAttribute("followers",activeUser.getFollowers());
+        // 반복문 필요 : 각 요소를 follower로
+        // 친구이름 : follower.follower.name, 친구프사 :  follower.follower.attachUser.thumbPath,
+        // 친구배사 :  follower.follower.attachUserBackground.thumbPath, 친구 프로필 링크 : "TravelCarrier/member/"+follower.follower.email,
+
+        // 백그라운드 없으면 오류 날 수 있음 - 타임리프로 null체크해서 해결
+        System.out.println("profile "+activeUser.getEmail()+", "+activeUser.getAttachUser().getThumbPath()+", "+activeUser.getName()
+        +", "+activeUser.getAttachUserBackground().getThumbPath());
+        for(Weekly w : activeUser.getWeeklys()){
+            System.out.println(w.getTitle()+", "+w.getTravelDate().getSDate()+", "+w.getTravelDate().getEDate()+", "
+            +", TravelCarrier/weekly/"+w.getId());
+        }
+        for(Weekly w : weeklyRepository.getTagWeeklys(activeUser)){
+            System.out.println(w.getTitle()+", "+w.getTravelDate().getSDate()+", "+w.getTravelDate().getEDate()+", "
+                    +", TravelCarrier/weekly/"+w.getId());
+        }
+        for(Follower follower : activeUser.getFollowers()){
+            System.out.println( follower.getFollower().getName()+", "+follower.getFollower().getAttachUser().getThumbPath()+", "+
+                    // follower.getFollower().getAttachUserBackground().getThumbPath()+
+                    ", TravelCarrier/member/"+follower.getFollower().getEmail());
+        }
+
         return "/test/mypage";
     }
 
