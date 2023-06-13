@@ -44,10 +44,19 @@ public class NotificationService {
         return sseEmitter;
     }
 
-    public List<Notification> findNotificationByUserId() {
+    public List<Notification> findNotificationByUserIdAndRead() {
         User suser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User activeUser = memberRepository.findUserById(suser.getId());
-        return notificationRepository.findByReceiver(activeUser);
+        // 읽음처리
+        List<Notification> list = notificationRepository.findByReceiver(activeUser);
+        for(Notification notification : list) notification.setIsRead(true);
+        // 알림목록 리턴
+        return list;
+    }
+
+    // 알림 삭제
+    public void deleteNotification(Long notificationId) {
+        notificationRepository.deleteById(notificationId);
     }
     public void saveReplyNotification(Reply reply) {
         //AttachDaily ad, String text, User user, CrudDate cd, Reply origin
@@ -58,17 +67,20 @@ public class NotificationService {
         //(User sender, User receiver, String notificationType, String content, Boolean isRead)
         String type;
         User receiver;
+        String url;
         if(reply.getOrigin() == null) {
             type = "comment";
             receiver = reply.getAttachDaily().getDaily().getWeekly().getUser();
+            url = "/weekly/"+reply.getAttachDaily().getDaily().getWeekly().getId()+"/daily";
         } else {
             type = "recomment";
             receiver = reply.getOrigin().getUser();
+            url = "/weekly/"+reply.getOrigin().getAttachDaily().getDaily().getWeekly().getId()+"/daily";
         }
 
         // 본인이 본인글에 작성할땐 알림X
         if(receiver.getId() != sender.getId()) {
-            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type).cdate(reply.getCrudDate().getCdate()).title(reply.getAttachDaily().getDaily().getWeekly().getTitle()).url("").isRead(false).build();
+            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type).cdate(reply.getCrudDate().getCdate()).title(reply.getAttachDaily().getDaily().getWeekly().getTitle()).url(url).isRead(false).build();
             notificationRepository.save(notification);
             sendEmitter(reply, receiver);
         }
@@ -83,4 +95,5 @@ public class NotificationService {
             NotificationController.sseEmitters.remove(receiver.getId());
         }
     }
+
 }
