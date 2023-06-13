@@ -1,0 +1,283 @@
+#userProfile_wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#userProfile_wrap > div {
+}
+.userProfile_top {
+  width: 100%;
+  height: 35%;
+  position: relative;
+  transition: 1s;
+}
+.userProfile_bg {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  filter: brightness(0.6);
+  position: relative;
+}
+.userProfile_bg img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+.userProfile_tab {
+  width: 30rem;
+  height: fit-content;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 4rem;
+  box-sizing: border-box;
+}
+.userProfile_tab ul {
+  display: flex;
+  justify-content: space-between;
+}
+.userProfile_tab ul li {
+  font-size: 1.2rem;
+  font-weight: 200;
+  position: relative;
+  cursor: pointer;
+  color: rgb(247, 247, 247, 0.7);
+}
+.userProfile_tab ul li span {
+  display: block;
+  padding: 1rem;
+}
+.userProfile_tab ul li.on ::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: #a0c1ca;
+  border-radius: 0.5px;
+}
+.userProfile_tab ul li.on {
+  color: #ffff;
+}
+
+/* 하단----------------------------------------------- */
+.userProfile_bottom {
+  width: 100%;
+  height: 65%;
+  padding-top: 3rem;
+  box-sizing: border-box;
+  display: flex;
+}
+/* 프로필 */
+.userProfile_right {
+  width: 40%;
+  height: 100%;
+  padding: 0 3rem 0 4rem;
+  box-sizing: border-box;
+  position: relative;
+}
+.my_profile {
+  position: absolute;
+  bottom: 100%;
+  display: flex;
+  align-items: center;
+}
+.my_profile_img {
+  width: 10rem;
+  height: 10rem;
+}
+.my_profile_img img {
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+.my_profile_id {
+  height: 100%;
+  height: fit-content;
+  display: flex;
+  margin-left: 2rem;
+}
+.my_profile_id span {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #f7f7f7;
+}
+
+#edit_profile {
+  width: 1.8rem;
+
+  cursor: pointer;
+  opacity: 0.7;
+  margin-left: 1rem;
+}
+#edit_profile:hover {
+  opacity: 1;
+}
+.my_profile_id span img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+/* 게시글 보기 -------------------------------------------------*/
+.userProfile_left {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-right: 4rem;
+  box-sizing: border-box;
+}
+/* 스크롤바 디자인 */
+.userProfile_left::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.userProfile_left::-webkit-scrollbar-thumb {
+  background: rgb(53, 58, 82, 0.3);
+  border-radius: 10px;
+}
+.userProfile_scroll {
+  width: 100%;
+  height: 100%;
+}
+.userProfile_scroll > ul {
+  width: 100%;
+  height: 100%;
+  display: none;
+  grid-gap: 1.5rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+  transition: 1s;
+}
+.userProfile_scroll > ul.show {
+  display: grid;
+  animation: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes show {
+  0% {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+.userProfile_scroll > ul > li {
+  width: 100%;
+  height: 100%;
+  background: #f7f7f7;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 2px #353a5219;
+}
+.userProfile_scroll > ul > li > a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+div.up_diary_thumbnail {
+  width: 9rem;
+  height: 9rem;
+  margin: auto;
+}
+div.up_diary_thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+div.up_diary_text {
+  margin: 2rem 0;
+}
+span.up_diary_tit {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+span.up_diary_period {
+  opacity: 40%;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+div.up_diary_btn {
+  width: 85%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+div.up_diary_btn > a,
+div.up_diary_btn > button {
+  font-size: 0.8rem;
+  font-weight: 300;
+  border: 1px solid rgb(53, 58, 82, 0.5);
+  border-radius: 0.2rem;
+  width: 100%;
+  padding: 0.7rem 0;
+  margin: 0 0.5rem;
+  opacity: 0.5;
+  transition: 0.2s;
+}
+div.up_diary_btn > a {
+  display: block;
+}
+.userProfile_tegged div.up_diary_btn button {
+  width: 50%;
+  margin: auto;
+}
+div.up_diary_btn > a:hover,
+div.up_diary_btn > button:hover {
+  background: #353a52;
+  color: #f7f7f7;
+  opacity: 1;
+}
+
+/* 설정------------------------------------------------- */
+.edit_profile {
+  width: 100%;
+  height: 100%;
+  display: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #00000089;
+  z-index: 101;
+}
+.edit_profile > div {
+  width: fit-content;
+  height: auto;
+  position: absolute;
+  background: #efeee9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+.edit_profile > div > ul {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: 300;
+}
+.edit_profile > div > ul > li {
+  border-bottom: 1px solid rgb(53, 58, 82, 0.2);
+  padding: 1.5rem 7rem;
+  cursor: pointer;
+}
+.edit_profile > div > ul > li:hover {
+  background: rgb(53, 58, 82, 0.05);
+  padding: 1.5rem 7rem;
+}
+.edit_profile > div > ul > li:last-child {
+  border-bottom: 0px solid #000;
+}

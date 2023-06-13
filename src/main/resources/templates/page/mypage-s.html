@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelCarrier</title>
+
+  <link rel="stylesheet" href="../../static/css/reset.css">
+  <link rel="stylesheet" href="../../static/css/common.css">
+  <link rel="stylesheet" href="../../static/css/header.css">
+  <link rel="stylesheet" href="../../static/css/main.css">
+  <link rel="stylesheet" href="../../static/css/weekly.css">
+  <link rel="stylesheet" href="../../static/css/weekly_form.css">
+  <link rel="stylesheet" href="../../static/css/daily(modal).css">
+  <link rel="stylesheet" href="../../static/css/daily_more.css">
+  <link rel="stylesheet" href="../../static/css/login.css">
+  <link rel="stylesheet" href="../../static/css/mypage.css">
+
+  <!-- XEicon -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <div class="nav">
+        <div class="hamburger on">
+          <span></span>
+          <span></span>
+        </div>
+        <div class="logo">
+          <a href="index.html">
+            <img src="../../static../../static/image/header/logo/journal.png" alt="logo">
+          </a>
+        </div>
+      </div>
+      <div class="board_link">
+        <a href="">Board</a>
+      </div>
+      <div class="contact_link">
+        <a href="">Contact</a>
+      </div>
+    </nav>
+    <div class="navigation"></div>
+  </header>
+  <!-- utill 유틸 -->
+  <div class="utill_menu">
+    <div class="notice">
+      <img src="../../static../../static/image/header/icon/notification.png" alt="실시간 알림 아이콘">
+    </div>
+    <div class="profile">
+      <a href="#none"></a>
+    </div>
+  </div>
+  <div class="utill_notice">
+    <div class="option_notice"></div>
+    <div class="update_notice">
+      <h6> <i class="xi-angle-right"></i>최근 업데이트</h6>
+      <ul>
+        <li class="notice_addFriend">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/bokyung.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 팔로우를 요청했습니다.
+            </p>
+            <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_beFriend">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/dohyun.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 회원님을 팔로우합니다.
+            </p>
+            <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_tag">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/jjang.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a>에 회원님을
+              태그했습니다.
+            </p>
+            <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_comment">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/seohyun.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 글에 댓글을
+              남겼습니다.
+            </p>
+            <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_recomment">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/human.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 댓글에 답댓글을
+              남겼습니다.
+            </p>
+            <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_addFriend">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/bokyung.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 팔로우를 요청했습니다.
+            </p>
+            <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_beFriend">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/dohyun.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 회원님을 팔로우합니다.
+            </p>
+            <span class="update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_tag">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/jjang.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a>에 회원님을
+              태그했습니다.
+            </p>
+            <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_comment">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/seohyun.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 글에 댓글을
+              남겼습니다.
+            </p>
+            <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+        <li class="notice_recomment">
+          <div class="notice_profile circle">
+            <img src="/image/user/profile/human.jpg" alt="프로필 이미지">
+          </div>
+          <div class="notice_textbox">
+            <p>
+              <a href="#none" class="notice_name">닉네임</a>님이 <a href="#none" class="notice_writing">유럽여행</a> 댓글에 답댓글을
+              남겼습니다.
+            </p>
+            <span class=" update_date"><i class="xi-time-o"></i>2023. 05. 23. 17:25</span>
+          </div>
+          <button class="notice_del">
+            <i class="xi-close"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <main id="userProfile_wrap">
+    <div class="userProfile_top">
+      <div class="userProfile_bg">
+        <img src="../../static../../static/image/mypage/bg.jpg" alt="유저프로필 배경이미지">
+      </div>
+      <div class="userProfile_tab">
+        <ul>
+          <li data-id=""="1" class="on">
+            <span>diary</span>
+          </li>
+          <li data-id=""="2">
+            <span>tagged</span>
+          </li>
+          <li data-id=""="3">
+            <span>review</span>
+          </li>
+          <li data-id=""="4">
+            <span>travler</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="userProfile_bottom">
+      <div class="userProfile_right">
+        <div class="my_profile">
+          <div class="my_profile_img circle">
+            <img src="../../static../../static/image/mypage/profile.jpg" alt="프로필 이미지">
+          </div>
+          <div class="my_profile_id">
+            <span>yun_ah17</span>
+            <span id="edit_profile">
+              <!-- <img src="../../static/image/mypage/icon/setting_wh.png" alt="프로필 수정아이콘"> -->
+              <img src="../../static/image/mypage/icon/pencil.png" alt="프로필 수정아이콘">
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="userProfile_left">
+        <div class="userProfile_diary show">
+          <ul class="userProfile_scroll">
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail1.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Budapest</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail2.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Paris</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail3.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail1.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail2.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail3.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail1.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="userProfile_tagged">
+          <ul class="userProfile_scroll">
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail1.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail2.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail3.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle up_diary_thumbnail">
+                <img src="../../static/image/mypage/thumbnail1.JPG" alt="썸네일">
+              </div>
+              <div class="up_diary_text">
+                <span class="up_diary_tit">Spain</span>
+                <span class="up_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="up_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="../../static/script/login.js"></script>
+  <script src="../../static/script/mypage.js"></script>
+  <script>
+    $(document).ready(function () {
+      // 최근 업데이트창 활성화 - by윤아
+      $(".notice").on("click", function () {
+        // 알림창 셋팅
+        $(".utill_notice ").addClass("show");
+        $(".diary_noH .writing").hide();
+      });
+      // 최근 업데이트창 비활성화 - by윤아
+      $(".update_notice h6 i").on("click", function () {
+        $(".utill_notice ").removeClass("show");
+        $(".diary_noH .writing").show();
+      });
+    });
+  </script>
+</body>

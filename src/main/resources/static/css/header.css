@@ -220,7 +220,7 @@ header > nav {
   border-radius: 10px;
 }
 .update_notice ul li {
-  border-bottom: 1px solid rgb(53, 58, 82, 0.2);
+  border-bottom: 1px solid rgb(53, 58, 82, 0.1);
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 2.5rem auto 1rem;
@@ -230,6 +230,9 @@ header > nav {
     "profile date del";
   padding: 1.5rem 0.5rem 1.5rem 1.5rem;
   position: relative;
+}
+.update_notice ul li:hover {
+  background: rgb(53, 58, 82, 0.05);
 }
 .update_notice h6 {
   border-bottom: 1px solid rgb(53, 58, 82, 0.2);

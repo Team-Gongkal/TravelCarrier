@@ -488,3 +488,15 @@ $(document).on("click",".updateWeekly", function(event){
   if(addTextHeight >= rem){
     $('.weekly_addText textarea').css('height','6rem');
   };
+
+  // 위클리의 개수에 따라 goToFirst레이아웃 변경 - by윤아
+  var remain = $('.weekly_wrap > div').length % 2;
+  console.log("위클리갯수나누기" + remain);
+  if(remain === 0){
+    $('.weekly_finish_even').hide();
+    $('.weekly_finish_odd').show();
+  }else if(remain === 1){
+    $('.weekly_finish_odd').hide();
+    $('.weekly_finish_even').show();
+  }
+  

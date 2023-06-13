@@ -440,79 +440,43 @@ $(".modal_title > .close").on("click", function () {
 });
 
 //데일리 이미지 슬라이드 구현 - by윤아
-$(window).on("load", function () {
+window.onload = function () {
+  var slide_left = 0;
+  var first = 1;
+  var last;
+  var slideCnt = 0;
+  var $slide = $("ul.diary_list li.d_slide");
+  var $first;
+  var $last;
   var slide_width = $(".diary_slides").outerWidth();
-  var sec_slide = $("li.d_slide").eq(1);
-  console.log(
-    "비교 : 윈도우 :" + $(window).width() + "  /  슬라이드 :" + slide_width
-  );
-  console.log(sec_slide);
 
-  //슬라이드 이동함수
-  function moving(x, slide) {
-    let left = parseInt(slide.css("left"));
-    slide.css("left", left - x + "px"); //이동
-    // 위치 리셋 시키기
-    if (slide_width + (left - x) <= 0) {
-      slide.css("left", slide_width + "px");
-    }
-    if ($(".diary_slides").eq(0).outerWidth() + (left - x) <= 0) {
-      slide.css("left", slide_width + "px");
-    }
-  }
+  $slide.each(function () {
+    $(this).attr("id", "slide" + ++slideCnt); //id속성추가;
+  });
+
   if (slide_width > $(window).width()) {
-    alert("무브 무브");
+    last = slideCnt;
+    setInterval(function () {
+      $slide.each(function () {
+        $(this).css("left", $(this).position().left - 1);
+      });
 
-    //이동 거리
-    var movingDistance = 1;
-    //이동 함수 적용하기
-    var originMove = setInterval(() => {
-      moving(movingDistance, $(".diary_slides").eq(0));
-    }, parseInt(1000 / 100));
-
-    // mouseenter시 슬라이드 일시정지
-    $(".diary_slides").on("mousemove", function () {
-      clearInterval(originMove);
-      movingDistance = 0;
-    });
-
-    //mouseleave시 슬라이드 재생
-    $(".diary_slides").on("mouseleave", function () {
-      movingDistance = 1;
-      //이동 함수 적용하기
-      originMove = setInterval(() => {
-        moving(movingDistance, $(".diary_slides").eq(0));
-      }, parseInt(1000 / 100));
-    });
+      $first = $("#slide" + first);
+      $last = $("#slide" + last);
+      if ($first.position().left < -200) {
+        $first.css("left", $last.position().left);
+        first++;
+        last++;
+        if (last > slideCnt) {
+          last = 1;
+        }
+        if (last > slideCnt) {
+          first = 1;
+        }
+      }
+    }, 50);
   }
-
-  //슬라이드 호버시
-  $(".diary_slides").on("mousemove", function () {
-    // title, period 숨기기
-    $(".diary_titlebox").addClass("hide");
-    // 댓글 아이콘 활성화
-    $(".reply_icon").addClass("show");
-    //2.배경 어둡게
-    $(".filter").addClass("on");
-    $(".diary_viewport").addClass("black");
-    $(".diary_noH .writing").hide();
-  });
-  $(".diary_slides").on("mouseleave", function () {
-    // title, period 보이기
-    $(".diary_titlebox").removeClass("hide");
-    // 댓글 아이콘 비활성화
-    $(".reply_icon").removeClass("show");
-    //슬라이드 양끝 흐림효과
-    $(".diary_noH").css({
-      background: "#efeee9",
-    });
-    //3.배경 흐리게 제거
-    $(".filter").removeClass("on");
-    //슬라이드 양끝 흐림효과
-    $(".diary_viewport").removeClass("black");
-    $(".diary_noH .writing").show();
-  });
-});
+};
 
 // daily 일기화면(hover) - by.윤아
 $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
@@ -587,7 +551,6 @@ $(document).ready(function () {
 $(document).ready(function () {
   $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
     var hover_attachNo = $(e.target).data("attachno");
-    //console.log("호버");
     console.log(hover_attachNo); //숫자로 잘 출력됨
 
     function making_slideArray() {
@@ -608,7 +571,7 @@ $(document).ready(function () {
 
     var made_slideArray = making_slideArray(); //결과 변수에 담아주기
     //console.log("결과");
-    //console.log(made_slideArray); //(5) [{…}, {…}, {…}, {…}, {…}] 예시 출력
+    //console.log(made_slideArray); //(5) [{…}, {…}, {…}, {…}, {…}] 예시 출력
 
     function find_attachNo(num) {
       return num.attachNo == hover_attachNo;

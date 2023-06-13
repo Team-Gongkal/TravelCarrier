@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>원페이지스크롤페이지 만들기</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+  <style>
+    .main {
+      width: 100vw;
+      height: 100vh;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .main .cont {
+      position: relative;
+      height: 100%;
+    }
+
+    .main_tit01,
+    .main_tit02 {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 250px;
+      line-height: 1;
+      transition: color 0.3s;
+      -webkit-text-stroke: 1px #fff;
+    }
+
+    .main_tit01 {
+      width: 100%;
+      mix-blend-mode: screen;
+      z-index: 3;
+    }
+
+    .main_tit02 {
+      width: 100%;
+      color: #141150;
+      z-index: 1;
+    }
+
+    .photozone {
+      position: absolute;
+      width: 50vw;
+      height: 50vh;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      background-size: 100vw;
+      transition: 0.5s;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .photozone.on {
+      opacity: 0.8;
+      transition: all 1s;
+    }
+
+    .photozone.on::after {
+      content: "";
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .photozone video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="contents">
+    <div class="stn main">
+      <div class="cont">
+        <div class="main_tit01">
+          <p>TITLE01</p>
+        </div>
+        <div class="main_tit02">
+          <p>TITLE02</p>
+        </div>
+        <div class="photozone">
+          <video src="../../static/image/login/example/sea.mp4" loop autoplay muted playsinline>
+          </video>
+        </div>
+      </div>
+    </div>
+    <div class="stn profile main-page">
+      <p>메인페이지 입니다</p>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus inventore neque placeat unde odit eligendi
+        dignissimos laborum, blanditiis totam? Impedit voluptatibus voluptatem provident iste fugiat magni quibusdam,
+        repellendus explicabo. Doloribus.</p>
+    </div>
+  </div>
+  <script>
+    let num = 0;
+    let idx = 0;
+    let delta;
+    const mainImg = document.querySelector(".photozone");
+    const mainTit = document.querySelector(".main_tit01");
+    const elMainCon = document.querySelectorAll(".main-page");
+
+    // mousewheel DOMMouseScroll 스크롤 이벤트
+    $(window).on('mousewheel DOMMouseScroll', function (e) {
+
+      delta = e.originalEvent.wheelDelta || e.originalEvent.detail * -1;
+      // e.originalEvent.wheelDelta || e.originalEvent.detail는 스크롤을 했을때 페이지가 아래로 이동하면 양수가, 위로 이동하면 음수가 나온다. 여기서는 편의를 위해 -1을 곱해서 음수와 양수를 역으로 만들어주었다.
+
+      if (delta < 0) { // 스크롤을 아래로 내렸을 때
+
+        if (!(num == 12)) { // num이 12가 아닐 때
+          // num의 증가범위를 12로 잡은 이유는, 비주얼 컨텐츠의 동작 횟수를 12회 내로 잡았기 때문.
+
+          num++; // num 증가
+
+          if (num <= 11) { // num이 11과 같거나 작다면
+
+            mainImg.style = `width:${(num * 5) + 50}vw; height:${(num * 5) + 50}vh;`;
+            // 비주얼 컨텐츠 영역의 넓이가 변하도록 스타일 조정(커짐)
+          }
+        }
+        if ((num == 12) && (idx < elMainCon.length)) {
+          // num이 12와 같고(비주얼 컨텐츠가 변하고 다음 페이지로 넘어갈 준비가 된 순간),
+          // idx(초기값0)가 첫 페이지 다음으로 오는 페이지들의 수보다 적을 때
+
+          idx++; // idx를 증가시킴
+        }
+
+      } else { // 스크롤을 위로 올렸을 때
+
+        if (!(idx == 0)) { // idx가 0이 아니라면
+          idx--; // idx를 감소시켜라
+        }
+        if ((num > 0) && (idx == 0)) {
+          // num이 0보다 크고 idx가 0일때
+
+          num--; // num을 감소시키고
+
+          mainImg.style = `width:${(num * 5) + 50}vw; height:${(num * 5) + 50}vh;`;
+          // 비주얼 컨텐츠 영역의 넓이가 변하도록 스타일 조정(작아짐)
+        }
+      }
+
+      $('html,body').stop().animate({
+        scrollTop: ($(window).height()) * idx
+        // 화면의 높이값에 스크롤에 따라 변하는 idx값을 곱해서 페이지 단위로 이동시킨다.
+        // idx가 1이라면 첫 페이지에서 다음 페이지로, idx가 2라면 두 번 째 페이지에서 세 번 째 페이지로 이동하는 식으로 작동한다.
+      }, 600)
+
+    }) </script>
+</body>
+
+</html>
