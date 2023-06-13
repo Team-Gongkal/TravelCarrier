@@ -101,9 +101,9 @@ p.travel_city {
 }
 /* 더보기 버튼 */
 div#more_thumbnail {
-  background: rgb(239, 238, 233, 0.2);
   padding: 2.5rem;
-  box-shadow: 0px 0px 3px #525d7600;
+  background: rgb(239, 238, 233, 0.4);
+  box-shadow: 1px 1px 3px #525d7646;
 }
 
 .plus {
@@ -125,6 +125,6 @@ div#more_thumbnail {
   transform: rotate(90deg);
 }
 div#more_thumbnail:hover {
-  background: rgb(239, 238, 233, 0.4);
+  background: rgb(239, 238, 233, 0.7);
   box-shadow: 1px 1px 3px #525d7646;
 }
