@@ -1,4 +1,4 @@
-package tc.travelCarrier.config;
+package tc.travelCarrier.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/",
                         "/TravelCarrier/member/login/**",
                         "/TravelCarrier/member/sign/**",
-                        "/js/**", "/css/**", "/image/**").permitAll() // 해당 경로들은 접근을 허용
+                        "/script/**", "/css/**", "/image/**","/font/**").permitAll() // 해당 경로들은 접근을 허용
                 .anyRequest() // 다른 모든 요청은
                 .authenticated() // 인증된 유저만 접근을 허용
                 .and()
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 URL
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout/action")) // 로그아웃 URL
                 .logoutSuccessUrl("/TravelCarrier/member/login") // 성공시 리턴 URL
                 .invalidateHttpSession(true) // 인증정보를 지우하고 세션을 무효화
                 .deleteCookies("JSESSIONID", "remember-me") // JSESSIONID, remember-me 쿠키 삭제
