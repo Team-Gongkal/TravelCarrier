@@ -28,9 +28,9 @@
     </header>
     <!-- utill 유틸 -->
     <div class="utill_menu">
-      <form class="logout" method="get" action="/logout/action" id="logoutForm">
+      <!-- <form class="logout" method="get" action="/logout/action" id="logoutForm">
         <button onclick="confirmLogout(event)" type="button">Logout</button>
-      </form>
+      </form> -->
 
       <div class="notice">
         <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
@@ -39,6 +39,27 @@
       <div class="profile circle" th:if="${user}"
         th:style="'background-image: url(' + ${user.attachUser.thumbPath} + ')'">
         <a href="http://localhost:8080/TravelCarrier/member/mypage"></a>
+      </div>
+
+      <!-- 개인설정 메뉴 -->
+      <div class="user_menu">
+        <ul>
+          <li>
+            <a href="#">
+              <span>프로필 수정</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>계정 정보</span>
+            </a>
+          </li>
+          <li>
+            <form class="logout" method="get" action="/logout/action" id="logoutForm">
+              <span onclick="confirmLogout(event)" type="button">로그아웃</span>
+            </form>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="utill_notice">
@@ -195,6 +216,7 @@
         </ul>
       </div>
     </div>
+
 
     <script>
       function confirmLogout(event) {
