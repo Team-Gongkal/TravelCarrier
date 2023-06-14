@@ -55,6 +55,26 @@
     <div class="profile">
       <a href="#none"></a>
     </div>
+    <!-- 개인설정 메뉴 -->
+    <div class="user_menu">
+      <ul>
+        <li>
+          <a href="#">
+            <span>프로필 수정</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>계정 정보</span>
+          </a>
+        </li>
+        <li>
+          <form class="logout" method="get" action="/logout/action" id="logoutForm">
+            <span onclick="confirmLogout(event)" type="button">로그아웃</span>
+          </form>
+        </li>
+      </ul>
+    </div>
   </div>
   <main class="daily">
     <!-- daily 시작화면 UI -->

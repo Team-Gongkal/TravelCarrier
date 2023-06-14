@@ -5,10 +5,10 @@
 <th:block th:replace="fragments/head :: headFragment"></th:block>
 
 <body>
-<th:block th:replace="fragments/header :: headerFragment"></th:block>
+    <th:block th:replace="fragments/header :: headerFragment"></th:block>
 
-<main>
-<!--    <div class="weekly_thumbnails">
+    <main id="main_map">
+        <!--    <div class="weekly_thumbnails">
             <div class="thumbnail thumbnail01"><a href="#none">
                 <div class="textbox">
                     <p class="travel_period">22.10.19-22.10.21</p>
@@ -22,30 +22,33 @@
                 </div>
             </a></div>-->
 
-    <div th:if="${user}" class="weekly_thumbnails">
-        <th:block th:each="weekly : ${user.weeklys}"  >
-            <div  th:style="'background-image: url(' + ${weekly.attachWeekly.thumbPath} + ')'"  class="thumbnail thumbnail01">
-                <a th:href="@{/TravelCarrier/weekly/{id}(id=${weekly.id})}" href="#none">
-                <div class="textbox">
-                    <p th:text="${#dates.format(weekly.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(weekly.travelDate.eDate, 'yyyy.MM.dd')}" class="travel_period">22.10.19-22.10.21</p>
-                    <p th:text="${weekly.title}" class="travel_city">Budapest</p>
+        <div th:if="${user}" class="weekly_thumbnails">
+            <th:block th:each="weekly : ${user.weeklys}">
+                <div th:style="'background-image: url(' + ${weekly.attachWeekly.thumbPath} + ')'"
+                    class="thumbnail thumbnail01">
+                    <a th:href="@{/TravelCarrier/weekly/{id}(id=${weekly.id})}" href="#none">
+                        <div class="textbox">
+                            <p th:text="${#dates.format(weekly.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(weekly.travelDate.eDate, 'yyyy.MM.dd')}"
+                                class="travel_period">22.10.19-22.10.21</p>
+                            <p th:text="${weekly.title}" class="travel_city">Budapest</p>
+                        </div>
+                    </a>
                 </div>
-                </a></div>
-        </th:block>
+            </th:block>
 
-        <div id="more_thumbnail">
-            <a href="/TravelCarrier/weeklyForm">
-                <div class="plus">
-                    <span></span>
-                    <span></span>
-                </div>
-            </a>
+            <div id="more_thumbnail">
+                <a href="/TravelCarrier/weeklyForm">
+                    <div class="plus">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
-</main>
-<!-- script -->
-<script>
-</script>
+    </main>
+    <!-- script -->
+    <script>
+    </script>
 
 </body>
 

@@ -441,50 +441,65 @@ $(".modal_title > .close").on("click", function () {
 
 //데일리 이미지 슬라이드 구현 - by윤아
 window.onload = function () {
-  var slide_left = 0;
-  var first = 1;
-  var last;
-  var slideCnt = 0;
-  var $slide = $("ul.diary_list li.d_slide");
-  var $first;
-  var $last;
-  var slide_width = $(".diary_slides").outerWidth();
+  //   var slide_left = 0;
+  //   var first = 1;
+  //   var last;
+  //   var slideCnt = 0;
+  //   var $slide = $("ul.diary_list li.d_slide");
+  //   var $first;
+  //   var $last;
+  //   var slide_width = $(".diary_slides").outerWidth();
 
-  $slide.each(function () {
-    $(this).attr("id", "slide" + ++slideCnt); //id속성추가;
-  });
+  //   $slide.each(function () {
+  //     $(this).attr("id", "slide" + ++slideCnt); //id속성추가;
+  //   });
 
-  if (slide_width > $(window).width()) {
-    last = slideCnt;
-    setInterval(function () {
-      $slide.each(function () {
-        $(this).css("left", $(this).position().left - 1);
-      });
+  //   if (slide_width > $(window).width()) {
+  //     last = slideCnt;
+  //     setInterval(function () {
+  //       $slide.each(function () {
+  //         $(this).css("left", $(this).position().left - 1);
+  //       });
 
-      $first = $("#slide" + first);
-      $last = $("#slide" + last);
-      if ($first.position().left < -200) {
-        $first.css("left", $last.position().left);
-        first++;
-        last++;
-        if (last > slideCnt) {
-          last = 1;
-        }
-        if (last > slideCnt) {
-          first = 1;
-        }
-      }
-    }, 50);
-  }
+  //       $first = $("#slide" + first);
+  //       $last = $("#slide" + last);
+  //       if ($first.position().left < -200) {
+  //         $first.css("left", $last.position().left);
+  //         first++;
+  //         last++;
+  //         if (last > slideCnt) {
+  //           last = 1;
+  //         }
+  //         if (last > slideCnt) {
+  //           first = 1;
+  //         }
+  //       }
+  //     }, 50);
+  //   }
+
+  // 슬라이드 수정=========================================
+  let origin_slide = document.querySelector("ul.diary_list");
+  origin_slide.id = "slide1";
+  // $(clone_slide).attr("id", "slide1");
+
+  let clone_slide = origin_slide.cloneNode(true); //(true)로 자식요소까지 복제해서 변수에 할당함
+  clone_slide.id = "slide2";
+  document.querySelector("div.diary_slides").appendChild(clone_slide); //자식요소로 붙여넣음
+
+  document.querySelector("#slide1").style.left = "0px";
+  document.querySelector("#slide2").style.left =
+    document.querySelector("ul.diary_list").offsetWidth + "px"; // offsetWidth : 마진값을 제외한 너비값을 계산
+
+  origin_slide.classList.add("original");
+  clone_slide.classList.add("clone");
 };
 
 // daily 일기화면(hover) - by.윤아
-$(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
+$(".diary_viewport").on("mouseenter", "li.d_slide > img", function (e) {
   // 복제된 diary_slides에는 mouseenter 이벤트가 적용되지 않아 위임 방식을 사용하여, 부모 요소인 .diary_viewport에 이벤트를 바인딩함
 
   //1. 백그라운드 바꾸기
   var img_src = e.target.src;
-  console.log(e.target);
   $(".diary_noH").css({
     "background-image": `url(${img_src})`,
     "background-repeat": "no-repeat",
@@ -492,13 +507,39 @@ $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
     "background-size": "cover",
   });
 
-  //3. 일기글 보이기
+  //1.제목숨기기 title, period 숨기기
+  $(".diary_titlebox").addClass("hide");
+
+  //2. 일기글 보이기
   $(".diary_textbox").addClass("on");
 
-  $(".d_slide").on("mouseleave", function (e) {
-    //4.일기 숨기기
-    $(".diary_textbox").removeClass("on");
+  //3. 댓글 아이콘 활성화
+  $(".reply_icon").addClass("show");
+
+  //4.필터 활성화
+  $(".filter").addClass("on");
+  $(".diary_viewport").addClass("black");
+});
+
+//슬라이드 전체 호버시 효과(제목 및 댓글 아이콘 따로 처리)
+$(".diary_slides").on("mouseleave", function () {
+  //배경화면 색 변경하기
+  $(".diary_noH").css({
+    background: "#efeee9",
   });
+
+  // title, period 보이기
+  $(".diary_titlebox").removeClass("hide");
+
+  // 댓글 아이콘 비활성화
+  $(".reply_icon").removeClass("show");
+
+  //2. 일기글 숨기기
+  $(".diary_textbox").removeClass("on");
+
+  //4.필터 비활성화
+  $(".filter").removeClass("on");
+  $(".diary_viewport").removeClass("black");
 });
 
 // 슬라이드 사진 크기에 따라 클래스명 변경 - by.서현
@@ -562,7 +603,7 @@ $(document).ready(function () {
             title: dataArr[i].data[j].get("title"),
             file: dataArr[i].data[j].get("file"),
             attachNo: dataArr[i].data[j].get("attachNo"),
-          }; //onject자료형으로 생성
+          }; //object자료형으로 생성
           diary_attachNo.push(diaryData); //비어있는 array자료형 안에 담아주기
         }
       }

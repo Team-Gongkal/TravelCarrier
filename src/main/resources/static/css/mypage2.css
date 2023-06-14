@@ -1,0 +1,362 @@
+#userProfile_wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#userProfile_wrap > div {
+}
+.userProfile_top {
+  width: 100%;
+  height: 35%;
+  position: relative;
+  transition: 1s;
+  z-index: 1;
+}
+.userProfile_bg {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  filter: brightness(0.6);
+  position: relative;
+}
+.userProfile_bg img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+.userProfile_tab {
+  width: 30rem;
+  height: fit-content;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 4rem;
+  box-sizing: border-box;
+}
+.userProfile_tab ul {
+  display: flex;
+  justify-content: space-between;
+}
+.userProfile_tab ul li {
+  font-size: 1.2rem;
+  font-weight: 200;
+  position: relative;
+  cursor: pointer;
+  color: rgb(247, 247, 247, 0.7);
+}
+.userProfile_tab ul li span {
+  display: block;
+  padding: 1rem;
+}
+.userProfile_tab ul li.on ::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: #a0c1ca;
+  border-radius: 0.5px;
+}
+.userProfile_tab ul li.on {
+  color: #ffff;
+}
+
+/* 하단----------------------------------------------- */
+.userProfile_bottom {
+  width: 100%;
+  height: 65%;
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  padding-top: 1.5rem;
+}
+/* 프로필 */
+.my_profile {
+  position: absolute;
+  bottom: calc(100% - 3rem);
+  display: flex;
+  align-items: center;
+  width: 40%;
+  height: fit-content;
+  padding: 0 3rem 0 4rem;
+  box-sizing: border-box;
+  z-index: 2;
+}
+.my_profile_img {
+  width: 10rem;
+  height: 10rem;
+}
+.my_profile_img img {
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+.my_profile_id {
+  height: 100%;
+  height: fit-content;
+  display: flex;
+  margin-left: 2rem;
+}
+.my_profile_id span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #f7f7f7;
+}
+
+#edit_profile {
+  width: 1.8rem;
+  cursor: pointer;
+  opacity: 0.7;
+  margin-left: 1rem;
+}
+#edit_profile:hover {
+  opacity: 1;
+}
+.my_profile_id span img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+/* 게시글 보기 -------------------------------------------------*/
+.userProfile_left {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 0 8rem;
+  box-sizing: border-box;
+  position: relative;
+}
+/* 스크롤바 디자인 */
+.userProfile_left::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.userProfile_left::-webkit-scrollbar-thumb {
+  background: rgb(53, 58, 82, 0.3);
+  border-radius: 10px;
+}
+
+/* common 공통영역 */
+.userProfile_scroll {
+  width: 100%;
+  height: 100%;
+}
+.userProfile_scroll > ul {
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  animation: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+
+  padding-top: 3rem;
+}
+@keyframes show {
+  0% {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.userProfile_scroll > ul > li {
+  width: 100%;
+  /* height: fit-content; 수정 개수적을때 늘어지는지확인 */
+  background: #f7f7f7;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 2px #353a5219;
+}
+
+.userProfile_scroll > ul > li > div > a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 다이어리 목록=========================== */
+ul.userProfile_diary {
+}
+ul.userProfile_diary ul li {
+}
+div.uP_diary_thumbnail {
+  width: 100%;
+  height: 13rem;
+}
+div.uP_diary_thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.uP_diary_box {
+  width: 100%;
+  height: fit-content;
+  box-sizing: border-box;
+  padding: 1.5rem 1rem;
+}
+.uP_diary_companion {
+  position: relative;
+}
+/* 동행인 */
+.uP_diary_companion ul.sel_companion {
+  width: fit-content;
+  overflow: hidden;
+  position: absolute;
+  bottom: 100%;
+}
+.uP_diary_companion > ul.sel_companion li:nth-child(1) {
+  background: url(../image/weekly/friendList/friend1.png);
+}
+.uP_diary_companion ul.sel_companion li:nth-child(2) {
+  background: url(../image/weekly/friendList/friend2.png);
+}
+.uP_diary_companion ul.sel_companion li:nth-child(3) {
+  background: url(../image/weekly/friendList/friend3.png);
+}
+.uP_diary_companion ul.sel_companion li:nth-child(4) {
+  background: url(../image/weekly/friendList/friend4.jpg);
+}
+.uP_diary_companion ul.sel_companion li:nth-child(5) {
+  background: url(../image/weekly/friendList/friend5.jpg);
+}
+.uP_diary_companion > ul.sel_companion > li {
+  float: left;
+  width: 2.5rem;
+  height: 2.5rem;
+  text-indent: -999px;
+  border: 2px solid #efeee9;
+  box-sizing: border-box;
+  left: 0em;
+  font-size: 0.9rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.uP_diary_box
+  > .uP_diary_companion
+  > ul.sel_companion
+  > li:not(.uP_diary_companion > ul.sel_companion > li:nth-child(1)) {
+  margin-left: -1rem;
+}
+
+/* 내용(제목 및 기간) */
+div.uP_diary_text {
+  margin: 1.3rem 0;
+}
+div.uP_diary_text > span {
+  display: block;
+}
+span.uP_diary_tit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+span.uP_diary_period {
+  opacity: 40%;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+span.uP_diary_user {
+  opacity: 40%;
+  font-weight: 300;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+div.uP_diary_btn {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0rem;
+}
+div.uP_diary_btn > a,
+div.uP_diary_btn > button {
+  font-size: 0.8rem;
+  font-weight: 300;
+  border: 1px solid rgb(53, 58, 82, 0.5);
+  border-radius: 0.5rem;
+  width: 48%;
+  padding: 0.7rem 0;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+div.uP_diary_btn > a {
+  display: block;
+  text-align: center;
+}
+div.uP_diary_btn button {
+  background: #353a52;
+  color: #f7f7f7;
+}
+div.uP_diary_btn > button:hover {
+  background: #525d76;
+  color: #f7f7f7;
+}
+/* travler================================ */
+.userProfile_scroll > ul.userProfile_travler {
+  width: 100%;
+  height: 100%;
+  display: none;
+  grid-gap: 1.5rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+  transition: 1s;
+}
+
+/* 설정------------------------------------------------- */
+.edit_profile {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 101;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+}
+.edit_profile.show {
+  visibility: visible;
+  opacity: 1;
+}
+.edit_profile > div {
+  width: fit-content;
+  height: auto;
+  position: absolute;
+  background: #efeee9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+.edit_profile > div > ul {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: 300;
+}
+.edit_profile > div > ul > li {
+  border-bottom: 1px solid rgb(53, 58, 82, 0.2);
+  padding: 1.5rem 7rem;
+  cursor: pointer;
+}
+.edit_profile > div > ul > li:hover {
+  background: rgb(53, 58, 82, 0.02);
+  padding: 1.5rem 7rem;
+}
+.edit_profile > div > ul > li:last-child {
+  border-bottom: 0px solid #000;
+  color: red;
+}

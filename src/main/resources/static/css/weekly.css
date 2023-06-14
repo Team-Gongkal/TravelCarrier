@@ -253,19 +253,27 @@ article .longBox {
   font-size: 1.2rem;
   font-weight: 200;
   margin: 0.5rem 0;
+  position: relative;
 }
-.keywordBox ul li:after {
+.keywordBox ul li::before {
   content: "";
   width: 0;
   height: 0.5em;
   display: block;
-  transform: translateY(-70%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(120%);
   background: rgb(160, 193, 202, 0.3);
   text-align: center;
   transition: 0.2s;
 }
-.keywordBox ul li:hover:after {
+.keywordBox ul li:hover:before {
   width: 100%;
+}
+.shortBox .keywordBox ul li a {
+  display: block;
+  position: relative;
 }
 .moreBox {
   height: 15%;
