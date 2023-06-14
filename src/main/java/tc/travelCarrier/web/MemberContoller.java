@@ -37,6 +37,7 @@ public class MemberContoller {
         return "test/login";
     }
 
+
     @GetMapping("/member/sign")
     public String memberSignIn(){
         return "test/sign";
@@ -89,6 +90,7 @@ public class MemberContoller {
         // 친구배사 :  follower.follower.attachUserBackground.thumbPath, 친구 프로필 링크 : "TravelCarrier/member/"+follower.follower.email,
 
         // 백그라운드 없으면 오류 날 수 있음 - 타임리프로 null체크해서 해결
+/*
         System.out.println("profile "+activeUser.getEmail()+", "+activeUser.getAttachUser().getThumbPath()+", "+activeUser.getName()
         +", "+activeUser.getAttachUserBackground().getThumbPath());
         for(Weekly w : activeUser.getWeeklys()){
@@ -104,9 +106,10 @@ public class MemberContoller {
                     // follower.getFollower().getAttachUserBackground().getThumbPath()+
                     ", TravelCarrier/member/"+follower.getFollower().getEmail());
         }
+*/
 
         return "/test/mypage";
     }
 
-
 }
+

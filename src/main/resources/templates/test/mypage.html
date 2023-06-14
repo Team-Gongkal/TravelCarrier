@@ -9,7 +9,7 @@
   <main id="userProfile_wrap">
     <div class="userProfile_top">
       <div class="userProfile_bg">
-        <img th:src="${profile.attachUserBackground.thumbPath != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}" alt="유저프로필 배경이미지">
+        <img th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}" alt="유저프로필 배경이미지">
       </div>
       <div class="userProfile_tab">
         <ul>
@@ -50,7 +50,7 @@
             <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" >
               <div class="circle up_diary_thumbnail">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
-                <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
+                 <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
                 </a>
               </div>
               <div class="up_diary_text">
