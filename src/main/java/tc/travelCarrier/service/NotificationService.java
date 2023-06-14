@@ -6,14 +6,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import tc.travelCarrier.domain.Notification;
-import tc.travelCarrier.domain.Reply;
-import tc.travelCarrier.domain.User;
+import tc.travelCarrier.domain.*;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.NotificationRepository;
+import tc.travelCarrier.repository.WeeklyRepository;
 import tc.travelCarrier.web.NotificationController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,6 +59,8 @@ public class NotificationService {
     public void deleteNotification(Long notificationId) {
         notificationRepository.deleteById(notificationId);
     }
+
+    //댓글작성알림 저장
     public void saveReplyNotification(Reply reply) {
         //AttachDaily ad, String text, User user, CrudDate cd, Reply origin
 
@@ -80,12 +83,34 @@ public class NotificationService {
 
         // 본인이 본인글에 작성할땐 알림X
         if(receiver.getId() != sender.getId()) {
-            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type).cdate(reply.getCrudDate().getCdate()).title(reply.getAttachDaily().getDaily().getWeekly().getTitle()).url(url).isRead(false).build();
+            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type).cdate(new Date()).title(reply.getAttachDaily().getDaily().getWeekly().getTitle()).url(url).isRead(false).build();
             notificationRepository.save(notification);
             sendEmitter(reply, receiver);
         }
     }
 
+    // 위클리 태그 알림 저장
+    public void saveTagNotification(Weekly weekly) {
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User sender = memberRepository.findUserById(activeUser.getId());
+
+        for(Gowith go : weekly.getGowiths()) {
+            Notification notification = Notification.builder().
+                    sender(sender)
+                    .receiver(go.getUser())
+                    .notificationType("gowith")
+                    .cdate(new Date())
+                    .title(weekly.getTitle())
+                    .url("/weekly/"+weekly.getId())
+                    .isRead(false)
+                    .build();
+            notificationRepository.save(notification);
+            sendEmitter(weekly, go.getUser());
+        }
+
+    }
+
+    // SSE로 실시간 댓글알림 전송
     private void sendEmitter(Reply reply, User receiver) {
         SseEmitter sseEmitter = NotificationController.sseEmitters.get(receiver.getId());
         try {
@@ -94,6 +119,16 @@ public class NotificationService {
         } catch (Exception e) {
             NotificationController.sseEmitters.remove(receiver.getId());
         }
+    }
+    // SSE로 실시간 태그알림 전송
+    private void sendEmitter(Weekly weekly, User receiver) {
+/*        SseEmitter sseEmitter = NotificationController.sseEmitters.get(receiver.getId());
+        try {
+            if(reply.getOrigin() == null)  sseEmitter.send(SseEmitter.event().name("reply").data(reply.getId()));
+            else sseEmitter.send(SseEmitter.event().name("re-reply").data(reply.getId()));
+        } catch (Exception e) {
+            NotificationController.sseEmitters.remove(receiver.getId());
+        }*/
     }
 
 }

@@ -105,4 +105,14 @@ public class WeeklyRepository {
     public void deleteAttachWeekly(AttachWeekly thumb) {
         em.remove(thumb);
     }
+
+    // 태그된 위클리 리스트를 조회
+    public List<Weekly> getTagWeeklys(User user) {
+        return em.createQuery("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = : user",
+                        Weekly.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+
 }

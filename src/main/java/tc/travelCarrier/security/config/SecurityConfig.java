@@ -1,4 +1,4 @@
-package tc.travelCarrier.security.config;
+package tc.travelCarrier.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -48,8 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 요청 URL에 따라 접근 권한을 설정
                 .antMatchers("/",
                         "/TravelCarrier/member/login/**",
+                        "/TravelCarrier/login/**",
                         "/TravelCarrier/member/sign/**",
-                        "/script/**", "/css/**", "/image/**","/font/**").permitAll() // 해당 경로들은 접근을 허용
+                        "/script/**", "/font/**", "/css/**", "/image/**").permitAll() // 해당 경로들은 접근을 허용
                 .anyRequest() // 다른 모든 요청은
                 .authenticated() // 인증된 유저만 접근을 허용
                 .and()

@@ -25,6 +25,7 @@ public class WeeklyService {
     private final AttachRepository attachRepository;
     private final AttachService attachService;
     private final MemberRepository memberRepository;
+    private final NotificationService notificationService;
 
     /**
      * 팔로워 목록 조회
@@ -41,6 +42,8 @@ public class WeeklyService {
         weeklyRepository.save(weekly);
         // 파일저장
         attachService.saveAttachWeekly(file, weekly);
+        // 알림전송
+        notificationService.saveTagNotification(weekly);
 
         return weekly.getId();
     }

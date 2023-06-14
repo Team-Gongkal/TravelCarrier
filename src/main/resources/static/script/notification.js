@@ -191,7 +191,7 @@ function tagHtml(data) {
       </div>
       <div class="notice_textbox">
         <p>
-          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 <a href="${data.url}" class="notice_writing">${data.title}</a>에 회원님을
+          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 <a href="http://localhost:8080/TravelCarrier${data.url}" class="notice_writing">${data.title}</a>에 회원님을
           태그했습니다.
         </p>
         <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>

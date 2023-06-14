@@ -50,12 +50,14 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private AttachUser attachUser;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private AttachUserBackground attachUserBackground;
+
     @OneToMany(mappedBy = "user")
     private List<Weekly> weeklys = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")//위클리폼을 위한 로딩
     private List<Follower> followers = new ArrayList<>();
-
 
     // 계정이 갖고있는 권한 목록은 리턴
     public Collection<? extends GrantedAuthority> getAuthorities() {
