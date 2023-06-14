@@ -112,7 +112,7 @@ main.daily {
   left: 0;
   opacity: 0;
   visibility: hidden;
-  transition:  0.5s;
+  transition: 0.5s;
   z-index: 100;
 }
 .daily_form_bg.show {
@@ -599,13 +599,39 @@ ul.diary_list {
   display: flex;
   cursor: pointer;
 }
-@keyframes imgRolling {
+/* 슬라이드 키프레임 추가 (원본과 복제본의 시작위치가 다르기 때문에 두개로 나누어서 각자 설정 */
+ul.diary_list.original {
+  animation: slideRolling01 50s linear infinite;
+}
+ul.diary_list.clone {
+  animation: slideRolling02 50s linear infinite;
+}
+@keyframes slideRolling01 {
   0% {
     transform: translateX(0);
   }
-  100% {
+  50% {
     transform: translateX(-100%);
   }
+  /* 50% 진행이 되었을 때 배너가 가려져서 안보이는 위치까지 이동 후 50.01에 뷰포트 너머 오른쪽으로 이동시킴 */
+  50.01% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slideRolling02 {
+  0% {
+    transition: translateX(0);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+.diary_slides:hover ul.diary_list.original,
+.diary_slides:hover ul.diary_list.clone {
+  animation-play-state: paused;
 }
 
 ul.diary_list > li {
@@ -766,20 +792,14 @@ ul.diary_list > li {
   z-index: 101;
   visibility: hidden;
   display: none;
+  background: rgb(0, 0, 0, 0.8);
 }
 .reply_modal.show {
   width: 100%;
   height: 100%;
   visibility: visible;
   display: flex;
-}
-.reply_modal > .reply_modal_bg {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgb(0, 0, 0, 0.8);
+  transition: 0.5s;
 }
 .reply_modal > .center {
   height: 85%;
@@ -991,7 +1011,7 @@ span.reply_id {
   height: fit-content;
   box-sizing: border-box;
   position: relative;
-  background: #525d7634;
+  background: rgba(82, 92, 117, 0.2);
   margin: 0 2rem;
   border-radius: 0.5rem;
 }
@@ -1014,15 +1034,26 @@ span.reply_id {
 }
 .reply_input textarea {
   height: 100%;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1em;
-  max-height: 2rem;
+  max-height: 3rem;
   box-sizing: border-box;
   background: transparent;
   overflow-y: scroll;
   overflow-x: hidden;
   margin: 1rem;
   padding: 0;
+}
+.reply_input textarea::placeholder {
+  padding-top: 0.5rem;
+}
+/* .reply_input textarea:focus::placeholder,
+.reply_input textarea:focus::-webkit-input-placeholder,
+.reply_input textarea:focus::-moz-placeholder {
+  color: transparent;
+} */
+.reply_input textarea:focus::-webkit-input-placeholder {
+  color: transparent;
 }
 /* 스크롤바 디자인 */
 .reply_input textarea::-webkit-scrollbar {
