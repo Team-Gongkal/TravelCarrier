@@ -104,7 +104,7 @@ const gally = document.querySelector(".example_img_wrap");
 const lastPage = document.querySelectorAll("#start section").length;
 
 //mousewheel DOMMouseScroll 스크롤 이벤트
-$(window).on("mousewheel DOMMouseScroll", function (e) {
+$(window).on("wheel DOMMouseScroll", function (e) {
   delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
 
   //스크롤을 내리면 idx변화 시키기 idx는 첫페이지와 마지막 페이지에 다달으먄 동작을 멈추도록 하고 만약 idx가 2일경우에 스크롤을 위로 내리거나 올리면 num이 변화하며 비디오의 크기가 줄었다가 커지도록 구현하는게 좋을 것 같ㄷ,근데 이때는 스크롤을 내려도 idx의 값은 변화가 있으면 안됨.

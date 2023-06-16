@@ -1,12 +1,11 @@
 /* main 가로스크롤 */
 main.weekly_scroll {
-  overflow: hidden;
   overflow-x: scroll;
   display: flex;
-
-  /*스크롤바 숨김 */
-  -webkit-overflow-scrolling: touch; /*IOS기반 브라우저에서 스크롤 성능을 최적화함*/
-  scrollbar-width: none; /*Firefox와 IE/Edge에서 숨김*/
+  width: fit-content;
+  /*스크롤바 숨김
+  -webkit-overflow-scrolling: touch; /*IOS기반 브라우저에서 스크롤 성능을 최적화함
+  scrollbar-width: none; /*Firefox와 IE/Edge에서 숨김
   -ms-overflow-style: none; /*WebKit기반 브라우저에서 숨김*/
 }
 

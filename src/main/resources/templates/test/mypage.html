@@ -9,7 +9,9 @@
   <main id="userProfile_wrap">
     <div class="userProfile_top">
       <div class="userProfile_bg">
-        <img th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}" alt="유저프로필 배경이미지">
+        <img
+          th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+          alt="유저프로필 배경이미지">
       </div>
       <div class="userProfile_tab">
         <ul>
@@ -33,7 +35,9 @@
       <div class="userProfile_right">
         <div class="my_profile">
           <div class="my_profile_img circle">
-            <img th:src="${profile.attachUser.thumbPath != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}" src="/image/mypage/profile.jpg" alt="프로필 이미지">
+            <img
+              th:src="${profile.attachUser.thumbPath != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+              src="/image/mypage/profile.jpg" alt="프로필 이미지">
           </div>
           <div class="my_profile_id">
             <span th:text="${profile.name}"></span>
@@ -46,16 +50,17 @@
       <div class="userProfile_left">
         <div class="userProfile_scroll">
           <ul class="userProfile_diary show">
-
-            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" >
+            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}">
               <div class="circle up_diary_thumbnail">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
-                 <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
+                  <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
                 </a>
               </div>
               <div class="up_diary_text">
                 <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
-                <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
+                <span
+                  th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
+                  class="up_diary_period">2022.10.19 - 2022.10.20</span>
               </div>
               <div class="up_diary_btn">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>
@@ -67,7 +72,7 @@
           </ul>
 
           <ul class="userProfile_tegged">
-            <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}" >
+            <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
               <div class="circle up_diary_thumbnail">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
                   <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
@@ -75,7 +80,9 @@
               </div>
               <div class="up_diary_text">
                 <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
-                <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
+                <span
+                  th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
+                  class="up_diary_period">2022.10.19 - 2022.10.20</span>
               </div>
               <div class="up_diary_btn">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>

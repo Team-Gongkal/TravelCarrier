@@ -500,3 +500,50 @@ $(document).on("click",".updateWeekly", function(event){
     $('.weekly_finish_even').show();
   }
   
+  //가로 슬라이드 구현 - by윤아
+  $(window).on('load', function(){
+    var weekly_scroll = $('.weekly_scroll');
+    var window_width = $(window).outerWidth();
+    var header_width = $('header').outerWidth();
+    console.log('보여지는 화면'+ window_width);//1514화면의 너비
+
+    //스크롤 포함 전체 너비 구하기
+    var scroll_width = weekly_scroll.prop('scrollWidth');
+    console.log('스크롤 전체너비'+scroll_width);
+    
+    //스크롤 양 체크하기
+    var scroll = weekly_scroll.scrollLeft();
+    console.log('스크롤 양'+ scroll);
+
+    //소수점 반올림
+    function vat(val){
+      var value = val.toFixed(0);
+      return parseInt(value);
+    }
+    
+    let num = 0; //첫페이지에서 스크롤되는 횟수(첫페이지 동영상 크기 변환) -스크롤을 할 때마다 증가하며 그에 따라서 스크롤 양을 증가시키기
+
+    let delta; //스크롤의 방향을 판별하기 위한 변수로 할당은 스크롤이벤트 안에서 함
+
+    let moving_cnt= (scroll_width - window_width + header_width) / 100; //무빙카운트, 3114 - 화면너비1514 -헤더너비 = 1600/50 해야됨
+    console.log(moving_cnt); //32번
+
+    //mousewheel DOMMouseScroll 스크롤 이벤트
+    $(window).on("wheel DOMMouseScroll", function (e) {
+      delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
+    
+      if (delta < 0) {//마우스 휠 방향아래
+        if(num <= moving_cnt){
+          num++;
+          $(weekly_scroll).stop().animate({ scrollLeft : num * 100}, 500, 'easeOutCubic');
+          console.log("+"+num);
+        }
+      } else if (delta > 0) {//마우스 휠 방향이 위일떄
+        if(num >= 0){
+          num--;
+          $(weekly_scroll).stop().animate( { scrollLeft : (num * 100) - 100}, 500,'easeOutCubic');
+          console.log("-"+num)
+        }
+      }
+    });
+  })
