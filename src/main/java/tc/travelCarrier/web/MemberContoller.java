@@ -1,6 +1,7 @@
 package tc.travelCarrier.web;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.domain.Follower;
+import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.User;
-import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 
@@ -37,7 +37,6 @@ public class MemberContoller {
         return "test/login";
     }
 
-
     @GetMapping("/member/sign")
     public String memberSignIn(){
         return "test/sign";
@@ -53,38 +52,35 @@ public class MemberContoller {
     // 로그인했는지 확인하기
     @GetMapping("/member/login/check")
     @ResponseBody
-    public String checkLogin(){
-        String check;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal().equals("anonymousUser")) check = "anonymousUser";
-        else check = "loginUser";
+    public String checkLogin(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        System.out.println("어노테이션 있음");
 
-        return check;
+        return "false";
     }
 
-        // 마이페이지
+    // 마이페이지
     @GetMapping("/member/mypage")
-    public String myPage(Model model){
+    public String myPage(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails){
 /*      본인 프로필(이메일, 프로필사진, 이름, 배경사진) : profile
         내 다이어리(썸네일, 제목, 기간, 링크) : diaryList
         태그된 다이어리 (썸네일, 제목, 기간, 글작성자, 링크) : tagDiaryList
         친구목록 (친구이름, 친구프사, 친구배사, 친구프로필링크) : followers
         */
-        User suser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User activeUser = memberRepository.findUserById(suser.getId());
+        User user = principalDetails.getUser();
 
-        model.addAttribute("profile",activeUser);
+        model.addAttribute("profile",user);
+        model.addAttribute("user",user);
         // 이메일 : profile.email, 프사 : profile.attachUser.thumbPath, 이름 : profile.name, 배경사진 : profile.attachUserBackground.thumbPath
 
-        model.addAttribute("diaryList",activeUser.getWeeklys());
+        model.addAttribute("diaryList",user.getWeeklys());
         // (반복문 필요 : 각 요소를 diary로) 썸네일 : diary.attachWeekly.thumbPath,
         // 제목 : diary.title, 기간 : diary.travelDate.sDate ~ diary.travelDate.eDate, 링크 : "TravelCarrier/weekly/"+diary.id
 
-        model.addAttribute("tagDiaryList", weeklyRepository.getTagWeeklys(activeUser));
+        model.addAttribute("tagDiaryList", weeklyRepository.getTagWeeklys(user));
         // (반복문 필요 : 각 요소를 diary로) 썸네일 : diary.attachWeekly.thumbPath,
         // 제목 : diary.title, 기간 : diary.travelDate.sDate ~ diary.travelDate.eDate, 링크 : "TravelCarrier/weekly/"+diary.id
 
-        model.addAttribute("followers",activeUser.getFollowers());
+        model.addAttribute("followers",user.getFollowers());
         // 반복문 필요 : 각 요소를 follower로
         // 친구이름 : follower.follower.name, 친구프사 :  follower.follower.attachUser.thumbPath,
         // 친구배사 :  follower.follower.attachUserBackground.thumbPath, 친구 프로필 링크 : "TravelCarrier/member/"+follower.follower.email,
@@ -110,6 +106,9 @@ public class MemberContoller {
 
         return "/test/mypage";
     }
+
+
+
 
 }
 

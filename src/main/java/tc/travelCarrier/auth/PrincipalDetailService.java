@@ -1,4 +1,4 @@
-package tc.travelCarrier.service;
+package tc.travelCarrier.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,8 @@ import tc.travelCarrier.repository.MemberRepository;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MemberService implements UserDetailsService {
+public class PrincipalDetailService implements UserDetailsService {
+
     private final MemberRepository memberRepository;
 
     @Override
@@ -20,6 +21,7 @@ public class MemberService implements UserDetailsService {
         User user = memberRepository.findUserByEmail(email);
         if(user == null) throw new UsernameNotFoundException("NotFound account");
 
-        return user;
+        return new PrincipalDetails(user);
     }
+
 }

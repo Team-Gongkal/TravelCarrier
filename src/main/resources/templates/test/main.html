@@ -21,8 +21,7 @@
                     <p class="travel_city">praha</p>
                 </div>
             </a></div>-->
-
-        <div th:if="${user}" class="weekly_thumbnails">
+        <div th:if="${user != null}" class="weekly_thumbnails">
             <th:block th:each="weekly : ${user.weeklys}">
                 <div th:style="'background-image: url(' + ${weekly.attachWeekly.thumbPath} + ')'"
                     class="thumbnail thumbnail01">

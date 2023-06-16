@@ -2,7 +2,12 @@ package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseBody;
+import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
 
@@ -20,13 +25,14 @@ public class MainController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/")
-    public String mainPage(Model model){
-        //로그인한 유저의 정보
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = memberRepository.findUserById(activeUser.getId());
-        model.addAttribute("user", user);
+    @Transactional
+    public String mainPage(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails){
 
-        System.out.println("사이즈 나오니? = "+user.getWeeklys().size());
+        User user1 = principalDetails.getUser();
+        System.out.println("user1 :" +user1.getEmail()+", "+user1.getName());
+        model.addAttribute("user", user1);
+
         return "test/main";
     }
+
 }

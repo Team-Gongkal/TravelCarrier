@@ -33,7 +33,7 @@
       <div class="userProfile_right">
         <div class="my_profile">
           <div class="my_profile_img circle">
-            <img th:src="${profile.attachUser.thumbPath != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}" src="/image/mypage/profile.jpg" alt="프로필 이미지">
+            <img th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}" src="/image/mypage/profile.jpg" alt="프로필 이미지">
           </div>
           <div class="my_profile_id">
             <span th:text="${profile.name}"></span>
