@@ -28,24 +28,20 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         OAuth2UserInfo oAuth2UserInfo = null;	//
-        String provider = userRequest.getClientRegistration().getRegistrationId();    //google
-        String providerId="", password="", email="";
-        Role role = Role.ROLE_USER;
-        String uuid = UUID.randomUUID().toString().substring(0, 6);
+        String provider = userRequest.getClientRegistration().getRegistrationId();
+
         if(provider.equals("google")){
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
-            provider = userRequest.getClientRegistration().getRegistrationId();    //google
-            providerId =  oAuth2UserInfo.getProviderId();
-            password = bCryptPasswordEncoder.encode("패스워드"+uuid);  // 사용자가 입력한 적은 없지만 만들어준다
-            email = oAuth2User.getAttribute("email");
-        }
-        else if(provider.equals("naver")){
+        } else if(provider.equals("naver")){
             oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
-            provider = userRequest.getClientRegistration().getRegistrationId();    //google
-            providerId =  oAuth2UserInfo.getProviderId();
-            password = bCryptPasswordEncoder.encode("패스워드"+uuid);  // 사용자가 입력한 적은 없지만 만들어준다
-            email = provider+"_"+providerId; //네이버는 자체 email을 제공하지 않으므로 식별자로 대체함
+        } else if(provider.equals("kakao")){	//추가
+            oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         }
+        Role role = Role.ROLE_USER;
+        String uuid = UUID.randomUUID().toString().substring(0, 6);
+        String providerId =  oAuth2UserInfo.getProviderId();
+        String password = bCryptPasswordEncoder.encode("패스워드"+uuid);
+        String email = provider+"_"+providerId; //
 
         User byUsername = memberRepository.findUserByEmail(email);
         //DB에 없는 사용자라면 회원가입처리
