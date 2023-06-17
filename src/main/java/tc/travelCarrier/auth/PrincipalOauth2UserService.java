@@ -9,8 +9,11 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tc.travelCarrier.domain.AttachUser;
+import tc.travelCarrier.domain.AttachUserBackground;
 import tc.travelCarrier.domain.Role;
 import tc.travelCarrier.domain.User;
+import tc.travelCarrier.repository.AttachRepository;
 import tc.travelCarrier.repository.MemberRepository;
 
 import java.util.Random;
@@ -18,8 +21,10 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     //DefaultOAuth2UserService는 OAuth2로그인 시 loadUserByUsername메서드로 로그인한 유저가 DB에 저장되어있는지를 찾는다.
+    private final AttachRepository attachRepository;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
@@ -51,6 +56,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider).providerId(providerId)
                     .build();
             memberRepository.save(byUsername);
+            attachRepository.saveProfilePic(AttachUser.builder().title("default_profile.jpg").user(byUsername).path("D:/TotalWorkspace/travelCarrier_workspace/travelCarrier/src/main/resources/static/image/mypage/default_profile.jpg").build());
+            attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg").user(byUsername).path("D:/TotalWorkspace/travelCarrier_workspace/travelCarrier/src/main/resources/static/image/mypage/default_bg.jpg").build());
         }
 
         return new PrincipalDetails(byUsername, oAuth2UserInfo);
