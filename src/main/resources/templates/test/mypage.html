@@ -5,102 +5,102 @@
 <th:block th:replace="fragments/head :: headFragment"></th:block>
 
 <body>
-  <th:block th:replace="fragments/header :: headerFragment"></th:block>
-  <main id="userProfile_wrap">
-    <div class="userProfile_top">
-      <div class="userProfile_bg">
-        <img th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}" alt="유저프로필 배경이미지">
-      </div>
-      <div class="userProfile_tab">
-        <ul>
-          <li data-id="1" class="on">
-            <span>diary</span>
-          </li>
-          <li data-id="2">
-            <span>tagged</span>
-          </li>
-          <li data-id="3">
-            <span>review</span>
-          </li>
-          <li data-id="4">
-            <span>travler</span>
-          </li>
-        </ul>
-      </div>
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<main id="userProfile_wrap">
+  <div class="userProfile_top">
+    <div class="userProfile_bg">
+      <img th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}" alt="유저프로필 배경이미지">
     </div>
-
-    <div class="userProfile_bottom">
-      <div class="userProfile_right">
-        <div class="my_profile">
-          <div class="my_profile_img circle">
-            <img th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}" src="/image/mypage/profile.jpg" alt="프로필 이미지">
-          </div>
-          <div class="my_profile_id">
-            <span th:text="${profile.name}"></span>
-            <span id="edit_profile">
-              <img src="/image/mypage/icon/pencil.png" alt="프로필 수정아이콘">
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="userProfile_left">
-        <div class="userProfile_scroll">
-          <ul class="userProfile_diary show">
-
-            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" >
-              <div class="circle up_diary_thumbnail">
-                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
-                 <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
-                </a>
-              </div>
-              <div class="up_diary_text">
-                <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
-                <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
-              </div>
-              <div class="up_diary_btn">
-                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>
-                <button type="button">
-                  삭제하기
-                </button>
-              </div>
-            </li>
-          </ul>
-
-          <ul class="userProfile_tegged">
-            <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}" >
-              <div class="circle up_diary_thumbnail">
-                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
-                  <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
-                </a>
-              </div>
-              <div class="up_diary_text">
-                <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
-                <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
-              </div>
-              <div class="up_diary_btn">
-                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>
-                <button type="button">
-                  삭제하기
-                </button>
-              </div>
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    </div>
-  </main>
-  <div class="edit_profile modal_bg">
-    <div>
+    <div class="userProfile_tab">
       <ul>
-        <li>프로필 수정</li>
-        <li>계정정보</li>
-        <li>로그아웃</li>
-        <li>취소</li>
+        <li data-id="1" class="on">
+          <span>diary</span>
+        </li>
+        <li data-id="2">
+          <span>tagged</span>
+        </li>
+        <li data-id="3">
+          <span>review</span>
+        </li>
+        <li data-id="4">
+          <span>travler</span>
+        </li>
       </ul>
     </div>
   </div>
-  <script src="/script/mypage.js"></script>
+
+  <div class="userProfile_bottom">
+    <div class="userProfile_right">
+      <div class="my_profile">
+        <div class="my_profile_img circle">
+          <img th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}" src="/image/mypage/profile.jpg" alt="프로필 이미지">
+        </div>
+        <div class="my_profile_id">
+          <span th:text="${profile.name}"></span>
+          <span id="edit_profile">
+              <img src="/image/mypage/icon/pencil.png" alt="프로필 수정아이콘">
+            </span>
+        </div>
+      </div>
+    </div>
+    <div class="userProfile_left">
+      <div class="userProfile_scroll">
+        <ul class="userProfile_diary show">
+
+          <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" >
+            <div class="circle up_diary_thumbnail">
+              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
+                <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
+              </a>
+            </div>
+            <div class="up_diary_text">
+              <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
+              <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
+            </div>
+            <div class="up_diary_btn">
+              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>
+              <button type="button">
+                삭제하기
+              </button>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="userProfile_tegged">
+          <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}" >
+            <div class="circle up_diary_thumbnail">
+              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
+                <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
+              </a>
+            </div>
+            <div class="up_diary_text">
+              <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
+              <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
+            </div>
+            <div class="up_diary_btn">
+              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>
+              <button type="button">
+                삭제하기
+              </button>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</main>
+<div class="edit_profile modal_bg">
+  <div>
+    <ul>
+      <li>프로필 수정</li>
+      <li>계정정보</li>
+      <li>로그아웃</li>
+      <li>취소</li>
+    </ul>
+  </div>
+</div>
+<script src="/script/mypage.js"></script>
 
 
 </body>

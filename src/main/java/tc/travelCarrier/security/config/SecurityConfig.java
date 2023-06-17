@@ -6,12 +6,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 import tc.travelCarrier.auth.PrincipalDetailService;
 import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.auth.PrincipalOauth2UserService;
 import tc.travelCarrier.security.AuthFailureHandler;
 import tc.travelCarrier.security.AuthSuccessHandler;
 
@@ -19,24 +21,33 @@ import tc.travelCarrier.security.AuthSuccessHandler;
 @EnableWebSecurity // 시큐리티 필터
 @EnableGlobalMethodSecurity(prePostEnabled = true) //특정 페이지에 특정 권한이 있는 유저만 접근 허용할 경우 미리 인증을 체크
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final BCryptPasswordEncoder passwordEncoder ;
     private final PrincipalDetailService principalDetailService;
     private final AuthSuccessHandler authSuccessHandler;
     private final AuthFailureHandler authFailureHandler;
+    private final PrincipalOauth2UserService principalOauth2UserService ;
+
 
 
     //bCryptPasswordEncoder는 스프링 시큐리티에서 제공하는 비밀번호 암호화 객체라는 해시함수를 사용하여 패스워드를 암호화.
     //회원 비밀번호 등록시 해당 메서드를 이용하여 암호화해야 로그인 처리시 동일한 해시로 비교한다.
-    @Bean
-    public BCryptPasswordEncoder encryptPassword() {
-        return new BCryptPasswordEncoder();
-    }
+
 
 
     //시큐리티가 로그인 과정에서 pw를 가로챌때 해당 해쉬로 암호화해서 비교
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(principalDetailService).passwordEncoder(encryptPassword());
+        auth.userDetailsService(principalDetailService).passwordEncoder(passwordEncoder);
     }
+/*
+    @Bean
+    public BCryptPasswordEncoder encryptPassword() {
+        return new BCryptPasswordEncoder();
+    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(principalDetailService).passwordEncoder(encryptPassword());
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -80,7 +91,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().rememberMe() // 로그인 유지
                 .alwaysRemember(false) // 항상 기억할 것인지 여부
                 .tokenValiditySeconds(43200) // in seconds, 12시간 유지
-                .rememberMeParameter("remember-me");
+                .rememberMeParameter("remember-me")
+
+                .and()					//추가
+                .oauth2Login()				// OAuth2기반의 로그인인 경우
+                .loginPage("/TravelCarrier/member/login")		// 인증이 필요한 URL에 접근하면 /loginForm으로 이동
+                .defaultSuccessUrl("/TravelCarrier/")			// 로그인 성공하면 "/" 으로 이동
+                .failureUrl("/TravelCarrier/member/login")		// 로그인 실패 시 /loginForm으로 이동
+                .userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
+                .userService(principalOauth2UserService);	//사용자정보를 처리할 때 사용한다
 
 
     }

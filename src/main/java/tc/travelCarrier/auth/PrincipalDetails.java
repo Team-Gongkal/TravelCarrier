@@ -4,19 +4,27 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import tc.travelCarrier.domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Getter
 @ToString
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;
-
+    private OAuth2UserInfo oAuth2UserInfo;
     public PrincipalDetails(User user){
         this.user = user;
+    }
+
+    //OAuth2User : OAuth2 로그인 시 사용
+    public PrincipalDetails(User user, OAuth2UserInfo oAuth2UserInfo) {
+        this.user = user;
+        this.oAuth2UserInfo = oAuth2UserInfo;
     }
 
     /**
@@ -103,5 +111,21 @@ public class PrincipalDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    /**
+     * OAuth2User 구현
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAttributes() {
+        return oAuth2UserInfo.getAttributes();
+    }
 
+    /**
+     * OAuth2User 구현
+     * @return
+     */
+    @Override
+    public String getName() {
+        return oAuth2UserInfo.getProviderId();
+    }
 }

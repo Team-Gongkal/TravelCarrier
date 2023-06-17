@@ -48,6 +48,11 @@ public class User {
     @Column(name="USER_TIME")
     private Timestamp createTime;
 
+    @Column(name="USER_PROVIDER")
+    private String provider;    // oauth2를 이용할 경우 어떤 플랫폼을 이용하는지
+    @Column(name="USER_PROVIDERID")
+    private String providerId;  // oauth2를 이용할 경우 아이디값
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private AttachUser attachUser;
 
@@ -67,5 +72,13 @@ public class User {
         this.email = email;
         this.role = role;
     }
-
+    @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
+    public User(String username, String password, String email, Role role, String provider, String providerId) {
+        this.name = username;
+        this.pw = password;
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
 }
