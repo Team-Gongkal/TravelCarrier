@@ -46,7 +46,7 @@ public class ReplyController {
         else originReply = null;
 
         //로그인한 유저의 정보
-        User user = principalDetails.getUser();
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         int replyId = replyService.saveReply(new Reply(
                 attachService.findAttachDaily(dto.getAttachNo()),

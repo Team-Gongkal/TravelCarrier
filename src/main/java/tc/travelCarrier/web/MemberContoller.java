@@ -66,7 +66,7 @@ public class MemberContoller {
         태그된 다이어리 (썸네일, 제목, 기간, 글작성자, 링크) : tagDiaryList
         친구목록 (친구이름, 친구프사, 친구배사, 친구프로필링크) : followers
         */
-        User user = principalDetails.getUser();
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         model.addAttribute("profile",user);
         model.addAttribute("user",user);

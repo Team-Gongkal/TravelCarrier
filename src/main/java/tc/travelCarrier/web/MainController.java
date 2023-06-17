@@ -28,9 +28,8 @@ public class MainController {
     @Transactional
     public String mainPage(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails){
 
-        User user1 = principalDetails.getUser();
-        System.out.println("user1 :" +user1.getEmail()+", "+user1.getName());
-        model.addAttribute("user", user1);
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        model.addAttribute("user", user);
 
         return "test/main";
     }

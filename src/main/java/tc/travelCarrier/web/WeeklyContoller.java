@@ -1,6 +1,7 @@
 package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class WeeklyContoller {
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         //로그인한 유저의 정보
-        User user = principalDetails.getUser();
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         model.addAttribute("user", user);
 
         return "test/weekly_form";
@@ -52,7 +53,7 @@ public class WeeklyContoller {
             System.out.println("Validation Error");
         }
         //로그인한 유저의 정보
-        User user = principalDetails.getUser();
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         List<User> goWithList = new ArrayList<User>();
         if(form.getGowiths() != null) {
@@ -106,10 +107,10 @@ public class WeeklyContoller {
         }
 
         //로그인한 유저의 정보
-        User user = principalDetails.getUser();
-        List<Follower> followerList = user.getFollowers();//안더ㅣ네;
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         model.addAttribute("user", user);
+        //model.addAttribute("followerList", followerList);
         model.addAttribute("allWdList", allWdList);
         model.addAttribute("weekly",weekly);
         return "test/weekly";

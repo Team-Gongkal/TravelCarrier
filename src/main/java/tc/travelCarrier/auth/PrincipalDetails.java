@@ -5,10 +5,12 @@ import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -128,4 +130,5 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public String getName() {
         return oAuth2UserInfo.getProviderId();
     }
+
 }

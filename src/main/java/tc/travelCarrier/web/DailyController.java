@@ -53,7 +53,7 @@ public class DailyController {
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
 
         //로그인한 유저의 정보
-        User user = principalDetails.getUser();
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         model.addAttribute("user", user);
 
         model.addAttribute("period", period);
