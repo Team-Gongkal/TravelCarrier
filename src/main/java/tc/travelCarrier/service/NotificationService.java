@@ -45,9 +45,7 @@ public class NotificationService {
         return sseEmitter;
     }
 
-    public List<Notification> findNotificationByUserIdAndRead() {
-        User suser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User activeUser = memberRepository.findUserById(suser.getId());
+    public List<Notification> findNotificationByUserIdAndRead(User activeUser) {
         // 읽음처리
         List<Notification> list = notificationRepository.findByReceiver(activeUser);
         for(Notification notification : list) notification.setIsRead(true);
@@ -61,11 +59,8 @@ public class NotificationService {
     }
 
     //댓글작성알림 저장
-    public void saveReplyNotification(Reply reply) {
+    public void saveReplyNotification(Reply reply, User sender) {
         //AttachDaily ad, String text, User user, CrudDate cd, Reply origin
-
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User sender = memberRepository.findUserById(activeUser.getId());
 
         //(User sender, User receiver, String notificationType, String content, Boolean isRead)
         String type;
@@ -90,9 +85,7 @@ public class NotificationService {
     }
 
     // 위클리 태그 알림 저장
-    public void saveTagNotification(Weekly weekly) {
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User sender = memberRepository.findUserById(activeUser.getId());
+    public void saveTagNotification(Weekly weekly, User sender) {
 
         for(Gowith go : weekly.getGowiths()) {
             Notification notification = Notification.builder().

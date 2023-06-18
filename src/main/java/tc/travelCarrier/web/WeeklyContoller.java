@@ -1,15 +1,11 @@
 package tc.travelCarrier.web;
 
-import static tc.travelCarrier.domain.Weekly.*;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.CrudDate;
 import tc.travelCarrier.domain.OpenStatus;
 import tc.travelCarrier.domain.TravelDate;
@@ -44,10 +41,9 @@ public class WeeklyContoller {
     private final MemberRepository memberRepository;
 
     @GetMapping("/weeklyForm")
-    public String getWeeklyForm(Model model) throws Exception {
+    public String getWeeklyForm(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         //로그인한 유저의 정보
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = memberRepository.findUserById(activeUser.getId());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         model.addAttribute("user", user);
 
         return "test/weekly_form";
@@ -60,14 +56,13 @@ public class WeeklyContoller {
 
     @PostMapping(value="/weeklyForm")
     @ResponseBody
-    public Integer regist(@Valid WeeklyForm form, BindingResult result,
-                       @RequestParam("status") OpenStatus status) throws Exception {
+    public Integer regist(@Valid WeeklyForm form, BindingResult result, @RequestParam("status") OpenStatus status,
+                          @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
         //로그인한 유저의 정보
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = memberRepository.findUserById(activeUser.getId());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         List<User> goWithList = new ArrayList<User>();
         if(form.getGowiths() != null) {
@@ -76,7 +71,7 @@ public class WeeklyContoller {
         int weeklyId = weeklyService.register(form.getFile(),
                 createWeekly(user, null, form.getTitle(), form.getNation(),
                 new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
-                        status, form.getText(), goWithList)
+                        status, form.getText(), goWithList), user
         );
 
         return weeklyId;
@@ -89,7 +84,7 @@ public class WeeklyContoller {
      * @return :
      * */
     @GetMapping("/weekly/{weeklyId}")
-    public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model) {
+    public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
         List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
@@ -121,13 +116,12 @@ public class WeeklyContoller {
         }
 
         //로그인한 유저의 정보
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = memberRepository.findUserById(activeUser.getId());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         model.addAttribute("user", user);
+        //model.addAttribute("followerList", followerList);
         model.addAttribute("allWdList", allWdList);
         model.addAttribute("weekly",weekly);
-        System.out.println("띄어쓰기 : "+weekly.getText());
         return "test/weekly";
     }
     @PostMapping("/weekly/{weeklyId}/update")

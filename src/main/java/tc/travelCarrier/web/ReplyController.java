@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.CrudDate;
 import tc.travelCarrier.domain.Reply;
@@ -35,7 +37,7 @@ public class ReplyController {
 
     // 댓글/답글 등록 로직
     @PostMapping("/reply/create")
-    public ResponseEntity<Map<String, Object>> createReply(@RequestBody ReplyDTO dto) throws Exception {
+    public ResponseEntity<Map<String, Object>> createReply(@RequestBody ReplyDTO dto,  @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         // origin=0이면 댓글, 1이상이면 답글
         //원댓글 찾기
         System.out.println(dto.toString());
@@ -44,8 +46,7 @@ public class ReplyController {
         else originReply = null;
 
         //로그인한 유저의 정보
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = memberRepository.findUserById(activeUser.getId());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         int replyId = replyService.saveReply(new Reply(
                 attachService.findAttachDaily(dto.getAttachNo()),
@@ -53,7 +54,7 @@ public class ReplyController {
                 user,
                 new CrudDate(dto.getCdate(), dto.getUdate()),
                 originReply
-        ));
+        ), user);
 
         // 글 작성자
         User weeklyUser = attachService.findAttachDaily(dto.getAttachNo()).getDaily().getWeekly().getUser();

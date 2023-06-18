@@ -2,36 +2,29 @@ package tc.travelCarrier.domain;
 
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
 @Entity
 @Getter @Setter
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User implements UserDetails {
+public class User {
     public User(){}
     public User(String email, String pw, String name){
         this.email = email;
         this.pw = pw;
         this.name = name;
     }
-
     @Builder
-    public User(String email, AttachUser attachUser, String name){
+    public User(String email, String pw){
         this.email = email;
-        this.attachUser = attachUser;
-        this.name = name;
+        this.pw = pw;
+        this.name = email;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,57 +40,45 @@ public class User implements UserDetails {
     @Column(name="USER_NAME")
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="USER_ROLE")
+    private Role role;
+
+    @CreationTimestamp  //자동으로 만들어준다
+    @Column(name="USER_TIME")
+    private Timestamp createTime;
+
+    @Column(name="USER_PROVIDER")
+    private String provider;    // oauth2를 이용할 경우 어떤 플랫폼을 이용하는지
+    @Column(name="USER_PROVIDERID")
+    private String providerId;  // oauth2를 이용할 경우 아이디값
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private AttachUser attachUser;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private AttachUserBackground attachUserBackground;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Weekly> weeklys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")//위클리폼을 위한 로딩
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)//위클리폼을 위한 로딩
     private List<Follower> followers = new ArrayList<>();
 
-    // 계정이 갖고있는 권한 목록은 리턴
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection <GrantedAuthority> collectors = new ArrayList<>();
-        collectors.add(() -> {
-            return "계정별 등록할 권한";
-        });
-
-        return collectors;
+    @Builder(builderClassName = "UserDetailRegister", builderMethodName = "userDetailRegister")
+    public User(String username, String password, String email, Role role) {
+        this.name = username;
+        this.pw = password;
+        this.email = email;
+        this.role = role;
     }
-
-    @Override
-    public String getPassword() {
-        return pw;
+    @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
+    public User(String username, String password, String email, Role role, String provider, String providerId) {
+        this.name = username;
+        this.pw = password;
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
     }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-
 }

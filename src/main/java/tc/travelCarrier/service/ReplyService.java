@@ -28,9 +28,9 @@ public class ReplyService {
 
     private final EntityManager em;
 
-    public int saveReply(Reply reply){
+    public int saveReply(Reply reply, User user){
         int replyId = replyRepository.save(reply);
-        notificationService.saveReplyNotification(reply);
+        notificationService.saveReplyNotification(reply, user);
         return replyId;
     }
 

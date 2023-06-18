@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.Notification;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.NotificationDTO;
@@ -32,17 +33,17 @@ public class NotificationController {
     public static Map<Integer, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
 
     @GetMapping(value = "/sub", produces = "text/event-stream")
-    public SseEmitter subscribe(@AuthenticationPrincipal User activeUser,
+    public SseEmitter subscribe(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                 @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-        System.out.println("액티브 : "+activeUser.getId());
-        int userId = activeUser.getId();
+        System.out.println("액티브 : "+principalDetails.getUser().getId());
+        int userId = principalDetails.getUser().getId();
 
         return notificationService.subscribe(userId);
     }
 
     @GetMapping(value = "/TravelCarrier/notification")
-    public ResponseEntity<List<NotificationDTO>> getNotification() {
-        List<Notification> list = notificationService.findNotificationByUserIdAndRead();
+    public ResponseEntity<List<NotificationDTO>> getNotification(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        List<Notification> list = notificationService.findNotificationByUserIdAndRead(principalDetails.getUser());
         // sender와 receiver의 User 그자체(email,thumbPath,닉네임)
         // id와 isread와 content까지
         // 시간, 제목, url도 필요!!!

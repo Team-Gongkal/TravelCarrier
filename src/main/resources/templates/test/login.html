@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- head 추가해줌 -->
 <th:block th:replace="fragments/head :: headFragment"></th:block>
@@ -136,7 +137,16 @@
       </section>
     </div>
     <div id="login_wrap" class="modal_bg">
-      <div>
+        <div sec:authorize="isAuthenticated()" >
+          <div class=" login">
+            <p>이미 로그인 된 사용자 입니다</p>
+          </div>
+          <button class="close">
+            <i class="xi-close"></i>
+          </button>
+        </div>
+
+      <div sec:authorize="isAnonymous()" >
         <div class="welcome_text">
           <p>가입하셈요</p>
         </div>
@@ -163,15 +173,15 @@
             <button onclick="login_submit()" type="submit">로그인</button>
           </form>
           <div class="lns_signup_with">
-            <a href="#구글">
+            <a href="/oauth2/authorization/google">
               <i class="xi-google"></i>
               <span>Google</span>
             </a>
-            <a href="#카카오">
+            <a href="/oauth2/authorization/kakao">
               <i class="xi-kakaotalk"></i>
               <span>Kakao</span>
             </a>
-            <a href="#네이버">
+            <a href="/oauth2/authorization/naver">
               <i class="xi-naver"></i>
               <span>Naver</span>
             </a>

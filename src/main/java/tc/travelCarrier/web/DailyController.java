@@ -2,6 +2,7 @@ package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.dto.DailyDTOComparator;
@@ -35,7 +37,7 @@ public class DailyController {
      * 후자는 위클리페이지에서  tDate, title 셋팅해서 ajax로 넘겨줘야함..
      * */
     @GetMapping("/weekly/{weeklyId}/daily")
-    public String getDaily(@PathVariable("weeklyId") int weeklyId, Model model) {
+    public String getDaily(@PathVariable("weeklyId") int weeklyId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
         List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
         Collections.sort(dailies, new DailyDTOComparator());
@@ -51,8 +53,7 @@ public class DailyController {
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
 
         //로그인한 유저의 정보
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = memberRepository.findUserById(activeUser.getId());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         model.addAttribute("user", user);
 
         model.addAttribute("period", period);
