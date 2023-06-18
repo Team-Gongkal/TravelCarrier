@@ -1,15 +1,14 @@
 package tc.travelCarrier.web;
 
-import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.context.SecurityContextHolder;
-import tc.travelCarrier.domain.User;
-import tc.travelCarrier.domain.Weekly;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import tc.travelCarrier.domain.User;
+import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.repository.MemberRepository;
 
 @Controller
@@ -27,6 +26,10 @@ public class MainController {
         model.addAttribute("user", user);
 
         System.out.println("사이즈 나오니? = "+user.getWeeklys().size());
+        for(Weekly w : user.getWeeklys()){
+            System.out.println("위클리 제먹 : "+w.getTitle()
+            +", 경로 : "+w.getAttachWeekly().getThumbPath());
+        }
         return "test/main";
     }
 }

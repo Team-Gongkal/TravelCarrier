@@ -1,9 +1,16 @@
 package tc.travelCarrier.domain;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,6 +32,10 @@ public abstract class Attach {
     protected String thumbPath;
 
     public String getThumbPath() {
-        return thumbPath.substring(81);
+        //서현이거
+        // return thumbPath.substring(81);
+        
+        //윤아거
+        return thumbPath.substring(86);
     }
 }

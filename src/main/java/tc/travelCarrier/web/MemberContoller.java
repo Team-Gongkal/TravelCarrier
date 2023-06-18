@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.User;
-import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 
@@ -74,6 +72,7 @@ public class MemberContoller {
         User activeUser = memberRepository.findUserById(suser.getId());
 
         model.addAttribute("profile",activeUser);
+        model.addAttribute("user",activeUser);
         // 이메일 : profile.email, 프사 : profile.attachUser.thumbPath, 이름 : profile.name, 배경사진 : profile.attachUserBackground.thumbPath
 
         model.addAttribute("diaryList",activeUser.getWeeklys());

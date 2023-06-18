@@ -1,24 +1,39 @@
 package tc.travelCarrier.web;
 
-import lombok.RequiredArgsConstructor;
+import static tc.travelCarrier.domain.Weekly.*;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import tc.travelCarrier.domain.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.RequiredArgsConstructor;
+import tc.travelCarrier.domain.CrudDate;
+import tc.travelCarrier.domain.OpenStatus;
+import tc.travelCarrier.domain.TravelDate;
+import tc.travelCarrier.domain.User;
+import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.WeeklyService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.*;
-
-import static tc.travelCarrier.domain.Weekly.createWeekly;
 
 @Controller
 @RequiredArgsConstructor
