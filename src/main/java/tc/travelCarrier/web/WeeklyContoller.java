@@ -1,7 +1,11 @@
 package tc.travelCarrier.web;
 
+import static tc.travelCarrier.domain.Weekly.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
