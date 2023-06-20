@@ -251,7 +251,7 @@ if (remain === 0) {
 }
 
 //가로 슬라이드 구현 - by윤아
-$(window).on("load", function (e) {
+$(window).on("load", function () {
   var weekly_scroll = $(".weekly_scroll");
   var window_width = $(window).outerWidth();
   var header_width = $("header").outerWidth();
@@ -275,7 +275,7 @@ $(window).on("load", function (e) {
   //mousewheel DOMMouseScroll 스크롤 이벤트
   $(window).on("wheel DOMMouseScroll", scrollHandler);
 
-  function scrollHandler() {
+  function scrollHandler(e) {
     delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
 
     if (delta < 0) {
