@@ -1,40 +1,27 @@
 package tc.travelCarrier.web;
 
-import static tc.travelCarrier.domain.Weekly.*;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import javax.validation.Valid;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import tc.travelCarrier.auth.PrincipalDetails;
-import tc.travelCarrier.domain.CrudDate;
-import tc.travelCarrier.domain.OpenStatus;
-import tc.travelCarrier.domain.TravelDate;
-import tc.travelCarrier.domain.User;
-import tc.travelCarrier.domain.Weekly;
+import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.MemberRepository;
+import tc.travelCarrier.repository.WeeklyRepository;
 import tc.travelCarrier.service.WeeklyService;
+
+import javax.validation.Valid;
+import java.util.*;
+
+import static tc.travelCarrier.domain.Weekly.createWeekly;
+import static tc.travelCarrier.security.AuthChecker.checkWeeklyAuth;
+import static tc.travelCarrier.security.AuthChecker.getReadAndUpdateAuth;
 
 @Controller
 @RequiredArgsConstructor
@@ -89,7 +76,31 @@ public class WeeklyContoller {
      * */
     @GetMapping("/weekly/{weeklyId}")
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        // if) 공개범위 : ALL : 전체공개, FOLLOW : 팔로워공개, ME : 나에게만
         Weekly weekly = weeklyService.findWeekly(weeklyId);
+        List<WeeklyDTO> allWdList = getAllWeeklyData(weekly, weeklyId);
+
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+
+        // 읽기,쓰기 권한 처리
+        String[] answer = getReadAndUpdateAuth(weekly,user);
+        model.addAttribute("readAuth", answer[0]);
+        model.addAttribute("updateAuth", answer[1]);
+        if(answer[0].equals("GRANTED") && answer[1].equals("DENIED")) {
+            List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
+            for(WeeklyDTO dto : wdList) System.out.println("dro : "+dto.toString());
+            model.addAttribute("wdList",wdList);
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("allWdList", allWdList);
+        for(WeeklyDTO dto : allWdList) System.out.println("allWdList : "+dto.toString());
+        model.addAttribute("weekly",weekly);
+        return "test/weekly";
+    }
+
+
+    private List<WeeklyDTO> getAllWeeklyData(Weekly weekly, int weeklyId) {
         long period = ((weekly.getTravelDate().getEDate().getTime() - weekly.getTravelDate().getSDate().getTime()) / 1000)/ (24*60*60)+1;
         List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
 
@@ -119,15 +130,9 @@ public class WeeklyContoller {
             System.out.println("allWdList : "+wd.toString());
         }
 
-        //로그인한 유저의 정보
-        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
-
-        model.addAttribute("user", user);
-        //model.addAttribute("followerList", followerList);
-        model.addAttribute("allWdList", allWdList);
-        model.addAttribute("weekly",weekly);
-        return "test/weekly";
+        return allWdList;
     }
+
     @PostMapping("/weekly/{weeklyId}/update")
     @ResponseBody
     public int updateWeekly(@Valid WeeklyForm form, BindingResult result,

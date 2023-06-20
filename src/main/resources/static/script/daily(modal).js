@@ -335,8 +335,10 @@ function checkThumbnails(dataArr) {
       }
     }
     if (!flag) {
+      if(formDataArr.length > 0) {
       formDataArr[0].set("thumb", 1);
       result = true;
+      } else result = false;
     }
   }
   console.log(result);
@@ -356,6 +358,7 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
     alert("저장할 사진이 없습니다!");
     return;
   }
+
   // 버튼변화이벤트
   var clickBtn = $(this);
   $(clickBtn).attr("disabled", true);
@@ -374,6 +377,10 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
     // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
     // formDataArr : [{file,title,text,thumb},{file,title,text,thumb}]
     var arr = dataArr[i];
+    console.log("whats after like??");
+    console.log(arr.day);
+    //return;
+
     var formDataArr = arr.data;
     for (var j = 0; j < formDataArr.length; j++) {
       if (formDataArr[j].get("file") instanceof File) {
@@ -394,7 +401,7 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
       else postData.append("texts", formDataArr[j].get("text"));
 
       postData.append("thumbs", formDataArr[j].get("thumb"));
-      postData.append("days", "DAY" + (i + 1));
+      postData.append("days", arr.day);
       postData.append("sorts", j);
       postData.append("attachNos", formDataArr[j].get("attachNo"));
       postData.append("dupdate", formDataArr[j].get("dupdate"));

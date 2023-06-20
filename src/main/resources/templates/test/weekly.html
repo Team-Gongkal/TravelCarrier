@@ -8,13 +8,24 @@
 
   <th:block th:replace="fragments/header :: headerFragment"></th:block>
 
-  <!-- weekly 디자인 시작 -->
+  <!-- 읽기 권한 없음 -->
+  <th:block th:if="${readAuth == 'DENIED'}">
+    <main class="weekly_scroll">
+    <p>해당 게시물에 대한 읽기 권한이 없습니다.</p>
+    </main>
+  </th:block>
+
+  <!-- 읽기권한 있음 : weekly 디자인 시작 -->
+  <th:block th:if="${readAuth == 'GRANTED'}">
   <main class="weekly_scroll">
     <article id="top">
       <div class="longBox">
+        <th:block th:if="${updateAuth == 'GRANTED'}">
         <div class="weekly_edit" onclick="event.preventDefault()">
           <img src="/image/weekly/icon/setting.png" alt="위클리 수정">
         </div>
+        </th:block>
+
         <div class="weekly_mainArtc">
           <div class="weekly_title">
             <h2 th:text="${weekly.title}">TITLE</h2>
@@ -63,6 +74,106 @@
       </div>
     </article>
 
+    <!-- 읽기 권한은 있으나 쓰기권한이 없을경우 -->
+    <th:block th:if="${updateAuth == 'DENIED'}">
+      <div th:each="wd,wdStat : ${wdList}" class="weekly_wrap">
+        <!-- 홀수 레이아웃 -->
+        <div th:if="${wdStat.odd}" class="shortBox_odd">
+          <div class="shortBox">
+            <div class="dateBox">
+              <div>
+                <!-- 날짜 집어넣기 -->
+                <span th:text="${wd.realDate}">Date</span>
+                <h1 th:text="${wdStat.count < 10 ? '0' + wd.dailyDate.substring(3) : wd.dailyDate.substring(3)}" class="travelDay_odd">01</h1>
+                <!-- 여행일 수 만큼 홀수 변수로 들어가게됨  -->
+              </div>
+            </div>
+
+
+            <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
+            </div>
+
+            <div th:if="${wd.keywords != null and wd.keywords.size() > 0}" class="keywordBox">
+              <ul th:each="key : ${wd.keywords}">
+                <li th:text="${key}" th:data-daily="${wd.dailyId}">keyword
+                  <span class="card_del"><i class="xi-close"></i></span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="moreBox">
+              <a href="" class="daily_path">more</a>
+            </div>
+          </div>
+
+          <div th:if="${wd.thumbPath == null}" class="longBox">
+            <a href="" class="daily_path">
+              <div class="plusBox w-rectL">
+                <div class="plus_big">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div th:if="${wd.thumbPath != null}" class="longBox">
+            <a href="" class="daily_path">
+              <div>
+                <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
+              </div>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- 짝수 레이아웃 -->
+        <div th:if="${wdStat.even}" class="shortBox_even">
+          <div class="shortBox">
+            <div class="moreBox">
+              <a href="" class="daily_path">more</a>
+            </div>
+
+            <div th:if="${wd.keywords == null or wd.keywords.size() == 0}" class="keywordBox">
+            </div>
+
+            <div th:if="${wd.keywords != null and wd.keywords.size() > 0}" class="keywordBox">
+              <ul th:each="key : ${wd.keywords}">
+                <li th:text="${key}" th:data-daily="${wd.dailyId}">keyword</li>
+              </ul>
+            </div>
+
+            <div class="dateBox">
+              <span th:text="${wd.realDate}">Date</span>
+              <h1 th:text="${wdStat.count < 10 ? '0' + wd.dailyDate.substring(3) : wd.dailyDate.substring(3)}" class="travelDay_odd">02</h1>
+            </div>
+          </div>
+
+          <div th:if="${wd.thumbPath == null}" class="longBox">
+            <a href="" class="daily_path">
+              <div class="plusBox w-rectL">
+                <div class="plus_big">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div th:if="${wd.thumbPath != null}" class="longBox">
+            <a href="" class="daily_path">
+              <div>
+                <img th:src="${wd.thumbPath}" src="" alt="사진이 표시되지 않음">
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </th:block>
+
+    <!-- 읽기 권한/ 쓰기권한 둘다있을경우 -->
+    <th:block th:if="${updateAuth == 'GRANTED'}">
     <div th:each="wd,wdStat : ${allWdList}" class="weekly_wrap">
       <!-- 홀수 레이아웃 -->
       <div th:if="${wdStat.odd}" class="shortBox_odd">
@@ -161,6 +272,7 @@
 
       </div>
     </div>
+    </th:block>
 
     <!-- 여행일 추가하기-->
     <div class="shortBox_odd weekly_finish_odd">
@@ -251,6 +363,7 @@
       </div>
     </div>
     <!-- 위클리 수정 모달 modal -->
+    <th:block th:if="${updateAuth == 'GRANTED'}">
     <div class="weekly_modal_bg modal_bg">
       <div class="weekly_modal">
         <div id="weekly_modal_form">
@@ -411,14 +524,18 @@
         </div>
       </div>
     </div>
+    </th:block>
 
   </main>
+  </th:block>
+
   <script th:inline="javascript">
     var all_keywords = [
       [# th:each = "wd : ${allWdList}"]
       [[${ wd.keywords }]],
       [/] 
       ];
+    console.log("all_keywords");
     console.log(all_keywords);
 
     var weeklyId = [[${weekly.id}]];
