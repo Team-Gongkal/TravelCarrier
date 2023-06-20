@@ -21,7 +21,7 @@ main#weekly_form div {
   position: relative;
   width: fit-content;
   height: 100%;
-  padding: 2.5em 10%;
+  padding: 3.5em 10%;
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -101,6 +101,7 @@ main#weekly_form div {
 .weekly_input {
   width: calc(50% + 5rem);
   float: right;
+  height: 100%;
   padding: 1.5rem 2.5rem;
   background: #efeee9;
 }
