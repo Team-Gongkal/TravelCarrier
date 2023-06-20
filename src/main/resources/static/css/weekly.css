@@ -1,16 +1,20 @@
 /* main 가로스크롤 */
 main.weekly_scroll {
-  overflow-x: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
   display: flex;
   width: fit-content;
-  /*스크롤바 숨김
-  -webkit-overflow-scrolling: touch; /*IOS기반 브라우저에서 스크롤 성능을 최적화함
-  scrollbar-width: none; /*Firefox와 IE/Edge에서 숨김
-  -ms-overflow-style: none; /*WebKit기반 브라우저에서 숨김*/
 }
-
+main.weekly_scroll::-webkit-scrollbar-track {
+  background: #d7d7d7;
+}
 main.weekly_scroll::-webkit-scrollbar {
-  display: none;
+  height: 0.5rem;
+}
+main.weekly_scroll::-webkit-scrollbar-thumb {
+  /* background: rgb(53, 58, 82, 0.2); */
+  background:rgb(160, 193, 202,0.5);
+  border-radius:10px;
 }
 /* weekly 디자인 시작 */
 .weekly_edit {
@@ -498,13 +502,21 @@ li.card span:nth-child(2):hover {
 .weekly_modal_bg .weekly_form {
   position: relative;
   width: fit-content;
-  padding: 0rem 5% 0rem calc(5% + 1.5rem);
+  padding: 5%;
   box-sizing: border-box;
   overflow: hidden;
 }
 .weekly_modal_bg .weekly_form .thumbnail {
   margin-left: 2.5rem;
-  height: auto;
+  height: 100%;
+}
+.weekly_modal_bg .weekly_form .thumbnail .thumbnail_img {
+  width: 65%;
+  height: 0;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 65%;
+  align-self: center;
 }
 .weekly_modal_bg .modal_title {
   position: relative;

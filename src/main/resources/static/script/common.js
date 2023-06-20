@@ -16,3 +16,6 @@ $(window).click(function (e) {
     ).removeClass("show");
   }
 });
+
+//모달창 활성화시 스크롤 비활성화 하기 -by윤아
+// 스크롤 비활성화

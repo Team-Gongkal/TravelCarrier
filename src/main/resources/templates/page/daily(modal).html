@@ -59,7 +59,7 @@
   </div>
   <main class="daily">
     <!-- daily 시작화면 UI -->
-    <div class="daily_start">
+    <div class="daily_start" style="display: none;">
       <div class="sdaily_text">
         <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
         </p>
@@ -73,9 +73,8 @@
       </div>
     </div>
 
-
     <!--daily-form 데일리 입력 폼/ 모달창-->
-    <div class="daily_form_bg">
+    <div class="daily_form_bg modal_bg">
       <form action="" id="daily_form">
         <div class="modal_title Dform_title">
           <button class="close">
@@ -109,12 +108,10 @@
           <div class="Dform_input">
             <div class="daily_days">
               <ul class="days_tabSlide">
-                <li class="Dtab days_num1">
-                  <span class="on">DAY1</span>
+                <li th:each="i : ${#numbers.sequence(1, period)}" class="Dtab days_num1">
+                  <span th:text="'DAY' + ${i}">DAY ?</span>
                 </li>
-                <li class="Dtab days_num1">
-                  <span>DAY ?</span>
-                </li>
+
               </ul>
             </div>
             <div class="daily_title">
@@ -136,7 +133,7 @@
               </div>
               <input type="radio" id="mainImgSet" name="mainImg">
               <label for="mainImgSet">대표이미지로 설정</label>
-              <b>i (대표이미지는 여행일별 대표 이미지를 의미합니다)</b>
+              <b>i (설정취소는 불가능하며, 다른사진을 클릭하여 변경이 가능합니다.)</b>
             </div>
             <div class="Dform_btn">
               <button class="btn Dform_btn_del" type="reset"> 작성취소</button>
@@ -146,76 +143,141 @@
         </div>
       </form>
     </div>
-    <!-- daily 일기화면(hover전) -->
+
+    <!-- daily 일기화면 -->
     <div class="diary_noH">
-      <div class="filter"></div>
-      <div class="diary_titlebox">
-        <h1>PARIS</h1>
-        <p> 기간 : yyyy-mm-dd ~
-          yyyy-mm-dd</p>
-      </div>
-      <div class="daily_viewport">
-        <div class="diary_slides">
-          <ul class="diary_list">
-<!--            <li class="d_slide square sqr">
-              <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="">
-              &lt;!&ndash; <p th:text="${daily.attachDailyTitle}">타이틀</p>
-            <p th:text="${daily.attachDailyText}">텍스트</p> &ndash;&gt;
+      <div class="center">
+        <div class="filter"></div>
+        <div class="diary_titlebox">
+          <h1 th:text="${weekly.title}">PARIS</h1>
+          <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
+            yyyy-mm-dd</p>
+        </div>
+        <div class="diary_viewport">
+          <div class="diary_slides">
+            <ul class="diary_list">
+              <li class="d_slide square sqr">
+                <img src="../../static/image/daily/diary/IMG_6493.JPG" alt="">
+              </li>
+              <li class="d_slide square rectL">
+                <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="">
+              </li>
+              <li class="d_slide square rectL">
+                <img src="../../static/image/daily/diary/IMG_7219.JPG" alt="">
+              </li>
+              <li class="d_slide square rectW">
+                <img src="../../static/image/daily/diary/IMG_6489.JPG" alt="">
+              </li>
+              <li class="d_slide square sqr">
+                <img src="../../static/image/daily/diary/IMG_7935.JPG" alt="">
+              </li>
+              <li class="d_slide square rectW">
+                <img src="../../static/image/daily/diary/IMG_6577.JPG" alt="">
+              </li>
+              <li class="d_slide square rectL">
+                <img src="../../static/image/daily/diary/IMG_6691.JPG" alt="">
+              </li>
+              <li class="d_slide square sqr">
+                <img src="../../static/image/daily/diary/IMG_7743.JPG" alt="">
+              </li>
+              <li class="d_slide square rectL">
+                <img src="../../static/image/daily/diary/IMG_7809.JPG" alt="">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="writing circle">
+          <img src="../../static/image/daily/icon/pencil.png" alt="edit daily">
+        </div>
+        <div class="diary_textbox">
+          <ul>
+            <li>
+              <h6>제목</h6>
+              <p>일기 내용</p>
             </li>
-            <li class="d_slide square rectL">
-              <img src="../../static/image/daily/diary/IMG_6472.JPG" alt="">
-            </li>
-            <li class="d_slide square rectL">
-              <img src="../../static/image/daily/diary/IMG_7219.JPG" alt="">
-            </li>
-            <li class="d_slide square rectW">
-              <img src="../../static/image/daily/diary/IMG_6489.JPG" alt="">
-            </li>
-            <li class="d_slide square sqr">
-              <img src="../../static/image/daily/diary/IMG_7935.JPG" alt="">
-            </li>-->
           </ul>
         </div>
       </div>
-      <div class="writing circle">
-        <img src="../../static/image/daily/icon/pencil.png" alt="edit daily">
-      </div>
-      <div class="diary_textbox">
-        <ul>
-          <!-- <li th:each="daily : ${dailies}">
-            <h6 th:text="${daily.attachDailyTitle}"></h6>
-            <p th:text="${daily.attachDailyText}"></p>
-          </li> -->
-          <li>
-            <h6>Lorem ipsum dolor</h6>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae modi totam voluptates voluptate qui!
-              Quidem eum doloribus possimus laudantium nulla corrupti tempora, blanditiis nesciunt beatae, aut itaque
-              illo necessitatibus vero?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum vero reprehenderit fugit, molestiae, et ex
-              deserunt rerum sit eius incidunt ea dicta ipsa repellat eligendi cumque optio nihil iste commodi?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore cum illo fugit unde ratione, similique
-              expedita dignissimos sunt, earum iure non! Maxime, distinctio earum consequatur at corporis numquam et a!
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus assumenda cum pariatur nostrum, vero aut
-              quaerat iure, deserunt nulla impedit, in exercitationem obcaecati? Obcaecati sapiente ratione ullam nulla,
-              sit nostrum.
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt atque officiis a officia optio, sit ullam.
-              Ex mollitia nemo, officiis possimus expedita sint esse debitis veniam aperiam veritatis culpa maiores!
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus assumenda cum pariatur nostrum, vero aut
-              quaerat iure, deserunt nulla impedit, in exercitationem obcaecati? Obcaecati sapiente ratione ullam nulla,
-              sit nostrum.
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt atque officiis a officia optio, sit ullam.
-              Ex mollitia nemo, officiis possimus expedita sint esse debitis veniam aperiam veritatis culpa maiores!
-            </p>
-          </li>
-        </ul>
+    </div>
+
+    <!-- daily 댓글UI -->
+    <div class="reply_modal modal_bg">
+      <div class="center">
+        <div class="reply_img">
+          <img src="../../static/image/daily/diary/example.jpg" alt="해당일기이미지">
+        </div>
+        <div class="reply_right_wrap">
+          <div class="reply_screen">
+            <div class="reply_scroll">
+                <div class="comment">
+                  <div class="comment_profile">
+                    <div>
+                      <img src="../../static/image/user/profile/seohyun.jpg" alt="프로필01">
+                    </div>
+                  </div>
+                  <div class="comment_date">
+                    <span>2023-05-08</span>
+                  </div>
+                  <div class="comment_textbox">
+                    <span class="comment_id">sieun</span>
+                    <p class="comment_content">
+                      아니 나 나비고 발급받을 때 증명사진 없어서 여권사진 들고갔더니 목 댕걍하고 얼굴만 대문짝만하게 붙여줬잖어ㅜㅜㅜㅜ
+                    </p>
+                  </div>
+                  <div class="comment_btn">
+                    <span class="mod_btn">수정하기</span>
+                    <span class="re_btn">답글달기</span>
+                    <span class="del_btn">삭제하기</span>
+                  </div>
+                </div>
+                <div class="recomment">
+                  <div class="comment_profile">
+                    <div>
+                      <img src="../../static/image/user/profile/zzangu.jpg" alt="프로필01">
+                    </div>
+                  </div>
+                  <div class="comment_date">
+                    <span>2023-05-08</span>
+                  </div>
+                  <div class="comment_textbox">
+                    <span class="comment_id">Yung</span>
+                    <p class="comment_content">
+                      <span class="reply_id">@Yung</span>
+                      ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+                    </p>
+                  </div>
+                  <div class="comment_btn">
+                    <span>수정하기</span>
+                    <span>답글달기</span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="reply_input">
+            <div class="tag_name">
+              <span>댓글달기</span>
+            </div>
+            <div class="reply_inputText">
+              <textarea type="text" autofocus maxlength="100"></textarea>
+              <button>
+                <img src="../../static/image/daily/icon/send.png" alt="등록">
+              </button>
+            </div>
+          </div>
+          <button class="close">
+            <i class="xi-close"></i>
+          </button>
+        </div>
       </div>
     </div>
+
   </main>
 
   <!-- <script th:inline="javascript">
     var dailies = [[${ dailies }]];
   </script> -->
-
-  <script src="../../static/script/daily.js"></script>
-  <!-- <script src="../../static/script/daily(modal).js"></script> -->
+  <!-- <script src="/script/daily.js"></script> -->
+  <script src="../../static/script/slide.js"></script>
+  <script src="../../static/script/reply.js"></script>
 </body>
