@@ -181,6 +181,7 @@ function login_submit(event){
         },
         success: function(response) {
             // 로그인 성공 시 실행할 동작
+            alert("로그인 성공");
             window.location.href = "/TravelCarrier/"; // 리다이렉트할 URL
         },
         error: function(xhr) {
@@ -188,7 +189,7 @@ function login_submit(event){
             if (xhr.status === 401) {
             var errorData = JSON.parse(xhr.responseText);
             var errorMsg = errorData.error;
-            if(errorMsg == "BadCredentialsException") alert("잘못된 비밀번호 입니다.");
+            if(errorMsg == "BadCredentialsException") alert("잘못된 아이디 혹은 비밀번호 입니다.");
             else if(errorMsg == "UsernameNotFound") alert("해당 계정이 존재하지 않습니다.");
             }
             else {
