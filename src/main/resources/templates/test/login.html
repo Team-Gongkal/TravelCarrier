@@ -151,11 +151,10 @@
           <p>가입하셈요</p>
         </div>
         <div class=" login">
-          <form id="login_form" action="/login/action" method="post">
+<!--          <form id="login_form" action="/login/action" method="post">-->
+          <form id="login_form">
             <h3>login</h3>
-            <!-- <div th:if="${error}" class="alert">
-            <p th:text="${exception}" class="alert"></p>
-          </div> -->
+
             <div class="login_id">
               <label for="">이메일</label>
               <input name="username" id="username" type="text" placeholder="이메일을 입력해주세요" title="아이디" />
@@ -170,7 +169,7 @@
                 로그인 유지하기</label>
             </div>
 
-            <button onclick="login_submit()" type="submit">로그인</button>
+            <button onclick="login_submit(event)">로그인</button>
           </form>
           <div class="lns_signup_with">
             <a href="/oauth2/authorization/google">
@@ -195,15 +194,7 @@
   </main>
 
   <script>
-    function login_submit() {
 
-    }
-    function fnSubmit() {
-      $("#login_form").submit();
-    }
-    $("#password").on("keyup", function (e) {
-      if (e.key == "Enter") fnSubmit();
-    });
   </script>
 
   <script src="/script/login.js"></script>

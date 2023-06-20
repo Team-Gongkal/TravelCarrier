@@ -2,6 +2,7 @@ package tc.travelCarrier.auth;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -27,6 +28,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private final AttachRepository attachRepository;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${file.dir}")
+    private String fileDir;
+
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
@@ -56,8 +62,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider).providerId(providerId)
                     .build();
             memberRepository.save(byUsername);
-            attachRepository.saveProfilePic(AttachUser.builder().title("default_profile.jpg").user(byUsername).path("D:/TotalWorkspace/travelCarrier_workspace/travelCarrier/src/main/resources/static/image/mypage/default_profile.jpg").build());
-            attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg").user(byUsername).path("D:/TotalWorkspace/travelCarrier_workspace/travelCarrier/src/main/resources/static/image/mypage/default_bg.jpg").build());
+            attachRepository.saveProfilePic(AttachUser.builder().title("default_profile.jpg").user(byUsername).path(fileDir+"mypage/default_profile.jpg").build());
+            attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg").user(byUsername).path(fileDir+"mypage/default_bg.jpg").build());
         }
 
         return new PrincipalDetails(byUsername, oAuth2UserInfo);

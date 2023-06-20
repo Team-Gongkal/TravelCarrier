@@ -169,3 +169,42 @@ $(".quick_login").click(function () {
 $("#login_wrap > div > button.close").click(function () {
   $("#login_wrap").removeClass("show");
 });
+
+function login_submit(event){
+    event.preventDefault();
+    $.ajax({
+        url: "/login/action",
+        type: "POST",
+        data: {
+            username: $("#username").val(),
+            password: $("#password").val()
+        },
+        success: function(response) {
+            // 로그인 성공 시 실행할 동작
+            window.location.href = "/TravelCarrier/"; // 리다이렉트할 URL
+        },
+        error: function(xhr) {
+            // 로그인 실패 시 실행할 동작
+            if (xhr.status === 401) {
+            var errorData = JSON.parse(xhr.responseText);
+            var errorMsg = errorData.error;
+            if(errorMsg == "BadCredentialsException") alert("잘못된 비밀번호 입니다.");
+            else if(errorMsg == "UsernameNotFound") alert("해당 계정이 존재하지 않습니다.");
+            }
+            else {
+              alert("예상치못한 오류가 발생했습니다.");
+            }
+        }
+    });
+}
+/*
+
+   function login_submit() {
+
+
+   function fnSubmit() {
+      $("#login_form").submit();
+    }
+    $("#password").on("keyup", function (e) {
+      if (e.key == "Enter") fnSubmit();
+    });*/

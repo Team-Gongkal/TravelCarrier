@@ -1,6 +1,7 @@
 package tc.travelCarrier.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -21,8 +22,10 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        setDefaultTargetUrl("/TravelCarrier/");
-        super.onAuthenticationSuccess(request, response, authentication);
+        //setDefaultTargetUrl("/TravelCarrier/");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json");
+        //super.onAuthenticationSuccess(request, response, authentication);
     }
 
 }
