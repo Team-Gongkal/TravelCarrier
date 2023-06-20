@@ -32,10 +32,7 @@ public abstract class Attach {
     protected String thumbPath;
 
     public String getThumbPath() {
-        //서현이거
-        // return thumbPath.substring(81);
-        
-        //윤아거
-        return thumbPath.substring(86);
+
+        return thumbPath.substring(thumbPath.indexOf("/static") + 7);
     }
 }
