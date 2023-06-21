@@ -470,19 +470,19 @@
 
                       <li class="public">
                         <input type="radio" th:checked="${#strings.equals(weekly.status, 'ALL')}" name="status"
-                          value="public" id="public" class="hide">
+                          value="public" id="public" class="hide"  th:disabled="${selfAuth == 'DENIED'}">
                         <label for="public"><img src="/image/weekly/icon/view-b.png" alt="" class="weekly_icon">
                           공개</label>
                       </li>
                       <li class="shareFriends">
                         <input type="radio" th:checked="${#strings.equals(weekly.status, 'FOLLOW')}" name="status"
-                          value="shareFriends" id="shareFriends" class="hide">
+                          value="shareFriends" id="shareFriends" class="hide" th:disabled="${selfAuth == 'DENIED'}">
                         <label for="shareFriends"><img src="/image/weekly/icon/people-b.png" alt="" class="weekly_icon">
                           친구공개</label>
                       </li>
                       <li class="private">
                         <input type="radio" th:checked="${#strings.equals(weekly.status, 'ME')}" name="status"
-                          value="private" id="private" class="hide">
+                          value="private" id="private" class="hide" th:disabled="${selfAuth == 'DENIED'}">
                         <label for="private"><img src="/image/weekly/icon/hide-b.png" alt="" class="weekly_icon">
                           비공개</label>
                       </li>
@@ -530,6 +530,8 @@
   </th:block>
 
   <script th:inline="javascript">
+    var selfAuth = /*[[${selfAuth}]]*/ null;
+    console.log(selfAuth);
     var all_keywords = [
       [# th:each = "wd : ${allWdList}"]
       [[${ wd.keywords }]],

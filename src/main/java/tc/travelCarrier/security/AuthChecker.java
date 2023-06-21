@@ -24,10 +24,11 @@ public class AuthChecker {
 
     // 위클리 수정 권한 있는지 확인하는 메소드(태그되었는지?)
     public static String[] getReadAndUpdateAuth(Weekly weekly, User user){
-        String[] answer = new String[2];
+        String[] answer = new String[3];
         OpenStatus status = weekly.getStatus();
         answer[0] = "DENIED";
         answer[1] = "DENIED";
+        answer[2] = "DENIED";
 
         // 쓰기권한 : 무조건 글쓴이랑 태그된사람만 있음!!
         if(checkWeeklyAuth(weekly,user)) answer[1] = "GRANTED";
@@ -46,6 +47,9 @@ public class AuthChecker {
             if(weekly.getUser() != user) answer[0] = "DENIED";
             else answer[0] = "GRANTED";
         }
+
+        //본인글인지 체크
+        if(weekly.getUser() == user) answer[2] = "GRANTED";
         return answer;
     }
 

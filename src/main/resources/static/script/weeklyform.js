@@ -392,7 +392,8 @@ $(document).ready(function () {
 
   // 동행인 선택 모달창 활성화 - by윤아
   $("#plus_companion").on("click", function () {
-    $(".companion_modal_bg").addClass("show");
+    if(selfAuth == "GRANTED") $(".companion_modal_bg").addClass("show");
+    else if(selfAuth == "DENIED") alert("친구 게시글의 동행인은 수정 할 수 없습니다");
   });
   $(".companion_modal > button").on("click", function () {
     $(".companion_modal_bg").removeClass("show");
