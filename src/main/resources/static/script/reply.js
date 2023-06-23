@@ -39,7 +39,7 @@ function currentReplyList(attachNo) {
 
 // 댓글리스트 ajax후 append해주는 메소드 - by.서현
 function appendReply(replyList) {
-  // replyList : [{attachNo, cdate, origin, originName, replyId, text, thumbPath, udate, userId, userName},{}]
+  // replyList : [{attachNo, cdate, origin, originName, replyId, text, thumbPath, udate, userId, userName, selfAuth},{}]
   $(".reply_scroll").empty();
   console.log(replyList);
   $.each(replyList, function (index, obj) {
@@ -53,7 +53,8 @@ function appendReply(replyList) {
         obj.userName,
         obj.text,
         obj.replyId,
-        obj.ddate
+        obj.ddate,
+        obj.selfAuth
       );
       $(".reply_scroll").append(html);
       // $(".reply_input textarea").val("");
@@ -68,7 +69,8 @@ function appendReply(replyList) {
         obj.text,
         obj.replyId,
         obj.originName,
-        obj.ddate
+        obj.ddate,
+        obj.selfAuth
       );
       targetDiv.append(recommentHtml);
       $(".reply_inputText textarea").val("");
@@ -108,8 +110,8 @@ function validReply() {
 // 새 댓글 등록 ajax - by.서현
 function createReply(type) {
   if (!validReply()) return;
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
+/*    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");*/
   // 댓글이면 origin값이 "", 대댓글이면 origin값이 원댓글Id
   if (type == "댓글달기") var originVal = "";
   else if (type.charAt(0) == "@")
@@ -171,7 +173,7 @@ function modifyReply() {
 }
 
 // 댓글 append 틀 - by.서현
-function newReplyHtml(img, date, name, comment, replyId, ddate) {
+function newReplyHtml(img, date, name, comment, replyId, ddate, selfAuth) {
   var html;
   if (ddate != undefined || ddate != null) {
     html = `
@@ -203,10 +205,13 @@ function newReplyHtml(img, date, name, comment, replyId, ddate) {
           <p class="comment_content">${comment}</p>
         </div>
         <div class="comment_btn">
-          <span class="mod_btn">수정하기</span>
-          <span class="re_btn">답글달기</span>
-          <span class="del_btn">삭제하기</span>
-        </div>
+          <span class="re_btn">답글달기</span>`;
+        if (selfAuth == 1) {
+          html += `<span class="mod_btn">수정하기</span>
+          <span class="del_btn">삭제하기</span>`;
+          }
+        html += `
+          </div>
       </div>
     </div>
     `;
@@ -214,15 +219,7 @@ function newReplyHtml(img, date, name, comment, replyId, ddate) {
   return html;
 }
 // 대댓글
-function newReCommentHtml(
-  img,
-  date,
-  name,
-  comment,
-  replyId,
-  originName,
-  ddate
-) {
+function newReCommentHtml(img,date,name,comment,replyId,originName,ddate,selfAuth) {
   var html;
   if (ddate != undefined || ddate != null) {
     html = `
@@ -255,12 +252,16 @@ function newReCommentHtml(
           </p>
         </div>
         <div class="comment_btn">
-          <span class="mod_btn">수정하기</span>
-          <span class="re_btn">답글달기</span>
-          <span class="del_btn">삭제하기</span>
-        </div>
-      </div>
-    `;
+          <span class="re_btn">답글달기</span>`;
+
+    if (selfAuth == 1) {
+          html+=
+          `<span class="mod_btn">수정하기</span>
+          <span class="del_btn">삭제하기</span>`;
+      }
+    html+=
+        `</div>
+      </div>`;
   }
   return html;
 }

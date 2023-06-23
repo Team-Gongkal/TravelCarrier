@@ -13,7 +13,7 @@ import java.util.Date;
 public class ReplyDTO {
     public ReplyDTO(){}
     public ReplyDTO(int attachNo, String text, Date cdate, Date udate, Date ddate,
-                    Reply originReply, User user, int replyId){
+                    Reply originReply, User user, int replyId, User activeUser){
         this.attachNo = attachNo;
         this.text = text;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -30,6 +30,9 @@ public class ReplyDTO {
             this.origin = originReply.getId();
             this.originName = originReply.getUser().getName();
         }
+
+        if(user == activeUser) this.selfAuth = true;
+        else this.selfAuth = false;
     }
 
     // 등록필드
@@ -48,5 +51,8 @@ public class ReplyDTO {
 
     //삭제필드
     private String ddate;
+
+    //권한필드
+    private boolean selfAuth;
 
 }

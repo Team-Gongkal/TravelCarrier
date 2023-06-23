@@ -71,10 +71,10 @@ public class ReplyController {
 
     // 댓글목록 조회 로직
     @GetMapping("/reply/{attachNo}")
-    public List<ReplyDTO> getReplyList(@PathVariable("attachNo") int attachNo) throws Exception {
+    public List<ReplyDTO> getReplyList(@PathVariable("attachNo") int attachNo,  @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         AttachDaily ad = attachService.findAttachDaily(attachNo);
         List<Reply> replyList = ad.getReplyList(); //그대로 리턴하면 순환참조문제가 발생하므로 dto로 리턴해줄것임
-
+        User activeUser = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         List<ReplyDTO> replyDTOList = new ArrayList<>();
         for(Reply r : replyList) {
             replyDTOList.add(new ReplyDTO(
@@ -85,7 +85,8 @@ public class ReplyController {
                     r.getCrudDate().getDdate(),
                     r.getOrigin(),
                     r.getUser(),
-                    r.getId()
+                    r.getId(),
+                    activeUser
             ));
         }
         return replyDTOList;
