@@ -54,7 +54,7 @@ public class WeeklyContoller {
         }
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
-
+        System.out.println("디폴트 : "+form.getFile());
         List<User> goWithList = new ArrayList<User>();
         if(form.getGowiths() != null) {
             for (int id : form.getGowiths()) goWithList.add(memberRepository.findUserById(id));
@@ -86,15 +86,14 @@ public class WeeklyContoller {
         String[] answer = getReadAndUpdateAuth(weekly,user);
         model.addAttribute("readAuth", answer[0]);
         model.addAttribute("updateAuth", answer[1]);
+        model.addAttribute("selfAuth", answer[2]);
         if(answer[0].equals("GRANTED") && answer[1].equals("DENIED")) {
             List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
-            for(WeeklyDTO dto : wdList) System.out.println("dro : "+dto.toString());
             model.addAttribute("wdList",wdList);
         }
 
         model.addAttribute("user", user);
         model.addAttribute("allWdList", allWdList);
-        for(WeeklyDTO dto : allWdList) System.out.println("allWdList : "+dto.toString());
         model.addAttribute("weekly",weekly);
         return "test/weekly";
     }

@@ -91,7 +91,8 @@ public class AttachService {
             saveArr = saveAttach(file,"weekly");
         } else {
             // 파일이 없을경우 서버저장 생략, 기본이미지 경로 DB에 저장
-            saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
+            //saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
+            saveArr = new String[]{"weekly_default_thumbnail.png", fileDir + "default/weekly_default_thumbnail.png"};
         }
 
         //2.AttachWeekly 엔티티 생성해서 DB에도 저장
@@ -223,12 +224,14 @@ public class AttachService {
     //FIle객체면 저장후업데이트,
     // null이면 thumbStatus 확인해서 ORIGIN이면 냅두고 DELETE면 국가사진으로 변경
     public void saveUpdateAttachWeekly(WeeklyForm form, Weekly weekly) throws Exception {
+        System.out.println("수정파일 "+form.getFile());
         //1.서버에 파일 저장
         String[] saveArr;
         if(form.getFile() != null){
             saveArr = saveAttach(form.getFile(),"weekly");
         } else if(form.getThumbStatus().equals("DELETE")){
-            saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
+            //saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
+            saveArr = new String[]{"weekly_default_thumbnail.png", fileDir + "default/weekly_default_thumbnail.png"};
         } else{
             return;
         }
