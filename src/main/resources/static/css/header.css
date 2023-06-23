@@ -132,11 +132,11 @@ header > nav {
   content: "";
   display: inline-block;
   position: absolute;
-  right: -3px;
-  top: 0px;
+  right: -2px;
+  top: 1px;
   width: calc(2.7rem / 2.8);
   height: calc(2.7rem / 2.8);
-  background: red;
+  background: #a0c1ca;
   border-radius: 100%;
   /* 새로운 알림이 있을 때 적용, 삭제 */
 }
@@ -181,6 +181,7 @@ header > nav {
   visibility: hidden;
   opacity: 0;
   margin-top: 0.6rem;
+  z-index: 150;
 }
 .user_menu.on {
   visibility: visible;
@@ -243,6 +244,8 @@ header > nav {
   line-height: 1.2em;
   transition: 0.5s;
   border-radius: 1rem;
+  z-index: 101;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 .utill_notice.show {
   right: 0.5rem;

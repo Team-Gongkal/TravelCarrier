@@ -275,6 +275,16 @@ $(window).on("load", function () {
   //mousewheel DOMMouseScroll 스크롤 이벤트
   $(window).on("wheel DOMMouseScroll", scrollHandler);
 
+  
+  //위클리 추가글 위에 mouseover시 스크롤 비활성화
+$('.weekly_addText > textarea').on("mouseenter mouseleave", function(event) {
+  if (event.type === "mouseenter") {
+    $(window).off("wheel DOMMouseScroll", scrollHandler);
+  } else {
+    $(window).on("wheel DOMMouseScroll", scrollHandler);
+  }
+});
+
   function scrollHandler(e) {
     delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
 
