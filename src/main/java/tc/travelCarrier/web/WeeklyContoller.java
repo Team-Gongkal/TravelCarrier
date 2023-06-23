@@ -54,7 +54,7 @@ public class WeeklyContoller {
         }
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
-
+        System.out.println("디폴트 : "+form.getFile());
         List<User> goWithList = new ArrayList<User>();
         if(form.getGowiths() != null) {
             for (int id : form.getGowiths()) goWithList.add(memberRepository.findUserById(id));

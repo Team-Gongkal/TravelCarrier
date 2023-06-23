@@ -4,8 +4,20 @@
 <!-- head 추가해줌 -->
 <th:block th:replace="fragments/head :: headFragment"></th:block>
 
+
 <body>
   <th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+  <!-- 읽기 권한 없음 -->
+  <th:block th:if="${readAuth == 'DENIED'}">
+    <main class="daily">
+    <div class="daily_start" >
+      <p>해당 게시물에 대한 읽기 권한이 없습니다.</p>
+    </div>
+    </main>
+  </th:block>
+
+  <th:block th:if="${readAuth == 'GRANTED'}">
   <main class="daily">
     <!-- daily 시작화면 UI -->
     <div class="daily_start" style="display: none;">
@@ -23,6 +35,7 @@
     </div>
 
     <!--daily-form 데일리 입력 폼/ 모달창-->
+    <th:block th:if="${updateAuth == 'GRANTED'}">
     <div class="daily_form_bg modal_bg">
       <form action="" id="daily_form">
         <div class="modal_title Dform_title">
@@ -92,6 +105,8 @@
         </div>
       </form>
     </div>
+    </th:block>
+
 
     <!-- daily 일기화면 -->
     <div class="diary_noH">
@@ -106,9 +121,11 @@
           <div class="diary_slides">
           </div>
         </div>
+        <th:block th:if="${updateAuth == 'GRANTED'}">
         <div class="writing circle">
           <img src="/image/daily/icon/pencil.png" alt="edit daily">
         </div>
+        </th:block>
         <div class="diary_textbox">
           <ul>
             <li>
@@ -194,6 +211,7 @@
     </div>
 
   </main>
+  </th:block>
 
   <script th:inline="javascript">
     var dailies = [[${ dailies }]];

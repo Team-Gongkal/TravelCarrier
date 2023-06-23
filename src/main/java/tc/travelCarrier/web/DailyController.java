@@ -15,12 +15,15 @@ import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyDTO;
 import tc.travelCarrier.dto.DailyDTOComparator;
 import tc.travelCarrier.dto.DailyForm;
+import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
 
 import java.util.*;
+
+import static tc.travelCarrier.security.AuthChecker.getReadAndUpdateAuth;
 
 @Controller
 @RequestMapping("/TravelCarrier")
@@ -54,8 +57,14 @@ public class DailyController {
 
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
-        model.addAttribute("user", user);
 
+        // 읽기,쓰기 권한 처리
+        String[] answer = getReadAndUpdateAuth(weekly,user);
+        model.addAttribute("readAuth", answer[0]);
+        model.addAttribute("updateAuth", answer[1]);
+        model.addAttribute("selfAuth", answer[2]);
+
+        model.addAttribute("user", user);
         model.addAttribute("period", period);
         model.addAttribute("dailies", dailies);
         model.addAttribute("weekly",weekly);

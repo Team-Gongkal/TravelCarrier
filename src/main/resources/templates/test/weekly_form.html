@@ -19,6 +19,7 @@
             <p>지도에서 보여질 여행 썸네일 이미지를 선택해주세요. 이미지는 크기에 맞게 리사이징 됩니다. 썸네일 사진이 없을 경우에는 자동 지정된 이미지가 보여집니다.</p>
           </div>
           <div class="thumbnail_img circle">
+            <img src="/image/default/weekly_default_thumbnail.png" alt="default_img">
           </div>
           <div class="thumbnail_btn">
             <button class="btn white_btn" type="button">
@@ -42,10 +43,6 @@
             <div class="country">
               <h3>여행 국가</h3>
               <select name="nation">
-                <option id="0" value="82" selected>KOREA</option>
-                <option id="1" value="83">FRANCE</option>
-                <option id="2" value="84">SPAIN</option>
-                <option id="3" value="85">CHAINA</option>
               </select>
 
             </div>
@@ -151,8 +148,10 @@
       </div>
     </div>
   </main>
-  <script src="/script/weeklyform.js"></script>
+
   <script>
+    var selectNation = 82;
+
     //여행기간 폼 placehorder 오늘날짜로 변경 - 윤아
     var date = new Date();
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -167,6 +166,8 @@
     console.log(selfAuth);
 
   </script>
+  <script src="/script/countries.js"></script>
+  <script src="/script/weeklyform.js"></script>
 </body>
 
 </html>

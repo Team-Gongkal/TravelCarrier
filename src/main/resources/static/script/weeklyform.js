@@ -260,6 +260,26 @@ $('#addText').keyup(function (e){
     }
 });
 */
+$(document).ready(function() {
+  var select = $('select[name="nation"]');
+
+  // 기존의 option 요소 제거
+  select.empty();
+
+  // 새로운 option 요소 추가
+  $.each(countries, function(index, country) {
+    var option = $('<option/>')
+      .attr('id', index)
+      .attr('value', country.phoneCode)
+      .text(country.name);
+
+    if (country.phoneCode == selectNation) {
+      option.prop('selected', true);
+    }
+    select.append(option);
+  });
+});
+
 
 $(document).ready(function () {
   // datepicker 설정 및 옵션 변경 - by윤아
@@ -428,7 +448,10 @@ $(document).on("change", "#thumbnail_change", function (event) {
 // 이미지 삭제버튼 메소드 by서현
 $(document).on("click", ".removeBtn", function (event) {
   $(".thumbnail_img.circle").empty();
+  var img = $("<img>").attr("src", "/image/default/weekly_default_thumbnail.png");
+  $(".thumbnail_img.circle").append(img);
 });
+
 // 선택된 동행인을 폼에 저장하는 메소드 by서현
 $(document).on("click", ".goWithBtn", function (event) {
   const companions = $(".checked_friends li");
@@ -463,7 +486,10 @@ $(".weekly_saveBtn").click(function (event) {
 
   // nation file sdate edate title text gowiths[] status
   var formData = new FormData();
-  formData.append("file", $("#thumbnail_change")[0].files[0]);
+  if ($(".thumbnail_img.circle img").attr("src") != "/image/default/weekly_default_thumbnail.png") {
+    formData.append("file", $("#thumbnail_change")[0].files[0]);
+  }
+
   formData.append(
     "nation",
     $('select[name="nation"] option:selected').attr("value")

@@ -194,7 +194,9 @@ $(document).on("click", ".updateWeekly", function (event) {
 
   // nation file sdate edate title text gowiths[] status
   var formData = new FormData();
-  formData.append("file", $("#thumbnail_change")[0].files[0]);
+    if ($(".thumbnail_img.circle img").attr("src") != "/image/default/weekly_default_thumbnail.png") {
+      formData.append("file", $("#thumbnail_change")[0].files[0]);
+    }
   formData.append(
     "nation",
     $('select[name="nation"] option:selected').attr("value")

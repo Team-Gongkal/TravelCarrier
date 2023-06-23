@@ -406,10 +406,6 @@
                   <div class="country">
                     <h3>여행 국가</h3>
                     <select name="nation">
-                      <option id="0" th:selected="${weekly.nation == '82'}" value="82">KOREA</option>
-                      <option id="1" th:selected="${weekly.nation == '83'}" value="83">FRANCE</option>
-                      <option id="2" th:selected="${weekly.nation == '84'}" value="84">SPAIN</option>
-                      <option id="3" th:selected="${weekly.nation == '85'}" value="85">CHAINA</option>
                     </select>
 
                   </div>
@@ -542,6 +538,9 @@
 
     var weeklyId = [[${weekly.id}]];
 
+    var selectNation = /*[[${weekly.nation}]]*/ null;
+    console.log(selectNation);
+
     var sgowiths = [
       [# th:each = "gw : ${weekly.gowiths}"]
       [[${ gw.user.id }]],
@@ -549,7 +548,7 @@
       ];
 
   </script>
-
+  <script src="/script/countries.js"></script>
   <script src="/script/weekly.js"></script>
   <script src="/script/weeklyform.js"></script>
 
