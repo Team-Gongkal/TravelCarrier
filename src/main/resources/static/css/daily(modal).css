@@ -899,7 +899,7 @@ ul.diary_list > li {
 .recomment {
   width: 100%;
   height: 100%;
-  padding: 0rem 0.5rem 0.5rem 0.5rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: auto 2fr 0.5fr;

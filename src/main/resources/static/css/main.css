@@ -104,7 +104,7 @@ p.travel_city {
 }
 /* 스크롤바 디자인 */
 .weekly_thumbnails::-webkit-scrollbar {
-  width: 0.5em;
+  width: 0em;
 }
 .weekly_thumbnails::-webkit-scrollbar-thumb {
   background: #525d76;

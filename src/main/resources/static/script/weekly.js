@@ -194,9 +194,12 @@ $(document).on("click", ".updateWeekly", function (event) {
 
   // nation file sdate edate title text gowiths[] status
   var formData = new FormData();
-    if ($(".thumbnail_img.circle img").attr("src") != "/image/default/weekly_default_thumbnail.png") {
-      formData.append("file", $("#thumbnail_change")[0].files[0]);
-    }
+  if (
+    $(".thumbnail_img.circle img").attr("src") !=
+    "/image/default/weekly_default_thumbnail.png"
+  ) {
+    formData.append("file", $("#thumbnail_change")[0].files[0]);
+  }
   formData.append(
     "nation",
     $('select[name="nation"] option:selected').attr("value")
@@ -277,15 +280,17 @@ $(window).on("load", function () {
   //mousewheel DOMMouseScroll 스크롤 이벤트
   $(window).on("wheel DOMMouseScroll", scrollHandler);
 
-  
   //위클리 추가글 위에 mouseover시 스크롤 비활성화
-$('.weekly_addText > textarea').on("mouseenter mouseleave", function(event) {
-  if (event.type === "mouseenter") {
-    $(window).off("wheel DOMMouseScroll", scrollHandler);
-  } else {
-    $(window).on("wheel DOMMouseScroll", scrollHandler);
-  }
-});
+  $(".weekly_addText > textarea, .utill_notice").on(
+    "mouseenter mouseleave",
+    function (event) {
+      if (event.type === "mouseenter") {
+        $(window).off("wheel DOMMouseScroll", scrollHandler);
+      } else {
+        $(window).on("wheel DOMMouseScroll", scrollHandler);
+      }
+    }
+  );
 
   function scrollHandler(e) {
     delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
