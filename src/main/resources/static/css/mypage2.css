@@ -16,6 +16,18 @@
   background-position: ;
   background-repeat: no-repeat; */
 }
+.gap {
+  background: #efeee9;
+  position: absolute;
+  top: 3.2rem;
+  width: 100%;
+  height: 2rem;
+  z-index: 1;
+  display: none;
+}
+.gap.on {
+  display: block;
+}
 .userProfile_bg img {
   width: 100%;
   height: 100%;
@@ -273,7 +285,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   z-index: 101;
 }
 .period_modal {
-  width: 40%;
+  width: 35%;
   height: auto;
   background: #efeee9;
   position: absolute;
@@ -288,12 +300,12 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   top: 1rem;
 }
 .period_modal h3 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 .modal_content {
   width: 100%;
   height: calc(100% - 4.2rem);
-  padding: 0 4rem;
+  padding: 0 2.5rem;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -301,8 +313,11 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   align-content: space-between;
   justify-content: space-between;
 }
+.modal_content > div > div {
+  padding: 0 0.5rem;
+}
 .inquire_period {
-  margin-bottom: 1.5rem;
+  margin: 1rem 0 2rem 0;
 }
 .inquire_period > div ul {
   display: flex;
@@ -327,7 +342,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 .direct_period .period_flex {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 .dami {
   display: inline-block;
@@ -337,13 +352,20 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   margin: auto;
 }
 .direct_period .period_flex .dateSet {
+  display: inline-block;
+  box-shadow: 1px 1px 2px 1px #353a5222;
+  width: 45%;
+}
+.direct_period .period_flex span.dateSet > input[type="text"] {
+  position: relative;
+  width: 80%;
 }
 .direct_period .period_flex a.dateClick {
 }
 .modal_content button {
   display: block;
-  width: 30%;
-  background: #353a52;
+  width: 25%;
+  background: #a0c1ca;
   color: #f7f7f7;
   margin: auto;
   margin-bottom: 1.5rem;
@@ -541,6 +563,7 @@ div.uP_diary_btn > button:hover {
   visibility: hidden;
   opacity: 0;
   transition: 0.3s;
+  z-index: 101;
 }
 .period_modal_bg.show,
 .edit_profile.show {

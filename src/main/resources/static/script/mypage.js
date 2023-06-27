@@ -2,18 +2,18 @@
 $("#edit_profile").on("click", function () {
   $(".edit_profile").addClass("show");
 });
-
 $(".edit_profile ul li")
   .last()
   .on("click", function () {
     $(".edit_profile").removeClass("show");
   });
 
+//기간검색 모달창 활성화 - by 윤아
 $(".search_period").on("click", function () {
   $(".period_modal_bg").addClass("show");
 });
 
-$(".period_modal_bg .close").on("click", function () {
+$(".period_modal_bg .close, #search_period").on("click", function () {
   $(".period_modal_bg").removeClass("show");
 });
 
@@ -59,10 +59,12 @@ userProfileScroll.on("scroll", function () {
     drop_menu.addClass("drop");
     $(".userProfile_bg").css("height", drop_menu.height());
     $(".utill_menu").addClass("hide");
+    $(".gap").addClass("on");
   }
   if (scrollTop < drop_height) {
     drop_menu.removeClass("drop");
     $(".utill_menu").removeClass("hide");
+    $(".gap").removeClass("on");
   }
   if (scrollTop == 0) {
     $(".userProfile_bg").css("height", "40%");
