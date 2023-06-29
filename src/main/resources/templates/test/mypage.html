@@ -49,16 +49,16 @@
           <div class="userProfile_tab">
             <ul>
               <li data-set="1" class="on">
-                <span>diary<em id="diary_num">(0)</em></span>
+                <span>diary<em id="diary_num" th:text=" '(' + ${#lists.size(diaryList)} + ')'"></em></span>
               </li>
               <li data-set="2">
-                <span>tagged<em id="tagged_num">(4)</em></span>
+                <span>tagged<em id="tagged_num" th:text=" '(' + ${#lists.size(tagDiaryList)} + ')'"></em></span>
               </li>
               <li data-set="3">
                 <span>review<em id="review_num">(19)</em></span>
               </li>
               <li data-set="4">
-                <span>travler<em id="travler_num">(0)</em></span>
+                <span>travler<em id="travler_num" th:text=" '(' + ${#lists.size(followers)} + ')'"></em></span>
               </li>
             </ul>
           </div>
