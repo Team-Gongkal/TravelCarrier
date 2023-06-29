@@ -81,9 +81,9 @@
               <div class="uP_diary_box">
                 <div class="uP_diary_companion">
                   <ul class="sel_companion">
-                    <li th:if="${followers != null}" th:each="follower : ${followers}"
-                      th:style="'background-image: url(' + ${follower.follower.attachUser.thumbPath} + ');'"
-                      class="circle"></li>
+                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"
+                        th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'"
+                        class="circle"></li>
                   </ul>
                 </div>
                 <div class="uP_diary_text">
@@ -105,15 +105,15 @@
             <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
               <div class="uP_diary_thumbnail">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
-                  <img src="/image/mypage/thumbnail1.JPG" alt="썸네일" class="moving_bg">
+                  <img th:if="${diary.attachWeekly != null}" th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일" class="moving_bg">
                 </a>
               </div>
               <div class="uP_diary_box">
                 <div class="uP_diary_companion">
                   <ul class="sel_companion">
-                    <li th:if="${followers != null}" th:each="follower : ${followers}"
-                      th:style="'background-image: url(' + ${follower.follower.attachUser.thumbPath} + ');'"
-                      class="circle"></li>
+                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"
+                        th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'"
+                        class="circle"></li>
                   </ul>
                 </div>
                 <div class="uP_diary_text">

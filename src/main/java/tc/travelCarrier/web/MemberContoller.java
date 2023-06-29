@@ -73,10 +73,14 @@ public class MemberContoller {
         model.addAttribute("diaryList",user.getWeeklys());
         // (반복문 필요 : 각 요소를 diary로) 썸네일 : diary.attachWeekly.thumbPath,
         // 제목 : diary.title, 기간 : diary.travelDate.sDate ~ diary.travelDate.eDate, 링크 : "TravelCarrier/weekly/"+diary.id
+        // 태그된 친구 목록: diary.gowiths (참고로 이건 List형태로 들어있으므로 반복문 필요 : 각 요소를 gowith으로)
+        // => gowith.user (프사는 gowith.user.attachUser.thumbPath, 이름은 gowith.user,name)
 
         model.addAttribute("tagDiaryList", weeklyRepository.getTagWeeklys(user));
         // (반복문 필요 : 각 요소를 diary로) 썸네일 : diary.attachWeekly.thumbPath,
         // 제목 : diary.title, 기간 : diary.travelDate.sDate ~ diary.travelDate.eDate, 링크 : "TravelCarrier/weekly/"+diary.id
+        // 태그된 친구 목록: diary.gowiths (참고로 이건 List형태로 들어있으므로 반복문 필요 : 각 요소를 gowith으로)
+        // => gowith.user (프사는 gowith.user.attachUser.thumbPath, 이름은 gowith.user,name)
 
         model.addAttribute("followers",user.getFollowers());
         // 반복문 필요 : 각 요소를 follower로
