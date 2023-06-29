@@ -5,102 +5,313 @@
 <th:block th:replace="fragments/head :: headFragment"></th:block>
 
 <body>
-<th:block th:replace="fragments/header :: headerFragment"></th:block>
-<main id="userProfile_wrap">
-  <div class="userProfile_top">
+  <th:block th:replace="fragments/header :: headerFragment"></th:block>
+  <main id="userProfile_wrap">
+    <!-- 배경이미지 -->
     <div class="userProfile_bg">
-      <img th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}" alt="유저프로필 배경이미지">
+      <img
+        th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+        alt="유저프로필 배경이미지" class="moving_bg">
     </div>
-    <div class="userProfile_tab">
+    <div class="gap"></div>
+    <div class="userProfile_scroll">
+      <div class="userProfile_top">
+        <!-- 프로필사진 및 편집 -->
+        <div class="my_profile">
+          <div class="my_profile_img circle">
+            <img
+              th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+              src="/image/mypage/profile.jpg" alt="프로필 이미지">
+          </div>
+          <div class="my_profile_id">
+            <span th:text="${profile.name}">yun_ah17</span>
+            <span id="edit_profile">
+              <!-- <img src="/image/mypage/icon/pencil.png" alt="프로필 수정아이콘"> -->
+              <img src="/image/mypage/icon/setting_wh.png" alt="프로필 수정아이콘">
+            </span>
+          </div>
+          <div class="add_friend_btn">
+            <button>following</button>
+          </div>
+        </div>
+        <!-- 탭메뉴 -->
+        <div class="drop_menu">
+          <div class="search_text">
+            <form action="">
+              <button>
+                <img src="/image/mypage/icon/search.png" alt="검색 아이콘">
+              </button>
+              <div>
+                <input type="text" name="" id="" placeholder="검색어">
+              </div>
+            </form>
+          </div>
+          <div class="userProfile_tab">
+            <ul>
+              <li data-set="1" class="on">
+                <span>diary<em id="diary_num">(0)</em></span>
+              </li>
+              <li data-set="2">
+                <span>tagged<em id="tagged_num">(4)</em></span>
+              </li>
+              <li data-set="3">
+                <span>review<em id="review_num">(19)</em></span>
+              </li>
+              <li data-set="4">
+                <span>travler<em id="travler_num">(0)</em></span>
+              </li>
+            </ul>
+          </div>
+          <div class="search_period">
+            <img src="/image/mypage/icon/schedule_wh.png" alt="기간검색아이콘">
+          </div>
+        </div>
+      </div>
+      <!-- 게시글 보기--------------------------- -->
+      <div class="userProfile_content">
+        <div class="userProfile_gallery">
+          <ul class="userProfile_diary show">
+            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}">
+              <div class="uP_diary_thumbnail">
+                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
+                  <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일"
+                    class="moving_bg">
+                </a>
+              </div>
+              <div class="uP_diary_box">
+                <div class="uP_diary_companion">
+                  <ul class="sel_companion">
+                    <li th:if="${followers != null}" th:each="follower : ${followers}"
+                      th:style="'background-image: url(' + ${follower.follower.attachUser.thumbPath} + ');'"
+                      class="circle"></li>
+                  </ul>
+                </div>
+                <div class="uP_diary_text">
+                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>
+                  <span
+                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
+                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+                </div>
+                <div class="uP_diary_btn">
+                  <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">수정하기</a>
+                  <button type="button">
+                    삭제하기
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul class="userProfile_tagged">
+            <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
+              <div class="uP_diary_thumbnail">
+                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
+                  <img src="/image/mypage/thumbnail1.JPG" alt="썸네일" class="moving_bg">
+                </a>
+              </div>
+              <div class="uP_diary_box">
+                <div class="uP_diary_companion">
+                  <ul class="sel_companion">
+                    <li th:if="${followers != null}" th:each="follower : ${followers}"
+                      th:style="'background-image: url(' + ${follower.follower.attachUser.thumbPath} + ');'"
+                      class="circle"></li>
+                  </ul>
+                </div>
+                <div class="uP_diary_text">
+                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>
+                  <span
+                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
+                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+                </div>
+                <div class="uP_diary_btn">
+                  <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">수정하기</a>
+                  <button type="button">
+                    삭제하기
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul class="userProfile_review"></ul>
+          <ul class="userProfile_travler">
+            <li>
+              <div class="circle uP_diary_thumbnail">
+                <a href="#">
+                  <img src="/image/mypage/thumbnail1.JPG" alt="썸네일">
+                </a>
+              </div>
+              <div class="uP_diary_text">
+                <span class="uP_diary_tit">Budapest</span>
+                <span class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="uP_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle uP_diary_thumbnail">
+                <a href="#">
+                  <img src="/image/mypage/thumbnail2.JPG" alt="썸네일">
+                </a>
+              </div>
+              <div class="uP_diary_text">
+                <span class="uP_diary_tit">Paris</span>
+                <span class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="uP_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle uP_diary_thumbnail">
+                <a href="#">
+                  <img src="/image/mypage/thumbnail3.JPG" alt="썸네일">
+                </a>
+              </div>
+              <div class="uP_diary_text">
+                <span class="uP_diary_tit">Spain</span>
+                <span class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="uP_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle uP_diary_thumbnail">
+                <a href="#">
+                  <img src="/image/mypage/thumbnail1.JPG" alt="썸네일">
+                </a>
+              </div>
+              <div class="uP_diary_text">
+                <span class="uP_diary_tit">Spain</span>
+                <span class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="uP_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle uP_diary_thumbnail">
+                <a href="#">
+                  <img src="/image/mypage/thumbnail2.JPG" alt="썸네일">
+                </a>
+              </div>
+              <div class="uP_diary_text">
+                <span class="uP_diary_tit">Spain</span>
+                <span class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="uP_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle uP_diary_thumbnail">
+                <a href="#">
+                  <img src="/image/mypage/thumbnail3.JPG" alt="썸네일">
+                </a>
+              </div>
+              <div class="uP_diary_text">
+                <span class="uP_diary_tit">Spain</span>
+                <span class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="uP_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="circle uP_diary_thumbnail">
+                <a href="#">
+                  <img src="/image/mypage/thumbnail1.JPG" alt="썸네일">
+                </a>
+              </div>
+              <div class="uP_diary_text">
+                <span class="uP_diary_tit">Spain</span>
+                <span class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+              </div>
+              <div class="uP_diary_btn">
+                <a href="#">수정하기</a>
+                <button type="button">
+                  삭제하기
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="period_modal_bg modal_bg">
+    <div class="period_modal">
+      <div class="modal_title">
+        <h3>기간 조회</h3>
+        <button class="close">
+          <i class="xi-close xi-2x"></i>
+        </button>
+      </div>
+      <div class="modal_content">
+        <div class="inquire_period">
+          <h3>기간 선택</h3>
+          <div>
+            <ul>
+              <li class="on">기간없음</li>
+              <li>1주일</li>
+              <li>1개월</li>
+              <li>3개월</li>
+              <li>6개월</li>
+              <li>지난 1년</li>
+            </ul>
+          </div>
+        </div>
+        <div class="direct_period">
+          <h3>직접 입력</h3>
+          <div class="period_flex">
+            <span class="dateSet">
+              <input name="sdate" type="text" id="sdate">
+              <a href="#none" class="btncalender dateClick">달력</a>
+            </span>
+            <span class="dami"></span>
+            <!-- 여행 종료일 -->
+            <span class="dateSet">
+              <input name="edate" type="text" id="edate">
+              <a href="#none" class="dateClick">달력</a>
+            </span>
+          </div>
+        </div>
+        <button id="search_period">검색</button>
+      </div>
+    </div>
+  </div>
+  <div class="edit_profile modal_bg">
+    <div>
       <ul>
-        <li data-id="1" class="on">
-          <span>diary</span>
-        </li>
-        <li data-id="2">
-          <span>tagged</span>
-        </li>
-        <li data-id="3">
-          <span>review</span>
-        </li>
-        <li data-id="4">
-          <span>travler</span>
-        </li>
+        <li>프로필 수정</li>
+        <li>계정정보</li>
+        <li>로그아웃</li>
+        <li>취소</li>
       </ul>
     </div>
   </div>
-
-  <div class="userProfile_bottom">
-    <div class="userProfile_right">
-      <div class="my_profile">
-        <div class="my_profile_img circle">
-          <img th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}" src="/image/mypage/profile.jpg" alt="프로필 이미지">
-        </div>
-        <div class="my_profile_id">
-          <span th:text="${profile.name}"></span>
-          <span id="edit_profile">
-              <img src="/image/mypage/icon/pencil.png" alt="프로필 수정아이콘">
-            </span>
-        </div>
-      </div>
-    </div>
-    <div class="userProfile_left">
-      <div class="userProfile_scroll">
-        <ul class="userProfile_diary show">
-
-          <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" >
-            <div class="circle up_diary_thumbnail">
-              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
-                <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
-              </a>
-            </div>
-            <div class="up_diary_text">
-              <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
-              <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
-            </div>
-            <div class="up_diary_btn">
-              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>
-              <button type="button">
-                삭제하기
-              </button>
-            </div>
-          </li>
-        </ul>
-
-        <ul class="userProfile_tegged">
-          <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}" >
-            <div class="circle up_diary_thumbnail">
-              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">
-                <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일">
-              </a>
-            </div>
-            <div class="up_diary_text">
-              <span th:text="${diary.title}" class="up_diary_tit">Budapest</span>
-              <span th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"  class="up_diary_period">2022.10.19 - 2022.10.20</span>
-            </div>
-            <div class="up_diary_btn">
-              <a th:href="'/TravelCarrier/weekly/' + ${diary.id}" href="#">수정하기</a>
-              <button type="button">
-                삭제하기
-              </button>
-            </div>
-          </li>
-        </ul>
-
-      </div>
-    </div>
-  </div>
-</main>
-<div class="edit_profile modal_bg">
-  <div>
-    <ul>
-      <li>프로필 수정</li>
-      <li>계정정보</li>
-      <li>로그아웃</li>
-      <li>취소</li>
-    </ul>
-  </div>
-</div>
-<script src="/script/mypage.js"></script>
+  <!-- <div id="GoToTop">
+    <button onclick="Top">GoToTop</button>
+  </div> -->
+  <script src="/script/mypage.js"></script>
 
 
 </body>

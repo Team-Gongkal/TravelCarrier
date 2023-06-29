@@ -31,17 +31,17 @@ function setSSE() {
 
 $(document).ready(function () {
   // 최근 업데이트창 활성화 - by윤아
-  $(".notice").on("click", function () {
+  $(".notice").on("click", function (e) {
     // 알림창 셋팅
     getNotification();
-    $(".utill_notice ").addClass("show");
-    $(".diary_noH .writing").hide();
+    $(".utill_notice").toggleClass("show");
   });
   // 최근 업데이트창 비활성화 - by윤아
   $(".update_notice h6 i").on("click", function () {
     $(".utill_notice ").removeClass("show");
-    $(".diary_noH .writing").show();
   });
+
+
 
   // 알림삭제 - by.서현
   $(document).on("click", ".notice_del", function () {

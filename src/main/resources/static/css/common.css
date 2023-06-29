@@ -159,7 +159,10 @@ form h3 {
   font-weight: 400;
   margin-bottom: 0.8rem;
 }
-
+.modal_title {
+  height: 4.2rem; /*font-size + padding*/
+  position: relative;
+}
 .modal_title h3 {
   text-align: center;
   font-size: 1.2rem;
@@ -179,4 +182,88 @@ form h3 {
 }
 .modal_title button.close:hover {
   color: #353a52;
+}
+
+/* daypicker-css 수정 */
+#ui-datepicker-div {
+  padding: 0;
+  font-family: "NanumSquareNeo";
+  display: none;
+  width: fit-content;
+}
+#ui-datepicker-div.ui-datepicker .ui-datepicker-title {
+  line-height: 0em;
+}
+#ui-datepicker-div select {
+  padding: 0;
+  background: transparent;
+  color: #f7f7f7;
+}
+#ui-datepicker-div select.ui-datepicker-month {
+  width: 26%;
+}
+#ui-datepicker-div select.ui-datepicker-year {
+  width: 33%;
+  margin-right: 0.2rem;
+}
+#ui-datepicker-div select option {
+  color: #353a52;
+}
+#ui-datepicker-div.ui-widget-content {
+  background: #f7f7f7;
+  color: #353a52;
+  border: 1px solid #353a5245;
+}
+#ui-datepicker-div .ui-widget-header {
+  background: #353a52;
+  border-radius: 0;
+  padding: 0.5rem 0;
+}
+#ui-datepicker-div .ui-widget-header .ui-icon {
+  background-image: url(../image/mypage/icon/btns.png);
+  background-size: cover;
+}
+#ui-datepicker-div .ui-widget-header .ui-icon.ui-icon-circle-triangle-w {
+  background-position: 0px 0;
+}
+#ui-datepicker-div .ui-widget-header .ui-icon.ui-icon-circle-triangle-e {
+  background-position: -13px 0px;
+}
+#ui-datepicker-div .ui-state-hover {
+  background: #f7f7f720;
+  border: 1px solid transparent;
+}
+#ui-datepicker-div.ui-datepicker .ui-datepicker-next,
+#ui-datepicker-div.ui-datepicker .ui-datepicker-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.8em;
+  height: 1.8em;
+}
+#ui-datepicker-div .ui-datepicker-calendar th {
+  padding: 0.6em 0.5em;
+  font-size: 0.9rem;
+  font-weight: normal;
+  border-bottom: 1px solid #353a52;
+}
+#ui-datepicker-div .ui-state-default,
+#ui-datepicker-div .ui-widget-content .ui-state-default,
+#ui-datepicker-div .ui-widget-header .ui-state-default {
+  border: 0;
+  background: transparent;
+  color: #353a52;
+}
+#ui-datepicker-div.ui-datepicker td span,
+#ui-datepicker-div.ui-datepicker td a {
+  padding: 0.8rem 0.4rem;
+  text-align: center;
+  font-weight: normal;
+}
+#ui-datepicker-div.ui-datepicker td a:hover {
+  background: rgb(160, 193, 202, 0.4);
+}
+
+#ui-datepicker-div.ui-datepicker .ui-state-highlight {
+  background: rgb(160, 193, 202, 0.4);
 }

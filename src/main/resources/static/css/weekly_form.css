@@ -132,15 +132,15 @@ main#weekly_form div {
 }
 .period_flex {
   display: flex;
-  box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
+}
+span.dateSet {
+  background: #f7f7f7;
 }
 .dateSet:nth-child(1) {
-  background: #f7f7f7;
   border-right: 2px solid #efeee9;
   border-radius: 0.2rem 0 0 0.2rem;
 }
 .dateSet:nth-child(2) {
-  background: #f7f7f7;
   border-radius: 0 0.2rem 0.2rem 0;
 }
 span.dateSet > input[type="text"] {
@@ -156,6 +156,9 @@ a.dateClick {
   background-size: cover;
   vertical-align: middle;
   position: relative;
+  image-rendering: -webkit-optimize-contrast;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 /* 추가글 입력 */
 .weekly_input > ul > li:nth-child(3) {

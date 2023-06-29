@@ -260,29 +260,28 @@ $('#addText').keyup(function (e){
     }
 });
 */
-$(document).ready(function() {
+$(document).ready(function () {
   var select = $('select[name="nation"]');
 
   // 기존의 option 요소 제거
   select.empty();
 
   // 새로운 option 요소 추가
-  $.each(countries, function(index, country) {
-    var option = $('<option/>')
-      .attr('id', index)
-      .attr('value', country.phoneCode)
+  $.each(countries, function (index, country) {
+    var option = $("<option/>")
+      .attr("id", index)
+      .attr("value", country.phoneCode)
       .text(country.name);
 
     if (country.phoneCode == selectNation) {
-      option.prop('selected', true);
+      option.prop("selected", true);
     }
     select.append(option);
   });
 });
 
-
+// datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
-  // datepicker 설정 및 옵션 변경 - by윤아
   $.datepicker.setDefaults($.datepicker.regional["ko"]);
   $("#sdate").datepicker({
     // showOn: 'both',
@@ -340,7 +339,7 @@ $(document).ready(function () {
       //시작일(startDate) datepicker가 닫힐때
       //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
       $("#edate").datepicker("option", "minDate", selectedDate);
-      if($("#edate").val() != "") $("#periodValidation").text("");
+      if ($("#edate").val() != "") $("#periodValidation").text("");
     },
   });
   //end Date
@@ -400,7 +399,7 @@ $(document).ready(function () {
       //시작일(startDate) datepicker가 닫힐때
       //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
       $("#sdate").datepicker("option", "maxDate", selectedDate);
-      if($("#sdate").val() != "") $("#periodValidation").text("");
+      if ($("#sdate").val() != "") $("#periodValidation").text("");
     },
   });
   //input태그 옆의 이미지 클릭시 datepicker열기 - by윤아
@@ -409,11 +408,11 @@ $(document).ready(function () {
     console.log(e.target);
   });
 
-
   // 동행인 선택 모달창 활성화 - by윤아
   $("#plus_companion").on("click", function () {
-    if(selfAuth == "GRANTED") $(".companion_modal_bg").addClass("show");
-    else if(selfAuth == "DENIED") alert("친구 게시글의 동행인은 수정 할 수 없습니다");
+    if (selfAuth == "GRANTED") $(".companion_modal_bg").addClass("show");
+    else if (selfAuth == "DENIED")
+      alert("친구 게시글의 동행인은 수정 할 수 없습니다");
   });
   $(".companion_modal > button").on("click", function () {
     $(".companion_modal_bg").removeClass("show");
@@ -433,8 +432,6 @@ $(document).ready(function () {
       }
     });
   });
-
-
 });
 
 // 사진첨부시 미리보기를 생성하는 메소드 by서현
@@ -448,7 +445,10 @@ $(document).on("change", "#thumbnail_change", function (event) {
 // 이미지 삭제버튼 메소드 by서현
 $(document).on("click", ".removeBtn", function (event) {
   $(".thumbnail_img.circle").empty();
-  var img = $("<img>").attr("src", "/image/default/weekly_default_thumbnail.png");
+  var img = $("<img>").attr(
+    "src",
+    "/image/default/weekly_default_thumbnail.png"
+  );
   $(".thumbnail_img.circle").append(img);
 });
 
@@ -482,11 +482,14 @@ $(".weekly_saveBtn").click(function (event) {
   event.preventDefault();
 
   // 제출전 유효성 검사, false면 제출 X
-  if(!checkValidation()) return;
+  if (!checkValidation()) return;
 
   // nation file sdate edate title text gowiths[] status
   var formData = new FormData();
-  if ($(".thumbnail_img.circle img").attr("src") != "/image/default/weekly_default_thumbnail.png") {
+  if (
+    $(".thumbnail_img.circle img").attr("src") !=
+    "/image/default/weekly_default_thumbnail.png"
+  ) {
     formData.append("file", $("#thumbnail_change")[0].files[0]);
   }
 
@@ -504,7 +507,7 @@ $(".weekly_saveBtn").click(function (event) {
   formData.append("text", $("#addText").val());
 
   $("ul.sel_companion li:not(:last)").each(function () {
-  console.log($(this).data("fid"));
+    console.log($(this).data("fid"));
     formData.append("gowiths[]", $(this).data("fid"));
   });
 
@@ -525,28 +528,33 @@ $(".weekly_saveBtn").click(function (event) {
     },
   });
 
-// 추가할곳
-  });
+  // 추가할곳
+});
 
 // 제출전 유효성 최종검사
-function checkValidation(){
-    // 날짜가 없을때만 제출 불가!
-    if( $("#sdate").val() == null ||  $("#edate").val() == null ||
-     $("#sdate").val() == undefined ||  $("#edate").val() == undefined ||
-     $("#sdate").val() == "" ||  $("#edate").val() == ""){
-        alert("날짜는 필수입력항목 입니다.");
-        return false;
-    }
-    return true;
+function checkValidation() {
+  // 날짜가 없을때만 제출 불가!
+  if (
+    $("#sdate").val() == null ||
+    $("#edate").val() == null ||
+    $("#sdate").val() == undefined ||
+    $("#edate").val() == undefined ||
+    $("#sdate").val() == "" ||
+    $("#edate").val() == ""
+  ) {
+    alert("날짜는 필수입력항목 입니다.");
+    return false;
+  }
+  return true;
 }
 // 글자수세기
-$('#addText').keyup(function (e){
-    var content = $(this).val();
-    $('#countText').html("("+content.length+" / 100)");    //글자수 실시간 카운팅
+$("#addText").keyup(function (e) {
+  var content = $(this).val();
+  $("#countText").html("(" + content.length + " / 100)"); //글자수 실시간 카운팅
 
-    if (content.length > 100){
-        alert("최대 100자까지 입력 가능합니다.");
-        $(this).val(content.substring(0, 100));
-        $('#countText').html("(100 / 100)");
-    }
+  if (content.length > 100) {
+    alert("최대 100자까지 입력 가능합니다.");
+    $(this).val(content.substring(0, 100));
+    $("#countText").html("(100 / 100)");
+  }
 });

@@ -11,8 +11,9 @@ $(window).load(function () {
 //검은 배경 클릭시 모달 비활성화 -by윤아
 $(window).click(function (e) {
   if ($(e.target).is($(".modal_bg"))) {
+    console.log(e.target);
     $(
-      ".weekly_modal_bg, .keyword_modal_bg, .edit_profile, #login_wrap , .reply_modal , .daily_form_bg"
+      ".weekly_modal_bg, .keyword_modal_bg, .edit_profile, #login_wrap , .reply_modal , .daily_form_bg .period_modal_bg"
     ).removeClass("show");
   }
 });

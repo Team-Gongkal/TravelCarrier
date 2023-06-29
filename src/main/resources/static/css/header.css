@@ -107,6 +107,13 @@ header > nav {
   display: flex;
   z-index: 100;
   justify-content: space-between;
+  visibility: visible;
+  opacity: 1;
+  transition: 0.3s;
+}
+.utill_menu.hide {
+  opacity: 0;
+  visibility: hidden;
 }
 .notice,
 .profile {
@@ -132,11 +139,11 @@ header > nav {
   content: "";
   display: inline-block;
   position: absolute;
-  right: -3px;
-  top: 0px;
+  right: -2px;
+  top: 1px;
   width: calc(2.7rem / 2.8);
   height: calc(2.7rem / 2.8);
-  background: red;
+  background: #a0c1ca;
   border-radius: 100%;
   /* 새로운 알림이 있을 때 적용, 삭제 */
 }
@@ -181,6 +188,7 @@ header > nav {
   visibility: hidden;
   opacity: 0;
   margin-top: 0.6rem;
+  z-index: 150;
 }
 .user_menu.on {
   visibility: visible;
@@ -228,13 +236,13 @@ header > nav {
 .utill_notice {
   width: 22vw;
   height: calc(100% - 6rem);
-  background: #efeee9;
   position: fixed;
   top: 4rem;
   right: -22vw;
   box-sizing: border-box;
   z-index: 50;
-  background: #f7f7f7;
+  background-color: rgb(247, 247, 247, 0.95);
+  backdrop-filter: blur(10px);
   font-family: "NanumSquareNeo";
   font-weight: 200;
   font-size: 0.9rem;
@@ -243,6 +251,8 @@ header > nav {
   line-height: 1.2em;
   transition: 0.5s;
   border-radius: 1rem;
+  z-index: 101;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 .utill_notice.show {
   right: 0.5rem;
@@ -253,6 +263,7 @@ header > nav {
   height: 100%;
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
 }
 .notice_del i {
   position: absolute;
@@ -274,17 +285,20 @@ header > nav {
 .update_notice ul {
   width: 100%;
   height: calc(100% - 3.5rem);
-  overflow-y: scroll;
+  overflow-y: unset;
   overflow-x: hidden;
   box-sizing: border-box;
 }
 
 /* 스크롤바 디자인 */
+.update_notice ul::-webkit-scrollbar-track {
+  background: #d7d7d7;
+}
 .update_notice ul::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 0.4rem;
 }
 .update_notice ul::-webkit-scrollbar-thumb {
-  background: rgba(53, 58, 82, 0.3);
+  background: rgba(53, 58, 82, 0.2);
   border-radius: 10px;
 }
 .update_notice ul li {
@@ -296,7 +310,7 @@ header > nav {
     "profile textbox del"
     "profile textbox del"
     "profile date del";
-  padding: 1.5rem 0.5rem 1.5rem 1.5rem;
+  padding: 1.5rem 1.1rem 1.5rem 1.1rem;
   position: relative;
 }
 .update_notice ul li:hover {
