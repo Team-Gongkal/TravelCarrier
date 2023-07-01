@@ -223,6 +223,12 @@ header > nav {
   font-weight: 100;
   font-size: 0.8rem;
 }
+.user_menu > ul > li i {
+  display: inline-block;
+  margin-right: 1em;
+  color: rgb(247, 247, 247, 0.8);
+  font-size: 0.6em;
+}
 .user_menu > ul > li form span {
   display: inline-block;
   vertical-align: middle;
@@ -305,7 +311,7 @@ header > nav {
   border-bottom: 1px solid rgb(53, 58, 82, 0.1);
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 2.5rem auto 1rem;
+  grid-template-columns: 2.5rem auto 0.5rem;
   grid-template-areas:
     "profile textbox del"
     "profile textbox del"

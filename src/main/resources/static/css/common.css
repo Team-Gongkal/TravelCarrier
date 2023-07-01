@@ -160,8 +160,12 @@ form h3 {
   margin-bottom: 0.8rem;
 }
 .modal_title {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.5rem 0.5rem;
   height: 4.2rem; /*font-size + padding*/
   position: relative;
+  border-bottom: 1px solid #b3b3b3;
 }
 .modal_title h3 {
   text-align: center;
@@ -200,10 +204,10 @@ form h3 {
   color: #f7f7f7;
 }
 #ui-datepicker-div select.ui-datepicker-month {
-  width: 26%;
+  width:30%;
 }
 #ui-datepicker-div select.ui-datepicker-year {
-  width: 33%;
+  width: 37%;
   margin-right: 0.2rem;
 }
 #ui-datepicker-div select option {
