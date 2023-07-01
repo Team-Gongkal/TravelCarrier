@@ -87,11 +87,12 @@ public class WeeklyContoller {
         model.addAttribute("readAuth", answer[0]);
         model.addAttribute("updateAuth", answer[1]);
         model.addAttribute("selfAuth", answer[2]);
+
+
         if(answer[0].equals("GRANTED") && answer[1].equals("DENIED")) {
             List<WeeklyDTO> wdList = weeklyService.findWeeklyDto(weeklyId);
             model.addAttribute("wdList",wdList);
         }
-
         model.addAttribute("user", user);
         model.addAttribute("allWdList", allWdList);
         model.addAttribute("weekly",weekly);
