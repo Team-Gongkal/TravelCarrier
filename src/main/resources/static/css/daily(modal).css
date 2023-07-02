@@ -43,13 +43,6 @@ main.daily {
   flex-direction: column;
   justify-content: center;
 }
-.modal_title {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 1.5rem 0.5rem;
-  position: relative;
-}
-
 .Dform_title {
   border-bottom: 1px solid #b3b3b3;
 }

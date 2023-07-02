@@ -261,6 +261,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   width: 20%;
   height: 100%;
   overflow: hidden;
+  display: none;
 }
 .search_period img {
   display: block;
@@ -317,14 +318,14 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   padding: 0 0.5rem;
 }
 .inquire_period {
-  margin: 1rem 0 2rem 0;
+  margin: 2.5rem 0 2rem 0;
 }
 .inquire_period > div ul {
   display: flex;
   justify-content: space-between;
 }
 .inquire_period > div ul li {
-  border: 1px solid rgb(53, 58, 82, 0.5);
+  border: 1px solid rgb(53, 58, 82, 0.3);
   border-radius: 100px;
   padding: 0.7rem 1.2rem;
   cursor: pointer;
@@ -342,7 +343,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 .direct_period .period_flex {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 .dami {
   display: inline-block;
@@ -353,7 +354,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 }
 .direct_period .period_flex .dateSet {
   display: inline-block;
-  box-shadow: 1px 1px 2px 1px #353a5222;
+  box-shadow: 1px 1px 4px 0px rgba(53, 58, 82, 0.1);
   width: 45%;
 }
 .direct_period .period_flex span.dateSet > input[type="text"] {
@@ -364,7 +365,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 }
 .modal_content button {
   display: block;
-  width: 25%;
+  width: 30%;
   background: #a0c1ca;
   color: #f7f7f7;
   margin: auto;
@@ -384,7 +385,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 
 /* common 공통영역 */
 .userProfile_gallery {
-  padding: 0 8rem;
+  padding: 0 8rem 3rem 8rem;
   box-sizing: border-box;
   position: relative;
   z-index: 0;
@@ -446,7 +447,8 @@ div.uP_diary_thumbnail img {
   height: 100%;
   object-fit: cover;
 }
-.uP_diary_box {
+.uP_diary_box,
+.uP_user_box {
   width: 100%;
   height: fit-content;
   box-sizing: border-box;
@@ -486,27 +488,25 @@ div.uP_diary_thumbnail img {
   display: none;
 }
 /* 내용(제목 및 기간) */
-div.uP_diary_text {
+div.uP_diary_text,
+div.uP_user_text {
   margin: 0.5rem 0 1.3rem 0;
 }
-div.uP_diary_text > span {
+div.uP_diary_text > span,
+div.uP_user_text > span {
   display: block;
 }
-span.uP_diary_tit {
+span.uP_diary_tit,
+span.uP_user_name {
   font-size: 1.2rem;
   font-weight: 500;
   margin-bottom: 1rem;
 }
-span.uP_diary_period {
+span.uP_diary_period,
+span.uP_user_added {
   opacity: 40%;
   font-weight: 400;
   font-size: 0.9rem;
-}
-span.uP_diary_user {
-  opacity: 40%;
-  font-weight: 300;
-  font-size: 0.9rem;
-  margin-top: 1rem;
 }
 div.uP_diary_btn {
   width: 100%;
@@ -541,17 +541,89 @@ div.uP_diary_btn > button:hover {
   background: #525d76;
   color: #f7f7f7;
 }
-/* travler================================ */
+
+/* travler 친구목록================================ */
 .userProfile_gallery > ul.userProfile_travler {
-  width: 100%;
-  height: 100%;
-  display: none;
-  grid-gap: 1.5rem;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  text-align: center;
-  transition: 1s;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+ul.userProfile_travler li {
+}
+ul.userProfile_travler li .uP_diary_thumbnail {
+  height: 7rem;
+}
+li .uP_user_box {
+  position: relative;
+  padding: 1.2rem 1rem;
 }
 
+div.uP_user_profileImg {
+  position: absolute;
+  bottom: calc(100% - 3.5rem); /*-프로필의 반높이*/
+  left: 50%;
+  transform: translate(-50%);
+}
+div.uP_user_profileImg .my_profile_img {
+  width: 7rem;
+  height: 7rem;
+  border: 2px solid #f7f7f7;
+}
+li div.uP_user_text {
+  margin: 3rem 0 1rem 0;
+}
+li .uP_user_text span.uP_user_name {
+  font-size: 1.2rem;
+  margin-bottom: 0.5em;
+}
+li .uP_user_text span.uP_user_added {
+  font-size: 0.6rem;
+}
+.follower_del_btn button {
+  width: 80%;
+  font-size: 0.8rem;
+  background: #353a5b;
+  color: #f7f7f7;
+  border-radius: 100px;
+  padding: 1em 0;
+}
+.follower_del_btn button i {
+  display: inline-block;
+  margin-right: 0.7em;
+}
+.follower_del_btn button:hover {
+  background: #a0c1ca;
+  color: #fff;
+}
+/* 친구목록 구분탭 */
+.travlar_option {
+  width: 20%;
+  height: 100%;
+  align-items: center;
+  display: none;
+}
+
+.travlar_option button {
+  width: 30%;
+  opacity: 0.3;
+  height: fit-content;
+  background: transparent;
+  color: rgb(247, 247, 247);
+  border: 1px solid rgb(247, 247, 247);
+  padding: 0.5rem;
+}
+.travlar_option button:hover {
+  background: rgb(247, 247, 247, 0.3);
+}
+.travlar_option button.on {
+  background: rgb(247, 247, 247, 0.3);
+  opacity: 1;
+}
+.travlar_option button#follower {
+  border-radius: 0.2rem 0 0 0.2rem;
+}
+.travlar_option button#follow {
+  border-radius: 0 0.2rem 0.2rem 0;
+}
 /* 설정------------------------------------------------- */
 .edit_profile {
   width: 100%;
@@ -605,4 +677,17 @@ div.uP_diary_btn > button:hover {
 .moving_bg {
   object-position: center 50%;
   /* transition: 0.05s; */
+}
+.travlar_option.show,
+.search_period.show {
+  display: flex;
+  justify-content: flex-end;
+}
+/* 더보기버튼 */
+.userProfile_gallery button#more_btn {
+  width: 7%;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
 }

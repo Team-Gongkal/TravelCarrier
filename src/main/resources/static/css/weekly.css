@@ -13,8 +13,8 @@ main.weekly_scroll::-webkit-scrollbar {
 }
 main.weekly_scroll::-webkit-scrollbar-thumb {
   /* background: rgb(53, 58, 82, 0.2); */
-  background:rgb(160, 193, 202,0.5);
-  border-radius:10px;
+  background: rgb(160, 193, 202, 0.5);
+  border-radius: 10px;
 }
 /* weekly 디자인 시작 */
 .weekly_edit {
@@ -122,7 +122,7 @@ article .longBox {
   height: 2.5em;
   text-indent: -999px;
   border: 2px solid #efeee9;
-  box-sizing: border-box;
+  box-sizing:3 border-box;
   left: 0em;
   font-size: 0.9rem;
   background-repeat: no-repeat;
@@ -141,6 +141,7 @@ article .longBox {
   flex: 0.7;
   display: flex;
   justify-content: end;
+  text-align: center;
 }
 .weekly_disclosure span {
   width: fit-content;
@@ -149,9 +150,11 @@ article .longBox {
   opacity: 0.2;
   font-size: 0.8rem;
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-align: end;
+}
+.weekly_disclosure span:first-child {
+padding-top: 0.1em;
+box-sizing: border-box;
 }
 .weekly_disclosure span img {
   width: 1.5rem;
@@ -421,7 +424,7 @@ article .longBox {
   box-sizing: border-box;
 }
 .addKeyword input[type="text"] {
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 }
 .addKeyword > div {
   width: 100%;
@@ -517,10 +520,6 @@ li.card span:nth-child(2):hover {
   position: relative;
   padding-bottom: 65%;
   align-self: center;
-}
-.weekly_modal_bg .modal_title {
-  position: relative;
-  border-bottom: 1px solid #b3b3b3;
 }
 .weekly_modal_bg button.close {
   position: absolute;

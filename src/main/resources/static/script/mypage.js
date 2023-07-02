@@ -17,6 +17,12 @@ $(".period_modal_bg .close, #search_period").on("click", function () {
   $(".period_modal_bg").removeClass("show");
 });
 
+//친구목록 활성화
+$(".travlar_option button").on("click", function (e) {
+  $(e.target).addClass("on");
+  $(e.target).siblings("button").removeClass("on");
+});
+
 //스크롤 변화에 따른 top높이 설정 - by윤아
 addEventListener("mousewheel", (e) => {
   const direction = e.deltaY > 0 ? "Scroll Down" : "Scroll Up";
@@ -74,30 +80,34 @@ userProfileScroll.on("scroll", function () {
 //탭메뉴 활성화 -by윤아
 var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery > ul");
-var count = tab.length;
-var $scroll = $("div.userProfile_scroll");
-console.log(count);
+var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 
-function open(i) {
+tab.click(function () {
+  var idx = $(this).index();
+
   tab.removeClass("on");
-  tab.eq(i).addClass("on");
   contents.removeClass("show");
-  contents.eq(i).addClass("show");
-  $scroll.scrollTop(0); //스크롤 초기화
-  console.log("클릭한애", contents.eq(i).children("li"));
-}
-for (let i = 0; i < count; i++) {
-  tab.eq(i).click(function () {
-    open(i);
+  $scroll.addClass("hide");
+  $(".search_period, .travlar_option").removeClass("show");
+  console.log(idx + "왜이래");
 
-    //게시글 갯수에 따라 스크롤 활성화 - by윤아
-    if (contents.eq(i).children("li").length < 5) {
-      $("#userProfile_wrap > div.userProfile_scroll").addClass("hide");
-    } else {
-      $("#userProfile_wrap > div.userProfile_scroll").removeClass("hide");
+  $(this).addClass("on");
+  contents.eq(idx).addClass("show");
+
+  if (idx < 3) {
+    if (contents.eq(idx).children("li").length >= 5) {
+      $scroll.eq(idx).removeClass("hide");
     }
-  });
-}
+    $(".search_period").addClass("show");
+    console.log("idx0-2 = " + idx);
+  } else if (idx == 3) {
+    if (contents.eq(idx).children("li").length >= 12) {
+      $scroll.eq(idx).removeClass("hide");
+    }
+    $(".travlar_option").addClass("show");
+    console.log("idx3 = " + idx);
+  }
+});
 
 // datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
