@@ -43,6 +43,7 @@
             <div class="country">
               <h3>여행 국가</h3>
               <select name="nation">
+                <option th:each="nation : ${nationList}" th:value="${nation.id}" th:text="${nation.name}" ></option>
               </select>
 
             </div>

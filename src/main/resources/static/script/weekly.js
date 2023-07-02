@@ -200,10 +200,7 @@ $(document).on("click", ".updateWeekly", function (event) {
   ) {
     formData.append("file", $("#thumbnail_change")[0].files[0]);
   }
-  formData.append(
-    "nation",
-    $('select[name="nation"] option:selected').attr("value")
-  );
+  formData.append("nation", $('select[name="nation"] option:selected').attr("value"));
   formData.append("sdate", $("#sdate").val());
   formData.append("edate", $("#edate").val());
   if ($("div.title input").val() === "") {

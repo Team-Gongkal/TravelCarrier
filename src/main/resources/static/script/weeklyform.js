@@ -260,25 +260,7 @@ $('#addText').keyup(function (e){
     }
 });
 */
-$(document).ready(function () {
-  var select = $('select[name="nation"]');
 
-  // 기존의 option 요소 제거
-  select.empty();
-
-  // 새로운 option 요소 추가
-  $.each(countries, function (index, country) {
-    var option = $("<option/>")
-      .attr("id", index)
-      .attr("value", country.phoneCode)
-      .text(country.name);
-
-    if (country.phoneCode == selectNation) {
-      option.prop("selected", true);
-    }
-    select.append(option);
-  });
-});
 
 // datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
@@ -493,10 +475,8 @@ $(".weekly_saveBtn").click(function (event) {
     formData.append("file", $("#thumbnail_change")[0].files[0]);
   }
 
-  formData.append(
-    "nation",
-    $('select[name="nation"] option:selected').attr("value")
-  );
+  formData.append("nation",$('select[name="nation"] option:selected').attr("value"));
+
   formData.append("sdate", $("#sdate").val());
   formData.append("edate", $("#edate").val());
   if ($("div.title input").val() === "") {
@@ -513,6 +493,7 @@ $(".weekly_saveBtn").click(function (event) {
 
   formData.append("status", $("input[name='status']:checked").val());
 
+  console.log(formData.get("nation"));
   $.ajax({
     type: "POST",
     url: "/TravelCarrier/weeklyForm",

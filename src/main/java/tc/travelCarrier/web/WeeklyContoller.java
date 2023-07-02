@@ -13,6 +13,7 @@ import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.MemberRepository;
+import tc.travelCarrier.repository.NationRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 import tc.travelCarrier.service.WeeklyService;
 
@@ -30,13 +31,15 @@ public class WeeklyContoller {
 
     private final WeeklyService weeklyService;
     private final MemberRepository memberRepository;
+    private final NationRepository nationRepository;
 
     @GetMapping("/weeklyForm")
     public String getWeeklyForm(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        List<Nation> nationList = nationRepository.findAll();
         model.addAttribute("user", user);
-
+        model.addAttribute("nationList", nationList);
         return "test/weekly_form";
     }
 
@@ -54,13 +57,17 @@ public class WeeklyContoller {
         }
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        // nation 객체 찾기
+        System.out.println("nation : "+form.getNation());
+        Nation nation = nationRepository.findNationById(form.getNation());
+
         System.out.println("디폴트 : "+form.getFile());
         List<User> goWithList = new ArrayList<User>();
         if(form.getGowiths() != null) {
             for (int id : form.getGowiths()) goWithList.add(memberRepository.findUserById(id));
         }
         int weeklyId = weeklyService.register(form.getFile(),
-                createWeekly(user, null, form.getTitle(), form.getNation(),
+                createWeekly(user, null, form.getTitle(), nation,
                 new TravelDate(form.getSdate(),form.getEdate()), new CrudDate(new Date(),null),
                         status, form.getText(), goWithList), user
         );
@@ -81,6 +88,9 @@ public class WeeklyContoller {
         List<WeeklyDTO> allWdList = getAllWeeklyData(weekly, weeklyId);
 
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+
+        List<Nation> nationList = nationRepository.findAll();
+        model.addAttribute("nationList", nationList);
 
         // 읽기,쓰기 권한 처리
         String[] answer = getReadAndUpdateAuth(weekly,user);
@@ -141,6 +151,7 @@ public class WeeklyContoller {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
+
         weeklyService.updateWeekly(weeklyId, form, status);
 
         return weeklyId;
