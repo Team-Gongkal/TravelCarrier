@@ -1,20 +1,27 @@
 package tc.travelCarrier.web;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.domain.Gowith;
 import tc.travelCarrier.domain.User;
+import tc.travelCarrier.domain.Weekly;
+import tc.travelCarrier.dto.MyPageDTO;
+import tc.travelCarrier.dto.SearchDTO;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
+import tc.travelCarrier.repository.WeeklySearchRepository;
+import tc.travelCarrier.service.SearchService;
+
+import org.springframework.data.domain.Pageable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,6 +31,7 @@ public class MemberContoller {
     private final MemberRepository memberRepository;
     private final WeeklyRepository weeklyRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final SearchService searchService;
 
     @GetMapping("/member/login")
     public String memberLogin(Model model,
@@ -107,6 +115,67 @@ public class MemberContoller {
 */
 
         return "/test/mypage";
+    }
+
+    //마이페이지 페이징
+    @PostMapping("/mypage/page")
+    @ResponseBody
+    public List<MyPageDTO> pagingMyPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                        @RequestBody SearchDTO searchDTO, Pageable pageable){
+        System.out.println(searchDTO.toString());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+
+        String type = searchDTO.getType();
+        Page<Weekly> weeklyPage = null;
+        if(type.equals("dia")) weeklyPage = searchService.findWeeklyPaging(user, pageable);
+        else if(type.equals("tag")) weeklyPage = searchService.findTagWeeklyPaging(user, pageable);
+        //else if(type.equals("fol"))
+        //그대로 리턴하면 순환참조 오류 발생하므로 dto로 바꿔서 보내준다
+        // dto : weeklyId, title, date, thumbPath, goWithList
+        List<MyPageDTO> result = new ArrayList<>();
+        for(Weekly w : weeklyPage){
+            List<String> users = new ArrayList<>();
+            for(Gowith g : w.getGowiths()) users.add(g.getUser().getAttachUser().getThumbPath());
+
+            MyPageDTO dto = MyPageDTO.builder()
+                    .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
+                    .thumbPath(w.getAttachWeekly().getThumbPath()).goWithList(users)
+                    .build();
+
+            result.add(dto);
+        }
+        return result;
+    }
+
+
+    //마이페이지 위클리 검색 (태그, 내글을 타입으로 구분)
+    @PostMapping("/mypage/search")
+    @ResponseBody
+    public List<MyPageDTO> searchWeekly(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                             @RequestBody SearchDTO searchDTO, Pageable pageable){
+        System.out.println(searchDTO.toString());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+
+        String type = searchDTO.getType();
+        Page<Weekly> weeklyPage = null;
+        if(type.equals("dia")) weeklyPage = searchService.findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(searchDTO.getKeyword(), user, pageable);
+        else if(type.equals("tag")) weeklyPage = searchService.findTaggedWeekliesByKeywordAndUser(searchDTO.getKeyword(), user, pageable);
+
+        //그대로 리턴하면 순환참조 오류 발생하므로 dto로 바꿔서 보내준다
+        // dto : weeklyId, title, date, thumbPath, goWithList
+        List<MyPageDTO> result = new ArrayList<>();
+        for(Weekly w : weeklyPage){
+            List<String> users = new ArrayList<>();
+            for(Gowith g : w.getGowiths()) users.add(g.getUser().getAttachUser().getThumbPath());
+
+            MyPageDTO dto = MyPageDTO.builder()
+                    .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
+                    .thumbPath(w.getAttachWeekly().getThumbPath()).goWithList(users)
+                    .build();
+
+            result.add(dto);
+        }
+        return result;
     }
 
 

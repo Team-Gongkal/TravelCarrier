@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
-public class WeeklyRepository {
+public class WeeklyRepository{
 
     private final EntityManager em;
 

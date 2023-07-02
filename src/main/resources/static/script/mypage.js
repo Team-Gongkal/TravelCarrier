@@ -227,3 +227,139 @@ $(document).ready(function () {
     console.log(e.target);
   });
 });
+
+
+
+// 검색어를 바탕으로 위클리 검색 ajax - by.서현
+$(document).ready(function() {
+  $('#search').keypress(function(event) {
+    if (event.which === 13) { // 엔터 키 눌렀을때 실행
+      event.preventDefault();
+      var searchKeyword = $(this).val();
+      var type = $(".userProfile_tab li.on span").text().substring(0, 3); //tag 또는 dia 보내짐
+
+      if (type == "tra" || type == "rev") {return;}
+      $.ajax({
+        url: "/TravelCarrier/mypage/search",
+        type: "POST",
+        data: JSON.stringify({  type : type,
+                                keyword: searchKeyword }),
+        contentType: "application/json",
+        success: function(resp) {
+          updateResult(type,resp);
+        },
+        error: function(error) {
+          alert("실패");
+        }
+      });
+    }
+  });
+});
+
+// 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
+$(".userProfile_tab li").on("click", function(e){
+    var type = $(this).find("span").text().substring(0,3);
+    if (type == "tra" || type == "rev") {return;}
+    var data = getPage(type,1);
+    updateResult(type, data);
+    $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
+});
+
+// 타입과 페이지를 파라미터로 해당 페이지를 get - by.서현
+function getPage(type, page){
+    $.ajax({
+        url: "/TravelCarrier/mypage/page",
+        type: "POST",
+        data: JSON.stringify({  type : type,
+                                page: page }),
+        contentType: "application/json",
+        success: function(resp) {
+          updateResult(type,resp);
+        },
+        error: function(error) {
+          alert("실패");
+        }
+    });
+}
+
+// 결과를 바탕으로 html틀을 할당 - by.서현
+function updateResult(type, data){
+    if(type == "dia") $(".userProfile_diary").empty();
+    else if(type == "tag") $(".userProfile_tagged").empty();
+    if(data == null) return;
+
+    for (var e of data) {
+        if(type == "dia") $(".userProfile_diary").append(diaryHtml(e));
+        else if(type == "tag") $(".userProfile_tagged").append(taggedHtml(e));
+        else if(type == "fol") return;
+    }
+}
+
+// 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
+function diaryHtml(data) {
+  var html = `
+    <li>
+      <div class="uP_diary_thumbnail">
+        <a href='/TravelCarrier/weekly/${data.id}'>
+          <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
+        </a>
+      </div>
+      <div class="uP_diary_box">
+        <div class="uP_diary_companion">
+          <ul class="sel_companion">`;
+
+  for (var thumbPath of data.goWithList) {
+    html += `<li style="background-image: url(${thumbPath});" class="circle"></li>`;
+  }
+
+  html += `
+          </ul>
+        </div>
+        <div class="uP_diary_text">
+          <span class="uP_diary_tit">${data.title}</span>
+          <span class="uP_diary_period">${data.date.sdate} - ${data.date.edate}</span>
+        </div>
+        <div class="uP_diary_btn">
+          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
+          <button type="button">삭제하기</button>
+        </div>
+      </div>
+    </li>`;
+
+  return html;
+}
+
+// 검색결과를 바탕으로 tagged탭의 html을 생성 - by.서현
+function taggedHtml(data) {
+  var html = `
+    <li>
+      <div class="uP_diary_thumbnail">
+        <a href='/TravelCarrier/weekly/${data.id}'>
+          <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
+        </a>
+      </div>
+      <div class="uP_diary_box">
+        <div class="uP_diary_companion">
+          <ul class="sel_companion">`;
+
+  for (var thumbPath of data.goWithList) {
+    html += `<li style="background-image: url(${thumbPath});" class="circle"></li>`;
+  }
+
+  html += `
+          </ul>
+        </div>
+        <div class="uP_diary_text">
+          <span class="uP_diary_tit">${data.title}</span>
+          <span class="uP_diary_period">${data.date.sdate} - ${data.date.edate}</span>
+        </div>
+        <div class="uP_diary_btn">
+          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
+          <button type="button">삭제하기</button>
+        </div>
+      </div>
+    </li>`;
+
+  return html;
+}
+

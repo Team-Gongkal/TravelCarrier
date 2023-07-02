@@ -29,8 +29,9 @@ public class Weekly {
     @Column(name="WEEKLY_TITLE")
     private String title;
 
-    @Column(name="WEEKLY_NATION")
-    private String nation;
+    @OneToOne
+    @JoinColumn(name = "WEEKLY_NATION", referencedColumnName = "NATION_ID")
+    private Nation nation;
 
     @Embedded
     private TravelDate travelDate; //여행기간
@@ -73,19 +74,19 @@ public class Weekly {
     public void updateWeekly(WeeklyForm form, OpenStatus status) throws ParseException {
         this.title = form.getTitle();
         this.text = form.getText();
-        this.nation = form.getNation();
+        //this.nation = form.getNation();
         this.travelDate = new TravelDate(form.getSdate(), form.getEdate());
         this.status = status;
     }
     //생성메소드
-    public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, String nation,
+    public static Weekly createWeekly(User user, AttachWeekly attachWeekly, String title, int nation,
                   TravelDate travelDate, CrudDate crudDate, OpenStatus status,
                   String text, List<User> goWithList){
         Weekly weekly = new Weekly();
         weekly.setUser(user);
         weekly.setAttachWeekly(attachWeekly);
         weekly.setTitle(title);
-        weekly.setNation(nation);
+        //weekly.setNation(nation);
         weekly.setTravelDate(travelDate);
         weekly.setCrudDate(crudDate);
         weekly.setStatus(status);

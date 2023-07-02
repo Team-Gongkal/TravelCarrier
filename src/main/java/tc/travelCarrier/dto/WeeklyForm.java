@@ -20,7 +20,7 @@ import java.util.Set;
 public class WeeklyForm {
 
     @NotEmpty(message = "여행 국가 정보는 필수항목 입니다.")
-    private String nation;
+    private int nation;
 
     private MultipartFile file;
 
