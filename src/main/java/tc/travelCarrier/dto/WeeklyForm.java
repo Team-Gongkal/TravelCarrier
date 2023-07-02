@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.domain.OpenStatus;
 import tc.travelCarrier.domain.TravelDate;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -19,8 +20,8 @@ import java.util.Set;
 @Getter @Setter @ToString
 public class WeeklyForm {
 
-    @NotEmpty(message = "여행 국가 정보는 필수항목 입니다.")
-    private String nation;
+    @NotNull(message = "여행 국가 정보는 필수항목 입니다.")
+    private Integer nation;
 
     private MultipartFile file;
 

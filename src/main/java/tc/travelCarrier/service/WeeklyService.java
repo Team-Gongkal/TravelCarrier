@@ -26,7 +26,7 @@ public class WeeklyService {
     private final AttachService attachService;
     private final MemberRepository memberRepository;
     private final NotificationService notificationService;
-
+    private final NationRepository nationRepository;
     /**
      * 팔로워 목록 조회
      * */
@@ -71,7 +71,8 @@ public class WeeklyService {
     public void updateWeekly(int weeklyId, WeeklyForm form, OpenStatus status) throws Exception {
         // 위클리 정보 수정
         Weekly weekly = findWeekly(weeklyId);
-        weekly.updateWeekly(form, status);
+        Nation nation = nationRepository.findNationById(form.getNation());
+        weekly.updateWeekly(form, status, nation);
 
         // 위클리 동행인 삭제
         for (Gowith gowith : weekly.getGowiths()) {

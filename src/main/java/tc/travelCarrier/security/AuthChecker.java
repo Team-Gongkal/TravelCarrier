@@ -44,8 +44,14 @@ public class AuthChecker {
             }
             if(weekly.getUser() == user) answer[0] = "GRANTED";
         }else if(status == OpenStatus.ME){
-            if(weekly.getUser() != user) answer[0] = "DENIED";
-            else answer[0] = "GRANTED";
+            answer[0] = "DENIED";
+            for(Gowith g : weekly.getGowiths()){
+                if(g.getUser() == user){
+                    answer[0] = "GRANTED";
+                    break;
+                }
+            }
+            if(weekly.getUser() == user) answer[0] = "GRANTED";
         }
 
         //본인글인지 체크
