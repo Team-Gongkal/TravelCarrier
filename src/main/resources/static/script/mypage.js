@@ -269,7 +269,7 @@ $(document).ready(function() {
 // 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
 $(".userProfile_tab li").on("click", function(e){
     var type = $(this).find("span").text().substring(0,3);
-    if (type == "tra" || type == "rev") {return;}
+    if (type == "rev") {return;}
     var data = getPage(type,1);
     updateResult(type, data);
     $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
@@ -294,15 +294,32 @@ function getPage(type, page){
 
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data){
-    if(type == "dia") $(".userProfile_diary").empty();
-    else if(type == "tag") $(".userProfile_tagged").empty();
-    if(data == null) return;
-
-    for (var e of data) {
-        if(type == "dia") $(".userProfile_diary").append(diaryHtml(e));
-        else if(type == "tag") $(".userProfile_tagged").append(taggedHtml(e));
-        else if(type == "fol") return;
+    console.log(data);
+    if(type == "dia") {
+        console.log("dia 실행");
+       $(".userProfile_diary").empty();
+       if(data == null) return;
+        for (var e of data) {
+            $(".userProfile_diary").append(diaryHtml(e));
+        }
     }
+    else if(type == "tag") {
+        console.log("tag 실행");
+        $(".userProfile_tagged").empty();
+        if(data == null) return;
+        for (var e of data) {
+            $(".userProfile_tagged").append(taggedHtml(e));
+        }
+    }
+    else if(type == "tra") {
+        $(".userProfile_travler").empty();
+        if(data == null) return;
+        for (var e of data) {
+            $(".userProfile_travler").append(travlerHtml(e));
+        }
+    }
+
+
 }
 
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
@@ -373,3 +390,37 @@ function taggedHtml(data) {
   return html;
 }
 
+
+// 검색결과를 바탕으로 travler탭의 html을 생성 - by.서현
+function travlerHtml(data) {
+    var html =
+               `<li>
+                  <div class="uP_diary_thumbnail">
+                    <a href="'TravelCarrier/member/' + ${data.id}">
+                      <img src="${data.backgroundThumbPath != null ? data.backgroundThumbPath : '/image/default/default_bg.jpg'}"
+                        alt="썸네일" class="moving_bg">
+                    </a>
+                  </div>
+                  <div class="uP_user_box">
+                    <div class="uP_user_profileImg">
+                      <div class="my_profile_img circle">
+                        <a href="'TravelCarrier/member/' + ${data.id}">
+                          <img
+                            src="${data.thumbPath}"
+                            src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="uP_user_text">
+                      <span text="${data.name}" class="uP_user_name">Budapest</span>
+                      <span class="uP_user_added">22.10.19</span>
+                    </div>
+                    <div class="follower_del_btn">
+                      <button><i class="fa-solid fa-user-minus fa-xs"></i>친구끊기</button>
+                    </div>
+                  </div>
+                </li>`;
+
+    return html;
+}

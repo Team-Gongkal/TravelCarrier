@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.repository.MemberRepository;
@@ -33,5 +34,9 @@ public class SearchService {
 
     public Page<Weekly> findTaggedWeekliesByKeywordAndUser(String keyword, User user, Pageable pageable) {
         return weeklySearchRepository.findTaggedWeekliesByKeywordAndUser(keyword, user, pageable);
+    }
+
+    public Page<Follower> findMyFollower(User user, Pageable pageable) {
+        return weeklySearchRepository.findMyFollower(user, pageable);
     }
 }

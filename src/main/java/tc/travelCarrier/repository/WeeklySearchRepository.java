@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
 
@@ -20,6 +21,9 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
 
     @Query("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = ?1 ORDER BY w.id DESC")
     Page<Weekly> findTaggedWeekliesByUser(User user, Pageable pageable);
+
+    @Query("SELECT f FROM Follower f WHERE f.user = ?1")
+    Page<Follower> findMyFollower (User user, Pageable pageable);
 
 
 
