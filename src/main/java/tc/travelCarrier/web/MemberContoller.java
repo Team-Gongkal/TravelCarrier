@@ -1,5 +1,7 @@
 package tc.travelCarrier.web;
 
+import static tc.travelCarrier.dto.MyPageDTO.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.Gowith;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
@@ -130,11 +133,22 @@ public class MemberContoller {
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
         String type = searchDTO.getType();
-        Page<Weekly> weeklyPage = null;
-        if(type.equals("dia")) weeklyPage = searchService.findWeeklyPaging(user, pageable);
-        else if(type.equals("tag")) weeklyPage = searchService.findTagWeeklyPaging(user, pageable);
-        //else if(type.equals("fol"))
-        //그대로 리턴하면 순환참조 오류 발생하므로 dto로 바꿔서 보내준다
+        if(type.equals("dia")){
+            Page<Weekly> weeklyPage = searchService.findWeeklyPaging(user, pageable);
+            return transferWeeklyDTO(weeklyPage);
+        }
+        else if(type.equals("tag")){
+            Page<Weekly> weeklyPage = searchService.findTagWeeklyPaging(user, pageable);
+            return transferWeeklyDTO(weeklyPage);
+        }
+        else if(type.equals("tra")){
+            Page<Follower> followerPage = searchService.findMyFollower(user, pageable);
+            return transferFollowerDTO(followerPage);
+        }
+        return null;
+    }
+
+    private List<MyPageDTO> transferWeeklyDTO(Page<Weekly> weeklyPage) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
         for(Weekly w : weeklyPage){
@@ -143,7 +157,7 @@ public class MemberContoller {
             System.out.println("레소레소");
             System.out.println(w.getTitle());
 
-            MyPageDTO dto = MyPageDTO.builder()
+            MyPageDTO dto = MyPageDTO.weeklyBuilder()
                     .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
                     .thumbPath(w.getAttachWeekly().getThumbPath())
                     .goWithList(users)
@@ -151,6 +165,24 @@ public class MemberContoller {
 
             result.add(dto);
         }
+
+        return result;
+    }
+    private List<MyPageDTO> transferFollowerDTO(Page<Follower> followerPage) {
+        // dto : weeklyId, title, date, thumbPath, goWithList
+        List<MyPageDTO> result = new ArrayList<>();
+        for(Follower f : followerPage){
+            MyPageDTO dto = generateFollowerDTO(f.getFollower().getName(),f.getFollower().getId(),f.getFollower().getAttachUser().getThumbPath(), f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath());
+/*                    MyPageDTO.followerBuilder()
+                    .id(f.getFollower().getId())
+                    .name(f.getFollower().getName())
+                    .thumbPath(f.getFollower().getAttachUser().getThumbPath())
+                    .backgroundThumbPath(f.getFollower().getAttachUser() == null ? null : f.getFollower().getAttachUser().getThumbPath())
+                    .build();*/
+            result.add(dto);
+            System.out.println(f.getFollower().getName()+", "+dto.toString());
+        }
+
         return result;
     }
 
@@ -175,7 +207,7 @@ public class MemberContoller {
             List<String> users = new ArrayList<>();
             for(Gowith g : w.getGowiths()) users.add(g.getUser().getAttachUser().getThumbPath());
 
-            MyPageDTO dto = MyPageDTO.builder()
+            MyPageDTO dto = MyPageDTO.weeklyBuilder()
                     .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
                     .thumbPath(w.getAttachWeekly().getThumbPath()).goWithList(users)
                     .build();
