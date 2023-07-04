@@ -81,11 +81,10 @@ on_scroll(idx, tab_li); //화면 로드시 실행해서 보여줌
 //탭실행
 tab.on("click", function () {
   idx = $(this).index(); //현재 클릭한 탭의 idx
-  console.log("탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
 
   tab.removeClass("on"); //선택한탭 css 제거
   contents.removeClass("show"); // 현재 보여지고있는 콘텐츠 숨기기
-  $(".search_period, .travlar_option").removeClass("show");
+
   $(this).addClass("on"); //선택한 탭 css추가
   contents.eq(idx).addClass("show"); //idx에 해당하는 콘텐츠 보이기
 });
@@ -93,16 +92,24 @@ tab.on("click", function () {
 //li개수에 따라 스크롤 생성
 function on_scroll() {
   $scroll.addClass("hide"); //스크롤 전체 제거
+
   if (idx < 3) {
+    console.log("3번이하선택");
+    $(".travlar_option").removeClass("show");
+    $(".search_period").addClass("show");
     if (tab_li >= 5) {
+      console.log("게시글이 5이하");
       $scroll.removeClass("hide");
     }
     $(".search_period").addClass("show");
   } else if (idx == 3) {
+    console.log("트레블러 선탣");
+    $(".search_period").removeClass("show");
+    $(".travlar_option").addClass("show");
     if (tab_li >= 12) {
+      console.log("친구없음 나가");
       $scroll.removeClass("hide");
     }
-    $(".travlar_option").addClass("show");
   }
 }
 // datepicker 설정 및 옵션 변경 - by윤아
@@ -304,6 +311,7 @@ function updateResult(type, data) {
   //게시글 갯수에 따른 스크롤 활성화
   idx = $(".userProfile_tab > ul > li.on").index();
   tab_li = contents.eq(idx).children("li").length;
+  console.log("탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
   on_scroll();
 }
 

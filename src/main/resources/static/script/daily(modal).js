@@ -47,8 +47,6 @@ $(document).ready(function () {
 
 // 슬라이드 셋팅
 $(document).ready(function () {
-  console.log("우무티티티");
-  console.log(dataArr);
   var newUl = $("<ul>").addClass("diary_list");
   for (var i = 0; i < dataArr.length; i++) {
     for (var j = 0; j < dataArr[i].data.length; j++) {
@@ -335,9 +333,9 @@ function checkThumbnails(dataArr) {
       }
     }
     if (!flag) {
-      if(formDataArr.length > 0) {
-      formDataArr[0].set("thumb", 1);
-      result = true;
+      if (formDataArr.length > 0) {
+        formDataArr[0].set("thumb", 1);
+        result = true;
       } else result = false;
     }
   }
@@ -485,22 +483,27 @@ window.onload = function () {
   //   }
 
   // 슬라이드 수정=========================================
-  let origin_slide = document.querySelector("ul.diary_list");
-  origin_slide.id = "slide1";
-  // $(clone_slide).attr("id", "slide1");
+  var slide_width = $(".diary_slides").outerWidth();
+  if (slide_width > $(window).width()) {
+    let origin_slide = document.querySelector("ul.diary_list");
+    origin_slide.id = "slide1";
+    // $(clone_slide).attr("id", "slide1");
 
-  let clone_slide = origin_slide.cloneNode(true); //(true)로 자식요소까지 복제해서 변수에 할당함
-  clone_slide.id = "slide2";
-  document.querySelector("div.diary_slides").appendChild(clone_slide); //자식요소로 붙여넣음
+    let clone_slide = origin_slide.cloneNode(true); //(true)로 자식요소까지 복제해서 변수에 할당함
+    clone_slide.id = "slide2";
+    document.querySelector("div.diary_slides").appendChild(clone_slide); //자식요소로 붙여넣음
 
-  document.querySelector("#slide1").style.left = "0px";
-  document.querySelector("#slide2").style.left =
-    document.querySelector("ul.diary_list").offsetWidth + "px"; // offsetWidth : 마진값을 제외한 너비값을 계산
+    document.querySelector("#slide1").style.left = "0px";
+    document.querySelector("#slide2").style.left =
+      document.querySelector("ul.diary_list").offsetWidth + "px"; // offsetWidth : 마진값을 제외한 너비값을 계산
 
-  origin_slide.classList.add("original");
-  clone_slide.classList.add("clone");
+    origin_slide.classList.add("original");
+    clone_slide.classList.add("clone");
+    $(".diary_viewport").removeClass("center");
+  } else {
+    $(".diary_viewport").addClass("center");
+  }
 };
-
 // daily 일기화면(hover) - by.윤아
 $(".diary_viewport").on("mouseenter", "li.d_slide > img", function (e) {
   // 복제된 diary_slides에는 mouseenter 이벤트가 적용되지 않아 위임 방식을 사용하여, 부모 요소인 .diary_viewport에 이벤트를 바인딩함
