@@ -32,6 +32,7 @@ addEventListener("mousewheel", (e) => {
 });
 
 // 스크롤에 따른 드롭다운 메뉴 구현 -by 윤아
+// 스크롤 이벤트 핸들러
 const userProfileScroll = $(".userProfile_scroll");
 let drop_menu = $(".drop_menu");
 let top_height = $(".userProfile_top").height();
@@ -44,18 +45,10 @@ console.log(
     "= drop높이 : " +
     drop_height
 );
-// 스크롤 이벤트 핸들러
+
 userProfileScroll.on("scroll", function () {
   const scrollTop = userProfileScroll.scrollTop();
   console.log("스크롤 양:", scrollTop);
-  console.log(
-    "top높이 : " +
-      top_height +
-      " - 드롭메뉴높이 : " +
-      drop_menu.height() +
-      "= drop높이 : " +
-      drop_height
-  );
   $(".moving_bg").css("objectPosition", `center ${50 + scrollTop / 100}%`);
   $(".userProfile_bg")
     .stop()
@@ -82,32 +75,33 @@ var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery > ul");
 var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 
-tab.click(function () {
+function activateTab() {
   var idx = $(this).index();
+  var tab_li = contents.eq(idx).children("li").length;
+  console.log("탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
 
   tab.removeClass("on");
   contents.removeClass("show");
   $scroll.addClass("hide");
   $(".search_period, .travlar_option").removeClass("show");
-  console.log(idx + "왜이래");
 
   $(this).addClass("on");
   contents.eq(idx).addClass("show");
 
   if (idx < 3) {
     if (contents.eq(idx).children("li").length >= 5) {
-      $scroll.eq(idx).removeClass("hide");
+      $scroll.removeClass("hide");
     }
     $(".search_period").addClass("show");
-    console.log("idx0-2 = " + idx);
-  } else if (idx == 3) {
+  } else if (idx === 3) {
     if (contents.eq(idx).children("li").length >= 12) {
-      $scroll.eq(idx).removeClass("hide");
+      $scroll.removeClass("hide");
     }
     $(".travlar_option").addClass("show");
-    console.log("idx3 = " + idx);
   }
-});
+}
+
+$(".userProfile_tab > ul > li").click(activateTab);
 
 // datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
@@ -238,71 +232,74 @@ $(document).ready(function () {
   });
 });
 
-
-
 // 검색어를 바탕으로 위클리 검색 ajax - by.서현
-$(document).ready(function() {
-  $('#search').keypress(function(event) {
-    if (event.which === 13) { // 엔터 키 눌렀을때 실행
+$(document).ready(function () {
+  $("#search").keypress(function (event) {
+    if (event.which === 13) {
+      // 엔터 키 눌렀을때 실행
       event.preventDefault();
       var searchKeyword = $(this).val();
       var type = $(".userProfile_tab li.on span").text().substring(0, 3); //tag 또는 dia 보내짐
 
-      if (type == "tra" || type == "rev") {return;}
+      if (type == "tra" || type == "rev") {
+        return;
+      }
       $.ajax({
         url: "/TravelCarrier/mypage/search",
         type: "POST",
-        data: JSON.stringify({  type : type,
-                                keyword: searchKeyword }),
+        data: JSON.stringify({ type: type, keyword: searchKeyword }),
         contentType: "application/json",
-        success: function(resp) {
-          updateResult(type,resp);
+        success: function (resp) {
+          updateResult(type, resp);
         },
-        error: function(error) {
+        error: function (error) {
           alert("실패");
-        }
+        },
       });
     }
   });
 });
 
 // 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
-$(".userProfile_tab li").on("click", function(e){
-    var type = $(this).find("span").text().substring(0,3);
-    if (type == "tra" || type == "rev") {return;}
-    var data = getPage(type,1);
-    updateResult(type, data);
-    $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
+$(".userProfile_tab li").on("click", function (e) {
+  var type = $(this).find("span").text().substring(0, 3);
+  if (type == "tra" || type == "rev") {
+    return;
+  }
+  var data = getPage(type, 1);
+  updateResult(type, data);
+  $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
 });
 
 // 타입과 페이지를 파라미터로 해당 페이지를 get - by.서현
-function getPage(type, page){
-    $.ajax({
-        url: "/TravelCarrier/mypage/page",
-        type: "POST",
-        data: JSON.stringify({  type : type,
-                                page: page }),
-        contentType: "application/json",
-        success: function(resp) {
-          updateResult(type,resp);
-        },
-        error: function(error) {
-          alert("실패");
-        }
-    });
+function getPage(type, page) {
+  $.ajax({
+    url: "/TravelCarrier/mypage/page",
+    type: "POST",
+    data: JSON.stringify({ type: type, page: page }),
+    contentType: "application/json",
+    success: function (resp) {
+      updateResult(type, resp);
+    },
+    error: function (error) {
+      alert("실패");
+    },
+  });
 }
 
 // 결과를 바탕으로 html틀을 할당 - by.서현
-function updateResult(type, data){
-    if(type == "dia") $(".userProfile_diary").empty();
-    else if(type == "tag") $(".userProfile_tagged").empty();
-    if(data == null) return;
+function updateResult(type, data) {
+  if (type == "dia") $(".userProfile_diary").empty();
+  else if (type == "tag") $(".userProfile_tagged").empty();
+  if (data == null) return;
 
-    for (var e of data) {
-        if(type == "dia") $(".userProfile_diary").append(diaryHtml(e));
-        else if(type == "tag") $(".userProfile_tagged").append(taggedHtml(e));
-        else if(type == "fol") return;
-    }
+  for (var e of data) {
+    if (type == "dia") $(".userProfile_diary").append(diaryHtml(e));
+    else if (type == "tag") $(".userProfile_tagged").append(taggedHtml(e));
+    else if (type == "fol") return;
+  }
+
+  console.log("(2) 탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
 }
 
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
@@ -373,3 +370,10 @@ function taggedHtml(data) {
   return html;
 }
 
+//친구추가 버튼
+function add_friend() {
+  var add_friend_btn = $(".add_friend_btn > button");
+  add_friend_btn.addClass("completed");
+  add_friend_btn.children("span").text("follow");
+  add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+}
