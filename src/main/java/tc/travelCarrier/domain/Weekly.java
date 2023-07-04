@@ -19,11 +19,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import groovy.transform.ToString;
 import lombok.Getter;
 import lombok.Setter;
 import tc.travelCarrier.dto.WeeklyForm;
 
-@Entity
+@Entity @ToString
 @Getter @Setter
 public class Weekly {
 

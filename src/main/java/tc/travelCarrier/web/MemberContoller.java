@@ -1,11 +1,20 @@
 package tc.travelCarrier.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import tc.travelCarrier.auth.PrincipalDetails;
@@ -16,12 +25,7 @@ import tc.travelCarrier.dto.MyPageDTO;
 import tc.travelCarrier.dto.SearchDTO;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
-import tc.travelCarrier.repository.WeeklySearchRepository;
 import tc.travelCarrier.service.SearchService;
-
-import org.springframework.data.domain.Pageable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -136,10 +140,13 @@ public class MemberContoller {
         for(Weekly w : weeklyPage){
             List<String> users = new ArrayList<>();
             for(Gowith g : w.getGowiths()) users.add(g.getUser().getAttachUser().getThumbPath());
+            System.out.println("레소레소");
+            System.out.println(w.getTitle());
 
             MyPageDTO dto = MyPageDTO.builder()
                     .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
-                    .thumbPath(w.getAttachWeekly().getThumbPath()).goWithList(users)
+                    .thumbPath(w.getAttachWeekly().getThumbPath())
+                    .goWithList(users)
                     .build();
 
             result.add(dto);
