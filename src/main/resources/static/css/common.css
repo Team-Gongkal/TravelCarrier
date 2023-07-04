@@ -101,6 +101,40 @@ textarea {
   line-height: 1.5em;
   box-sizing: border-box;
 }
+.login form div input:-webkit-autofill,
+.login form div input:-webkit-autofill:hover,
+.login form div input:-webkit-autofill:focus,
+.login form div input:-webkit-autofill:active,
+.addKeyword input:-webkit-autofill,
+.addKeyword input:-webkit-autofill:hover,
+.addKeyword input:-webkit-autofill:focus,
+.addKeyword input:-webkit-autofill:active {
+  -webkit-text-fill-color: #353a52;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+/* 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #f7f7f7; /*폰트컬러
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+} */
+
+/* input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+} */
+
 /* input hide */
 input.hide {
   width: 1px;

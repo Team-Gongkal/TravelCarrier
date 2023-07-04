@@ -217,6 +217,16 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   background: transparent;
   color: rgb(247, 247, 247, 0.8);
 }
+
+.search_text form input:-webkit-autofill,
+.search_text form input:-webkit-autofill:hover,
+.search_text form input:-webkit-autofill:focus,
+.search_text form input:-webkit-autofill:active {
+  -webkit-text-fill-color: #f7f7f7;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 .userProfile_tab {
   width: 60%;
   height: fit-content;

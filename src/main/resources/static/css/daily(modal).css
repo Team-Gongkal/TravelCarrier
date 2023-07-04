@@ -533,7 +533,9 @@ button.Dform_btn_disable {
   align-items: end;
   margin: 0 0 3rem 0;
 }
-
+.diary_viewport.center {
+  justify-content: center;
+}
 /* 슬라이드 양 끝 흐림 효과 */
 .diary_viewport::after,
 .diary_viewport::before {

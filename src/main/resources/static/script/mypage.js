@@ -71,38 +71,47 @@ userProfileScroll.on("scroll", function () {
 });
 
 //탭메뉴 활성화 -by윤아
+var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery > ul");
-var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
+var idx = $(".userProfile_tab > ul > li.on").index();
+var tab_li = contents.eq(idx).children("li").length;
+on_scroll(idx, tab_li); //화면 로드시 실행해서 보여줌
 
-function activateTab() {
-  var idx = $(this).index();
-  var tab_li = contents.eq(idx).children("li").length;
-  console.log("탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
+//탭실행
+tab.on("click", function () {
+  idx = $(this).index(); //현재 클릭한 탭의 idx
 
-  tab.removeClass("on");
-  contents.removeClass("show");
-  $scroll.addClass("hide");
-  $(".search_period, .travlar_option").removeClass("show");
+  tab.removeClass("on"); //선택한탭 css 제거
+  contents.removeClass("show"); // 현재 보여지고있는 콘텐츠 숨기기
 
-  $(this).addClass("on");
-  contents.eq(idx).addClass("show");
+  $(this).addClass("on"); //선택한 탭 css추가
+  contents.eq(idx).addClass("show"); //idx에 해당하는 콘텐츠 보이기
+});
+
+//li개수에 따라 스크롤 생성
+function on_scroll() {
+  $scroll.addClass("hide"); //스크롤 전체 제거
 
   if (idx < 3) {
-    if (contents.eq(idx).children("li").length >= 5) {
+    console.log("3번이하선택");
+    $(".travlar_option").removeClass("show");
+    $(".search_period").addClass("show");
+    if (tab_li >= 5) {
+      console.log("게시글이 5이하");
       $scroll.removeClass("hide");
     }
     $(".search_period").addClass("show");
-  } else if (idx === 3) {
-    if (contents.eq(idx).children("li").length >= 12) {
+  } else if (idx == 3) {
+    console.log("트레블러 선탣");
+    $(".search_period").removeClass("show");
+    $(".travlar_option").addClass("show");
+    if (tab_li >= 12) {
+      console.log("친구없음 나가");
       $scroll.removeClass("hide");
     }
-    $(".travlar_option").addClass("show");
   }
 }
-
-$(".userProfile_tab > ul > li").click(activateTab);
-
 // datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
   $.datepicker.setDefaults($.datepicker.regional["ko"]);
@@ -232,29 +241,29 @@ $(document).ready(function () {
   });
 });
 
-
-
 // 검색어를 바탕으로 위클리 검색 ajax - by.서현
-$(document).ready(function() {
-  $('#search').keypress(function(event) {
-    if (event.which === 13) { // 엔터 키 눌렀을때 실행
+$(document).ready(function () {
+  $("#search").keypress(function (event) {
+    if (event.which === 13) {
+      // 엔터 키 눌렀을때 실행
       event.preventDefault();
       var searchKeyword = $(this).val();
       var type = $(".userProfile_tab li.on span").text().substring(0, 3); //tag 또는 dia 보내짐
 
-      if (type == "tra" || type == "rev") {return;}
+      if (type == "tra" || type == "rev") {
+        return;
+      }
       $.ajax({
         url: "/TravelCarrier/mypage/search",
         type: "POST",
-        data: JSON.stringify({  type : type,
-                                keyword: searchKeyword }),
+        data: JSON.stringify({ type: type, keyword: searchKeyword }),
         contentType: "application/json",
-        success: function(resp) {
-          updateResult(type,resp);
+        success: function (resp) {
+          updateResult(type, resp);
         },
-        error: function(error) {
+        error: function (error) {
           alert("실패");
-        }
+        },
       });
     }
   });
@@ -313,7 +322,11 @@ function updateResult(type, data){
         }
     }
 
-
+  //게시글 갯수에 따른 스크롤 활성화
+  idx = $(".userProfile_tab > ul > li.on").index();
+  tab_li = contents.eq(idx).children("li").length;
+  console.log("탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
+  on_scroll();
 }
 
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
