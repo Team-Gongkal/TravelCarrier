@@ -71,38 +71,40 @@ userProfileScroll.on("scroll", function () {
 });
 
 //탭메뉴 활성화 -by윤아
+var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery > ul");
-var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
+var idx = $(".userProfile_tab > ul > li.on").index();
+var tab_li = contents.eq(idx).children("li").length;
+on_scroll(idx, tab_li); //화면 로드시 실행해서 보여줌
 
-function activateTab() {
-  var idx = $(this).index();
-  var tab_li = contents.eq(idx).children("li").length;
+//탭실행
+tab.on("click", function () {
+  idx = $(this).index(); //현재 클릭한 탭의 idx
   console.log("탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
 
-  tab.removeClass("on");
-  contents.removeClass("show");
-  $scroll.addClass("hide");
+  tab.removeClass("on"); //선택한탭 css 제거
+  contents.removeClass("show"); // 현재 보여지고있는 콘텐츠 숨기기
   $(".search_period, .travlar_option").removeClass("show");
+  $(this).addClass("on"); //선택한 탭 css추가
+  contents.eq(idx).addClass("show"); //idx에 해당하는 콘텐츠 보이기
+});
 
-  $(this).addClass("on");
-  contents.eq(idx).addClass("show");
-
+//li개수에 따라 스크롤 생성
+function on_scroll() {
+  $scroll.addClass("hide"); //스크롤 전체 제거
   if (idx < 3) {
-    if (contents.eq(idx).children("li").length >= 5) {
+    if (tab_li >= 5) {
       $scroll.removeClass("hide");
     }
     $(".search_period").addClass("show");
-  } else if (idx === 3) {
-    if (contents.eq(idx).children("li").length >= 12) {
+  } else if (idx == 3) {
+    if (tab_li >= 12) {
       $scroll.removeClass("hide");
     }
     $(".travlar_option").addClass("show");
   }
 }
-
-$(".userProfile_tab > ul > li").click(activateTab);
-
 // datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
   $.datepicker.setDefaults($.datepicker.regional["ko"]);
@@ -299,7 +301,10 @@ function updateResult(type, data) {
     else if (type == "fol") return;
   }
 
-  console.log("(2) 탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
+  //게시글 갯수에 따른 스크롤 활성화
+  idx = $(".userProfile_tab > ul > li.on").index();
+  tab_li = contents.eq(idx).children("li").length;
+  on_scroll();
 }
 
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
