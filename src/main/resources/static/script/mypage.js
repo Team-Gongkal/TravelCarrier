@@ -32,6 +32,7 @@ addEventListener("mousewheel", (e) => {
 });
 
 // 스크롤에 따른 드롭다운 메뉴 구현 -by 윤아
+// 스크롤 이벤트 핸들러
 const userProfileScroll = $(".userProfile_scroll");
 let drop_menu = $(".drop_menu");
 let top_height = $(".userProfile_top").height();
@@ -44,18 +45,10 @@ console.log(
     "= drop높이 : " +
     drop_height
 );
-// 스크롤 이벤트 핸들러
+
 userProfileScroll.on("scroll", function () {
   const scrollTop = userProfileScroll.scrollTop();
   console.log("스크롤 양:", scrollTop);
-  console.log(
-    "top높이 : " +
-      top_height +
-      " - 드롭메뉴높이 : " +
-      drop_menu.height() +
-      "= drop높이 : " +
-      drop_height
-  );
   $(".moving_bg").css("objectPosition", `center ${50 + scrollTop / 100}%`);
   $(".userProfile_bg")
     .stop()
@@ -82,32 +75,33 @@ var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery > ul");
 var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 
-tab.click(function () {
+function activateTab() {
   var idx = $(this).index();
+  var tab_li = contents.eq(idx).children("li").length;
+  console.log("탭번호 : " + idx + "/ 자식요소개수 : " + tab_li);
 
   tab.removeClass("on");
   contents.removeClass("show");
   $scroll.addClass("hide");
   $(".search_period, .travlar_option").removeClass("show");
-  console.log(idx + "왜이래");
 
   $(this).addClass("on");
   contents.eq(idx).addClass("show");
 
   if (idx < 3) {
     if (contents.eq(idx).children("li").length >= 5) {
-      $scroll.eq(idx).removeClass("hide");
+      $scroll.removeClass("hide");
     }
     $(".search_period").addClass("show");
-    console.log("idx0-2 = " + idx);
-  } else if (idx == 3) {
+  } else if (idx === 3) {
     if (contents.eq(idx).children("li").length >= 12) {
-      $scroll.eq(idx).removeClass("hide");
+      $scroll.removeClass("hide");
     }
     $(".travlar_option").addClass("show");
-    console.log("idx3 = " + idx);
   }
-});
+}
+
+$(".userProfile_tab > ul > li").click(activateTab);
 
 // datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
@@ -390,6 +384,13 @@ function taggedHtml(data) {
   return html;
 }
 
+//친구추가 버튼
+function add_friend() {
+  var add_friend_btn = $(".add_friend_btn > button");
+  add_friend_btn.addClass("completed");
+  add_friend_btn.children("span").text("follow");
+  add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+}
 
 // 검색결과를 바탕으로 travler탭의 html을 생성 - by.서현
 function travlerHtml(data) {

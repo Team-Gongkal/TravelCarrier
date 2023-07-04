@@ -114,7 +114,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   cursor: pointer;
   opacity: 0.7;
   line-height: 1rem;
-  margin-left: 0.2rem;
+  margin-left: 0.3rem;
 }
 #edit_profile:hover {
   opacity: 1;
@@ -129,6 +129,8 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   cursor: pointer;
 }
 .add_friend_btn button {
+  width: 100%;
+  height: auto;
   background: transparent;
   border: 1px solid #f7f7f7;
   color: #f7f7f7;
@@ -136,10 +138,16 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   border-radius: 100px;
   opacity: 0.5;
 }
+
 .add_friend_btn button:hover {
   background: rgba(247, 247, 247, 0.3);
   border: 1px solid #fff;
   color: #fff;
+  opacity: 1;
+}
+.add_friend_btn button.completed {
+  background: #a0c1ca;
+  color: #f7f7f7;
   opacity: 1;
 }
 /* 드롭다운 메뉴 */
@@ -586,10 +594,7 @@ li .uP_user_text span.uP_user_added {
   border-radius: 100px;
   padding: 1em 0;
 }
-.follower_del_btn button i {
-  display: inline-block;
-  margin-right: 0.7em;
-}
+
 .follower_del_btn button:hover {
   background: #a0c1ca;
   color: #fff;

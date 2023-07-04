@@ -138,7 +138,11 @@ button.white_btn {
 button > img {
   vertical-align: text-bottom;
 }
-
+/* fontawesome */
+.fa {
+  display: inline-block;
+  margin-right: 0.7em;
+}
 /* 원형 자르기 */
 .circle {
   width: 100%;
@@ -204,7 +208,7 @@ form h3 {
   color: #f7f7f7;
 }
 #ui-datepicker-div select.ui-datepicker-month {
-  width:30%;
+  width: 30%;
 }
 #ui-datepicker-div select.ui-datepicker-year {
   width: 37%;
