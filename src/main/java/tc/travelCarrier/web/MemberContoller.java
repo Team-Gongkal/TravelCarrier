@@ -172,15 +172,20 @@ public class MemberContoller {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
         for(Follower f : followerPage){
-            MyPageDTO dto = generateFollowerDTO(f.getFollower().getName(),f.getFollower().getId(),f.getFollower().getAttachUser().getThumbPath(), f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath());
+            //MyPageDTO dto = generateFollowerDTO(f.getFollower().getName(),f.getFollower().getId(),f.getFollower().getAttachUser().getThumbPath(), f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath());
 /*                    MyPageDTO.followerBuilder()
                     .id(f.getFollower().getId())
                     .name(f.getFollower().getName())
                     .thumbPath(f.getFollower().getAttachUser().getThumbPath())
                     .backgroundThumbPath(f.getFollower().getAttachUser() == null ? null : f.getFollower().getAttachUser().getThumbPath())
                     .build();*/
-            result.add(dto);
-            System.out.println(f.getFollower().getName()+", "+dto.toString());
+            result.add(MyPageDTO.followerBuilder()
+                    .id(f.getFollower().getId())
+                    .name(f.getFollower().getName())
+                    .thumbPath(f.getFollower().getAttachUser().getThumbPath())
+                    .backgroundThumbPath(f.getFollower().getAttachUser() == null ? null : f.getFollower().getAttachUser().getThumbPath())
+                    .build());
+            //System.out.println(f.getFollower().getName()+", "+dto.toString());
         }
 
         return result;

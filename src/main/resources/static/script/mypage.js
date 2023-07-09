@@ -412,7 +412,7 @@ function travlerHtml(data) {
                   <div class="uP_user_box">
                     <div class="uP_user_profileImg">
                       <div class="my_profile_img circle">
-                        <a href="'TravelCarrier/member/' + ${data.id}">
+                        <a href="TravelCarrier/member/${data.id}">
                           <img
                             src="${data.thumbPath}"
                             src="/image/mypage/profile.jpg" alt="프로필 이미지">
