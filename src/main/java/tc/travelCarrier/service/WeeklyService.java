@@ -1,7 +1,6 @@
 package tc.travelCarrier.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,8 +10,6 @@ import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.*;
 
-import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
@@ -93,10 +90,6 @@ public class WeeklyService {
 
     }
 
-    /**
-     * 위클리 삭제
-     */
-
     // 위클리 키워드 저장
     public String saveKeyword(KwordDTO dto){
         kwordRepository.deleteByDailyId(dto.getDailyId());
@@ -105,5 +98,15 @@ public class WeeklyService {
             kwordRepository.save(new Kword(daily,kword));
         }
         return "success";
+    }
+
+    // 위클리 삭제
+    public void deleteWeekly(Weekly weekly, User user) {
+        // 로그인 user가 글쓴이가 맞는지 확인 후 delete처리한다.
+        if(weekly.getUser().getId() == user.getId()) {
+            weeklyRepository.remove(weekly);
+        }else{
+            // 예외처리 필요함....
+        }
     }
 }

@@ -330,7 +330,7 @@ function updateResult(type, data) {
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
 function diaryHtml(data) {
   var html = `
-    <li>
+    <li data-wid="${data.id}" >
       <div class="uP_diary_thumbnail">
         <a href='/TravelCarrier/weekly/${data.id}'>
           <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
@@ -353,7 +353,7 @@ function diaryHtml(data) {
         </div>
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
-          <button type="button">삭제하기</button>
+          <button type="button" class="weeklyDelBtn" >삭제하기</button>
         </div>
       </div>
     </li>`;
@@ -387,7 +387,7 @@ function taggedHtml(data) {
         </div>
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
-          <button type="button">삭제하기</button>
+          <button type="button">숨기기</button>
         </div>
       </div>
     </li>`;
@@ -438,4 +438,26 @@ function add_friend() {
   add_friend_btn.addClass("completed");
   add_friend_btn.children("span").text("follow");
   add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+}
+
+// 위클리 삭제 클릭 이벤트 - by.서현
+$(document).on("click", ".weeklyDelBtn", function() {
+  var title = $(this).closest("li").find(".uP_diary_tit").text();
+  var wid = $(this).closest("li").data("wid");
+  if (confirm("[ " + title + " ] 삭제하시겠습니까?")) deleteWeekly(wid);
+});
+
+function deleteWeekly(weeklyId) {
+    $.ajax({
+        url: "/TravelCarrier/weekly/"+weeklyId,
+        type: "DELETE",
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            $("li[data-wid='" + weeklyId + "']").remove();
+        },
+        error: function (error) {
+            alert("삭제 실패"+error);
+        }
+    });
 }

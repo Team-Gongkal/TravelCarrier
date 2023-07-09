@@ -1,6 +1,8 @@
 package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -163,7 +165,16 @@ public class WeeklyContoller {
         return weeklyService.saveKeyword(dto);
     }
 
-
+    @DeleteMapping("/weekly/{weeklyId}")
+    public ResponseEntity<Void> deleteWeekly(@PathVariable("weeklyId") int weeklyId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        try {
+            Weekly weekly = weeklyService.findWeekly(weeklyId);
+            weeklyService.deleteWeekly(weekly,principalDetails.getUser());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); //500에러
+        }
+    }
 
 
 }
