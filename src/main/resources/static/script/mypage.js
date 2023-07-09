@@ -271,9 +271,13 @@ $(document).ready(function () {
 // 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
 $(".userProfile_tab li").on("click", function (e) {
   var type = $(this).find("span").text().substring(0, 3);
-  if (type == "rev") {
-    return;
-  }
+    if (type == "tra") $("#search").attr("placeholder", "검색하기 (이름, 이메일)");
+    else if (type == "rev") {
+        $("#search").attr("placeholder", "");
+        return;
+    }
+    else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
+
   var data = getPage(type, 1);
   updateResult(type, data);
   $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
