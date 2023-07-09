@@ -5,12 +5,24 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import tc.travelCarrier.domain.TravelDate;
-import tc.travelCarrier.domain.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Getter @ToString @Setter
 public class MyPageDTO {
+    //weeklyId, title, date, thumbPath, goWithList
+    private int id;
+    private String title;
+    private TravelDate date;
+    private String thumbPath;
+    private List<String> goWithList; //user는 우선 프로필사진만!!
+
+    private String name;
+    private String backgroundThumbPath;
+    private String fDate;
+
     public MyPageDTO(){}
     @Builder(builderMethodName = "weeklyBuilder")
     public MyPageDTO(int  id, String title, TravelDate date, String thumbPath, List<String> goWithList) {
@@ -21,30 +33,25 @@ public class MyPageDTO {
         this.goWithList = goWithList;
     }
 
+    // 이거 name 왜안되는지 납득이 안됨
     @Builder(builderMethodName = "followerBuilder")
-    public MyPageDTO(int id, String name, String thumbPath, String backgroundThumbPath) {
+    public MyPageDTO(int id, String name, String thumbPath, String backgroundThumbPath, Date fDate) {
         this.id = id;
         this.name = name;
         this.thumbPath = thumbPath;
         this.backgroundThumbPath = backgroundThumbPath;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.fDate = dateFormat.format(fDate);
     }
-    //weeklyId, title, date, thumbPath, goWithList
-    private int id;
-    private String title;
-    private TravelDate date;
-    private String thumbPath;
-    private List<String> goWithList; //user는 우선 프로필사진만!!
 
-    private String name;
-    private String backgroundThumbPath;
-
-    public static MyPageDTO generateFollowerDTO(String name, int id, String thumbPath, String bgPath){
+    public static MyPageDTO generateFollowerDTO(String name, int id, String thumbPath, String bgPath, Date fDate){
         MyPageDTO dto = new MyPageDTO();
         dto.setName(name);
         dto.setId(id);
         dto.setThumbPath(thumbPath);
         dto.setBackgroundThumbPath(bgPath);
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dto.setFDate(dateFormat.format(fDate));
         return dto;
     }
 

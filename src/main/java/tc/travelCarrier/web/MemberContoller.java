@@ -172,19 +172,16 @@ public class MemberContoller {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
         for(Follower f : followerPage){
-            //MyPageDTO dto = generateFollowerDTO(f.getFollower().getName(),f.getFollower().getId(),f.getFollower().getAttachUser().getThumbPath(), f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath());
-/*                    MyPageDTO.followerBuilder()
+/*            result.add(MyPageDTO.followerBuilder()
                     .id(f.getFollower().getId())
                     .name(f.getFollower().getName())
                     .thumbPath(f.getFollower().getAttachUser().getThumbPath())
-                    .backgroundThumbPath(f.getFollower().getAttachUser() == null ? null : f.getFollower().getAttachUser().getThumbPath())
-                    .build();*/
-            result.add(MyPageDTO.followerBuilder()
-                    .id(f.getFollower().getId())
-                    .name(f.getFollower().getName())
-                    .thumbPath(f.getFollower().getAttachUser().getThumbPath())
-                    .backgroundThumbPath(f.getFollower().getAttachUser() == null ? null : f.getFollower().getAttachUser().getThumbPath())
-                    .build());
+                    .backgroundThumbPath(f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath())
+                    .fDate(f.getFDate())
+                    .build());*/
+            result.add(generateFollowerDTO(f.getFollower().getName(),f.getFollower().getId(),f.getFollower().getAttachUser().getThumbPath(),
+                    f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath(),
+                    f.getFDate()));
             //System.out.println(f.getFollower().getName()+", "+dto.toString());
         }
 
@@ -204,6 +201,10 @@ public class MemberContoller {
         Page<Weekly> weeklyPage = null;
         if(type.equals("dia")) weeklyPage = searchService.findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(searchDTO.getKeyword(), user, pageable);
         else if(type.equals("tag")) weeklyPage = searchService.findTaggedWeekliesByKeywordAndUser(searchDTO.getKeyword(), user, pageable);
+        else if(type.equals("tra")) {
+            Page<Follower> follwerPage= searchService.findFollowerByNameAndEmail(searchDTO.getKeyword(), user, pageable);
+            return transferFollowerDTO(follwerPage);
+        }
 
         //그대로 리턴하면 순환참조 오류 발생하므로 dto로 바꿔서 보내준다
         // dto : weeklyId, title, date, thumbPath, goWithList

@@ -250,9 +250,8 @@ $(document).ready(function () {
       var searchKeyword = $(this).val();
       var type = $(".userProfile_tab li.on span").text().substring(0, 3); //tag 또는 dia 보내짐
 
-      if (type == "tra" || type == "rev") {
-        return;
-      }
+      if (type == "rev") return;
+
       $.ajax({
         url: "/TravelCarrier/mypage/search",
         type: "POST",
@@ -421,10 +420,8 @@ function travlerHtml(data) {
                     </div>
 
                     <div class="uP_user_text">
-                      <span text="${
-                        data.name
-                      }" class="uP_user_name">Budapest</span>
-                      <span class="uP_user_added">22.10.19</span>
+                      <span class="uP_user_name">${data.name}</span>
+                      <span class="uP_user_added">${data.fdate}</span>
                     </div>
                     <div class="follower_del_btn">
                       <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>

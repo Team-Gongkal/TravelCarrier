@@ -39,4 +39,8 @@ public class SearchService {
     public Page<Follower> findMyFollower(User user, Pageable pageable) {
         return weeklySearchRepository.findMyFollower(user, pageable);
     }
+
+    public Page<Follower> findFollowerByNameAndEmail(String keyword, User user, Pageable pageable) {
+        return weeklySearchRepository.findFollowerByNameAndEmail(keyword, user, pageable);
+    }
 }
