@@ -21,11 +21,11 @@
           <div class="my_profile_img circle">
             <img
               th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-              src="/image/mypage/profile.jpg" alt="프로필 이미지">
+              src="/image/mypage/profile.jpg" alt="프로필 이미지" id="image">
           </div>
           <div class="my_profile_id">
             <span th:text="${profile.name}">yun_ah17</span>
-            <span id="edit_profile">
+            <span id="edit_menu">
               <!-- <img src="/image/mypage/icon/pencil.png" alt="프로필 수정아이콘"> -->
               <img src="/image/mypage/icon/setting_wh.png" alt="프로필 수정아이콘">
             </span>
@@ -72,6 +72,7 @@
           </div>
         </div>
       </div>
+      <!-- 게시글 보기--------------------------- -->
       <!-- 게시글 보기--------------------------- -->
       <div class="userProfile_content">
         <div class="userProfile_gallery">
@@ -140,37 +141,39 @@
           <ul class="userProfile_review">
             <p>페이지준비중입니다</p>
           </ul>
-          <ul class="userProfile_travler">
-            <li th:if="${followers != null}" th:each="follower : ${followers}">
-              <div class="uP_diary_thumbnail">
-                <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                  <img th:if="${follower.follower.attachUserBackground != null}"
-                    th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
-                    alt="썸네일" class="moving_bg">
-                </a>
-              </div>
-              <div class="uP_user_box">
-                <div class="uP_user_profileImg">
-                  <div class="my_profile_img circle">
-                    <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                      <img
-                        th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-                        src="/image/mypage/profile.jpg" alt="프로필 이미지">
-                    </a>
+          <div class="userProfile_travler">
+            <ul class="follower">
+              <li th:if="${followers != null}" th:each="follower : ${followers}">
+                <div class="uP_diary_thumbnail">
+                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
+                    <img th:if="${follower.follower.attachUserBackground != null}"
+                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
+                      alt="썸네일" class="moving_bg">
+                  </a>
+                </div>
+                <div class="uP_user_box">
+                  <div class="uP_user_profileImg">
+                    <div class="my_profile_img circle">
+                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
+                        <img
+                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="uP_user_text">
+                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>
+                    <span class="uP_user_added">22.10.19</span>
+                  </div>
+                  <div class="follower_del_btn">
+                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
                   </div>
                 </div>
-
-                <div class="uP_user_text">
-                  <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>
-                  <span class="uP_user_added">22.10.19</span>
-                </div>
-                <div class="follower_del_btn">
-                  <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
-                  <!-- <button></i>친구끊기<i class="fa-solid fa-user-xmark fa-xs"></i></button> -->
-                </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+            <ul class="follow"></ul>
+          </div>
           <button id="more_btn">more</button>
         </div>
       </div>
@@ -217,12 +220,17 @@
       </div>
     </div>
   </div>
-  <div class="edit_profile modal_bg">
+  <div class="edit_menu modal_bg">
     <div>
       <ul>
         <li>프로필 수정</li>
         <li>계정정보</li>
-        <li>로그아웃</li>
+        <li onclick="confirmLogout(event)" type="button">
+          <!-- <form class="logout" method="get" action="/logout/action" id="logoutForm"> -->
+          <span>
+            로그아웃</span>
+          <!-- </form> -->
+        </li>
         <li>취소</li>
       </ul>
     </div>
@@ -231,7 +239,22 @@
     <button onclick="Top">GoToTop</button>
   </div> -->
   <script src="/script/mypage.js"></script>
-
+  <script>
+    var image = document.getElementById('image');
+    var cropper = new Cropper(image, {
+      aspectRatio: 16 / 9, // 자르기 비율 설정
+      crop: function (event) {
+        // 자르기 영역이 변경될 때마다 실행되는 콜백 함수
+        console.log(event.detail.x);
+        console.log(event.detail.y);
+        console.log(event.detail.width);
+        console.log(event.detail.height);
+        console.log(event.detail.rotate);
+        console.log(event.detail.scaleX);
+        console.log(event.detail.scaleY);
+      }
+    });
+  </script>
 
 </body>
 

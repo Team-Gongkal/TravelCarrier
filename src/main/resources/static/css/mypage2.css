@@ -109,14 +109,14 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   color: #f7f7f7;
 }
 
-#edit_profile {
+#edit_menu {
   width: 1.3rem;
   cursor: pointer;
   opacity: 0.7;
   line-height: 1rem;
   margin-left: 0.3rem;
 }
-#edit_profile:hover {
+#edit_menu:hover {
   opacity: 1;
 }
 .my_profile_id span img {
@@ -403,7 +403,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 
 /* common 공통영역 */
 .userProfile_gallery {
-  padding: 0 8rem 3rem 8rem;
+  padding: 0 8rem 6rem 8rem;
   box-sizing: border-box;
   position: relative;
   z-index: 0;
@@ -435,7 +435,8 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   }
 }
 
-.userProfile_gallery > ul > li {
+.userProfile_gallery > ul > li,
+div.userProfile_travler > ul > li {
   width: 100%;
   /* height: fit-content; 삭제 개수적을때 늘어지는지확인 */
   background: #f7f7f7;
@@ -445,7 +446,8 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   box-shadow: 1px 1px 2px #353a5219;
 }
 
-.userProfile_gallery > ul > li > div > a {
+.userProfile_gallery > ul > li > div > a,
+.userProfile_travler > ul > li > div > a {
   display: block;
   width: 100%;
   height: 100%;
@@ -561,13 +563,30 @@ div.uP_diary_btn > button:hover {
 }
 
 /* travler 친구목록================================ */
-.userProfile_gallery > ul.userProfile_travler {
+div.userProfile_travler {
+  display: none;
+}
+div.userProfile_travler.show {
+  display: block;
+  animation: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+div.userProfile_travler > ul {
+  display: none;
   grid-gap: 2rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+  transition: 1s;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
-ul.userProfile_travler li {
+div.userProfile_travler > ul.show {
+  display: grid;
 }
-ul.userProfile_travler li .uP_diary_thumbnail {
+div.userProfile_travler li {
+}
+div.userProfile_travler li .uP_diary_thumbnail {
   height: 7rem;
 }
 li .uP_user_box {
@@ -640,7 +659,7 @@ li .uP_user_text span.uP_user_added {
   border-radius: 0 0.2rem 0.2rem 0;
 }
 /* 설정------------------------------------------------- */
-.edit_profile {
+.edit_menu {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -653,11 +672,11 @@ li .uP_user_text span.uP_user_added {
   z-index: 101;
 }
 .period_modal_bg.show,
-.edit_profile.show {
+.edit_menu.show {
   visibility: visible;
   opacity: 1;
 }
-.edit_profile > div {
+.edit_menu > div {
   width: fit-content;
   height: auto;
   position: absolute;
@@ -668,22 +687,22 @@ li .uP_user_text span.uP_user_added {
   border-radius: 0.3rem;
   overflow: hidden;
 }
-.edit_profile > div > ul {
+.edit_menu > div > ul {
   width: 100%;
   height: 100%;
   text-align: center;
   font-weight: 300;
 }
-.edit_profile > div > ul > li {
+.edit_menu > div > ul > li {
   border-bottom: 1px solid rgb(53, 58, 82, 0.2);
   padding: 1.5rem 7rem;
   cursor: pointer;
 }
-.edit_profile > div > ul > li:hover {
+.edit_menu > div > ul > li:hover {
   background: rgb(53, 58, 82, 0.02);
   padding: 1.5rem 7rem;
 }
-.edit_profile > div > ul > li:last-child {
+.edit_menu > div > ul > li:last-child {
   border-bottom: 0px solid #000;
   color: red;
 }
@@ -705,4 +724,5 @@ li .uP_user_text span.uP_user_added {
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
+  margin-bottom: 3rem;
 }

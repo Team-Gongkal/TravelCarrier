@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+<body>
+  <th:block th:replace="fragments/header :: headerFragment"></th:block>
+  <main id="userProfile_wrap">
+    <!-- 배경이미지 -->
+    <div class="userProfile_bg">
+      <img
+        th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+        alt="유저프로필 배경이미지" class="moving_bg">
+    </div>
+    <div class="gap"></div>
+    <div class="userProfile_scroll">
+      <div class="userProfile_top">
+        <!-- 프로필사진 및 편집 -->
+        <div class="my_profile">
+          <div class="my_profile_img circle">
+            <img
+              th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+              src="/image/mypage/profile.jpg" alt="프로필 이미지" id="image">
+          </div>
+          <div class="my_profile_id">
+            <span th:text="${profile.name}">yun_ah17</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    var image = document.getElementById('image');
+    var cropper = new Cropper(image, {
+      aspectRatio: 16 / 9, // 자르기 비율 설정
+      crop: function (event) {
+        // 자르기 영역이 변경될 때마다 실행되는 콜백 함수
+        console.log(event.detail.x);
+        console.log(event.detail.y);
+        console.log(event.detail.width);
+        console.log(event.detail.height);
+        console.log(event.detail.rotate);
+        console.log(event.detail.scaleX);
+        console.log(event.detail.scaleY);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
