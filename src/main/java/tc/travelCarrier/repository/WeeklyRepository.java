@@ -115,4 +115,7 @@ public class WeeklyRepository{
     }
 
 
+    public void remove(Weekly weekly) {
+        em.remove(weekly);
+    }
 }

@@ -261,9 +261,8 @@ $(document).ready(function () {
       var searchKeyword = $(this).val();
       var type = $(".userProfile_tab li.on span").text().substring(0, 3); //tag 또는 dia 보내짐
 
-      if (type == "tra" || type == "rev") {
-        return;
-      }
+      if (type == "rev") return;
+
       $.ajax({
         url: "/TravelCarrier/mypage/search",
         type: "POST",
@@ -283,9 +282,13 @@ $(document).ready(function () {
 // 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
 $(".userProfile_tab li").on("click", function (e) {
   var type = $(this).find("span").text().substring(0, 3);
-  if (type == "rev") {
-    return;
-  }
+    if (type == "tra") $("#search").attr("placeholder", "검색하기 (이름, 이메일)");
+    else if (type == "rev") {
+        $("#search").attr("placeholder", "");
+        return;
+    }
+    else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
+
   var data = getPage(type, 1);
   updateResult(type, data);
   $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
@@ -342,7 +345,7 @@ function updateResult(type, data) {
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
 function diaryHtml(data) {
   var html = `
-    <li>
+    <li data-wid="${data.id}" >
       <div class="uP_diary_thumbnail">
         <a href='/TravelCarrier/weekly/${data.id}'>
           <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
@@ -365,7 +368,7 @@ function diaryHtml(data) {
         </div>
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
-          <button type="button">삭제하기</button>
+          <button type="button" class="weeklyDelBtn" >삭제하기</button>
         </div>
       </div>
     </li>`;
@@ -399,7 +402,7 @@ function taggedHtml(data) {
         </div>
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
-          <button type="button">삭제하기</button>
+          <button type="button">숨기기</button>
         </div>
       </div>
     </li>`;
@@ -423,7 +426,7 @@ function travlerHtml(data) {
                   <div class="uP_user_box">
                     <div class="uP_user_profileImg">
                       <div class="my_profile_img circle">
-                        <a href="'TravelCarrier/member/' + ${data.id}">
+                        <a href="TravelCarrier/member/${data.id}">
                           <img
                             src="${data.thumbPath}"
                             src="/image/mypage/profile.jpg" alt="프로필 이미지">
@@ -432,10 +435,8 @@ function travlerHtml(data) {
                     </div>
 
                     <div class="uP_user_text">
-                      <span text="${
-                        data.name
-                      }" class="uP_user_name">Budapest</span>
-                      <span class="uP_user_added">22.10.19</span>
+                      <span class="uP_user_name">${data.name}</span>
+                      <span class="uP_user_added">${data.fdate}</span>
                     </div>
                     <div class="follower_del_btn">
                       <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
@@ -452,4 +453,26 @@ function add_friend() {
   add_friend_btn.addClass("completed");
   add_friend_btn.children("span").text("follow");
   add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+}
+
+// 위클리 삭제 클릭 이벤트 - by.서현
+$(document).on("click", ".weeklyDelBtn", function() {
+  var title = $(this).closest("li").find(".uP_diary_tit").text();
+  var wid = $(this).closest("li").data("wid");
+  if (confirm("[ " + title + " ] 삭제하시겠습니까?")) deleteWeekly(wid);
+});
+
+function deleteWeekly(weeklyId) {
+    $.ajax({
+        url: "/TravelCarrier/weekly/"+weeklyId,
+        type: "DELETE",
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            $("li[data-wid='" + weeklyId + "']").remove();
+        },
+        error: function (error) {
+            alert("삭제 실패"+error);
+        }
+    });
 }
