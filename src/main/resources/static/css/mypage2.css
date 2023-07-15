@@ -109,14 +109,14 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   color: #f7f7f7;
 }
 
-#edit_profile {
+#edit_menu {
   width: 1.3rem;
   cursor: pointer;
   opacity: 0.7;
   line-height: 1rem;
   margin-left: 0.3rem;
 }
-#edit_profile:hover {
+#edit_menu:hover {
   opacity: 1;
 }
 .my_profile_id span img {
@@ -403,7 +403,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 
 /* common 공통영역 */
 .userProfile_gallery {
-  padding: 0 8rem 3rem 8rem;
+  padding: 0 8rem 6rem 8rem;
   box-sizing: border-box;
   position: relative;
   z-index: 0;
@@ -435,7 +435,8 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   }
 }
 
-.userProfile_gallery > ul > li {
+.userProfile_gallery > ul > li,
+div.userProfile_travler > ul > li {
   width: 100%;
   /* height: fit-content; 삭제 개수적을때 늘어지는지확인 */
   background: #f7f7f7;
@@ -445,7 +446,8 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   box-shadow: 1px 1px 2px #353a5219;
 }
 
-.userProfile_gallery > ul > li > div > a {
+.userProfile_gallery > ul > li > div > a,
+.userProfile_travler > ul > li > div > a {
   display: block;
   width: 100%;
   height: 100%;
@@ -561,13 +563,30 @@ div.uP_diary_btn > button:hover {
 }
 
 /* travler 친구목록================================ */
-.userProfile_gallery > ul.userProfile_travler {
+div.userProfile_travler {
+  display: none;
+}
+div.userProfile_travler.show {
+  display: block;
+  animation: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+div.userProfile_travler > ul {
+  display: none;
   grid-gap: 2rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+  transition: 1s;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
-ul.userProfile_travler li {
+div.userProfile_travler > ul.show {
+  display: grid;
 }
-ul.userProfile_travler li .uP_diary_thumbnail {
+div.userProfile_travler li {
+}
+div.userProfile_travler li .uP_diary_thumbnail {
   height: 7rem;
 }
 li .uP_user_box {
@@ -640,7 +659,7 @@ li .uP_user_text span.uP_user_added {
   border-radius: 0 0.2rem 0.2rem 0;
 }
 /* 설정------------------------------------------------- */
-.edit_profile {
+.edit_menu {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -653,11 +672,11 @@ li .uP_user_text span.uP_user_added {
   z-index: 101;
 }
 .period_modal_bg.show,
-.edit_profile.show {
+.edit_menu.show {
   visibility: visible;
   opacity: 1;
 }
-.edit_profile > div {
+.edit_menu > div {
   width: fit-content;
   height: auto;
   position: absolute;
@@ -668,22 +687,22 @@ li .uP_user_text span.uP_user_added {
   border-radius: 0.3rem;
   overflow: hidden;
 }
-.edit_profile > div > ul {
+.edit_menu > div > ul {
   width: 100%;
   height: 100%;
   text-align: center;
   font-weight: 300;
 }
-.edit_profile > div > ul > li {
+.edit_menu > div > ul > li {
   border-bottom: 1px solid rgb(53, 58, 82, 0.2);
   padding: 1.5rem 7rem;
   cursor: pointer;
 }
-.edit_profile > div > ul > li:hover {
+.edit_menu > div > ul > li:hover {
   background: rgb(53, 58, 82, 0.02);
   padding: 1.5rem 7rem;
 }
-.edit_profile > div > ul > li:last-child {
+.edit_menu > div > ul > li:last-child {
   border-bottom: 0px solid #000;
   color: red;
 }
@@ -705,4 +724,366 @@ li .uP_user_text span.uP_user_added {
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
+  margin-bottom: 3rem;
+}
+/* 프로필 편집 및 계쩡 정보설정 모달창========= */
+.edit_modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 101;
+  display: flex;
+}
+/* 모달비활성화 및 활성화 */
+.edit_modal.show,
+.crop_img_modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+.edit_modal_wrap {
+  width: 80%;
+  aspect-ratio: 16 / 8.7;
+  background: #efeee9;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.edit_modal_nav {
+  width: 20%;
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  border-right: 1px solid #353a52;
+}
+.edit_modal_nav .my_profile .my_profile_id span {
+  color: #353a52;
+}
+.edit_modal_nav ul {
+  margin-top: 2rem;
+}
+.edit_modal_nav ul li {
+  width: 100%;
+  padding: 0rem 2rem;
+  border-bottom: 1px solid #353a521a;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.edit_modal_nav ul li span {
+  width: fit-content;
+  display: block;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.edit_modal_nav ul li:last-child {
+  border: 0;
+}
+.edit_modal_nav ul li span::after {
+  content: "";
+  width: 100%;
+  height: 0.5em;
+  display: block;
+  transform: translateY(-70%);
+  text-align: center;
+}
+.edit_modal_nav ul li.on span::after {
+  background: rgb(160, 193, 202, 0.3);
+}
+.edit_modal_nav ul li span:hover::after {
+  background: rgb(160, 193, 202, 0.3);
+  animation-name: highliter;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  position: relative;
+}
+
+@keyframes highliter {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* 환경설정 창-콘텐츠 */
+.edit_modal_con {
+  width: 80%;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.edit_modal_con > ul {
+  padding: 2rem;
+}
+.edit_modal_con > ul > li {
+}
+/* 스크롤바 디자인 */
+.edit_modal_con::-webkit-scrollbar {
+  width: 0.8rem;
+}
+.edit_modal_con::-webkit-scrollbar-thumb {
+  background: #353a524f;
+  border-radius: 10px;
+}
+/* 스크롤바 버튼부분 여백으로 만들기(상)*/
+.edit_modal_con::-webkit-scrollbar-button:vertical:start:decrement,
+.edit_modal_con::-webkit-scrollbar-button:vertical:start:increment {
+  display: block;
+  height: 1rem;
+}
+/* 스크롤바 버튼부분 여백으로 만들기(하)*/
+.edit_modal_con::-webkit-scrollbar-button:vertical:end:decrement {
+  display: block;
+  width: 1rem;
+}
+.edit_profile {
+  width: 100%;
+}
+.edit_profile h3 {
+  position: relative;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #353a5246;
+  padding: 1rem 0;
+  box-sizing: border-box;
+  margin-bottom: 0.5rem;
+}
+.edit_profile_padding {
+  padding: 2rem;
+  box-sizing: border-box;
+}
+.edit_profile_ex {
+  width: 100%;
+  height: fit-content;
+  position: relative;
+}
+div.edit_profile_padding > div {
+  width: 100%;
+  /* height: 10.9rem; 프로필이미지+닉네임높이값 */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+.edit_profile h3 {
+  display: flex;
+}
+.edit_profile p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  opacity: 0.7;
+  padding: 0.2rem 0.5rem;
+}
+.edit_profile p::after {
+  content: "";
+  width: 100%;
+  height: 0.5em;
+  display: block;
+  transform: translateY(-100%);
+  text-align: center;
+  background: rgb(160, 193, 202, 0.3);
+}
+
+.edit_profile_ex .userProfile_bg {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.edit_profile_ex .my_profile {
+  height: 100%;
+  position: relative;
+  padding: 0;
+}
+/* 프로필 이미지 선택 */
+.select_img.icon_bg::after {
+  background: no-repeat center / 25% url(../image/mypage/icon/camera.svg);
+  opacity: 0.7;
+}
+.choose_profile ul {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 8rem;
+}
+.choose_profile ul li > span,
+.choose_bg ul li > span,
+.choose_bg ul > li > label > span {
+  width: fit-content;
+  display: block;
+  margin: auto;
+  padding: 1rem 0;
+  font-weight: 200;
+  opacity: 0.8;
+}
+.choose_profile ul li > div {
+  width: 12rem;
+  aspect-ratio: 1 / 1;
+  box-shadow: inset 0 0 0 0.3rem #353a5229;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.choose_profile ul li > div.on,
+.choose_bg ul li.on {
+  box-shadow: inset 0 0 0 0.3rem #a0c1ca;
+  position: relative;
+}
+.choose_profile ul li > div.on:after,
+.choose_bg ul li.on:after {
+  content: "";
+  background: center / cover no-repeat url(../image/mypage/icon/check.svg);
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.choose_bg ul li.on:after {
+  top: -1rem;
+}
+.profile_img_ex {
+  width: 10.7rem;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+.profile_img_ex img,
+.profile_bg_ex img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+/* 배경이미지 바꾸기 */
+.choose_bg > ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 3rem;
+  padding: 2rem 4rem;
+}
+.choose_bg > ul > li {
+  width: 100%;
+  border-radius: 0.8rem;
+  box-shadow: inset 0 0 0 0.3rem #353a5229;
+  padding: 0.6rem 0.6rem 0rem 0.6rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.choose_bg > ul > li > label {
+  cursor: pointer;
+}
+.choose_bg > ul > li > div,
+.choose_bg > ul > li > label > div {
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile_bg_ex {
+  position: relative;
+}
+.profile_bg_ex.select_img.icon_bg::after {
+  background-size: 15%;
+}
+/* 저장버튼 */
+.edit_profile_saveBtn,
+.edit_img_saveBtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.edit_profile_saveBtn button.btn {
+  background: #353a52;
+}
+.edit_profile_saveBtn button.btn:hover {
+  background: #525d76;
+}
+/* 모달창 닫기버튼 */
+.modal_bg > button {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 1.5rem;
+  background: transparent;
+  opacity: 0.5;
+}
+.modal_bg > button > span {
+  display: block;
+  width: 0.5rem;
+  height: 3rem;
+  background: #f7f7f7;
+  border-radius: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.modal_bg > button.clos > span:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.modal_bg > button.clos > span:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.modal_bg > button:hover {
+  opacity: 1;
+}
+/* 이미지 자르기 */
+.crop_img_modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  background: #f7f7f77b;
+  z-index: 110;
+  opacity: 0;
+  visibility: hidden;
+}
+.crop_img_wrap {
+  width: 70%;
+  height: 90%;
+  background: #f7f7f7;
+  padding: 3rem 5rem;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.crop_img_wrap h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  padding-bottom: 3rem;
+}
+.crop_img_wrap .filePath {
+  margin-top: 1rem;
+}
+.crop_img_wrap div.filePath p {
+  font-size: 1rem;
+  padding: 0.3rem;
 }

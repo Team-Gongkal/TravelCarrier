@@ -111,7 +111,7 @@ function setDataArr(event) {
 
 // 오른쪽 폼(제목,메모,경로,대표) 비우기
 function removeRightForm() {
-  $('li[class="clickImg"]').removeAttr("class");
+  $('li[class="clickImg icon_bg"]').removeAttr("class");
   $('div.daily_title input[type="text"]').val("");
   $("div.daily_text textarea").val("");
   $('input[type="radio"]').prop("checked", false);
@@ -120,9 +120,13 @@ function removeRightForm() {
 // 사진 클릭이벤트
 $(document).on("click", "ul.Dform_imglist li img", function (event) {
   removeRightForm();
+  //선택항목 검은 배경 지우기
+  $("ul.Dform_imglist li span").removeAttr("class", "icon_bg_dark");
   //만약 selectArr이 0, 즉 defailt가 떠있으면 실행 X
   if (selectArr.length !== 0) {
-    $(this).closest("li").attr("class", "clickImg");
+    $(this).parent("span").parent("li").attr("class", "clickImg icon_bg");
+    //선택항목 검은 배경 추가
+    $(this).parent("span").attr("class", "icon_bg_dark");
     liIndex = $("ul.Dform_imglist li").index($("li.clickImg"));
     $('div.daily_title input[type="text"]').val(
       selectArr[liIndex].get("title")
@@ -225,12 +229,12 @@ function drawThumbs() {
 
       //main인 데이터 이미 있으면 붙여줘야됨
       if (formData.get("thumb") == 0) {
-        var li = $("<li>").attr("data-index", tmp).append(img);
+        var li = $("<li>").attr("data-index", tmp).append($('<span>').append(img));
       } else if (formData.get("thumb") == 1) {
         var li = $("<li>")
           .attr("id", "main")
           .attr("data-index", tmp)
-          .append(img);
+          .append($('<span>').append(img));
       }
       li.attr("data-attachNo", formData.get("attachNo"));
       li.attr("data-update", formData.get("dupdate"));
@@ -635,4 +639,14 @@ $(document).ready(function () {
     $(".diary_textbox ul li h6").text(hover_data.title);
     $(".diary_textbox ul li p").text(hover_data.text);
   });
+});
+
+// 데일리 이미지 호버시 bg 어둡게 -by윤아
+document.addEventListener("mouseover", function(event) {
+  var hoveredElement = event.target;
+});
+$(document).on("mouseenter", "ul.Dform_imglist li img", function(e){
+
+});
+$(document).on("mouseout", "ul.Dform_imglist li img", function(e){
 });

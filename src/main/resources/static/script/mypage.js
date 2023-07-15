@@ -1,12 +1,10 @@
 //계정관리 모달창 활성화 - by 윤아
-$("#edit_profile").on("click", function () {
-  $(".edit_profile").addClass("show");
+$("#edit_menu").on("click", function () {
+  $(".edit_menu").addClass("show");
 });
-$(".edit_profile ul li")
-  .last()
-  .on("click", function () {
-    $(".edit_profile").removeClass("show");
-  });
+$(".edit_menu ul li").on("click", function () {
+  $(".edit_menu").removeClass("show");
+});
 
 //기간검색 모달창 활성화 - by 윤아
 $(".search_period").on("click", function () {
@@ -17,7 +15,27 @@ $(".period_modal_bg .close, #search_period").on("click", function () {
   $(".period_modal_bg").removeClass("show");
 });
 
-//친구목록 활성화
+//프로필 편집 모달창 활성화 - by 윤아
+$("#edit_profile").on("click", function () {
+  $(".edit_modal").addClass("show");
+});
+
+$(".clos").on("click", function () {
+  $(".edit_modal").removeClass("show");
+});
+
+//팔로우/팔로워 탭 - by 윤아
+var following_content = $(".userProfile_travler > ul");
+$("#follower").on("click", function () {
+  following_content.removeClass("show");
+  following_content.filter(".follower").addClass("show");
+});
+$("#follow").on("click", function () {
+  following_content.removeClass("show");
+  following_content.filter(".follow").addClass("show");
+});
+
+//친구목록 버튼 활성화
 $(".travlar_option button").on("click", function (e) {
   $(e.target).addClass("on");
   $(e.target).siblings("button").removeClass("on");
@@ -73,7 +91,8 @@ userProfileScroll.on("scroll", function () {
 //탭메뉴 활성화 -by윤아
 var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 var tab = $(".userProfile_tab > ul > li");
-var contents = $(".userProfile_gallery > ul");
+var contents = $(".userProfile_gallery").children("ul,div");
+console.log(contents);
 var idx = $(".userProfile_tab > ul > li.on").index();
 var tab_li = contents.eq(idx).children("li").length;
 on_scroll(idx, tab_li); //화면 로드시 실행해서 보여줌
@@ -271,12 +290,12 @@ $(document).ready(function () {
 // 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
 $(".userProfile_tab li").on("click", function (e) {
   var type = $(this).find("span").text().substring(0, 3);
-    if (type == "tra") $("#search").attr("placeholder", "검색하기 (이름, 이메일)");
-    else if (type == "rev") {
-        $("#search").attr("placeholder", "");
-        return;
-    }
-    else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
+  if (type == "tra")
+    $("#search").attr("placeholder", "검색하기 (이름, 이메일)");
+  else if (type == "rev") {
+    $("#search").attr("placeholder", "");
+    return;
+  } else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
 
   var data = getPage(type, 1);
   updateResult(type, data);
@@ -317,10 +336,10 @@ function updateResult(type, data) {
       $(".userProfile_tagged").append(taggedHtml(e));
     }
   } else if (type == "tra") {
-    $(".userProfile_travler").empty();
+    $(".travler_follower").empty();
     if (data == null) return;
     for (var e of data) {
-      $(".userProfile_travler").append(travlerHtml(e));
+      $(".travler_follower").append(travlerHtml(e));
     }
   }
 
@@ -445,25 +464,25 @@ function add_friend() {
 }
 
 // 위클리 삭제 클릭 이벤트 - by.서현
-$(document).on("click", ".weeklyDelBtn", function() {
+$(document).on("click", ".weeklyDelBtn", function () {
   var title = $(this).closest("li").find(".uP_diary_tit").text();
   var wid = $(this).closest("li").data("wid");
   if (confirm("[ " + title + " ] 삭제하시겠습니까?")) deleteWeekly(wid);
 });
 
 function deleteWeekly(weeklyId) {
-    $.ajax({
-        url: "/TravelCarrier/weekly/"+weeklyId,
-        type: "DELETE",
-        processData: false,
-        contentType: false,
-        success: function (data) {
-            $("li[data-wid='" + weeklyId + "']").remove();
-        },
-        error: function (error) {
-            alert("삭제 실패"+error);
-        }
-    });
+  $.ajax({
+    url: "/TravelCarrier/weekly/" + weeklyId,
+    type: "DELETE",
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      $("li[data-wid='" + weeklyId + "']").remove();
+    },
+    error: function (error) {
+      alert("삭제 실패" + error);
+    },
+  });
 }
 
 

@@ -125,7 +125,7 @@ public class MemberContoller {
         }
 */
 
-        return "/test/mypage";
+        return "/test/edit_profile";
     }
 
     //마이페이지 페이징

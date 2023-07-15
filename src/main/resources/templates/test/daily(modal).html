@@ -45,7 +45,7 @@
               <h3>일기장</h3>
             </div>
             <div class="Dform">
-              <div class="default_Dform_imgs" style="display: none;">
+              <div class="default_Dform_imgs">
                 <label>
                   <div class="dropzone">
                     <input type="file" class="attach" multiple>
@@ -55,14 +55,13 @@
                   </div>
                 </label>
               </div>
-              <div class="Dform_imgs" style="display: none;">
+              <div class="Dform_imgs">
                 <p>이미지를 드래그하여 순서를 편집할 수 있습니다.</p>
                 <div class="Dform_container">
                   <ul class="Dform_imglist">
                     <li id="moreImgLi">
                       <input type="file" multiple id="moreImg" class="attach">
                       <label for="moreImg"><i class="xi-plus"></i></label>
-                    </li>
                     </li>
                   </ul>
                 </div>
@@ -73,7 +72,6 @@
                     <li th:each="i : ${#numbers.sequence(1, period)}" class="Dtab days_num1">
                       <span th:text="'DAY' + ${i}">DAY ?</span>
                     </li>
-
                   </ul>
                 </div>
                 <div class="daily_title">
