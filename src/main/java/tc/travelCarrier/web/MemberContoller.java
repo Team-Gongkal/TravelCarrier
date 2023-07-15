@@ -125,6 +125,17 @@ public class MemberContoller {
         }
 */
 
+        return "/test/mypage";
+    }
+
+    // 마이페이지
+    @GetMapping("/member/mypage/edit")
+    public String editProfile(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails){
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+
+        model.addAttribute("profile",user);
+        model.addAttribute("user",user);
+        model.addAttribute("followers",user.getFollowers());
         return "/test/edit_profile";
     }
 
