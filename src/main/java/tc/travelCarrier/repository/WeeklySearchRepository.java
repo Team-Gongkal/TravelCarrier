@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tc.travelCarrier.domain.Follower;
+import tc.travelCarrier.domain.OpenStatus;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
 
@@ -21,14 +22,12 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
 
     Page<Weekly> findByUserOrderByIdDesc(User user, Pageable pageable);
 
-    @Query("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = ?1 AND g.hide = false ORDER BY w.id DESC")
-    Page<Weekly> findTaggedWeekliesByUser222(User user, Pageable pageable);
+
 
     @Query("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = ?1 ORDER BY w.id DESC")
     Page<Weekly> findTaggedWeekliesByUser(User user, Pageable pageable);
 
-    @Query("SELECT f FROM Follower f WHERE f.user = ?1")
-    Page<Follower> findMyFollower (User user, Pageable pageable);
+
 
     @Query("SELECT f FROM Follower f JOIN f.user u WHERE u = ?2 AND (f.follower.name LIKE %?1% OR f.follower.email LIKE %?1%)")
     Page<Follower> findFollowerByNameAndEmail (String keyword, User user, Pageable pageable);
@@ -37,4 +36,18 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
     Page<Weekly> findWeeklyPagingByDate(Date sdate, Date edate, User user, Pageable pageable);
     @Query("SELECT DISTINCT w FROM Weekly w JOIN w.gowiths g JOIN g.user u WHERE g.user = ?3 AND (w.travelDate.sDate >= ?1 AND w.travelDate.eDate <= ?2)")
     Page<Weekly> findTagWeeklyPagingByDate(Date sdate, Date edate, User user, Pageable pageable);
+
+
+
+    // 친구의 마이페이지
+
+    // 팔로우되어있지 않은 상대의 마이페이지 -> ALL만
+    @Query("SELECT w FROM Weekly w WHERE w.user = ?1 AND w.status = ?2 ORDER BY w.id DESC")
+    Page<Weekly> findNotFollowWeekliesByTraveler(User user, OpenStatus status, Pageable pageable);
+
+    // 팔로우되어있는 상대의 마이페이지 -> FOLLOW+ALL만 즉 Not ME
+    @Query("SELECT w FROM Weekly w WHERE w.user = ?1 AND w.status != ?2 ORDER BY w.id DESC")
+    Page<Weekly> findFollowWeekliesByTraveler(User user, OpenStatus status, Pageable pageable);
+
+    // 친구의 마이페이지 태그된 글 목록 -> 해당 글의 글쓴이가 로그인유저의 팔로워일때 AND ALL인것만 뜸
 }

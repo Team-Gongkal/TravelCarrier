@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+<body>
+  <th:block th:replace="fragments/header :: headerFragment"></th:block>
+  <main id="userProfile_wrap">
+    <!-- 배경이미지 -->
+    <div class="userProfile_bg">
+      <img
+        th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+        alt="유저프로필 배경이미지" class="moving_bg">
+    </div>
+    <div class="gap"></div>
+    <div class="userProfile_scroll">
+      <div class="userProfile_top">
+        <!-- 프로필사진 및 편집 -->
+        <div class="my_profile">
+          <div class="my_profile_img circle">
+            <img
+              th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+              src="/image/mypage/profile.jpg" alt="프로필 이미지">
+          </div>
+          <div class="my_profile_id">
+            <span th:text="${profile.name}">yun_ah17</span>
+          </div>
+          <div class="add_friend_btn">
+            <button th:if="${follow} == false" onclick="add_friend()">
+              <i class="fa-solid fa-plus fa"></i>
+              <span>following</span>
+            </button>
+            <button th:if="${follow} == true" onclick="add_friend()" class="completed">
+              <i class="fa-solid fa-check fa-xs fa" aria-hidden="true"></i>
+              <span>follow</span>
+            </button>
+          </div>
+
+        </div>
+        <!-- 탭메뉴 -->
+        <div class="drop_menu">
+          <div class="search_text">
+            <form action="">
+              <button>
+                <img src="/image/mypage/icon/search.png" alt="검색 아이콘">
+              </button>
+              <div>
+                <input type="text" name="" id="search" placeholder="검색하기 (제목, 국가명, 동행인)">
+              </div>
+            </form>
+          </div>
+          <div class="userProfile_tab">
+            <ul>
+              <li class="on">
+                <span>diary<em id="diary_num" th:text=" '(' + ${#lists.size(diaryList)} + ')'"></em></span>
+              </li>
+              <li>
+                <span>tagged<em id="tagged_num" th:text=" '(' + ${#lists.size(tagDiaryList)} + ')'"></em></span>
+              </li>
+              <li>
+                <span>review<em id="review_num">(0)</em></span>
+              </li>
+              <li>
+                <span>travler<em id="travler_num" th:text=" '(' + ${#lists.size(followers)} + ')'"></em></span>
+              </li>
+            </ul>
+          </div>
+          <div class="search_period show">
+            <img src="/image/mypage/icon/schedule_wh.png" alt="기간검색아이콘">
+          </div>
+          <div class="travlar_option">
+            <button type="button" id="follower" class="on">follower</button>
+            <button type="button" id="follow">follow</button>
+          </div>
+        </div>
+      </div>
+      <!-- 게시글 보기--------------------------- -->
+      <!-- 게시글 보기--------------------------- -->
+      <div class="userProfile_content">
+        <div class="userProfile_gallery">
+          <ul class="userProfile_diary show">
+            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">
+              <div class="uP_diary_thumbnail">
+                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
+                  <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일"
+                    class="moving_bg">
+                </a>
+              </div>
+              <div class="uP_diary_box">
+                <div class="uP_diary_companion">
+                  <ul class="sel_companion">
+                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"
+                      th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'" class="circle">
+                    </li>
+                  </ul>
+                </div>
+                <div class="uP_diary_text">
+                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>
+                  <span
+                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
+                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul class="userProfile_tagged">
+            <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
+              <div class="uP_diary_thumbnail">
+                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
+                  <img th:if="${diary.attachWeekly != null}" th:src="${diary.attachWeekly.thumbPath}"
+                    src="/image/mypage/thumbnail1.JPG" alt="썸네일" class="moving_bg">
+                </a>
+              </div>
+              <div class="uP_diary_box">
+                <div class="uP_diary_companion">
+                  <ul class="sel_companion">
+                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"
+                      th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'" class="circle">
+                    </li>
+                  </ul>
+                </div>
+                <div class="uP_diary_text">
+                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>
+                  <span
+                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
+                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>
+                </div>
+
+              </div>
+            </li>
+          </ul>
+          <ul class="userProfile_review">
+            <p>페이지준비중입니다</p>
+          </ul>
+          <div class="userProfile_travler">
+            <ul class="follower">
+              <li th:if="${followers != null}" th:each="follower : ${followers}">
+                <div class="uP_diary_thumbnail">
+                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
+                    <img th:if="${follower.follower.attachUserBackground != null}"
+                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
+                      alt="썸네일" class="moving_bg">
+                  </a>
+                </div>
+                <div class="uP_user_box">
+                  <div class="uP_user_profileImg">
+                    <div class="my_profile_img circle">
+                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
+                        <img
+                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="uP_user_text">
+                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>
+                    <span class="uP_user_added">22.10.19</span>
+                  </div>
+                  <div class="follower_del_btn">
+                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <ul class="follow show">
+              <li th:if="${followers != null}" th:each="follower : ${followers}">
+                <div class="uP_diary_thumbnail">
+                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
+                    <img th:if="${follower.follower.attachUserBackground != null}"
+                         th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
+                         alt="썸네일" class="moving_bg">
+                  </a>
+                </div>
+                <div class="uP_user_box">
+                  <div class="uP_user_profileImg">
+                    <div class="my_profile_img circle">
+                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
+                        <img
+                                th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                                src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="uP_user_text">
+                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>
+                    <span class="uP_user_added">22.10.19</span>
+                  </div>
+                  <div class="follower_del_btn">
+                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <button id="more_btn">more</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="period_modal_bg modal_bg">
+    <div class="period_modal">
+      <div class="modal_title">
+        <h3>기간 조회</h3>
+        <button class="close">
+          <i class="xi-close xi-2x"></i>
+        </button>
+      </div>
+      <div class="modal_content">
+        <div class="inquire_period">
+          <h3>기간 선택</h3>
+          <div>
+            <ul>
+              <li class="on">기간없음</li>
+              <li>1주일</li>
+              <li>1개월</li>
+              <li>3개월</li>
+              <li>6개월</li>
+              <li>지난 1년</li>
+            </ul>
+          </div>
+        </div>
+        <div class="direct_period">
+          <h3>직접 입력</h3>
+          <div class="period_flex">
+            <span class="dateSet">
+              <input name="sdate" type="text" id="sdate">
+              <a href="#none" class="btncalender dateClick">달력</a>
+            </span>
+            <span class="dami"></span>
+            <!-- 여행 종료일 -->
+            <span class="dateSet">
+              <input name="edate" type="text" id="edate">
+              <a href="#none" class="dateClick">달력</a>
+            </span>
+          </div>
+        </div>
+        <button id="search_period">조회하기</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/script/traveler.js"></script>
+
+</body>
+
+</html>

@@ -36,8 +36,8 @@ public class AuthChecker {
         // 읽기권한
         if(status == OpenStatus.ALL) answer[0] = "GRANTED";
         else if(status == OpenStatus.FOLLOW){
-            for(Follower follower : weekly.getUser().getFollowers()){
-                if(follower.getFollower() == user){
+            for(Follower follower : user.getFollowers()){
+                if(follower.getFollower() == weekly.getUser()){
                     answer[0] = "GRANTED";
                     break;
                 }

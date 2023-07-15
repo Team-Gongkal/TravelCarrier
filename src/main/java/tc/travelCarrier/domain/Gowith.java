@@ -12,6 +12,7 @@ public class Gowith {
     public Gowith(){}
     public Gowith(User user){
         this.user = user;
+        hide = false;
     }
     @Id @GeneratedValue
     @Column(name = "GOWITH_NO")
