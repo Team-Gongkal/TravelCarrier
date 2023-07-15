@@ -2,6 +2,7 @@ package tc.travelCarrier.web;
 
 import static tc.travelCarrier.dto.MyPageDTO.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -207,7 +208,7 @@ public class MemberContoller {
     //마이페이지 위클리 검색 (태그, 내글을 타입으로 구분)
     @PostMapping("/mypage/search")
     @ResponseBody
-    public List<MyPageDTO> searchWeekly(@AuthenticationPrincipal PrincipalDetails principalDetails,
+    public List<MyPageDTO> searchWeeklyByKeyword(@AuthenticationPrincipal PrincipalDetails principalDetails,
                              @RequestBody SearchDTO searchDTO, Pageable pageable){
         System.out.println(searchDTO.toString());
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
@@ -240,6 +241,35 @@ public class MemberContoller {
 
 
 
+    //마이페이지 위클리 기간 검색
+    @PostMapping("/mypage/search/date")
+    @ResponseBody
+    public List<MyPageDTO> searchWeeklyByDate(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                        @RequestBody SearchDTO searchDTO, Pageable pageable) throws ParseException {
+        System.out.println(searchDTO.toString());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+
+        String type = searchDTO.getType();
+        Page<Weekly> weeklyPage = null;
+        if(type.equals("dia")) weeklyPage = searchService.findWeeklyPagingByDate(searchDTO, user, pageable);
+        else if(type.equals("tag")) weeklyPage = searchService.findTagWeeklyPagingByDate(searchDTO, user, pageable);
+
+        //그대로 리턴하면 순환참조 오류 발생하므로 dto로 바꿔서 보내준다
+        // dto : weeklyId, title, date, thumbPath, goWithList
+        List<MyPageDTO> result = new ArrayList<>();
+        for(Weekly w : weeklyPage){
+            List<String> users = new ArrayList<>();
+            for(Gowith g : w.getGowiths()) users.add(g.getUser().getAttachUser().getThumbPath());
+
+            MyPageDTO dto = MyPageDTO.weeklyBuilder()
+                    .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
+                    .thumbPath(w.getAttachWeekly().getThumbPath()).goWithList(users)
+                    .build();
+
+            result.add(dto);
+        }
+        return result;
+    }
 
 }
 

@@ -10,6 +10,8 @@ import tc.travelCarrier.domain.Weekly;
 
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
+
 public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
     @Query("SELECT DISTINCT w FROM Weekly w JOIN w.nation n JOIN w.gowiths g JOIN g.user u WHERE (w.title LIKE %?1% OR n.name LIKE %?1% OR u.email LIKE %?1% OR u.name LIKE %?1%) AND w.user = ?2")
     Page<Weekly> findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(String keyword, User user, Pageable pageable);
@@ -28,6 +30,8 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
     @Query("SELECT f FROM Follower f JOIN f.user u WHERE u = ?2 AND (f.follower.name LIKE %?1% OR f.follower.email LIKE %?1%)")
     Page<Follower> findFollowerByNameAndEmail (String keyword, User user, Pageable pageable);
 
-
-
+    @Query("SELECT w FROM Weekly w WHERE w.user = ?3 AND (w.travelDate.sDate >= ?1 AND w.travelDate.eDate <= ?2)")
+    Page<Weekly> findWeeklyPagingByDate(Date sdate, Date edate, User user, Pageable pageable);
+    @Query("SELECT DISTINCT w FROM Weekly w JOIN w.gowiths g JOIN g.user u WHERE g.user = ?3 AND (w.travelDate.sDate >= ?1 AND w.travelDate.eDate <= ?2)")
+    Page<Weekly> findTagWeeklyPagingByDate(Date sdate, Date edate, User user, Pageable pageable);
 }

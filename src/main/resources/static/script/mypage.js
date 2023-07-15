@@ -11,7 +11,7 @@ $(".search_period").on("click", function () {
   $(".period_modal_bg").addClass("show");
 });
 
-$(".period_modal_bg .close, #search_period").on("click", function () {
+$(".period_modal_bg .close").on("click", function () {
   $(".period_modal_bg").removeClass("show");
 });
 
@@ -508,4 +508,90 @@ function hideOrShowWeekly(weeklyId,type) {
             alert("숨김처리에 실패하였습니다."+error);
         }
     });
+}
+
+// 기간 선택 이벤트
+  $(".inquire_period li").on("click", function() {
+    // 기존에 on 클래스가 붙어있는 li 요소의 on 클래스를 제거
+    $(".inquire_period li.on").removeClass("on");
+    $(this).addClass("on");
+
+    $("#edate").val("");
+    $("#sdate").val("");
+  });
+
+// 기간입력시 <기간없음> 자동선택
+$("#edate, #sdate").datepicker({
+    onSelect: function(dateText, inst) {
+        $(".inquire_period li.on").removeClass("on");
+        $('.inquire_period li:first').addClass("on")
+    }
+});
+// 기간 검색 이벤트
+$(document).on("click","#search_period", function(){
+    if (!dateValidate()) return;
+    // type, sdate, edate
+    var sdate;
+    var edate;
+    if($('.inquire_period li:first').hasClass("on")) {
+        sdate = $('#sdate').val();
+        edate = $('#edate').val();
+    } else{
+        var dateArr = getDate($('.inquire_period li.on').text());
+        sdate = dateArr.sdate;
+        edate = dateArr.edate;
+    }
+
+    var type = $(".userProfile_tab li.on span").text().substring(0, 3);
+    searchDate(type, sdate, edate);
+});
+
+function searchDate(type, sdate, edate){
+    $.ajax({
+        url: "/TravelCarrier/mypage/search/date",
+        type: "POST",
+        data :  JSON.stringify({ type:type, sdate: sdate, edate : edate }),
+        contentType: "application/json",
+        success: function (resp) {
+        console.log(resp);
+            $(".period_modal_bg").removeClass("show");
+            updateResult(type, resp);
+        },
+        error: function (error) {
+            alert("실패"+error);
+        }
+    });
+}
+
+
+function dateValidate(){
+    // 기간선택 검사
+    if($('.inquire_period li:first-child').hasClass("on")) {
+        if($('#sdate').val()=="" || $('#edate').val() =="") {
+            alert("날짜가 선택되지 않았습니다");
+            return false;
+        }
+    } else{
+        if($('.inquire_period li.on').length == 0) return false;
+    }
+
+    return true;
+}
+
+function getDate(btn){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+    var day = ('0' + date.getDate()).slice(-2);
+    var edate = `${year}-${month}-${day}`;
+
+    if(btn == "1주일") day = ('0' + (date.getDate()-7)).slice(-2);
+    else if(btn == "1개월") month = ('0' + (date.getMonth()+1 - 1)).slice(-2);
+    else if(btn == "3개월") month = ('0' + (date.getMonth()+1 -3)).slice(-2);
+    else if(btn == "6개월") month = ('0' + (date.getMonth()+1 - 6)).slice(-2);
+    else if(btn == "지난 1년") year = date.getFullYear()-1;
+
+    var sdate = `${year}-${month}-${day}`;
+    result = {"sdate" : sdate, "edate" : edate};
+    return  result;
 }
