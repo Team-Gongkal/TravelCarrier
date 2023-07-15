@@ -10,6 +10,7 @@ import lombok.ToString;
 public class SearchDTO {
 
     private String type;
+    private String detailType;
     private int page;
 
     // 키워드 기반 검색

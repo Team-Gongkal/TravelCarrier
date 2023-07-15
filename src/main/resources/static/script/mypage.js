@@ -29,10 +29,12 @@ var following_content = $(".userProfile_travler > ul");
 $("#follower").on("click", function () {
   following_content.removeClass("show");
   following_content.filter(".follower").addClass("show");
+  getTravelerPage("tra","follower",1);
 });
 $("#follow").on("click", function () {
   following_content.removeClass("show");
   following_content.filter(".follow").addClass("show");
+  getTravelerPage("tra","following",1);
 });
 
 //친구목록 버튼 활성화
@@ -260,6 +262,8 @@ $(document).ready(function () {
   });
 });
 
+
+
 // 검색어를 바탕으로 위클리 검색 ajax - by.서현
 $(document).ready(function () {
   $("#search").keypress(function (event) {
@@ -290,9 +294,11 @@ $(document).ready(function () {
 // 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
 $(".userProfile_tab li").on("click", function (e) {
   var type = $(this).find("span").text().substring(0, 3);
-  if (type == "tra")
+  if (type == "tra") {
     $("#search").attr("placeholder", "검색하기 (이름, 이메일)");
-  else if (type == "rev") {
+    $("#follower").trigger("click");
+    return;
+  } else if (type == "rev") {
     $("#search").attr("placeholder", "");
     return;
   } else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
@@ -317,7 +323,20 @@ function getPage(type, page) {
     },
   });
 }
-
+function getTravelerPage(type,detailType,page){
+  $.ajax({
+    url: "/TravelCarrier/mypage/page",
+    type: "POST",
+    data: JSON.stringify({ type: type, page: page, detailType : detailType}),
+    contentType: "application/json",
+    success: function (resp) {
+      updateResult(detailType, resp);
+    },
+    error: function (error) {
+      alert("실패");
+    },
+  });
+}
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
   console.log(data);
@@ -335,13 +354,20 @@ function updateResult(type, data) {
     for (var e of data) {
       $(".userProfile_tagged").append(taggedHtml(e));
     }
-  } else if (type == "tra") {
-    $(".travler_follower").empty();
-    if (data == null) return;
-    for (var e of data) {
-      $(".travler_follower").append(travlerHtml(e));
+  } else if (type == "following") {
+        $(".follow").empty();
+        if (data == null) return;
+        for (var e of data) {
+          $(".follow").append(travlerHtml(e));
+        }
+   } else if(type == "follower"){
+        $(".follower").empty();
+        if (data == null) return;
+        for (var e of data) {
+          $(".follower").append(travlerHtml(e));
+        }
     }
-  }
+
 
   //게시글 갯수에 따른 스크롤 활성화
   idx = $(".userProfile_tab > ul > li.on").index();

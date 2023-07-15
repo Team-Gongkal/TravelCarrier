@@ -12,23 +12,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import tc.travelCarrier.auth.PrincipalDetails;
-import tc.travelCarrier.domain.Follower;
-import tc.travelCarrier.domain.Gowith;
-import tc.travelCarrier.domain.User;
-import tc.travelCarrier.domain.Weekly;
+import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.MyPageDTO;
 import tc.travelCarrier.dto.SearchDTO;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
+import tc.travelCarrier.repository.WeeklySearchRepository;
 import tc.travelCarrier.service.SearchService;
 
 @Controller
@@ -38,6 +31,7 @@ public class MemberContoller {
 
     private final MemberRepository memberRepository;
     private final WeeklyRepository weeklyRepository;
+    private final WeeklySearchRepository weeklySearchRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final SearchService searchService;
 
@@ -74,7 +68,7 @@ public class MemberContoller {
 
     // 마이페이지
     @GetMapping("/member/mypage")
-    public String myPage(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails){
+    public String myPage(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails, Pageable pageable){
 /*      본인 프로필(이메일, 프로필사진, 이름, 배경사진) : profile
         내 다이어리(썸네일, 제목, 기간, 링크) : diaryList
         태그된 다이어리 (썸네일, 제목, 기간, 글작성자, 링크) : tagDiaryList
@@ -98,34 +92,18 @@ public class MemberContoller {
         // 태그된 친구 목록: diary.gowiths (참고로 이건 List형태로 들어있으므로 반복문 필요 : 각 요소를 gowith으로)
         // => gowith.user (프사는 gowith.user.attachUser.thumbPath, 이름은 gowith.user,name)
 
-        model.addAttribute("followers",user.getFollowers());
+        model.addAttribute("followers",memberRepository.getFollowerPaging(user,pageable));
+        model.addAttribute("followings",memberRepository.getFollowingPaging(user,pageable));
         // 반복문 필요 : 각 요소를 follower로
         // 친구이름 : follower.follower.name, 친구프사 :  follower.follower.attachUser.thumbPath,
         // 친구배사 :  follower.follower.attachUserBackground.thumbPath, 친구 프로필 링크 : "TravelCarrier/member/"+follower.follower.email,
 
         // 백그라운드 없으면 오류 날 수 있음 - 타임리프로 null체크해서 해결
-/*
-        System.out.println("profile "+activeUser.getEmail()+", "+activeUser.getAttachUser().getThumbPath()+", "+activeUser.getName()
-        +", "+activeUser.getAttachUserBackground().getThumbPath());
-        for(Weekly w : activeUser.getWeeklys()){
-            System.out.println(w.getTitle()+", "+w.getTravelDate().getSDate()+", "+w.getTravelDate().getEDate()+", "
-            +", TravelCarrier/weekly/"+w.getId());
-        }
-        for(Weekly w : weeklyRepository.getTagWeeklys(activeUser)){
-            System.out.println(w.getTitle()+", "+w.getTravelDate().getSDate()+", "+w.getTravelDate().getEDate()+", "
-                    +", TravelCarrier/weekly/"+w.getId());
-        }
-        for(Follower follower : activeUser.getFollowers()){
-            System.out.println( follower.getFollower().getName()+", "+follower.getFollower().getAttachUser().getThumbPath()+", "+
-                    // follower.getFollower().getAttachUserBackground().getThumbPath()+
-                    ", TravelCarrier/member/"+follower.getFollower().getEmail());
-        }
-*/
 
         return "/test/mypage";
     }
 
-    // 마이페이지
+    // 테스트페이지
     @GetMapping("/member/mypage/edit")
     public String editProfile(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails){
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
@@ -154,8 +132,15 @@ public class MemberContoller {
             return transferWeeklyDTO(user, weeklyPage);
         }
         else if(type.equals("tra")){
-            Page<Follower> followerPage = searchService.findMyFollower(user, pageable);
-            return transferFollowerDTO(followerPage);
+            if(searchDTO.getDetailType().equals("following")) {
+                Page<Follower> followingPage = memberRepository.getFollowingPaging(user, pageable);
+                return transferFollowerDTO("following", followingPage);
+            }
+            else if(searchDTO.getDetailType().equals("follower")) {
+                Page<Follower> followerPage = memberRepository.getFollowerPaging(user,pageable);
+                return transferFollowerDTO("follower", followerPage);
+            }
+
         }
         return null;
     }
@@ -183,23 +168,24 @@ public class MemberContoller {
 
         return result;
     }
-    private List<MyPageDTO> transferFollowerDTO(Page<Follower> followerPage) {
+    private List<MyPageDTO> transferFollowerDTO(String type, Page<Follower> fPage) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
-        for(Follower f : followerPage){
-/*            result.add(MyPageDTO.followerBuilder()
-                    .id(f.getFollower().getId())
-                    .name(f.getFollower().getName())
-                    .thumbPath(f.getFollower().getAttachUser().getThumbPath())
-                    .backgroundThumbPath(f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath())
-                    .fDate(f.getFDate())
-                    .build());*/
-            result.add(generateFollowerDTO(f.getFollower().getName(),f.getFollower().getId(),f.getFollower().getAttachUser().getThumbPath(),
-                    f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath(),
-                    f.getFDate()));
-            //System.out.println(f.getFollower().getName()+", "+dto.toString());
+        if(type.equals("following")) {
+            for (Follower f : fPage) {
+                result.add(generateFollowerDTO(f.getFollower().getName(), f.getFollower().getId(), f.getFollower().getAttachUser().getThumbPath(),
+                        f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath(),
+                        f.getFDate()));
+                //System.out.println(f.getFollower().getName()+", "+dto.toString());
+            }
+        } else if(type.equals("follower")) {
+            for (Follower f : fPage) {
+                result.add(generateFollowerDTO(f.getUser().getName(), f.getUser().getId(), f.getUser().getAttachUser().getThumbPath(),
+                        f.getUser().getAttachUserBackground() == null ? null : f.getUser().getAttachUserBackground().getThumbPath(),
+                        f.getFDate()));
+                //System.out.println(f.getFollower().getName()+", "+dto.toString());
+            }
         }
-
         return result;
     }
 
@@ -218,7 +204,7 @@ public class MemberContoller {
         else if(type.equals("tag")) weeklyPage = searchService.findTaggedWeekliesByKeywordAndUser(searchDTO.getKeyword(), user, pageable);
         else if(type.equals("tra")) {
             Page<Follower> follwerPage= searchService.findFollowerByNameAndEmail(searchDTO.getKeyword(), user, pageable);
-            return transferFollowerDTO(follwerPage);
+            return transferFollowerDTO("following",follwerPage);
         }
 
         //그대로 리턴하면 순환참조 오류 발생하므로 dto로 바꿔서 보내준다
@@ -268,6 +254,62 @@ public class MemberContoller {
             result.add(dto);
         }
         return result;
+    }
+
+    // 마이페이지
+    @GetMapping("/member/{email}")
+    public String myPage(@PathVariable String email, Model model,
+                         @AuthenticationPrincipal PrincipalDetails principalDetails,
+                         Pageable pageable){
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        User traveler = memberRepository.findUserByEmail(email);
+
+        //만약 본인이라면
+        if(user.getId() == traveler.getId()) return "redirect:/TravelCarrier/member/mypage";
+
+        model.addAttribute("user",user);
+        // 헤더에 들어가는거임!!
+        model.addAttribute("profile",traveler);
+        // 이메일 : profile.email, 프사 : profile.attachUser.thumbPath, 이름 : profile.name, 배경사진 : profile.attachUserBackground.thumbPath
+
+
+        // 팔로워인지 확인
+        boolean follow = false;
+        for(Follower f : user.getFollowers()){
+            if(f.getFollower().getId() == traveler.getId()) follow = true;
+        }
+        model.addAttribute("follow", follow);
+        if(follow) model.addAttribute("diaryList",weeklySearchRepository.findFollowWeekliesByTraveler(traveler, OpenStatus.ME,pageable));
+        else model.addAttribute("diaryList",weeklySearchRepository.findNotFollowWeekliesByTraveler(traveler,OpenStatus.ALL,pageable));
+
+        List<Weekly> tagDiaryList = new ArrayList<>();
+        for(Weekly w : weeklyRepository.getTagWeeklys(traveler)){
+            // ME : 글쓴이 본인이거나 태그된사람이면 띄우기
+            if(w.getStatus() == OpenStatus.ME){
+                if(w.getUser().getId() == user.getId()) tagDiaryList.add(w);
+                else {
+                    for(Gowith g : w.getGowiths()){
+                        if(g.getUser().getId() == user.getId()) tagDiaryList.add(w);
+                        break;
+                    }
+                }
+            }
+            // FOLLOWER : 나도 글쓴이의 팔로워라면 띄우기
+            if(w.getStatus() == OpenStatus.FOLLOW){
+                for(Follower f : w.getUser().getFollowers()){
+                    if(f.getUser().getId() == user.getId()) tagDiaryList.add(w);
+                    break;
+                }
+            }
+            // ALL : 무조건 띄우기
+            if(w.getStatus() == OpenStatus.ALL) tagDiaryList.add(w);
+        }
+        model.addAttribute("tagDiaryList", tagDiaryList);
+
+        model.addAttribute("followers",traveler.getFollowers());
+
+
+        return "/test/traveler";
     }
 
 }

@@ -25,6 +25,7 @@ import java.util.Date;
 public class SearchService {
     private final WeeklySearchRepository weeklySearchRepository;
     private final EntityManager em;
+    private final MemberRepository memberRepository;
 
     public Page<Weekly> findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser (String keyword, User user, Pageable pageable){
         return weeklySearchRepository.findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(keyword, user, pageable);
@@ -41,9 +42,6 @@ public class SearchService {
         return weeklySearchRepository.findTaggedWeekliesByKeywordAndUser(keyword, user, pageable);
     }
 
-    public Page<Follower> findMyFollower(User user, Pageable pageable) {
-        return weeklySearchRepository.findMyFollower(user, pageable);
-    }
 
     public Page<Follower> findFollowerByNameAndEmail(String keyword, User user, Pageable pageable) {
         return weeklySearchRepository.findFollowerByNameAndEmail(keyword, user, pageable);
