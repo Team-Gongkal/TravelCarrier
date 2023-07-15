@@ -152,7 +152,7 @@ button {
   transition: 0.2s;
 }
 button.btn {
-  width: 11vw;
+  width: 11rem;
   padding: 0.85rem;
   font-weight: 300;
   color: #f7f7f7;
@@ -162,6 +162,10 @@ button.btn {
   cursor: pointer;
   font-family: "NanumSquareNeo";
   letter-spacing: 0.05rem;
+  transition: 0.2s;
+}
+button.btn:hover {
+  background: #525d76;
 }
 button.white_btn {
   padding: 0.85rem;
@@ -225,7 +229,27 @@ form h3 {
 .modal_title button.close:hover {
   color: #353a52;
 }
-
+/* 아이콘 배경 어둡게 설정(프로필 편집 & 데일리 이미지삭제) */
+.icon_bg::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.icon_bg_dark::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
 /* daypicker-css 수정 */
 #ui-datepicker-div {
   padding: 0;

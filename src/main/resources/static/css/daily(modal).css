@@ -163,7 +163,6 @@ ul.Dform_imglist {
   display: grid;
   gap: 1rem 1rem;
   grid-template-columns: 1fr 1fr 1fr;
-
   padding: 0 3.5%;
   box-sizing: border-box;
 }
@@ -177,59 +176,58 @@ div.Dform_container::-webkit-scrollbar-thumb {
 }
 ul.Dform_imglist li {
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
-  padding-bottom: 100%;
   box-sizing: border-box;
   display: block;
   flex-wrap: wrap;
   cursor: pointer;
   border-radius: 0.25rem;
+  border: 1.5px solid #ffffff00;
+}
+ul.Dform_imglist li:hover {
+  border: 1.5px solid #f7f7f7;
+}
+
+ul.Dform_imglist li:last-child:hover {
+  border: none;
+}
+
+ul.Dform_imglist li.clickImg.icon_bg:hover {
+  border: none;
 }
 ul.Dform_imglist li img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  border: 1.5px solid #ffffff00;
   box-sizing: border-box;
   -webkit-user-drag: none; /*잔상방지(삭제)*/
 }
 /*  선택이미지 */
 ul.Dform_imglist li.clickImg img {
-  border: 1.5px solid #f7f7f7;
   box-sizing: border-box;
   display: block;
 }
+ul.Dform_imglist .clickImg.icon_bg::after {
+  border: 1.5px solid #f7f7f7;
+  background: no-repeat center / 20% url(../image/daily/icon/trash-can-wh.svg);
 
-ul.Dform_imglist li.clickImg:before {
-  /* content: url(../image/daily/icon/trashcan-b.png); */
-  content: "";
-  background: url(../image/daily/icon/trashcan-b.png);
-  background-position: 50%, 50%;
-  background-repeat: no-repeat;
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 1;
-  transition: 0.2s;
 }
-ul.Dform_imglist li.clickImg:hover:before {
-  background: url(../image/daily/icon/trashcan-red.png);
-  background-position: 50%, 50%;
-  background-repeat: no-repeat;
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
+ul.Dform_imglist li.clickImg:hover .icon_bg_dark::after {
+  background: rgba(0, 0, 0, 0.7);
+}
+ul.Dform_imglist li.clickImg:hover::after {
+  background: no-repeat center / 20% url(../image/daily/icon/trash-can-b.svg);
 }
 
 /* 대표이미지 */
-li#main::after {
+li#main::before {
   content: "대표";
   width: 32%;
   text-align: center;
@@ -285,8 +283,6 @@ ul.Dform_imglist label:after {
   height: 50%;
 }
 input[type="file"]#moreImg {
-  background: #fff;
-  border: 1px solid red;
   /* 파일 필드 숨기기 */
   position: absolute;
   width: 1px;

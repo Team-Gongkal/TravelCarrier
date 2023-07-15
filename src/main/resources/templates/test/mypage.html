@@ -21,7 +21,7 @@
           <div class="my_profile_img circle">
             <img
               th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-              src="/image/mypage/profile.jpg" alt="프로필 이미지" id="image">
+              src="/image/mypage/profile.jpg" alt="프로필 이미지">
           </div>
           <div class="my_profile_id">
             <span th:text="${profile.name}">yun_ah17</span>
@@ -77,7 +77,7 @@
       <div class="userProfile_content">
         <div class="userProfile_gallery">
           <ul class="userProfile_diary show">
-            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid = "${diary.id}">
+            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">
               <div class="uP_diary_thumbnail">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
                   <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일"
@@ -100,7 +100,7 @@
                 </div>
                 <div class="uP_diary_btn">
                   <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">수정하기</a>
-                  <button type="button" class="weeklyDelBtn" >
+                  <button type="button" class="weeklyDelBtn">
                     삭제하기
                   </button>
                 </div>
@@ -223,7 +223,7 @@
   <div class="edit_menu modal_bg">
     <div>
       <ul>
-        <li>프로필 수정</li>
+        <li id="edit_profile">프로필 수정</li>
         <li>계정정보</li>
         <li onclick="confirmLogout(event)" type="button">
           <!-- <form class="logout" method="get" action="/logout/action" id="logoutForm"> -->
@@ -235,14 +235,163 @@
       </ul>
     </div>
   </div>
-  <!-- <div id="GoToTop">
-    <button onclick="Top">GoToTop</button>
-  </div> -->
+  <div class="edit_modal modal_bg">
+    <div class="edit_modal_wrap">
+      <div class="edit_modal_nav">
+        <div class="my_profile">
+          <div class="my_profile_img circle">
+            <img
+              th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+              src="/image/mypage/profile.jpg" alt="프로필 이미지">
+          </div>
+          <div class="my_profile_id">
+            <span th:text="${profile.name}">yun_ah17</span>
+          </div>
+        </div>
+        <ul>
+          <li class="on"><span>프로필 편집</span></li>
+          <li><span>계정 설정</span></li>
+          <li><span>로그아웃</span></li>
+          <li><span>탈퇴</span></li>
+          <li><span>눈누난나</span></li>
+        </ul>
+      </div>
+      <div class="edit_modal_con">
+        <ul>
+          <li class="edit_profile">
+            <div class="edit_profile_ex">
+              <h3>미리보기
+                <p>하단의 저장버튼을 잊지말고 눌러주세요!</p>
+              </h3>
+              <!-- 배경이미지 -->
+              <div class="edit_profile_padding">
+                <div>
+                  <div class="userProfile_bg">
+                    <img
+                      th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+                      alt="유저프로필 배경이미지">
+                    <!-- 프로필사진 및 편집 -->
+                  </div>
+                  <div class="my_profile">
+                    <div class="my_profile_img circle">
+                      <img
+                        th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                        src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                    </div>
+                    <div class="my_profile_id">
+                      <span th:text="${profile.name}">yun_ah17</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="choose_profile">
+              <h3>프로필 이미지</h3>
+              <ul class="edit_profile_padding">
+                <li>
+                  <div class="on">
+                    <label for="profile_img_change" class="profile_img_ex select_img icon_bg circle">
+                      <span class="icon_bg_dark">
+                        <img
+                          th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                      </span>
+                    </label>
+                    <input type="file" id="profile_img_change" class="hide">
+                  </div>
+                  <span>이미지 선택</span>
+                </li>
+                <li class="default_profile">
+                  <div>
+                    <div class="profile_img_ex circle">
+                      <img src="/image/default/randomly_profile/randomly_profile4.jpg" alt="기본프로필이미지">
+                    </div>
+                  </div>
+                  <span>기본 프로필</span>
+                </li>
+                <li class="ramdomly_profile">
+                  <div>
+                    <div class="profile_img_ex circle">
+                      <img src="/image/default/randomly_profile/randomly_profile2.jpg" alt="랜덤프로필이미지">
+                    </div>
+                  </div>
+                  <span>랜덤 프로필</span>
+                </li>
+              </ul>
+            </div>
+            <div class="choose_bg">
+              <h3>프로필 배경</h3>
+              <ul class="edit_profile_padding">
+                <li class="on">
+                  <label for="profile_bg_change">
+                    <div>
+                      <div class="profile_bg_ex select_img icon_bg">
+                        <span class="icon_bg_dark">
+                          <img
+                            th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+                            alt="유저프로필 배경이미지">
+                        </span>
+                      </div>
+                      <input type="file" id="profile_bg_change" class="hide">
+                    </div>
+                    <span>이미지 선택</span>
+                  </label>
+                </li>
+                <li class="default_profile">
+                  <div>
+                    <div class="profile_bg_ex">
+                      <img src="/image/default/default_bg0.jpg" alt="기본프로필이미지">
+                    </div>
+                  </div>
+                  <span>기본 배경</span>
+                </li>
+                <li class="ramdomly_profile">
+                  <div>
+                    <div class="profile_bg_ex">
+                      <img src="/image/default/randomly_bg/randomly_bg1.jpg" alt="랜덤프로필이미지">
+                    </div>
+                  </div>
+                  <span>랜덤 배경</span>
+                </li>
+              </ul>
+            </div>
+            <div class="edit_profile_saveBtn">
+              <button type="button" class="btn ">저장하기</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <button class="clos">
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <div class="crop_img_modal">
+    <div class="crop_img_wrap">
+      <h2>배경 이미지 편집</h2>
+      <div>
+        <div class="crop_img">
+          <img id="cropImg" src="/image/mypage/profile.jpg" alt="편집할 이미지">
+        </div>
+        <div class="filePath">
+          <p>/파일명.jpg</p>
+          <input type="file" id="fileChange">
+          <label for="fileChange">
+            <img src="/image/daily/icon/changeImg.svg" alt="이미지변경아이콘">
+          </label>
+        </div>
+      </div>
+      <div class="edit_img_saveBtn">
+        <button type="button" class="btn ">저장하기</button>
+      </div>
+    </div>
+  </div>
   <script src="/script/mypage.js"></script>
   <script>
-    var image = document.getElementById('image');
+    var image = document.getElementById('cropImg');
     var cropper = new Cropper(image, {
-      aspectRatio: 16 / 9, // 자르기 비율 설정
+      aspectRatio: 4 / 1, // 자르기 비율 설정
       crop: function (event) {
         // 자르기 영역이 변경될 때마다 실행되는 콜백 함수
         console.log(event.detail.x);
@@ -252,7 +401,10 @@
         console.log(event.detail.rotate);
         console.log(event.detail.scaleX);
         console.log(event.detail.scaleY);
-      }
+      },
+      zoomOnWheel: true,
+      viewMode: 1,
+      dragMode: 'move'
     });
   </script>
 
