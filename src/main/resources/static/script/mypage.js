@@ -482,11 +482,11 @@ function hideOrShowWeekly(weeklyId,type) {
         data :  JSON.stringify({ "type": type }),
         contentType: "application/json",
         success: function (data) {
-            alert("성공!!");
+            alert("숨김처리 되었습니다.");
             $("li[data-wid='" + weeklyId + "']").remove();
         },
         error: function (error) {
-            alert("실패!!"+error);
+            alert("숨김처리에 실패하였습니다."+error);
         }
     });
 }
