@@ -352,6 +352,7 @@ function updateResult(type, data) {
 
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
 function diaryHtml(data) {
+console.log(data);
   var html = `
     <li data-wid="${data.id}" >
       <div class="uP_diary_thumbnail">
@@ -409,9 +410,12 @@ function taggedHtml(data) {
           <span class="uP_diary_period">${data.date.sdate} - ${data.date.edate}</span>
         </div>
         <div class="uP_diary_btn">
-          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
-          <button type="button" class="weeklyHideBtn">숨기기</button>
-        </div>
+          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>`;
+
+  if(data.hide == true) html += `<button type="button" >보이기</button>`;
+  else if(data.hide == false) html += `<button type="button" class="weeklyHideBtn">숨기기</button>`;
+
+  html += `</div>
       </div>
     </li>`;
 
