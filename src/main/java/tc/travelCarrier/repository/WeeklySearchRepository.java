@@ -19,7 +19,7 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
 
     Page<Weekly> findByUserOrderByIdDesc(User user, Pageable pageable);
 
-    @Query("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = ?1 ORDER BY w.id DESC")
+    @Query("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = ?1 AND g.hide = false ORDER BY w.id DESC")
     Page<Weekly> findTaggedWeekliesByUser(User user, Pageable pageable);
 
     @Query("SELECT f FROM Follower f WHERE f.user = ?1")

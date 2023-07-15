@@ -25,7 +25,8 @@ public class Gowith {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-
+    @Column(name = "GOWITH_HIDE")
+    private Boolean hide;
 
 
 }

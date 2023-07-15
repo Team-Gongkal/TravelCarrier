@@ -92,6 +92,10 @@ public class MemberContoller {
         // => gowith.user (프사는 gowith.user.attachUser.thumbPath, 이름은 gowith.user,name)
 
         model.addAttribute("tagDiaryList", weeklyRepository.getTagWeeklys(user));
+        System.out.println("잠깐만요:");
+        for(Weekly w : weeklyRepository.getTagWeeklys(user)){
+            System.out.println("위클리 "+w.getTitle());
+        }
         // (반복문 필요 : 각 요소를 diary로) 썸네일 : diary.attachWeekly.thumbPath,
         // 제목 : diary.title, 기간 : diary.travelDate.sDate ~ diary.travelDate.eDate, 링크 : "TravelCarrier/weekly/"+diary.id
         // 태그된 친구 목록: diary.gowiths (참고로 이건 List형태로 들어있으므로 반복문 필요 : 각 요소를 gowith으로)

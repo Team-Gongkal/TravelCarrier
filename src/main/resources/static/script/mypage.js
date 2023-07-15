@@ -368,7 +368,7 @@ function diaryHtml(data) {
 // 검색결과를 바탕으로 tagged탭의 html을 생성 - by.서현
 function taggedHtml(data) {
   var html = `
-    <li>
+    <li data-wid="${data.id}">
       <div class="uP_diary_thumbnail">
         <a href='/TravelCarrier/weekly/${data.id}'>
           <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
@@ -391,7 +391,7 @@ function taggedHtml(data) {
         </div>
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
-          <button type="button">숨기기</button>
+          <button type="button" class="weeklyHideBtn">숨기기</button>
         </div>
       </div>
     </li>`;
@@ -462,6 +462,31 @@ function deleteWeekly(weeklyId) {
         },
         error: function (error) {
             alert("삭제 실패"+error);
+        }
+    });
+}
+
+
+// 태그된 위클리 숨기기 이벤트 - by.서현
+$(document).on("click", ".weeklyHideBtn", function() {
+  var title = $(this).closest("li").find(".uP_diary_tit").text();
+  var wid = $(this).closest("li").data("wid");
+  if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?")) hideOrShowWeekly(wid,"hide");
+});
+
+// 태그된 위클리에 대해 숨김또는 보이기 하는 ajax (숨김:"hide" 보이기:"seek")
+function hideOrShowWeekly(weeklyId,type) {
+    $.ajax({
+        url: "/TravelCarrier/weekly/"+weeklyId,
+        type: "PUT",
+        data :  JSON.stringify({ "type": type }),
+        contentType: "application/json",
+        success: function (data) {
+            alert("성공!!");
+            $("li[data-wid='" + weeklyId + "']").remove();
+        },
+        error: function (error) {
+            alert("실패!!"+error);
         }
     });
 }

@@ -22,6 +22,7 @@ public class WeeklyService {
     private final AttachRepository attachRepository;
     private final AttachService attachService;
     private final MemberRepository memberRepository;
+    private final GowithRepository gowithRepository;
     private final NotificationService notificationService;
     private final NationRepository nationRepository;
     /**
@@ -108,5 +109,13 @@ public class WeeklyService {
         }else{
             // 예외처리 필요함....
         }
+    }
+
+    // 위클리 숨김/보이기처리
+    public void hideOrShowWeekly(Weekly weekly, String type, User user) {
+        Gowith gowith = gowithRepository.findByWeeklyAndUser(weekly, user);
+        if(type.equals("hide")) gowith.setHide(true);
+        else if(type.equals("show")) gowith.setHide(false);
+        gowithRepository.save(gowith); // 객체 변경사항 저장
     }
 }

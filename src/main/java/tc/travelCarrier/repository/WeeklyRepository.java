@@ -108,7 +108,7 @@ public class WeeklyRepository{
 
     // 태그된 위클리 리스트를 조회
     public List<Weekly> getTagWeeklys(User user) {
-        return em.createQuery("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = : user",
+        return em.createQuery("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = : user AND g.hide = false GROUP BY w.id",
                         Weekly.class)
                 .setParameter("user", user)
                 .getResultList();
