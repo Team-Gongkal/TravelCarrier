@@ -358,13 +358,13 @@ function updateResult(type, data) {
         $(".follow").empty();
         if (data == null) return;
         for (var e of data) {
-          $(".follow").append(travlerHtml(e));
+          $(".follow").append(travlerHtml(e, "following"));
         }
    } else if(type == "follower"){
         $(".follower").empty();
         if (data == null) return;
         for (var e of data) {
-          $(".follower").append(travlerHtml(e));
+          $(".follower").append(travlerHtml(e, "follower"));
         }
     }
 
@@ -449,7 +449,7 @@ function taggedHtml(data) {
 }
 
 // 검색결과를 바탕으로 travler탭의 html을 생성 - by.서현
-function travlerHtml(data) {
+function travlerHtml(data, type) {
   var html = `<li>
                   <div class="uP_diary_thumbnail">
                     <a href="'TravelCarrier/member/' + ${data.id}">
@@ -475,11 +475,20 @@ function travlerHtml(data) {
                     <div class="uP_user_text">
                       <span class="uP_user_name">${data.name}</span>
                       <span class="uP_user_added">${data.fdate}</span>
-                    </div>
+                    </div>`;
+
+                  if(type == "following"){
+                    html += `
                     <div class="follower_del_btn">
-                      <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
-                    </div>
-                  </div>
+                       <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
+                     </div>`;
+                  }
+                  else if(type == "follower"){
+                    html += `<div class="follower_del_btn">
+                      <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구신청</button>
+                    </div>`;
+                  }
+          html += `</div>
                 </li>`;
 
   return html;
