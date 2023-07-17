@@ -1,5 +1,4 @@
 # TravelCarrier
----
 (트래블 캐리어 로고)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FcheshireHYUN%2FTravelCarrier&count_bg=%2381C5E0&title_bg=%23D0D0D0&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
@@ -11,22 +10,27 @@
 
  
 ## Information
---
 자세한 여행기록을 기록하고, 친구와 함께 편집하고, 사람들에게 공유하고싶어!
 이러한 기능을 제공하기 위해 TravelCarrier가 만들어졌습니다.
 
 
 ## Stacks
----
 ### Environment
 
 ### Dev
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+<img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
+
+
+
 
 ### Communication
 
 
 ## 화면 구성
---
 ### 로그인
 ### 메인
 ### 마이페이지
@@ -48,13 +52,6 @@
 
 
 ## 아키텍처
-├── usr
-│   ├── bin
-│   ├── src
-│   └── tmp -> ../var/tmp
-└── var
-    ├── adm
-
 ## 기타 추가사항
 
 
