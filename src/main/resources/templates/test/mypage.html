@@ -30,10 +30,6 @@
               <img src="/image/mypage/icon/setting_wh.png" alt="프로필 수정아이콘">
             </span>
           </div>
-          <div class="add_friend_btn">
-            <button onclick="add_friend()"><i class="fa-solid fa-plus fa"></i>
-              <span>following</span></button>
-          </div>
         </div>
         <!-- 탭메뉴 -->
         <div class="drop_menu">
@@ -59,7 +55,7 @@
                 <span>review<em id="review_num">(0)</em></span>
               </li>
               <li>
-                <span>travler<em id="travler_num" th:text=" '(' + ${#lists.size(followers)} + ')'"></em></span>
+                <span>traveler<em id="travler_num"></em></span>
               </li>
             </ul>
           </div>
@@ -67,8 +63,8 @@
             <img src="/image/mypage/icon/schedule_wh.png" alt="기간검색아이콘">
           </div>
           <div class="travlar_option">
-            <button type="button" id="follower" class="on">follower</button>
-            <button type="button" id="follow">follow</button>
+            <button type="button" id="follower" class="on" >follower</button>
+            <button type="button" id="follow" >following</button>
           </div>
         </div>
       </div>
@@ -142,37 +138,11 @@
             <p>페이지준비중입니다</p>
           </ul>
           <div class="userProfile_travler">
-            <ul class="follower">
-              <li th:if="${followers != null}" th:each="follower : ${followers}">
-                <div class="uP_diary_thumbnail">
-                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                    <img th:if="${follower.follower.attachUserBackground != null}"
-                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
-                      alt="썸네일" class="moving_bg">
-                  </a>
-                </div>
-                <div class="uP_user_box">
-                  <div class="uP_user_profileImg">
-                    <div class="my_profile_img circle">
-                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                        <img
-                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
-                      </a>
-                    </div>
-                  </div>
+            <ul class="follower show">
 
-                  <div class="uP_user_text">
-                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>
-                    <span class="uP_user_added">22.10.19</span>
-                  </div>
-                  <div class="follower_del_btn">
-                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
-                  </div>
-                </div>
-              </li>
             </ul>
-            <ul class="follow"></ul>
+            <ul class="follow">
+            </ul>
           </div>
           <button id="more_btn">more</button>
         </div>

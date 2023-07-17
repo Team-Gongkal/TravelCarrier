@@ -1,6 +1,8 @@
 package tc.travelCarrier.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +20,8 @@ public interface MemberRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u.followers FROM User u WHERE u = :user")
     public List<Follower> findFollowersByUser(@Param("user") User user);
+    @Query("SELECT f FROM Follower f WHERE f.user = ?1")
+    Page<Follower> getFollowingPaging (User user, Pageable pageable);
+    @Query("SELECT f FROM Follower f WHERE f.follower = ?1")
+    Page<Follower> getFollowerPaging(User user, Pageable pageable);
 }

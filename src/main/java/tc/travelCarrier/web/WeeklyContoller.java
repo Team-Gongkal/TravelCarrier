@@ -166,10 +166,24 @@ public class WeeklyContoller {
     }
 
     @DeleteMapping("/weekly/{weeklyId}")
-    public ResponseEntity<Void> deleteWeekly(@PathVariable("weeklyId") int weeklyId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<Void> deleteWeekly(@PathVariable("weeklyId") int weeklyId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         try {
             Weekly weekly = weeklyService.findWeekly(weeklyId);
             weeklyService.deleteWeekly(weekly,principalDetails.getUser());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); //500에러
+        }
+    }
+
+    @PutMapping("/weekly/{weeklyId}")
+    public ResponseEntity<Void> hideOrShowWeekly(@PathVariable("weeklyId") int weeklyId,
+                                                 @RequestBody Map<String,String> request,
+                                                 @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        try {
+            Weekly weekly = weeklyService.findWeekly(weeklyId);
+            User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+            weeklyService.hideOrShowWeekly(weekly, request.get("type"), user);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); //500에러

@@ -23,14 +23,17 @@ public class MyPageDTO {
     private String backgroundThumbPath;
     private String fDate;
 
+    private boolean hide;
+
     public MyPageDTO(){}
     @Builder(builderMethodName = "weeklyBuilder")
-    public MyPageDTO(int  id, String title, TravelDate date, String thumbPath, List<String> goWithList) {
+    public MyPageDTO(int  id, String title, TravelDate date, String thumbPath, List<String> goWithList, boolean hide) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.thumbPath = thumbPath;
         this.goWithList = goWithList;
+        this.hide = hide;
     }
 
     // 이거 name 왜안되는지 납득이 안됨
@@ -42,6 +45,7 @@ public class MyPageDTO {
         this.backgroundThumbPath = backgroundThumbPath;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         this.fDate = dateFormat.format(fDate);
+
     }
 
     public static MyPageDTO generateFollowerDTO(String name, int id, String thumbPath, String bgPath, Date fDate){
