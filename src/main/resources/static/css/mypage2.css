@@ -436,7 +436,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 }
 
 .userProfile_gallery > ul > li,
-div.userProfile_travler > ul > li {
+div.userProfile_traveler > ul > li {
   width: 100%;
   /* height: fit-content; 삭제 개수적을때 늘어지는지확인 */
   background: #f7f7f7;
@@ -447,7 +447,7 @@ div.userProfile_travler > ul > li {
 }
 
 .userProfile_gallery > ul > li > div > a,
-.userProfile_travler > ul > li > div > a {
+.userProfile_traveler > ul > li > div > a {
   display: block;
   width: 100%;
   height: 100%;
@@ -561,18 +561,21 @@ div.uP_diary_btn > button:hover {
   background: #525d76;
   color: #f7f7f7;
 }
-
-/* travler 친구목록================================ */
-div.userProfile_travler {
+/* 보이기 및 숨기기 버튼 */
+/* div.uP_diary_btn > button.weeklyHideBtn {
+  background: #353a52;
+} */
+/* traveler 친구목록================================ */
+div.userProfile_traveler {
   display: none;
 }
-div.userProfile_travler.show {
+div.userProfile_traveler.show {
   display: block;
   animation: show;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
-div.userProfile_travler > ul {
+div.userProfile_traveler > ul {
   display: none;
   grid-gap: 2rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -581,12 +584,10 @@ div.userProfile_travler > ul {
   padding-top: 3rem;
   padding-bottom: 3rem;
 }
-div.userProfile_travler > ul.show {
+div.userProfile_traveler > ul.show {
   display: grid;
 }
-div.userProfile_travler li {
-}
-div.userProfile_travler li .uP_diary_thumbnail {
+div.userProfile_traveler li .uP_diary_thumbnail {
   height: 7rem;
 }
 li .uP_user_box {
@@ -726,11 +727,11 @@ li .uP_user_text span.uP_user_added {
   transform: translateX(-50%);
   margin-bottom: 3rem;
 }
-/* 프로필 편집 및 계쩡 정보설정 모달창========= */
+/* 프로필 편집 및 계정 정보설정 모달창========= */
 .edit_modal {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.8);
@@ -847,6 +848,7 @@ li .uP_user_text span.uP_user_added {
   display: block;
   width: 1rem;
 }
+/* 프로필 이미지 변경 모달창 ======================================================== */
 .edit_profile {
   width: 100%;
 }
@@ -857,7 +859,24 @@ li .uP_user_text span.uP_user_added {
   padding: 1rem 0;
   box-sizing: border-box;
   margin-bottom: 0.5rem;
+  display: flex;
 }
+.edit_profile p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  opacity: 0.7;
+  padding: 0.2rem 0.5rem;
+}
+.edit_profile p::after {
+  content: "";
+  width: 100%;
+  height: 0.5em;
+  display: block;
+  transform: translateY(-100%);
+  text-align: center;
+  background: rgb(160, 193, 202, 0.3);
+}
+
 .edit_profile_padding {
   padding: 2rem;
   box-sizing: border-box;
@@ -878,24 +897,6 @@ div.edit_profile_padding > div {
   overflow: hidden;
   padding: 2rem;
   box-sizing: border-box;
-}
-.edit_profile h3 {
-  display: flex;
-}
-.edit_profile p {
-  font-size: 0.8rem;
-  font-weight: 300;
-  opacity: 0.7;
-  padding: 0.2rem 0.5rem;
-}
-.edit_profile p::after {
-  content: "";
-  width: 100%;
-  height: 0.5em;
-  display: block;
-  transform: translateY(-100%);
-  text-align: center;
-  background: rgb(160, 193, 202, 0.3);
 }
 
 .edit_profile_ex .userProfile_bg {
@@ -918,17 +919,17 @@ div.edit_profile_padding > div {
   justify-content: space-between;
   padding: 2rem 8rem;
 }
-.choose_profile ul li > span,
-.choose_bg ul li > span,
+.choose_profile ul li label > span,
+.choose_bg ul li label > span,
 .choose_bg ul > li > label > span {
   width: fit-content;
   display: block;
   margin: auto;
   padding: 1rem 0;
   font-weight: 200;
-  opacity: 0.8;
+  cursor: pointer;
 }
-.choose_profile ul li > div {
+.choose_profile ul li label > div {
   width: 12rem;
   aspect-ratio: 1 / 1;
   box-shadow: inset 0 0 0 0.3rem #353a5229;
@@ -938,12 +939,12 @@ div.edit_profile_padding > div {
   align-items: center;
   cursor: pointer;
 }
-.choose_profile ul li > div.on,
+.choose_profile ul li label > div.on,
 .choose_bg ul li.on {
   box-shadow: inset 0 0 0 0.3rem #a0c1ca;
   position: relative;
 }
-.choose_profile ul li > div.on:after,
+.choose_profile ul li label > div.on:after,
 .choose_bg ul li.on:after {
   content: "";
   background: center / cover no-repeat url(../image/mypage/icon/check.svg);

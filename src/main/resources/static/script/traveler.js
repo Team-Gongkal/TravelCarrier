@@ -25,7 +25,7 @@ $(".clos").on("click", function () {
 });
 
 //팔로우/팔로워 탭 - by 윤아
-var following_content = $(".userProfile_travler > ul");
+var following_content = $(".userProfile_traveler > ul");
 $("#follower").on("click", function () {
   following_content.removeClass("show");
   following_content.filter(".follower").addClass("show");
@@ -289,7 +289,7 @@ $(document).ready(function () {
 
 // 각 탭을 클릭하면 해당 탭의 1페이지를 로드한다 - by.서현
 $(".userProfile_tab li").on("click", function (e) {
-    return;
+  return;
   var type = $(this).find("span").text().substring(0, 3);
   if (type == "tra")
     $("#search").attr("placeholder", "검색하기 (이름, 이메일)");
@@ -337,10 +337,10 @@ function updateResult(type, data) {
       $(".userProfile_tagged").append(taggedHtml(e));
     }
   } else if (type == "tra") {
-    $(".travler_follower").empty();
+    $(".traveler_follower").empty();
     if (data == null) return;
     for (var e of data) {
-      $(".travler_follower").append(travlerHtml(e));
+      $(".traveler_follower").append(travelerHtml(e));
     }
   }
 
@@ -353,7 +353,7 @@ function updateResult(type, data) {
 
 // 검색결과를 바탕으로 diary탭의 html을 생성 - by.서현
 function diaryHtml(data) {
-console.log(data);
+  console.log(data);
   var html = `
     <li data-wid="${data.id}" >
       <div class="uP_diary_thumbnail">
@@ -413,8 +413,9 @@ function taggedHtml(data) {
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>`;
 
-  if(data.hide == true) html += `<button type="button" >보이기</button>`;
-  else if(data.hide == false) html += `<button type="button" class="weeklyHideBtn">숨기기</button>`;
+  if (data.hide == true) html += `<button type="button" >보이기</button>`;
+  else if (data.hide == false)
+    html += `<button type="button" class="weeklyHideBtn">숨기기</button>`;
 
   html += `</div>
       </div>
@@ -423,8 +424,8 @@ function taggedHtml(data) {
   return html;
 }
 
-// 검색결과를 바탕으로 travler탭의 html을 생성 - by.서현
-function travlerHtml(data) {
+// 검색결과를 바탕으로 traveler탭의 html을 생성 - by.서현
+function travelerHtml(data) {
   var html = `<li>
                   <div class="uP_diary_thumbnail">
                     <a href="'TravelCarrier/member/' + ${data.id}">
@@ -490,113 +491,112 @@ function deleteWeekly(weeklyId) {
   });
 }
 
-
 // 태그된 위클리 숨기기 이벤트 - by.서현
-$(document).on("click", ".weeklyHideBtn", function() {
+$(document).on("click", ".weeklyHideBtn", function () {
   var title = $(this).closest("li").find(".uP_diary_tit").text();
   var wid = $(this).closest("li").data("wid");
-  if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?")) hideOrShowWeekly(wid,"hide");
+  if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?"))
+    hideOrShowWeekly(wid, "hide");
 });
 
 // 태그된 위클리에 대해 숨김또는 보이기 하는 ajax (숨김:"hide" 보이기:"seek")
-function hideOrShowWeekly(weeklyId,type) {
-    $.ajax({
-        url: "/TravelCarrier/weekly/"+weeklyId,
-        type: "PUT",
-        data :  JSON.stringify({ "type": type }),
-        contentType: "application/json",
-        success: function (data) {
-            alert("숨김처리 되었습니다.");
-            $("li[data-wid='" + weeklyId + "']").remove();
-        },
-        error: function (error) {
-            alert("숨김처리에 실패하였습니다."+error);
-        }
-    });
+function hideOrShowWeekly(weeklyId, type) {
+  $.ajax({
+    url: "/TravelCarrier/weekly/" + weeklyId,
+    type: "PUT",
+    data: JSON.stringify({ type: type }),
+    contentType: "application/json",
+    success: function (data) {
+      alert("숨김처리 되었습니다.");
+      $("li[data-wid='" + weeklyId + "']").remove();
+    },
+    error: function (error) {
+      alert("숨김처리에 실패하였습니다." + error);
+    },
+  });
 }
 
 // 기간 선택 이벤트
-  $(".inquire_period li").on("click", function() {
-    // 기존에 on 클래스가 붙어있는 li 요소의 on 클래스를 제거
-    $(".inquire_period li.on").removeClass("on");
-    $(this).addClass("on");
+$(".inquire_period li").on("click", function () {
+  // 기존에 on 클래스가 붙어있는 li 요소의 on 클래스를 제거
+  $(".inquire_period li.on").removeClass("on");
+  $(this).addClass("on");
 
-    $("#edate").val("");
-    $("#sdate").val("");
-  });
+  $("#edate").val("");
+  $("#sdate").val("");
+});
 
 // 기간입력시 <기간없음> 자동선택
 $("#edate, #sdate").datepicker({
-    onSelect: function(dateText, inst) {
-        $(".inquire_period li.on").removeClass("on");
-        $('.inquire_period li:first').addClass("on")
-    }
+  onSelect: function (dateText, inst) {
+    $(".inquire_period li.on").removeClass("on");
+    $(".inquire_period li:first").addClass("on");
+  },
 });
 // 기간 검색 이벤트
-$(document).on("click","#search_period", function(){
-    if (!dateValidate()) return;
-    // type, sdate, edate
-    var sdate;
-    var edate;
-    if($('.inquire_period li:first').hasClass("on")) {
-        sdate = $('#sdate').val();
-        edate = $('#edate').val();
-    } else{
-        var dateArr = getDate($('.inquire_period li.on').text());
-        sdate = dateArr.sdate;
-        edate = dateArr.edate;
-    }
+$(document).on("click", "#search_period", function () {
+  if (!dateValidate()) return;
+  // type, sdate, edate
+  var sdate;
+  var edate;
+  if ($(".inquire_period li:first").hasClass("on")) {
+    sdate = $("#sdate").val();
+    edate = $("#edate").val();
+  } else {
+    var dateArr = getDate($(".inquire_period li.on").text());
+    sdate = dateArr.sdate;
+    edate = dateArr.edate;
+  }
 
-    var type = $(".userProfile_tab li.on span").text().substring(0, 3);
-    searchDate(type, sdate, edate);
+  var type = $(".userProfile_tab li.on span").text().substring(0, 3);
+  searchDate(type, sdate, edate);
 });
 
-function searchDate(type, sdate, edate){
-    $.ajax({
-        url: "/TravelCarrier/mypage/search/date",
-        type: "POST",
-        data :  JSON.stringify({ type:type, sdate: sdate, edate : edate }),
-        contentType: "application/json",
-        success: function (resp) {
-        console.log(resp);
-            $(".period_modal_bg").removeClass("show");
-            updateResult(type, resp);
-        },
-        error: function (error) {
-            alert("실패"+error);
-        }
-    });
+function searchDate(type, sdate, edate) {
+  $.ajax({
+    url: "/TravelCarrier/mypage/search/date",
+    type: "POST",
+    data: JSON.stringify({ type: type, sdate: sdate, edate: edate }),
+    contentType: "application/json",
+    success: function (resp) {
+      console.log(resp);
+      $(".period_modal_bg").removeClass("show");
+      updateResult(type, resp);
+    },
+    error: function (error) {
+      alert("실패" + error);
+    },
+  });
 }
 
-
-function dateValidate(){
-    // 기간선택 검사
-    if($('.inquire_period li:first-child').hasClass("on")) {
-        if($('#sdate').val()=="" || $('#edate').val() =="") {
-            alert("날짜가 선택되지 않았습니다");
-            return false;
-        }
-    } else{
-        if($('.inquire_period li.on').length == 0) return false;
+function dateValidate() {
+  // 기간선택 검사
+  if ($(".inquire_period li:first-child").hasClass("on")) {
+    if ($("#sdate").val() == "" || $("#edate").val() == "") {
+      alert("날짜가 선택되지 않았습니다");
+      return false;
     }
+  } else {
+    if ($(".inquire_period li.on").length == 0) return false;
+  }
 
-    return true;
+  return true;
 }
 
-function getDate(btn){
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-    var day = ('0' + date.getDate()).slice(-2);
-    var edate = `${year}-${month}-${day}`;
+function getDate(btn) {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  var edate = `${year}-${month}-${day}`;
 
-    if(btn == "1주일") day = ('0' + (date.getDate()-7)).slice(-2);
-    else if(btn == "1개월") month = ('0' + (date.getMonth()+1 - 1)).slice(-2);
-    else if(btn == "3개월") month = ('0' + (date.getMonth()+1 -3)).slice(-2);
-    else if(btn == "6개월") month = ('0' + (date.getMonth()+1 - 6)).slice(-2);
-    else if(btn == "지난 1년") year = date.getFullYear()-1;
+  if (btn == "1주일") day = ("0" + (date.getDate() - 7)).slice(-2);
+  else if (btn == "1개월") month = ("0" + (date.getMonth() + 1 - 1)).slice(-2);
+  else if (btn == "3개월") month = ("0" + (date.getMonth() + 1 - 3)).slice(-2);
+  else if (btn == "6개월") month = ("0" + (date.getMonth() + 1 - 6)).slice(-2);
+  else if (btn == "지난 1년") year = date.getFullYear() - 1;
 
-    var sdate = `${year}-${month}-${day}`;
-    result = {"sdate" : sdate, "edate" : edate};
-    return  result;
+  var sdate = `${year}-${month}-${day}`;
+  result = { sdate: sdate, edate: edate };
+  return result;
 }

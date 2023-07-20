@@ -62,7 +62,7 @@
                 <span>review<em id="review_num">(0)</em></span>
               </li>
               <li>
-                <span>travler<em id="travler_num" th:text=" '(' + ${#lists.size(followers)} + ')'"></em></span>
+                <span>traveler<em id="traveler_num" th:text=" '(' + ${#lists.size(followers)} + ')'"></em></span>
               </li>
             </ul>
           </div>
@@ -133,7 +133,7 @@
           <ul class="userProfile_review">
             <p>페이지준비중입니다</p>
           </ul>
-          <div class="userProfile_travler">
+          <div class="userProfile_traveler">
             <ul class="follower">
               <li th:if="${followers != null}" th:each="follower : ${followers}">
                 <div class="uP_diary_thumbnail">
@@ -169,8 +169,8 @@
                 <div class="uP_diary_thumbnail">
                   <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
                     <img th:if="${follower.follower.attachUserBackground != null}"
-                         th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
-                         alt="썸네일" class="moving_bg">
+                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
+                      alt="썸네일" class="moving_bg">
                   </a>
                 </div>
                 <div class="uP_user_box">
@@ -178,8 +178,8 @@
                     <div class="my_profile_img circle">
                       <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
                         <img
-                                th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-                                src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
                       </a>
                     </div>
                   </div>
