@@ -26,7 +26,6 @@
           <div class="my_profile_id">
             <span th:text="${profile.name}">yun_ah17</span>
             <span id="edit_menu">
-              <!-- <img src="/image/mypage/icon/pencil.png" alt="프로필 수정아이콘"> -->
               <img src="/image/mypage/icon/setting_wh.png" alt="프로필 수정아이콘">
             </span>
           </div>
@@ -55,7 +54,7 @@
                 <span>review<em id="review_num">(0)</em></span>
               </li>
               <li>
-                <span>traveler<em id="travler_num"></em></span>
+                <span>traveler<em id="traveler_num"></em></span>
               </li>
             </ul>
           </div>
@@ -63,8 +62,8 @@
             <img src="/image/mypage/icon/schedule_wh.png" alt="기간검색아이콘">
           </div>
           <div class="travlar_option">
-            <button type="button" id="follower" class="on" >follower</button>
-            <button type="button" id="follow" >following</button>
+            <button type="button" id="follower" class="on">follower</button>
+            <button type="button" id="follow">following</button>
           </div>
         </div>
       </div>
@@ -137,7 +136,7 @@
           <ul class="userProfile_review">
             <p>페이지준비중입니다</p>
           </ul>
-          <div class="userProfile_travler">
+          <div class="userProfile_traveler">
             <ul class="follower show">
 
             </ul>
@@ -226,109 +225,132 @@
           <li><span>눈누난나</span></li>
         </ul>
       </div>
+      <!-- 환결설정 모달창========================================================= -->
       <div class="edit_modal_con">
         <ul>
+          <!-- 프로필 이미지 변경 -->
           <li class="edit_profile">
-            <div class="edit_profile_ex">
-              <h3>미리보기
-                <p>하단의 저장버튼을 잊지말고 눌러주세요!</p>
-              </h3>
-              <!-- 배경이미지 -->
-              <div class="edit_profile_padding">
-                <div>
-                  <div class="userProfile_bg">
-                    <img
-                      th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
-                      alt="유저프로필 배경이미지">
-                    <!-- 프로필사진 및 편집 -->
-                  </div>
-                  <div class="my_profile">
-                    <div class="my_profile_img circle">
+            <form action="index.html">
+              <div class="edit_profile_ex">
+                <h3>미리보기
+                  <p>하단의 저장버튼을 잊지말고 눌러주세요!</p>
+                </h3>
+                <!-- 배경이미지 -->
+                <div class="edit_profile_padding">
+                  <div>
+                    <div class="userProfile_bg">
                       <img
-                        th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-                        src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                        th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+                        alt="유저프로필 배경이미지">
+                      <!-- 프로필사진 및 편집 -->
                     </div>
-                    <div class="my_profile_id">
-                      <span th:text="${profile.name}">yun_ah17</span>
+                    <div class="my_profile">
+                      <div class="my_profile_img circle">
+                        <img
+                          th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                      </div>
+                      <div class="my_profile_id">
+                        <span th:text="${profile.name}">yun_ah17</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="choose_profile">
-              <h3>프로필 이미지</h3>
-              <ul class="edit_profile_padding">
-                <li>
-                  <div class="on">
-                    <label for="profile_img_change" class="profile_img_ex select_img icon_bg circle">
-                      <span class="icon_bg_dark">
-                        <img
-                          th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
-                      </span>
-                    </label>
-                    <input type="file" id="profile_img_change" class="hide">
-                  </div>
-                  <span>이미지 선택</span>
-                </li>
-                <li class="default_profile">
-                  <div>
-                    <div class="profile_img_ex circle">
-                      <img src="/image/default/randomly_profile/randomly_profile4.jpg" alt="기본프로필이미지">
-                    </div>
-                  </div>
-                  <span>기본 프로필</span>
-                </li>
-                <li class="ramdomly_profile">
-                  <div>
-                    <div class="profile_img_ex circle">
-                      <img src="/image/default/randomly_profile/randomly_profile2.jpg" alt="랜덤프로필이미지">
-                    </div>
-                  </div>
-                  <span>랜덤 프로필</span>
-                </li>
-              </ul>
-            </div>
-            <div class="choose_bg">
-              <h3>프로필 배경</h3>
-              <ul class="edit_profile_padding">
-                <li class="on">
-                  <label for="profile_bg_change">
-                    <div>
-                      <div class="profile_bg_ex select_img icon_bg">
-                        <span class="icon_bg_dark">
-                          <img
-                            th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
-                            alt="유저프로필 배경이미지">
-                        </span>
+              <div class="choose_profile">
+                <h3>프로필 이미지</h3>
+                <ul class="edit_profile_padding">
+                  <li class="upload_image">
+                    <input type="radio" name="choose_profile" id="upload_profile" value="upload_profile" class="hide">
+                    <label for="upload_profile">
+                      <div class="on">
+                        <input type="file" id="profile_img_change" class="hide">
+                        <div for="profile_img_change" class="profile_img_ex select_img icon_bg circle">
+                          <span class="icon_bg_dark">
+                            <img
+                              th:src="${profile.attachUser != null ? profile.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
+                              src="/image/mypage/profile.jpg" alt="프로필 이미지">
+                          </span>
+                        </div>
                       </div>
-                      <input type="file" id="profile_bg_change" class="hide">
-                    </div>
-                    <span>이미지 선택</span>
-                  </label>
-                </li>
-                <li class="default_profile">
-                  <div>
-                    <div class="profile_bg_ex">
-                      <img src="/image/default/default_bg0.jpg" alt="기본프로필이미지">
-                    </div>
-                  </div>
-                  <span>기본 배경</span>
-                </li>
-                <li class="ramdomly_profile">
-                  <div>
-                    <div class="profile_bg_ex">
-                      <img src="/image/default/randomly_bg/randomly_bg1.jpg" alt="랜덤프로필이미지">
-                    </div>
-                  </div>
-                  <span>랜덤 배경</span>
-                </li>
-              </ul>
-            </div>
-            <div class="edit_profile_saveBtn">
-              <button type="button" class="btn ">저장하기</button>
-            </div>
+                      <span>이미지 선택</span>
+                    </label>
+                  </li>
+                  <li class="default_profile">
+                    <input type="radio" name="choose_profile" id="default_profile" value="default_profile" class="hide">
+                    <label for="default_profile">
+                      <div>
+                        <div class="profile_img_ex circle">
+                          <img src="/image/default/randomly_profile/randomly_profile4.jpg" alt="기본프로필이미지">
+                        </div>
+                      </div>
+                      <span>기본 프로필</span>
+                    </label>
+                  </li>
+                  <li class="ramdomly_profile">
+                    <input type="radio" name="choose_profile" id="ramdomly_profile" value="ramdomly_profile"
+                      class="hide">
+                    <label for="ramdomly_profile">
+                      <div>
+                        <div class="profile_img_ex circle">
+                          <img src="/image/default/randomly_profile/randomly_profile2.jpg" alt="랜덤프로필이미지">
+                        </div>
+                      </div>
+                      <span>랜덤 프로필</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="choose_bg">
+                <h3>프로필 배경</h3>
+                <ul class="edit_profile_padding">
+                  <li class="upload_image on">
+                    <input type=" radio" name="choose_bg" id="upload_bg" value="upload_bg" class="hide">
+                    <label for="upload_bg">
+                      <div>
+                        <div class="profile_bg_ex select_img icon_bg">
+                          <input type="file" id="profile_bg_change" class="hide">
+                          <span class="icon_bg_dark">
+                            <img
+                              th:src="${profile.attachUserBackground != null ? profile.attachUserBackground.thumbPath : '/image/mypage/bg.jpg'}"
+                              alt="유저프로필 배경이미지">
+                          </span>
+                        </div>
+                      </div>
+                      <span>이미지 선택</span>
+                    </label>
+                  </li>
+                  <li class="default_profile">
+                    <input type="radio" name="choose_bg" id="default_bg" value="default_bg" class="hide">
+                    <label for="default_bg">
+                      <div>
+                        <div class="profile_bg_ex">
+                          <img src="/image/default/default_bg0.jpg" alt="기본프로필이미지">
+                        </div>
+                      </div>
+                      <span>기본 배경</span>
+                    </label>
+                  </li>
+                  <li class="ramdomly_profile">
+                    <input type="radio" name="choose_bg" id="ramdomly_bg" value="ramdomly_bg" class="hide">
+                    <label for="ramdomly_bg">
+                      <div>
+                        <div class="profile_bg_ex">
+                          <img src="/image/default/randomly_bg/randomly_bg1.jpg" alt="랜덤프로필이미지">
+                        </div>
+                      </div>
+                      <span>랜덤 배경</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="edit_profile_saveBtn">
+                <button type="submit" class="btn">저장하기</button>
+              </div>
+            </form>
           </li>
+          <!-- 프로필 변경 끝 -->
+          <!-- 개인정보설정 -->
         </ul>
       </div>
     </div>
