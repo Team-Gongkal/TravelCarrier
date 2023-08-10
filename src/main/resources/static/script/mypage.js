@@ -631,42 +631,50 @@ function getDate(btn) {
   return result;
 }
 
-// 프로필 이미지 선택시 checked - by 윤아
-$(`input:radio[name=choose_profile],input:radio[name=choose_bg]`).on(
-  "change",
-  function () {
-    var upload = $("input:radio[name=choose_profile]:checked").val();
-    var uploadbg = $("input:radio[name=choose_bg]:checked").val();
-
-    if ($(this).is(":checked")) {
-      if ($(this).is("input:radio[name=choose_profile]")) {
-        // choose_profile에 대한 동작 수행
-        $(".choose_profile ul li > label > div").removeClass("on");
-        $(this).siblings("label").children("div").addClass("on");
-      } else if ($(this).is("input:radio[name=choose_bg]")) {
-        // choose_bg에 대한 동작 수행
-        $(".choose_bg > ul > li").removeClass("on");
-        $(this).parents("li").addClass("on");
-        // $(this).siblings("label").children("div").addClass("on");
-      }
-    }
-    if (upload === "upload_profile") {
-      $("#profile_img_change").trigger("click");
-    }
-    if (uploadbg === "upload_bg") {
-      $("#profile_bg_change").trigger("click");
-    }
-  }
-);
+// 이미지 변경 옵션 선택시:checked - by 윤아
 document.addEventListener("click", function (event) {
   var hoveredElement = event.target;
   console.log(hoveredElement);
 });
+var input_profile = $("input:radio[name=choose_profile]");
+var input_bg = $("input:radio[name=choose_bg]");
+var choose_profile = $(
+  ".choose_profile > ul.edit_profile_padding > li > label > div"
+);
+var choose_background = $(".choose_bg > ul.edit_profile_padding > li");
+$(input_profile)
+  .add(input_bg)
+  .on("click", function (e) {
+    if ($(this).is(input_profile)) {
+      // choose_profile에 대한 동작 수행
+      choose_profile.removeClass("on");
+      $(e.target).siblings("label").children("div").addClass("on");
 
-// $(".choose_profile, .choose_bg").on("click", "ul > li", function () {
-//   if ($(this).parent().hasClass("choose_profile")) {
-//     $("#profile_img_change").trigger("click");
-//   } else if ($(this).parent().hasClass("choose_bg")) {
-//     $("#profile_bg_change").trigger("click");
-//   }
-// });
+      // 이미지 선택시 프로필파일 선택창 활성화
+      if ($(this).val() === "upload_profile") {
+        //내가 클릭한 값이 일치하는지 확인해야해서 $(this)사용, input_profile.val()은 3개 버튼의 값을 가져오기에 확인이 불가함.
+        console.log("프로필 바꿔라");
+        //안의 파일 인풋창 활성화
+        $("#profile_img_change").click();
+      }
+    } else if ($(this).is(input_bg)) {
+      // choose_background에 대한 동작 수행
+      choose_background.removeClass("on");
+      $(e.target).parents("li").addClass("on");
+      // 이미지 선택시 배경파일 선택창 활성화
+      if ($(this).val() === "upload_bg") {
+        console.log("배경 바꿔라");
+        $("#profile_bg_change").click();
+      }
+    }
+  });
+
+//이미지 선택시 crop_img_modal 활성화
+$("#profile_img_change").on("change", function () {
+  // 파일 선택이 완료되었을 때 실행할 코드 작성
+  console.log("파일이 선택되었습니다.");
+  // 선택된 파일 정보 가져오기 예시
+  var selectedFile = this.files[0];
+  $(".crop_img_wrap > .filePath > p > span").text(selectedFile.name);
+  $(".crop_img_modal").addClass("show");
+});

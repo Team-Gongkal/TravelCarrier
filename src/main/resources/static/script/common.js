@@ -13,7 +13,7 @@ $(window).click(function (e) {
   if ($(e.target).is($(".modal_bg"))) {
     console.log(e.target);
     $(
-      ".weekly_modal_bg, .keyword_modal_bg, .edit_profile, #login_wrap , .reply_modal , .daily_form_bg .period_modal_bg"
+      ".weekly_modal_bg, .keyword_modal_bg, .edit_profile, #login_wrap , .reply_modal , .daily_form_bg, .period_modal_bg, .edit_menu, .edit_modal"
     ).removeClass("show");
   }
 });

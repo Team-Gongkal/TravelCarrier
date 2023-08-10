@@ -217,7 +217,6 @@ ul.Dform_imglist li.clickImg img {
 ul.Dform_imglist .clickImg.icon_bg::after {
   border: 1.5px solid #f7f7f7;
   background: no-repeat center / 20% url(../image/daily/icon/trash-can-wh.svg);
-
 }
 ul.Dform_imglist li.clickImg:hover .icon_bg_dark::after {
   background: rgba(0, 0, 0, 0.7);
@@ -376,14 +375,17 @@ div.filePath input[type="file"] {
   border: 0;
   position: absolute;
 }
+div.filePath label {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
 div.filePath label img {
   width: 20%;
   max-width: 100%;
   height: auto;
   opacity: 0.2;
   cursor: pointer;
-  vertical-align: middle;
-  float: right;
   transition: 0.2s;
 }
 div.filePath label img:hover {

@@ -807,7 +807,6 @@ li .uP_user_text span.uP_user_added {
   animation-timing-function: linear;
   position: relative;
 }
-
 @keyframes highliter {
   0% {
     width: 0;
@@ -1059,7 +1058,9 @@ div.edit_profile_padding > div {
   position: absolute;
   top: 0%;
   left: 0%;
-  background: #f7f7f77b;
+  background: rgb(0, 0, 0, 0.8);
+  /* background: rgba(255, 255, 255, 0.7); */
+  /* background: rgb(239, 238, 233, 0.9); */
   z-index: 110;
   opacity: 0;
   visibility: hidden;
@@ -1076,10 +1077,24 @@ div.edit_profile_padding > div {
   flex-direction: column;
   justify-content: space-between;
 }
+.crop_img_wrap > div:nth-of-type(1) {
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Ensure the size of the image fit the container perfectly */
+.crop_img_wrap img {
+  display: block;
+  /* This rule is very important, please don't ignore this */
+  max-width: 100%;
+}
 .crop_img_wrap h2 {
   font-size: 1.5rem;
   text-align: center;
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
 }
 .crop_img_wrap .filePath {
   margin-top: 1rem;

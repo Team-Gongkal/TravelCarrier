@@ -305,7 +305,7 @@
                 <h3>프로필 배경</h3>
                 <ul class="edit_profile_padding">
                   <li class="upload_image on">
-                    <input type=" radio" name="choose_bg" id="upload_bg" value="upload_bg" class="hide">
+                    <input type="radio" name="choose_bg" id="upload_bg" value="upload_bg" class="hide">
                     <label for="upload_bg">
                       <div>
                         <div class="profile_bg_ex select_img icon_bg">
@@ -351,6 +351,7 @@
           </li>
           <!-- 프로필 변경 끝 -->
           <!-- 개인정보설정 -->
+          <li></li>
         </ul>
       </div>
     </div>
@@ -364,18 +365,18 @@
       <h2>배경 이미지 편집</h2>
       <div>
         <div class="crop_img">
-          <img id="cropImg" src="/image/mypage/profile.jpg" alt="편집할 이미지">
-        </div>
-        <div class="filePath">
-          <p>/파일명.jpg</p>
-          <input type="file" id="fileChange">
-          <label for="fileChange">
-            <img src="/image/daily/icon/changeImg.svg" alt="이미지변경아이콘">
-          </label>
+          <img id="cropImg" src="/image/mypage/bg.jpg" alt="편집할 이미지" class="preview_image">
         </div>
       </div>
+      <div class="filePath">
+        <p>파일명 : <span>/파일명.jpg</span></p>
+        <input type="file" id="fileChange">
+        <label for="fileChange">
+          <img src="/image/daily/icon/changeImg.svg" alt="이미지변경아이콘">
+        </label>
+      </div>
       <div class="edit_img_saveBtn">
-        <button type="button" class="btn ">저장하기</button>
+        <button type="button" class="btn">저장하기</button>
       </div>
     </div>
   </div>
@@ -394,10 +395,12 @@
         console.log(event.detail.scaleX);
         console.log(event.detail.scaleY);
       },
+      autoCropArea: 1,//잘라질 박스의 크기지정 0.1~1
       zoomOnWheel: true,
       viewMode: 1,
       dragMode: 'move'
     });
+
   </script>
 
 </body>
