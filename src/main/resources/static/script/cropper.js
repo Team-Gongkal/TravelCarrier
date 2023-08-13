@@ -1,3 +1,4 @@
+var cropper = null;
 $("#profile_img_change").on("change", function (event) {
   // 파일 선택이 완료되었을 때 실행할 코드 작성
   console.log("파일이 선택되었습니다.");
@@ -18,7 +19,7 @@ $("#profile_img_change").on("change", function (event) {
   //[2] cropper.js 플러그인사용
   const image = document.getElementById("cropImg");
   // 1.옵션설정
-  const cropper = new Cropper(image, {
+  cropper = new Cropper(image, {
     aspectRatio: 4 / 1, // 자르기 비율 설정
     crop(event) {
       // 자르기 영역이 변경될 때마다 실행되는 콜백 함수
@@ -50,40 +51,42 @@ $("#profile_img_change").on("change", function (event) {
     cropBoxResizable: false,
   });
 
-  //2. 서버에 올릴 수 있도록 파일로 변환
-
-  function saveCrop() {
-    cropper.getCroppedCanvas().toBlob(
-      (blob) => {
-        //HTMLCanvasElement를 return 받아서 blob파일로 변환해준다
-        const formData = new FormData(); //데이터폼을 생성
-
-        formData.append("croppedImage", blob /*, 'example.png' , 0.7*/);
-        //새로운 formData를 생성해서 앞에서 변경해준 blob파일을 삽입한다.(이름 지정 가능, 맨뒤 매개변수는 화질 설정)
-        console.log(formData);
-        for (const [key, value] of formData.entries()) {
-          console.log(key, value);
-        }
-        // jQuery.ajax이용해서 서버에 업로드
-        $.ajax("https://codingapple1.github.io/hello.txt", {
-          method: "POST",
-          data: formData, //앞에서 생성한 formData
-          processData: false, // data 파라미터 강제 string 변환 방지
-          contentType: false, // application/x-www-form-urlencoded; 방지
-          success() {
-            console.log("Upload success");
-          },
-          error() {
-            console.log("Upload error");
-          },
-        });
-      } /*, 'image/png' */
-    ); //서버에 저장 형식 사용 가능
-  }
-  $(".edit_img_saveBtn > .btn").on("click", function () {
-    saveCrop();
-  });
   //이미지 파일명 가져오기
   $(".crop_img_wrap > .filePath > p > span").text(selectedFile.name);
   $(".crop_img_modal").addClass("show");
+});
+
+//2. 서버에 올릴 수 있도록 파일로 변환
+
+function saveCrop() {
+  cropper.getCroppedCanvas().toBlob(
+    (blob) => {
+      //HTMLCanvasElement를 return 받아서 blob파일로 변환해준다
+      const formData = new FormData(); //데이터폼을 생성
+
+      formData.append("profileImg", blob /*, 'example.png' , 0.7*/);
+      //새로운 formData를 생성해서 앞에서 변경해준 blob파일을 삽입한다.(이름 지정 가능, 맨뒤 매개변수는 화질 설정)
+      console.log(formData);
+      // for (const [key, value] of formData.entries()) {
+      //   console.log(key, value);
+      // }
+      // jQuery.ajax이용해서 서버에 업로드
+      $.ajax({
+        url: "/TravelCarrier/member/profile",
+        type: "POST",
+        data: formData, //앞에서 생성한 formData
+        processData: false, // data 파라미터 강제 string 변환 방지
+        contentType: false, // application/x-www-form-urlencoded; 방지
+        success: function () {
+          console.log("업로드 성공");
+        },
+        error: function () {
+          console.log("업로드 에러");
+        },
+      });
+    } /*, 'image/png' */
+  ); //서버에 저장 형식 사용 가능
+}
+$(".edit_img_saveBtn > .btn").on("click", function () {
+  saveCrop();
 });
