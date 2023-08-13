@@ -2,11 +2,9 @@ package tc.travelCarrier.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import tc.travelCarrier.domain.Kword;
+import tc.travelCarrier.domain.Follower;
+import tc.travelCarrier.domain.User;
 
 @Repository
-public interface KwordRepository extends JpaRepository<Kword, Integer>{
-
-    void deleteByDailyId(int dailyId);
-
+public interface FollowRepository extends JpaRepository<Follower, Integer> {
 }

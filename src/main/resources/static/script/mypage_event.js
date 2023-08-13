@@ -1,7 +1,4 @@
-// 트래블러의 페이지를 보여주는 이벤트리스너를 관리하는 js입니다
-
-//현재 방문한 트래블러 페이지의 주인의 이메일
-let TravelerEmail = $(location).attr('href').substring( $(location).attr('href').indexOf("/member/")+8 );
+// mypage의 ajax를 관리하는 이벤트리스너를 등록하는 js파일입니다
 
 
 //팔로우/팔로워 탭 - by 윤아
@@ -51,17 +48,17 @@ $(".userProfile_tab li").on("click", function (e) {
     return;
   } else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
 
-  var data = getTravelerPage(type, 1);
+  var data = getPage(type, 1);
   updateResult(type, data);
   $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
 });
 
 // 타입과 페이지를 파라미터로 해당 페이지를 get - by.서현
-function getTravelerPage(type, page) {
+function getPage(type, page) {
   $.ajax({
-    url: "/TravelCarrier/member/"+TravelerEmail+"/page",
+    url: "/TravelCarrier/mypage/page",
     type: "POST",
-    data: JSON.stringify({ userEmail:TravelerEmail, type: type, page: page }),
+    data: JSON.stringify({ type: type, page: page }),
     contentType: "application/json",
     success: function (resp) {
       updateResult(type, resp);
@@ -71,10 +68,9 @@ function getTravelerPage(type, page) {
     },
   });
 }
-
 function getFollowPage(type, detailType, page) {
   $.ajax({
-    url: "/TravelCarrier/member/"+TravelerEmail+"/page",
+    url: "/TravelCarrier/mypage/page",
     type: "POST",
     data: JSON.stringify({ type: type, page: page, detailType: detailType }),
     contentType: "application/json",
@@ -86,7 +82,6 @@ function getFollowPage(type, detailType, page) {
     },
   });
 }
-
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
   console.log(data);
@@ -150,6 +145,10 @@ function diaryHtml(data) {
           <span class="uP_diary_tit">${data.title}</span>
           <span class="uP_diary_period">${data.date.sdate} - ${data.date.edate}</span>
         </div>
+        <div class="uP_diary_btn">
+          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
+          <button type="button" class="weeklyDelBtn" >삭제하기</button>
+        </div>
       </div>
     </li>`;
 
@@ -180,6 +179,14 @@ function taggedHtml(data) {
           <span class="uP_diary_tit">${data.title}</span>
           <span class="uP_diary_period">${data.date.sdate} - ${data.date.edate}</span>
         </div>
+        <div class="uP_diary_btn">
+          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>`;
+
+  if (data.hide == true) html += `<button type="button" >보이기</button>`;
+  else if (data.hide == false)
+    html += `<button type="button" class="weeklyHideBtn">숨기기</button>`;
+
+  html += `</div>
       </div>
     </li>`;
 
@@ -213,9 +220,77 @@ function travelerHtml(data, type) {
                     <div class="uP_user_text">
                       <span class="uP_user_name">${data.name}</span>
                       <span class="uP_user_added">${data.fdate}</span>
-                    </div></li>`;
+                    </div>`;
+
+  if (type == "following") {
+    html += `
+                    <div class="follower_del_btn">
+                       <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
+                     </div>`;
+  } else if (type == "follower") {
+    html += `<div class="follower_del_btn">
+                      <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구신청</button>
+                    </div>`;
+  }
+  html += `</div>
+                </li>`;
 
   return html;
+}
+
+//친구추가 버튼
+function add_friend() {
+  var add_friend_btn = $(".add_friend_btn > button");
+  add_friend_btn.addClass("completed");
+  add_friend_btn.children("span").text("follow");
+  add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+}
+
+// 위클리 삭제 클릭 이벤트 - by.서현
+$(document).on("click", ".weeklyDelBtn", function () {
+  var title = $(this).closest("li").find(".uP_diary_tit").text();
+  var wid = $(this).closest("li").data("wid");
+  if (confirm("[ " + title + " ] 삭제하시겠습니까?")) deleteWeekly(wid);
+});
+
+function deleteWeekly(weeklyId) {
+  $.ajax({
+    url: "/TravelCarrier/weekly/" + weeklyId,
+    type: "DELETE",
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      $("li[data-wid='" + weeklyId + "']").remove();
+    },
+    error: function (error) {
+      alert("삭제 실패" + error);
+    },
+  });
+}
+
+// 태그된 위클리 숨기기 이벤트 - by.서현
+$(document).on("click", ".weeklyHideBtn", function () {
+  var title = $(this).closest("li").find(".uP_diary_tit").text();
+  var wid = $(this).closest("li").data("wid");
+  if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?"))
+    hideOrShowWeekly(wid, "hide");
+});
+
+// 태그된 위클리에 대해 숨김또는 보이기 하는 ajax (숨김:"hide" 보이기:"seek")
+function hideOrShowWeekly(weeklyId, type) {
+  $.ajax({
+    url: "/TravelCarrier/weekly/" + weeklyId,
+    type: "PUT",
+    data: JSON.stringify({ type: type }),
+    contentType: "application/json",
+    success: function (data) {
+      alert("숨김처리 되었습니다.");
+      $("li[data-wid='" + weeklyId + "']").remove();
+    },
+    error: function (error) {
+      alert("숨김처리에 실패하였습니다." + error);
+    },
+  });
 }
 
 // 기간 선택 이벤트
@@ -302,3 +377,39 @@ function getDate(btn) {
   result = { sdate: sdate, edate: edate };
   return result;
 }
+
+// 프로필 이미지 선택시 checked - by 윤아
+$(`input:radio[name=choose_profile],input:radio[name=choose_bg]`).on(
+  "change",
+  function () {
+    var upload = $("input:radio[name=choose_profile]:checked").val();
+    var uploadbg = $("input:radio[name=choose_bg]:checked").val();
+
+    if ($(this).is(":checked")) {
+      if ($(this).is("input:radio[name=choose_profile]")) {
+        // choose_profile에 대한 동작 수행
+        $(".choose_profile ul li > label > div").removeClass("on");
+        $(this).siblings("label").children("div").addClass("on");
+      } else if ($(this).is("input:radio[name=choose_bg]")) {
+        // choose_bg에 대한 동작 수행
+        $(".choose_bg > ul > li").removeClass("on");
+        $(this).parents("li").addClass("on");
+        // $(this).siblings("label").children("div").addClass("on");
+      }
+    }
+    if (upload === "upload_profile") {
+      $("#profile_img_change").trigger("click");
+    }
+    if (uploadbg === "upload_bg") {
+      $("#profile_bg_change").trigger("click");
+    }
+  }
+);
+
+// $(".choose_profile, .choose_bg").on("click", "ul > li", function () {
+//   if ($(this).parent().hasClass("choose_profile")) {
+//     $("#profile_img_change").trigger("click");
+//   } else if ($(this).parent().hasClass("choose_bg")) {
+//     $("#profile_bg_change").trigger("click");
+//   }
+// });

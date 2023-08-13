@@ -11,6 +11,7 @@ public class SearchDTO {
 
     private String type;
     private String detailType;
+    private String travelerEmail;
     private int page;
 
     // 키워드 기반 검색

@@ -1,5 +1,6 @@
 package tc.travelCarrier.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,15 @@ import java.util.Date;
 @Table(name = "FOLLOWER")
 @Getter @Setter
 public class Follower {
+
+    Follower(){}
+
+    @Builder
+    Follower(User user, User follower, Date fDate){
+        this.user = user;
+        this.follower = follower;
+        this.fDate = fDate;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +34,6 @@ public class Follower {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="FOLLOWER_ID")
+    @JoinColumn(name="FOLLOW_ID")
     private User follower;
 }
