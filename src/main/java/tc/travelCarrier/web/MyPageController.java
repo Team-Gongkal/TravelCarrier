@@ -219,7 +219,7 @@ public class MyPageController {
     }
 
     // targetUser를 user가 팔로우
-    @GetMapping("/member/follow/{email}")
+    @GetMapping("/member/following/{email}")
     public ResponseEntity follow(@PathVariable String email, @AuthenticationPrincipal PrincipalDetails principalDetails){
         User targetUser = memberRepository.findUserByEmail(email);
         User loginUser = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
@@ -228,6 +228,15 @@ public class MyPageController {
                 .follower(targetUser)
                 .fDate(new Date())
                 .build());
+        return ResponseEntity.ok(null);
+    }
+    // targetUser를 user가 팔로우
+    @GetMapping("/member/unfollow/{email}")
+    public ResponseEntity unfollow(@PathVariable String email, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        User targetUser = memberRepository.findUserByEmail(email);
+        User loginUser = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        Follower removeRow = followRepository.findByUserAndFollower(loginUser, targetUser);
+        followRepository.delete(removeRow);
         return ResponseEntity.ok(null);
     }
 

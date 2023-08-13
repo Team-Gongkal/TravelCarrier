@@ -264,10 +264,10 @@ $(document).ready(function () {
   });
 });
 
-document.addEventListener("click", function (event) {
-  var hoveredElement = event.target;
-  console.log(hoveredElement);
-});
+//document.addEventListener("click", function (event) {
+//  var hoveredElement = event.target;
+//  console.log(hoveredElement);
+//});
 
 // $(".choose_profile, .choose_bg").on("click", "ul > li", function () {
 //   if ($(this).parent().hasClass("choose_profile")) {

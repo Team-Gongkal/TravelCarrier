@@ -302,3 +302,50 @@ function getDate(btn) {
   result = { sdate: sdate, edate: edate };
   return result;
 }
+
+// 친구추가 이벤트
+$('.add_friend_btn > button').on('click', function(){
+    add_friend();
+})
+
+//친구추가 버튼
+function add_friend() {
+  var add_friend_btn = $(".add_friend_btn > button");
+  if (add_friend_btn.hasClass("completed")) { //친구일때 친구취소시 동작
+        unfollowTarget();
+        add_friend_btn.removeClass("completed");
+        add_friend_btn.children("span").text("follow");
+        add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+  } else { // 친구 아닐때 친구신청시
+        followingTarget();
+        add_friend_btn.addClass("completed");
+        add_friend_btn.children("span").text("following");
+        add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+  }
+}
+
+function followingTarget() {
+  $.ajax({
+    url: "/TravelCarrier/member/following/"+TravelerEmail,
+    type: "GET",
+    success: function (resp) {
+      console.log("성공");
+    },
+    error: function (error) {
+      alert("실패" + error);
+    },
+  });
+}
+
+function unfollowTarget() {
+  $.ajax({
+    url: "/TravelCarrier/member/unfollow/"+TravelerEmail,
+    type: "GET",
+    success: function (resp) {
+      console.log("성공");
+    },
+    error: function (error) {
+      alert("실패" + error);
+    },
+  });
+}

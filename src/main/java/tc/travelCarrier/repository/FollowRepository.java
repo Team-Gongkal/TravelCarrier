@@ -7,4 +7,5 @@ import tc.travelCarrier.domain.User;
 
 @Repository
 public interface FollowRepository extends JpaRepository<Follower, Integer> {
+    Follower findByUserAndFollower(User loginUser, User targetUser);
 }
