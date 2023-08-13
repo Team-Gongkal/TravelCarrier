@@ -62,7 +62,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider).providerId(providerId)
                     .build();
             memberRepository.save(byUsername);
-            attachRepository.saveProfilePic(AttachUser.builder().title("default_profile.jpg").user(byUsername).path(fileDir+"mypage/default_profile.jpg").build());
+            attachRepository.saveProfilePic(AttachUser.builder().attachTitle("default_profile.jpg").user(byUsername).thumb(fileDir+"mypage/default_profile.jpg").build());
             attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg").user(byUsername).path(fileDir+"mypage/default_bg.jpg").build());
         }
 

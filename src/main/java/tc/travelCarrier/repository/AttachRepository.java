@@ -2,12 +2,11 @@ package tc.travelCarrier.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import tc.travelCarrier.domain.AttachDaily;
-import tc.travelCarrier.domain.AttachUser;
-import tc.travelCarrier.domain.AttachUserBackground;
-import tc.travelCarrier.domain.AttachWeekly;
+import tc.travelCarrier.domain.*;
+import tc.travelCarrier.dto.WeeklyDTO;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -39,11 +38,20 @@ public class AttachRepository {
         AttachDaily attachDaily = em.find(AttachDaily.class, no);
         em.remove(attachDaily);
     }
-    // 프로필 사진 저장
+    // 프로필 배경사진 저장
     public void saveBgPic(AttachUserBackground attachUserBackground){
         em.persist(attachUserBackground);
     }
 
+    // 프로필 사진 수정
+    public void editProfile(AttachUser newAttachUser, User user){
+        String jpql = "SELECT a FROM AttachUser a WHERE a.user = :user";
+        AttachUser origin = em.createQuery(jpql, AttachUser.class)
+                .setParameter("user", user)
+                .getSingleResult();
+        em.remove(origin);
 
+        em.persist(newAttachUser);
+    }
 
 }

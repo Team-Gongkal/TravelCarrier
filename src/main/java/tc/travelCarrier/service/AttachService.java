@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import tc.travelCarrier.domain.AttachDaily;
-import tc.travelCarrier.domain.AttachWeekly;
-import tc.travelCarrier.domain.Daily;
-import tc.travelCarrier.domain.Weekly;
+import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.AttachRepository;
@@ -244,4 +241,28 @@ public class AttachService {
     public AttachDaily findAttachDaily(int attachNo){
         return attachRepository.findAttachDaily(attachNo);
     }
+
+    /**
+     * 프로필사진 저장하는 메소드
+     * */
+    public void saveAttachUser(MultipartFile file, User user) throws Exception {
+        //1.서버에 파일 저장
+        String[] saveArr;
+        if(file != null) {
+            // 파일이 있을경우 서버에 저장후 DB 저장
+            saveArr = saveAttach(file,"user/profile");
+        } else {
+            // 파일이 없을경우 서버저장 생략, 기본이미지 경로 DB에 저장
+            saveArr = new String[]{"default_profile.png", fileDir + "default/default_profile.png"};
+        }
+
+        //2.AttachWeekly 엔티티 생성해서 DB에도 저장
+        AttachUser attachUser = AttachUser.builder()
+                                    .user(user)
+                                    .attachTitle(saveArr[0])
+                                    .thumb(saveArr[1])
+                                    .build();
+        attachRepository.editProfile(attachUser, user);
+    }
+    
 }

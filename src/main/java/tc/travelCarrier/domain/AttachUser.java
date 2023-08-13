@@ -18,10 +18,10 @@ public class AttachUser extends Attach{
     private User user;
 
     @Builder
-    public AttachUser(User user, String title, String path) {
+    public AttachUser(User user, String attachTitle, String thumb) {
         this.user = user;
-        this.attachTitle = title;
-        this.thumbPath = path;
+        this.attachTitle = attachTitle;
+        this.thumbPath = thumb;
     }
     
 }
