@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.OpenStatus;
 import tc.travelCarrier.domain.User;
@@ -12,7 +13,7 @@ import tc.travelCarrier.domain.Weekly;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
-
+@Repository
 public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
     @Query("SELECT DISTINCT w FROM Weekly w JOIN w.nation n JOIN w.gowiths g JOIN g.user u WHERE (w.title LIKE %?1% OR n.name LIKE %?1% OR u.email LIKE %?1% OR u.name LIKE %?1%) AND w.user = ?2")
     Page<Weekly> findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(String keyword, User user, Pageable pageable);

@@ -27,13 +27,13 @@
             <span th:text="${profile.name}">yun_ah17</span>
           </div>
           <div class="add_friend_btn">
-            <button th:if="${follow} == false" onclick="add_friend()">
+            <button th:if="${follow} == false">
               <i class="fa-solid fa-plus fa"></i>
-              <span>following</span>
-            </button>
-            <button th:if="${follow} == true" onclick="add_friend()" class="completed">
-              <i class="fa-solid fa-check fa-xs fa" aria-hidden="true"></i>
               <span>follow</span>
+            </button>
+            <button th:if="${follow} == true" class="completed">
+              <i class="fa-solid fa-check fa-xs fa" aria-hidden="true"></i>
+              <span>following</span>
             </button>
           </div>
 
@@ -242,6 +242,7 @@
     </div>
   </div>
 
+  <script src="/script/mypage.js"></script>
   <script src="/script/traveler.js"></script>
 
 </body>

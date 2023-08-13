@@ -20,6 +20,7 @@ public class MyPageDTO {
     private List<String> goWithList; //user는 우선 프로필사진만!!
 
     private String name;
+    private String email;
     private String backgroundThumbPath;
     private String fDate;
 
@@ -48,7 +49,7 @@ public class MyPageDTO {
 
     }
 
-    public static MyPageDTO generateFollowerDTO(String name, int id, String thumbPath, String bgPath, Date fDate){
+    public static MyPageDTO generateFollowerDTO(String name, int id, String thumbPath, String bgPath, Date fDate, String email){
         MyPageDTO dto = new MyPageDTO();
         dto.setName(name);
         dto.setId(id);
@@ -56,6 +57,7 @@ public class MyPageDTO {
         dto.setBackgroundThumbPath(bgPath);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dto.setFDate(dateFormat.format(fDate));
+        dto.setEmail(email);
         return dto;
     }
 
