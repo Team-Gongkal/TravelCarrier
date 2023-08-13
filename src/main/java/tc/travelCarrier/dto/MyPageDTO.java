@@ -1,14 +1,14 @@
 package tc.travelCarrier.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import tc.travelCarrier.domain.TravelDate;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 @Getter @ToString @Setter
 public class MyPageDTO {
