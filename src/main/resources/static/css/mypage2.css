@@ -726,6 +726,10 @@ li .uP_user_text span.uP_user_added {
   bottom: 0;
   transform: translateX(-50%);
   margin-bottom: 3rem;
+  display: none;
+}
+.userProfile_gallery button#more_btn.show {
+  display: block;
 }
 /* 프로필 편집 및 계정 정보설정 모달창========= */
 .edit_modal {

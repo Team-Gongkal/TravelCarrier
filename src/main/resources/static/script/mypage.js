@@ -131,8 +131,12 @@ function on_scroll() {
       console.log("친구없음 나가");
       $scroll.removeClass("hide");
     }
+  } else if (idx > 16) {
+    // 게시글 개수에 따른 더보기버튼 활성화,,
+    $("#more_btn").addClass("show");
   }
 }
+
 // datepicker 설정 및 옵션 변경 - by윤아
 $(document).ready(function () {
   $.datepicker.setDefaults($.datepicker.regional["ko"]);
@@ -632,10 +636,12 @@ function getDate(btn) {
 }
 
 // 이미지 변경 옵션 선택시:checked - by 윤아
+//확인용
 document.addEventListener("click", function (event) {
   var hoveredElement = event.target;
   console.log(hoveredElement);
 });
+
 var input_profile = $("input:radio[name=choose_profile]");
 var input_bg = $("input:radio[name=choose_bg]");
 var choose_profile = $(
@@ -664,17 +670,9 @@ $(input_profile)
       // 이미지 선택시 배경파일 선택창 활성화
       if ($(this).val() === "upload_bg") {
         console.log("배경 바꿔라");
+
+        //파일선택 인풋창 실행
         $("#profile_bg_change").click();
       }
     }
   });
-
-//이미지 선택시 crop_img_modal 활성화
-$("#profile_img_change").on("change", function () {
-  // 파일 선택이 완료되었을 때 실행할 코드 작성
-  console.log("파일이 선택되었습니다.");
-  // 선택된 파일 정보 가져오기 예시
-  var selectedFile = this.files[0];
-  $(".crop_img_wrap > .filePath > p > span").text(selectedFile.name);
-  $(".crop_img_modal").addClass("show");
-});

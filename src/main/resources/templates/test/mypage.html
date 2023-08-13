@@ -365,7 +365,7 @@
       <h2>배경 이미지 편집</h2>
       <div>
         <div class="crop_img">
-          <img id="cropImg" src="/image/mypage/bg.jpg" alt="편집할 이미지" class="preview_image">
+          <img id="cropImg" src="/image/daily/icon/changeImg.svg" alt="편집할 이미지" class="preview_image">
         </div>
       </div>
       <div class="filePath">
@@ -381,27 +381,7 @@
     </div>
   </div>
   <script src="/script/mypage.js"></script>
-  <script>
-    var image = document.getElementById('cropImg');
-    var cropper = new Cropper(image, {
-      aspectRatio: 4 / 1, // 자르기 비율 설정
-      crop: function (event) {
-        // 자르기 영역이 변경될 때마다 실행되는 콜백 함수
-        console.log(event.detail.x);
-        console.log(event.detail.y);
-        console.log(event.detail.width);
-        console.log(event.detail.height);
-        console.log(event.detail.rotate);
-        console.log(event.detail.scaleX);
-        console.log(event.detail.scaleY);
-      },
-      autoCropArea: 1,//잘라질 박스의 크기지정 0.1~1
-      zoomOnWheel: true,
-      viewMode: 1,
-      dragMode: 'move'
-    });
-
-  </script>
+  <script src="/script/cropper.js"></script>
 
 </body>
 
