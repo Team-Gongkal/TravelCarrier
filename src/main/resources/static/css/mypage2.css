@@ -1010,7 +1010,7 @@ div.edit_profile_padding > div {
 }
 /* 저장버튼 */
 .edit_profile_saveBtn,
-.edit_img_saveBtn {
+.edit_cropImg_saveBtn {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -1022,6 +1022,13 @@ div.edit_profile_padding > div {
 .edit_profile_saveBtn button.btn:hover {
   background: #525d76;
 }
+.edit_cropImg_saveBtn button.btn:nth-child(1) {
+  color: #000;
+}
+.edit_cropImg_saveBtn button.btn:hover:nth-child(1) {
+  color: red;
+}
+
 /* 모달창 닫기버튼 */
 .modal_bg > button {
   width: fit-content;

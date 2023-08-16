@@ -1,33 +1,35 @@
 package tc.travelCarrier.service;
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.Directory;
-import com.drew.metadata.MetadataException;
-import com.drew.metadata.exif.ExifIFD0Directory;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
-import com.mortennobel.imagescaling.AdvancedResizeOp;
-import com.mortennobel.imagescaling.ResampleOp;
-import lombok.RequiredArgsConstructor;
+import javax.imageio.ImageIO;
+
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import tc.travelCarrier.domain.*;
+
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
+
+import lombok.RequiredArgsConstructor;
+import tc.travelCarrier.domain.AttachDaily;
+import tc.travelCarrier.domain.AttachUser;
+import tc.travelCarrier.domain.AttachWeekly;
+import tc.travelCarrier.domain.Daily;
+import tc.travelCarrier.domain.User;
+import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.AttachRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 
 
 
@@ -250,12 +252,15 @@ public class AttachService {
         String[] saveArr;
         if(file != null) {
             // 파일이 있을경우 서버에 저장후 DB 저장
-            saveArr = saveAttach(file,"user/profile");
+            saveArr = saveAttach(file,"profile");
+            System.out.println("성공이맞나요...");
         } else {
             throw new FileNotFoundException();
         }
 
         //2.AttachWeekly 엔티티 생성해서 DB에도 저장
+        System.out.println("====atatatataat===========");
+        System.out.println(saveArr[1]);
         AttachUser attachUser = AttachUser.builder()
                                     .user(user)
                                     .attachTitle(saveArr[0])
