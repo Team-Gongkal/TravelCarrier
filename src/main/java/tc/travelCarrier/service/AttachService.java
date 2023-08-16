@@ -118,13 +118,14 @@ public class AttachService {
      * */
     public String[] saveAttach(MultipartFile file, String folder) throws Exception {
         if(file.isEmpty()){
-            //return 0;
+            throw new FileNotFoundException("File " + folder + "");
         }
 
         // 1. 새로운 파일이름 생성
         String uuid = UUID.randomUUID().toString();
         // 2. 원래 파일이름으로부터 확장자 분리
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+        if(extension.equals("blob")) extension = "png";
         // 3. UUID+확장자명으로 새 파일제목 완성
         String newTitle = uuid+"."+extension;
 
