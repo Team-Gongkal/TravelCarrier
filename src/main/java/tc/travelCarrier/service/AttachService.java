@@ -28,6 +28,7 @@ import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.dto.WeeklyForm;
+import tc.travelCarrier.exeption.FileNotFoundException;
 import tc.travelCarrier.repository.AttachRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 
