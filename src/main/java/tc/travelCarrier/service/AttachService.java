@@ -20,12 +20,7 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.domain.AttachDaily;
-import tc.travelCarrier.domain.AttachUser;
-import tc.travelCarrier.domain.AttachWeekly;
-import tc.travelCarrier.domain.Daily;
-import tc.travelCarrier.domain.User;
-import tc.travelCarrier.domain.Weekly;
+import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.exeption.FileNotFoundException;
@@ -255,20 +250,34 @@ public class AttachService {
         if(file != null) {
             // 파일이 있을경우 서버에 저장후 DB 저장
             saveArr = saveAttach(file,"profile");
-            System.out.println("성공이맞나요...");
-        } else {
-            throw new FileNotFoundException();
-        }
+        } else throw new FileNotFoundException();
 
-        //2.AttachWeekly 엔티티 생성해서 DB에도 저장
-        System.out.println("====atatatataat===========");
-        System.out.println(saveArr[1]);
+        //2.AttachUser 엔티티 생성해서 DB에도 저장
         AttachUser attachUser = AttachUser.builder()
                                     .user(user)
                                     .attachTitle(saveArr[0])
                                     .thumb(saveArr[1])
                                     .build();
         attachRepository.editProfile(attachUser, user);
+    }
+
+
+    /**
+     * 배경사진 저장하는 메소드
+     * */
+    public void saveAttachUserBackground(MultipartFile file, User user) throws Exception {
+        //1.서버에 파일 저장
+        String[] saveArr;
+        if(file != null) saveArr = saveAttach(file,"background");
+        else throw new FileNotFoundException();
+
+        //2.AttachUserBackground 엔티티 생성해서 DB에도 저장
+        AttachUserBackground attachUserBackground = AttachUserBackground.builder()
+                .user(user)
+                .title(saveArr[0])
+                .path(saveArr[1])
+                .build();
+        attachRepository.editBackground(attachUserBackground, user);
     }
     
 }

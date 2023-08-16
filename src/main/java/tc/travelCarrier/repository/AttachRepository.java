@@ -6,6 +6,7 @@ import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.WeeklyDTO;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -45,13 +46,28 @@ public class AttachRepository {
 
     // 프로필 사진 수정
     public void editProfile(AttachUser newAttachUser, User user){
-        String jpql = "SELECT a FROM AttachUser a WHERE a.user = :user";
-        AttachUser origin = em.createQuery(jpql, AttachUser.class)
-                .setParameter("user", user)
-                .getSingleResult();
-        em.remove(origin);
+        try{
+            String jpql = "SELECT a FROM AttachUser a WHERE a.user = :user";
+            AttachUser origin = em.createQuery(jpql, AttachUser.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+            origin.editAttachUser(newAttachUser);
+        } catch (NoResultException e){
+            em.persist(newAttachUser);
+        }
+    }
 
-        em.persist(newAttachUser);
+    // 배경 사진 수정
+    public void editBackground(AttachUserBackground aub, User user){
+        try{
+            String jpql = "SELECT a FROM AttachUserBackground a WHERE a.user = :user";
+            AttachUserBackground origin = em.createQuery(jpql, AttachUserBackground.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+            origin.editAttachUserBackground(aub);
+        } catch (NoResultException e){
+            em.persist(aub);
+        }
     }
 
 }

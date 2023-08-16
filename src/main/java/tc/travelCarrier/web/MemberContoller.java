@@ -70,10 +70,21 @@ public class MemberContoller {
     // 멤버 프로필사진 변경
     @PostMapping(value="/member/profile")
     @ResponseBody
-    public ResponseEntity regist(@RequestParam("profileImg") MultipartFile profileFile,
+    public ResponseEntity registProfile(@RequestParam("profileImg") MultipartFile profileFile,
                                          @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         User user = principalDetails.getUser();
         attachService.saveAttachUser(profileFile, user);
+        return ResponseEntity.ok(null);
+    }
+
+
+    // 멤버 프로필사진 변경
+    @PostMapping(value="/member/background")
+    @ResponseBody
+    public ResponseEntity registBackground(@RequestParam("profileImg") MultipartFile backgroundImgFile,
+                                 @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+        User user = principalDetails.getUser();
+        attachService.saveAttachUserBackground(backgroundImgFile, user);
         return ResponseEntity.ok(null);
     }
 

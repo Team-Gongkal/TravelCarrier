@@ -1,9 +1,6 @@
 package tc.travelCarrier.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -23,5 +20,10 @@ public class AttachUser extends Attach{
         this.attachTitle = attachTitle;
         this.thumbPath = thumb;
     }
-    
+
+    public void editAttachUser(AttachUser au){
+        this.attachTitle = au.getAttachTitle();
+        this.thumbPath = au.getFullThumbPath();
+    }
+
 }

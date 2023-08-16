@@ -78,7 +78,7 @@ function saveCrop() {
         processData: false, // data 파라미터 강제 string 변환 방지
         contentType: false, // application/x-www-form-urlencoded; 방지
         success: function () {
-          console.log("업로드 성공");
+          alert("업로드 성공");
         },
         error: function () {
           console.log("업로드 에러");
