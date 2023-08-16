@@ -252,8 +252,7 @@ public class AttachService {
             // 파일이 있을경우 서버에 저장후 DB 저장
             saveArr = saveAttach(file,"user/profile");
         } else {
-            // 파일이 없을경우 서버저장 생략, 기본이미지 경로 DB에 저장
-            saveArr = new String[]{"default_profile.png", fileDir + "default/default_profile.png"};
+            throw new FileNotFoundException();
         }
 
         //2.AttachWeekly 엔티티 생성해서 DB에도 저장
