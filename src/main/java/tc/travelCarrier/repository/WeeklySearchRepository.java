@@ -23,6 +23,8 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
 
     Page<Weekly> findByUserOrderByIdDesc(User user, Pageable pageable);
 
+    // dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
+//    @Query("SELECT DISTINCT w FROM Weekly w WHERE w.status == 'ALL'")
 
 
     @Query("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = ?1 ORDER BY w.id DESC")
