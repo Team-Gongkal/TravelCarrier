@@ -36,8 +36,15 @@ public class AuthChecker {
         // 읽기권한
         if(status == OpenStatus.ALL) answer[0] = "GRANTED";
         else if(status == OpenStatus.FOLLOW){
-            for(Follower follower : user.getFollowers()){
+/*            for(Follower follower : user.getFollowers()){
                 if(follower.getFollower() == weekly.getUser()){
+                    answer[0] = "GRANTED";
+                    break;
+                }
+            }*/
+            // 글쓴이가 팔로워하고 있는 사람들에게 읽기권한을 부여한다
+            for(Follower f : weekly.getUser().getFollowers()){
+                if(f.getFollower() == user){
                     answer[0] = "GRANTED";
                     break;
                 }

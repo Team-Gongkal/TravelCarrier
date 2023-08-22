@@ -257,19 +257,27 @@ public class MyPageController {
         model.addAttribute("profile",traveler);
         // 이메일 : profile.email, 프사 : profile.attachUser.thumbPath, 이름 : profile.name, 배경사진 : profile.attachUserBackground.thumbPath
 
-
-        // 팔로워인지 확인
-        boolean follow = false;
+        // 접속자가 트래블러를 팔로우하는지 확인
+        boolean isFollowingTraveler = false;
         for(Follower f : user.getFollowers()){
-            if(f.getFollower().getId() == traveler.getId()) follow = true;
+            if(f.getFollower().getId() == traveler.getId()) isFollowingTraveler = true;
         }
+        model.addAttribute("isFollowingTraveler", isFollowingTraveler);
+
+        // 트래블러가 접속자를 팔로우 하는지 확인
+        boolean follow = false;
+        // FOLLOW공개 글은 내가 traveler의 팔로잉목록에 있어야 볼 수 있다.
+        for(Follower f : traveler.getFollowers()){
+            if(f.getFollower().getId() == user.getId()) follow = true;
+        }
+
         model.addAttribute("follow", follow);
         if(follow) model.addAttribute("diaryList",weeklySearchRepository.findFollowWeekliesByTraveler(traveler, OpenStatus.ME,pageable));
         else model.addAttribute("diaryList",weeklySearchRepository.findNotFollowWeekliesByTraveler(traveler,OpenStatus.ALL,pageable));
 
         List<Weekly> tagDiaryList = new ArrayList<>();
         for(Weekly w : weeklyRepository.getTagWeeklys(traveler)){
-            // ME : 글쓴이 본인이거나 태그된사람이면 띄우기
+            // ME : 글쓴이 본인이거나 함께 태그된사람이면 띄우기
             if(w.getStatus() == OpenStatus.ME){
                 if(w.getUser().getId() == user.getId()) tagDiaryList.add(w);
                 else {
@@ -305,6 +313,11 @@ public class MyPageController {
         User traveler = memberRepository.findUserByEmail(email);
 
         String type = searchDTO.getType();
+        /*
+            정리하자면, 현재 트래블러의 페이지를 방문했을때
+            dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
+            tag : ALL, FOLLOW(user가 글쓴이의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있거나 글쓴이가 user일경우)
+         */
         if(type.equals("dia")){
             Page<Weekly> weeklyPage = searchService.findWeeklyPaging(traveler, pageable);
             return transferWeeklyDTO(traveler, weeklyPage);
