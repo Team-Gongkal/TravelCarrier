@@ -18,6 +18,7 @@ $(document).ready(function () {
 
     //선택한 이미지 파일명 가져오기-------------
     var selectedFile = event.target.files[0];
+
     //내가 선택한 파일을 변수로 담아줌/다중파일 업로드가 가능한데, 우리는 1개만 선택하니 [0]번으로 고정함
     $(".crop_img > img").attr("src", URL.createObjectURL(selectedFile));
     //이미지 url생성해주기, 보안상 url을 가져오는 것이 안돼, 임의로 만들어줌
@@ -57,21 +58,25 @@ $(document).ready(function () {
     //[1]프로필 변경일 경우---------------------
     var changedInputId = event.target.id; // 변경된 입력 요소의 ID를 가져옴
     if (changedInputId === "profile_img_change") {
-      //   //프로필 이미지 객체에 생성
-      //   var profileObj = new ProfileChange();
       //cropper비율 설정(1:1)
       cropper.options.aspectRatio = 1 / 1;
       cropper.options.autoCropArea = 0.5;
 
+      // 프로필 이미지 객체에 생성
+      var profileObj = selectedFile;
+      console.log(selectedFile);
+
       //[2]배경이미지의 변경일 경우--------------------
     } else if (changedInputId === "profile_bg_change") {
-      //   //배경 이미지 객체에 생성
-      //   var backgroundObj = new ProfileChange();
       //cropper비율 설정(4:1)
       cropper.options.autoCropArea = 1;
       cropper.options.aspectRatio = 4 / 1;
+
+      // 배경 이미지 객체에 생성
+      var backgroundObj = selectedFile;
     }
   });
+
   //2. 서버에 올릴 수 있도록 파일로 변환
   function saveCrop() {
     cropper.getCroppedCanvas().toBlob(
@@ -87,7 +92,7 @@ $(document).ready(function () {
         }
         // jQuery.ajax이용해서 서버에 업로드
         $.ajax({
-          url: "/TravelCarrier/member/profile",
+          url: "/TravelCarrier/member/background",
           type: "POST",
           data: formData, //앞에서 생성한 formData
           processData: false, // data 파라미터 강제 string 변환 방지
