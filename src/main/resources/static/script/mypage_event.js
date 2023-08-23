@@ -228,7 +228,7 @@ function travelerHtml(data, type) {
                        <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
                      </div>`;
   } else if (type == "follower") {
-    html += `<div class="follower_del_btn">
+    html += `<div class="follower_add_btn">
                       <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구신청</button>
                     </div>`;
   }
