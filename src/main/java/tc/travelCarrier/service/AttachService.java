@@ -133,9 +133,6 @@ public class AttachService {
         // 썸네일로 변환한 파일의 저장경로
         String thumbPath = fileDir+"user/"+folder+"/"+newTitle;
 
-        System.out.println("왜 오류?ㅋㅋ "+resizeImageFile(file));
-System.out.println("왜 오류?ㅋㅋ "+extension);
-System.out.println("왜 오류?ㅋㅋ "+new File(thumbPath));
         // 이미지 저장
         boolean a = ImageIO.write(resizeImageFile(file), extension,
                 new File(thumbPath));
@@ -147,8 +144,6 @@ System.out.println("왜 오류?ㅋㅋ "+new File(thumbPath));
 
     // 이미지 리사이징 - 고민이 더 필요할듯
     private BufferedImage resizeImageFile(MultipartFile mFile) throws IOException {
-
-
         File file = new File(System.getProperty("java.io.tmpdir") + mFile.getOriginalFilename());
         mFile.transferTo(file);
         // 회전
