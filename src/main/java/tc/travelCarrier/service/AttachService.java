@@ -134,6 +134,7 @@ public class AttachService {
         String thumbPath = fileDir+"user/"+folder+"/"+newTitle;
 
         // 이미지 저장
+        System.out.println("thumbPath : "+thumbPath);
         boolean a = ImageIO.write(resizeImageFile(file), extension,
                 new File(thumbPath));
 
@@ -145,6 +146,7 @@ public class AttachService {
     // 이미지 리사이징 - 고민이 더 필요할듯
     private BufferedImage resizeImageFile(MultipartFile mFile) throws IOException {
         File file = new File(System.getProperty("java.io.tmpdir") + mFile.getOriginalFilename());
+        System.out.println("mfile : "+file);
         mFile.transferTo(file);
         // 회전
         //file = turnImage(file);

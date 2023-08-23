@@ -308,23 +308,35 @@ public class MyPageController {
     //트래블러 페이지 페이징
     @PostMapping("/member/{email}/page")
     @ResponseBody
-    public List<MyPageDTO> pagingTravelerPage(@PathVariable String email, @RequestBody SearchDTO searchDTO, Pageable pageable){
+    public List<MyPageDTO> pagingTravelerPage(@PathVariable String email,
+                                              @AuthenticationPrincipal PrincipalDetails principalDetails,
+                                              @RequestBody SearchDTO searchDTO, Pageable pageable){
         System.out.println(searchDTO.toString());
         User traveler = memberRepository.findUserByEmail(email);
-
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         String type = searchDTO.getType();
         /*
             정리하자면, 현재 트래블러의 페이지를 방문했을때
-            dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
             tag : ALL, FOLLOW(user가 글쓴이의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있거나 글쓴이가 user일경우)
+            dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
          */
+
+        //내가 traveler의 팔로잉목록에 있는지 확인
+        boolean isFollowUser = false;
+        for(Follower f : traveler.getFollowers()){
+            if(f.getFollower().getId() == user.getId()){
+                isFollowUser = true;
+                break;
+            }
+        }
+        System.out.println("팔로잉 중? ="+isFollowUser);
         if(type.equals("dia")){
             Page<Weekly> weeklyPage = searchService.findWeeklyPaging(traveler, pageable);
-            return transferWeeklyDTO(traveler, weeklyPage);
+            return transferCheckWeeklyDTO(user, weeklyPage, isFollowUser);
         }
         else if(type.equals("tag")){
             Page<Weekly> weeklyPage = searchService.findTagWeeklyPaging(traveler, pageable);
-            return transferWeeklyDTO(traveler, weeklyPage);
+            return transferCheckTagWeeklyDTO(user, weeklyPage);
         }
         else if(type.equals("tra")){
             if(searchDTO.getDetailType().equals("following")) {
@@ -338,6 +350,90 @@ public class MyPageController {
 
         }
         return null;
+    }
+
+    //해당 트래블러의 다이어리에 대해 접근할수있는 데이터만 남기기
+    //dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
+    private List<MyPageDTO> transferCheckWeeklyDTO(User user, Page<Weekly> weeklyPage, boolean isFollowUser) {
+        // dto : weeklyId, title, date, thumbPath, goWithList
+        List<MyPageDTO> result = new ArrayList<>();
+        for(Weekly w : weeklyPage){
+            if(w.getStatus() == OpenStatus.FOLLOW && !isFollowUser) continue;
+            if(w.getStatus() == OpenStatus.ME){
+                boolean flag = false;
+                for(Gowith g : w.getGowiths()) {
+                    if(g.getUser().getId() == user.getId()){
+                        flag = true;
+                    }
+                }
+                if(!flag) continue;
+            }
+
+            List<String> users = new ArrayList<>();
+            boolean hide = false;
+            for(Gowith g : w.getGowiths()) {
+                users.add(g.getUser().getAttachUser().getThumbPath());
+                if(g.getUser().getId() == user.getId()) hide = g.getHide();
+            }
+
+            MyPageDTO dto = MyPageDTO.weeklyBuilder()
+                    .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
+                    .thumbPath(w.getAttachWeekly().getThumbPath())
+                    .goWithList(users)
+                    .hide(hide)
+                    .build();
+
+            result.add(dto);
+        }
+
+        return result;
+    }
+
+    //tag : ALL, FOLLOW(user가 글쓴이의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있거나 글쓴이가 user일경우)
+    private List<MyPageDTO> transferCheckTagWeeklyDTO(User user, Page<Weekly> weeklyPage) {
+        // dto : weeklyId, title, date, thumbPath, goWithList
+        List<MyPageDTO> result = new ArrayList<>();
+        for(Weekly w : weeklyPage){
+            if(w.getStatus() == OpenStatus.FOLLOW){
+                boolean isFollowUser = false;
+                for(Follower f : w.getUser().getFollowers()){
+                    if(f.getFollower().getId() == user.getId()){
+                        isFollowUser = true;
+                        break;
+                    }
+                }
+                if(!isFollowUser) continue;
+            }
+            if(w.getStatus() == OpenStatus.ME){
+                if(w.getUser().getId() != user.getId()){
+                    boolean flag = false;
+                    for(Gowith g : w.getGowiths()) {
+                        if(g.getUser().getId() == user.getId()){
+                            flag = true;
+                        }
+                    }
+                    if(!flag) continue;
+                }
+            }
+
+            List<String> users = new ArrayList<>();
+            boolean hide = false;
+            for(Gowith g : w.getGowiths()) {
+                users.add(g.getUser().getAttachUser().getThumbPath());
+                if(g.getUser().getId() == user.getId()) hide = g.getHide();
+            }
+
+            MyPageDTO dto = MyPageDTO.weeklyBuilder()
+                    .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
+                    .thumbPath(w.getAttachWeekly().getThumbPath())
+                    .goWithList(users)
+                    .hide(hide)
+                    .build();
+
+            result.add(dto);
+        }
+
+        return result;
     }
 
 

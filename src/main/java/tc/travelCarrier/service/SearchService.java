@@ -60,4 +60,6 @@ public class SearchService {
         Date edate = sdf.parse(searchDTO.getEdate());
         return weeklySearchRepository.findTagWeeklyPagingByDate(sdate, edate,  user, pageable);
     }
+
+
 }
