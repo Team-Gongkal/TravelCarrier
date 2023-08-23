@@ -20,7 +20,13 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.domain.*;
+import tc.travelCarrier.domain.AttachDaily;
+import tc.travelCarrier.domain.AttachUser;
+import tc.travelCarrier.domain.AttachUserBackground;
+import tc.travelCarrier.domain.AttachWeekly;
+import tc.travelCarrier.domain.Daily;
+import tc.travelCarrier.domain.User;
+import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.exeption.FileNotFoundException;
@@ -127,6 +133,9 @@ public class AttachService {
         // 썸네일로 변환한 파일의 저장경로
         String thumbPath = fileDir+"user/"+folder+"/"+newTitle;
 
+        System.out.println("왜 오류?ㅋㅋ "+resizeImageFile(file));
+System.out.println("왜 오류?ㅋㅋ "+extension);
+System.out.println("왜 오류?ㅋㅋ "+new File(thumbPath));
         // 이미지 저장
         boolean a = ImageIO.write(resizeImageFile(file), extension,
                 new File(thumbPath));

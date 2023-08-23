@@ -268,42 +268,87 @@ $(document).ready(function () {
   });
 });
 
-//document.addEventListener("click", function (event) {
-//  var hoveredElement = event.target;
-//  console.log(hoveredElement);
-//});
+//클릭요소 확인용(삭제)
+document.addEventListener("click", function (event) {
+  var hoveredElement = event.target;
+  console.log(hoveredElement);
+});
 
-var input_profile = $("input:radio[name=choose_profile]");
-var input_bg = $("input:radio[name=choose_bg]");
+//프로필 이미지 변경 input태그 활성화
+// var input_profile = $("input:radio[name=choose_profile]");
+// var input_bg = $("input:radio[name=choose_bg]");
+// var choose_profile = $(
+//   ".choose_profile > ul.edit_profile_padding > li > label > div"
+// );
+// var choose_background = $(".choose_bg > ul.edit_profile_padding > li");
+
+// // $(input_profile)
+// //   .add(input_bg)
+// $("input:radio[name=choose_bg], input:radio[name=choose_profile]").on(
+//   "click",
+//   function (e) {
+//     if ($(this).is(input_profile)) {
+//       // choose_profile에 대한 동작 수행
+//       choose_profile.removeClass("on");
+//       $(e.target).siblings("label").children("div").addClass("on");
+
+//       // 이미지 선택시 프로필파일 선택창 활성화
+//       if ($(this).val() === "upload_profile") {
+//         //내가 클릭한 값이 일치하는지 확인해야해서 $(this)사용, input_profile.val()은 3개 버튼의 값을 가져오기에 확인이 불가함.
+//         console.log("프로필 바꿔라");
+//         //안의 파일선택인풋 활성화
+//         $("#profile_img_change").click();
+//       }
+//     } else if ($(this).is(input_bg)) {
+//       // choose_background에 대한 동작 수행
+//       choose_background.removeClass("on");
+//       $(e.target).parents("li").addClass("on");
+//       // 이미지 선택시 배경파일 선택창 활성화
+//       if ($(this).val() === "upload_bg") {
+//         console.log("배경 바꿔라");
+
+//         //파일선택 인풋창 실행
+//         $("#profile_bg_change").click();
+//       }
+//     }
+//   }
+// );
 var choose_profile = $(
   ".choose_profile > ul.edit_profile_padding > li > label > div"
 );
 var choose_background = $(".choose_bg > ul.edit_profile_padding > li");
-$(input_profile)
-  .add(input_bg)
-  .on("click", function (e) {
-    if ($(this).is(input_profile)) {
-      // choose_profile에 대한 동작 수행
-      choose_profile.removeClass("on");
-      $(e.target).siblings("label").children("div").addClass("on");
 
-      // 이미지 선택시 프로필파일 선택창 활성화
-      if ($(this).val() === "upload_profile") {
-        //내가 클릭한 값이 일치하는지 확인해야해서 $(this)사용, input_profile.val()은 3개 버튼의 값을 가져오기에 확인이 불가함.
-        console.log("프로필 바꿔라");
-        //안의 파일 인풋창 활성화
-        $("#profile_img_change").click();
-      }
-    } else if ($(this).is(input_bg)) {
-      // choose_background에 대한 동작 수행
-      choose_background.removeClass("on");
-      $(e.target).parents("li").addClass("on");
-      // 이미지 선택시 배경파일 선택창 활성화
-      if ($(this).val() === "upload_bg") {
-        console.log("배경 바꿔라");
+//[1] 선택한 라디오버튼 표시하기
+function chooseOn() {
+  console.log(this.value + "라디오선택됨");
+  if ($(this).is("input:radio[name=choose_profile]")) {
+    // (1)선택된 라디오버튼이 프로필 변경일 경우
+    choose_profile.removeClass("on");
+    $(this).siblings("label").children("div").addClass("on");
+  }
+  if ($(this).is("input:radio[name=choose_bg]")) {
+    // (2)선택된 라디오버튼이 배경 변경일 경우
+    choose_background.removeClass("on");
+    $(this).parents("li").addClass("on");
+  }
+}
+// [1] 실행
+$(".edit_profile input[type=radio]").on("change", chooseOn);
 
-        //파일선택 인풋창 실행
-        $("#profile_bg_change").click();
-      }
-    }
-  });
+//[2]프로필과 배경이미지 변경 라디오버튼 선택시
+function clickUpload() {
+  console.log("업로드선택함");
+
+  //(1)프로필 이미지 변경
+  if (this.value === "upload_profile") {
+    console.log("프로필 이미지 바껴라");
+    // 크로퍼 열기 + 파일선택 인풋창 실행
+    $("#profile_img_change").click();
+  } else if (this.value === "upload_bg") {
+    //(2) 배경 이미지 변경
+    console.log("배경 이미지 바껴라");
+    $("#profile_bg_change").click();
+  }
+}
+// [2]실행
+$(".edit_profile input[type=radio]").on("click", clickUpload);

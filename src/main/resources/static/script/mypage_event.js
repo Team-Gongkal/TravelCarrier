@@ -1,6 +1,5 @@
 // mypage의 ajax를 관리하는 이벤트리스너를 등록하는 js파일입니다
 
-
 //팔로우/팔로워 탭 - by 윤아
 $("#follower").on("click", function () {
   getFollowPage("tra", "follower", 1);
@@ -379,32 +378,32 @@ function getDate(btn) {
 }
 
 // 프로필 이미지 선택시 checked - by 윤아
-$(`input:radio[name=choose_profile],input:radio[name=choose_bg]`).on(
-  "change",
-  function () {
-    var upload = $("input:radio[name=choose_profile]:checked").val();
-    var uploadbg = $("input:radio[name=choose_bg]:checked").val();
+// $(`input:radio[name=choose_profile],input:radio[name=choose_bg]`).on(
+//   "change",
+//   function () {
+//     var upload = $("input:radio[name=choose_profile]:checked").val();
+//     var uploadbg = $("input:radio[name=choose_bg]:checked").val();
 
-    if ($(this).is(":checked")) {
-      if ($(this).is("input:radio[name=choose_profile]")) {
-        // choose_profile에 대한 동작 수행
-        $(".choose_profile ul li > label > div").removeClass("on");
-        $(this).siblings("label").children("div").addClass("on");
-      } else if ($(this).is("input:radio[name=choose_bg]")) {
-        // choose_bg에 대한 동작 수행
-        $(".choose_bg > ul > li").removeClass("on");
-        $(this).parents("li").addClass("on");
-        // $(this).siblings("label").children("div").addClass("on");
-      }
-    }
-    if (upload === "upload_profile") {
-      $("#profile_img_change").trigger("click");
-    }
-    if (uploadbg === "upload_bg") {
-      $("#profile_bg_change").trigger("click");
-    }
-  }
-);
+//     if ($(this).is(":checked")) {
+//       if ($(this).is("input:radio[name=choose_profile]")) {
+//         // choose_profile에 대한 동작 수행
+//         $(".choose_profile ul li > label > div").removeClass("on");
+//         $(this).siblings("label").children("div").addClass("on");
+//       } else if ($(this).is("input:radio[name=choose_bg]")) {
+//         // choose_bg에 대한 동작 수행
+//         $(".choose_bg > ul > li").removeClass("on");
+//         $(this).parents("li").addClass("on");
+//         // $(this).siblings("label").children("div").addClass("on");
+//       }
+//     }
+//     if (upload === "upload_profile") {
+//       $("#profile_img_change").trigger("click");
+//     }
+//     if (uploadbg === "upload_bg") {
+//       $("#profile_bg_change").trigger("click");
+//     }
+//   }
+// );
 
 // $(".choose_profile, .choose_bg").on("click", "ul > li", function () {
 //   if ($(this).parent().hasClass("choose_profile")) {
