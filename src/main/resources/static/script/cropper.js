@@ -32,10 +32,6 @@ $(document).ready(function () {
       //autoCropArea: 0.5, 잘라질 박스의 크기지정 0.1~1
       width: 100 + "%",
       height: 90 + "%",
-      // minWidth: 256,
-      // minHeight: 256,
-      // maxWidth: 4096,
-      // maxHeight: 4096,
       fillColor: "#ffffff00", //투명도 설정 가능
       imageSmoothingEnabled: false,
       imageSmoothingQuality: "high",
@@ -55,66 +51,82 @@ $(document).ready(function () {
         console.log(event.detail.scaleY);
       },*/
     });
+
     //[1]프로필 변경일 경우---------------------
     var changedInputId = event.target.id; // 변경된 입력 요소의 ID를 가져옴
     if (changedInputId === "profile_img_change") {
       //cropper비율 설정(1:1)
       cropper.options.aspectRatio = 1 / 1;
       cropper.options.autoCropArea = 0.5;
-
-      // 프로필 이미지 객체에 생성
-      var profileObj = selectedFile;
-      console.log(selectedFile);
+      $(".edit_img_saveBtn  button[type=button]").removeClass("bolbBackground");
+      $(".edit_img_saveBtn  button[type=button]").addClass("bolbProfile");
 
       //[2]배경이미지의 변경일 경우--------------------
     } else if (changedInputId === "profile_bg_change") {
       //cropper비율 설정(4:1)
       cropper.options.autoCropArea = 1;
-      cropper.options.aspectRatio = 4 / 1;
-
-      // 배경 이미지 객체에 생성
-      var backgroundObj = selectedFile;
+      cropper.options.aspectRatio = 3 / 1;
+      $(".edit_img_saveBtn  button[type=button]").removeClass("bolbProfile");
+      $(".edit_img_saveBtn  button[type=button]").addClass("bolbBackground");
     }
   });
+  //cropper적용하기-버튼 클릭시
+  var profileFormData = null;
+  var backgroundFormData = null;
 
+  $(document).on("click", ".bolbProfile", function () {
+    console.log("###프로필 데이터 폼 생성");
+    profileFormData = new FormData(); //데이터폼을 생성
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      profileFormData.append("profileImg", blob /*, 'example.png' , 0.7*/);
+      var url = URL.createObjectURL(blob);
+      $(
+        ".edit_modal_con .my_profile_img img, .choose_profile .upload_image img"
+      ).attr("src", url);
+    });
+  });
+
+  $(document).on("click", ".bolbBackground", function () {
+    console.log("###배경 데이터 폼 생성");
+    backgroundFormData = new FormData(); //데이터폼을 생성
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      backgroundFormData.append(
+        "backgroundImg",
+        blob /*, 'example.png' , 0.7*/
+      );
+      var url = URL.createObjectURL(blob);
+      $(".userProfile_bg img, .choose_bg .upload_image img").attr("src", url);
+    });
+  });
+  // 모달창 닫기
+  $(".edit_img_saveBtn").click(function () {
+    $(".crop_img_modal").removeClass("show");
+  });
   //2. 서버에 올릴 수 있도록 파일로 변환
-  function saveCrop() {
-    cropper.getCroppedCanvas().toBlob(
-      (blob) => {
-        //HTMLCanvasElement를 return 받아서 blob파일로 변환해준다
-        const formData = new FormData(); //데이터폼을 생성
-
-        formData.append("profileImg", blob /*, 'example.png' , 0.7*/);
-        //새로운 formData를 생성해서 앞에서 변경해준 blob파일을 삽입한다.(이름 지정 가능, 맨뒤 매개변수는 화질 설정)
-        console.log(formData);
-        for (const [key, value] of formData.entries()) {
-          console.log(key, value);
-        }
-        // jQuery.ajax이용해서 서버에 업로드
-        $.ajax({
-          url: "/TravelCarrier/member/background",
-          type: "POST",
-          data: formData, //앞에서 생성한 formData
-          processData: false, // data 파라미터 강제 string 변환 방지
-          contentType: false, // application/x-www-form-urlencoded; 방지
-          success: function () {
-            console.log("업로드 성공");
-          },
-          error: function () {
-            console.log("업로드 에러");
-          },
-        });
-      } /*, 'image/png' */
-    ); //서버에 저장 형식 사용 가능
+  function saveCrop(url, formData) {
+    console.log("---------------------");
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: formData, //앞에서 생성한 formData
+      processData: false, // data 파라미터 강제 string 변환 방지
+      contentType: false, // application/x-www-form-urlencoded; 방지
+      success: function () {
+        console.log("업로드 성공");
+      },
+      error: function () {
+        console.log("업로드 에러");
+      },
+    });
   }
 
-  //cropper적용하기-버튼 클릭시
-  $(".edit_img_saveBtn  button").on("click", function () {
-    if ($(this).attr("type") === "button") {
-      saveCrop();
-      console.log("크롭실행");
+  $(".edit_profile_saveBtn button").on("click", function () {
+    console.log("이미지 저장해");
+    if (profileFormData !== null) {
+      saveCrop("/TravelCarrier/member/profile", profileFormData);
     }
-    //+모달창 닫기
-    $(".crop_img_modal").removeClass("show");
+    if (backgroundFormData !== null) {
+      saveCrop("/TravelCarrier/member/background", backgroundFormData);
+    }
   });
 });

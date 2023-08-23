@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 import tc.travelCarrier.auth.PrincipalDetails;
-import tc.travelCarrier.domain.*;
+import tc.travelCarrier.domain.User;
 import tc.travelCarrier.repository.FollowRepository;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
@@ -81,7 +81,7 @@ public class MemberContoller {
     // 멤버 프로필사진 변경
     @PostMapping(value="/member/background")
     @ResponseBody
-    public ResponseEntity registBackground(@RequestParam("profileImg") MultipartFile backgroundImgFile,
+    public ResponseEntity registBackground(@RequestParam("backgroundImg") MultipartFile backgroundImgFile,
                                  @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         User user = principalDetails.getUser();
         attachService.saveAttachUserBackground(backgroundImgFile, user);
