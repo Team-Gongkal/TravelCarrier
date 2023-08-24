@@ -397,7 +397,6 @@ header > nav {
   opacity: 1;
   visibility: visible;
 }
-
 .alert {
   width: 27%;
   height: fit-content;
@@ -409,14 +408,16 @@ header > nav {
   transform: translateX(-50%);
   border-radius: 0.4rem;
   overflow: hidden;
+}
+#alert_modal.show .alert {
   animation-name: alertCome;
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
   opacity: 0;
 }
 @keyframes alertCome {
   0% {
-    top: -100%;
+    top: -50%;
     opacity: 0;
   }
   100% {
