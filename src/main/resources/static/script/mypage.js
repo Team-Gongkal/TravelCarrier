@@ -92,7 +92,7 @@ userProfileScroll.on("scroll", function () {
   }
 });
 
-//탭메뉴 활성화 -by윤아
+//메인 탭메뉴 활성화 -by윤아
 var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery").children("ul,div");
@@ -274,45 +274,27 @@ document.addEventListener("click", function (event) {
   console.log(hoveredElement);
 });
 
-//프로필 이미지 변경 input태그 활성화
-// var input_profile = $("input:radio[name=choose_profile]");
-// var input_bg = $("input:radio[name=choose_bg]");
-// var choose_profile = $(
-//   ".choose_profile > ul.edit_profile_padding > li > label > div"
-// );
-// var choose_background = $(".choose_bg > ul.edit_profile_padding > li");
+//(⚙️ 설정)--------------------------------------
+//탭메뉴 활성화
+var settingTab = $(".edit_modal_nav > ul> li"); //탭메뉴 리스트
+var settingCon = $(".edit_modal_con > ul > li"); //탭메뉴에 해당하는 컨텐츠
 
-// // $(input_profile)
-// //   .add(input_bg)
-// $("input:radio[name=choose_bg], input:radio[name=choose_profile]").on(
-//   "click",
-//   function (e) {
-//     if ($(this).is(input_profile)) {
-//       // choose_profile에 대한 동작 수행
-//       choose_profile.removeClass("on");
-//       $(e.target).siblings("label").children("div").addClass("on");
+//탭실행
+settingTab.each((idx) => {
+  $(settingTab)
+    .eq(idx)
+    .on("click", function () {
+      console.log(idx);
+      //선택된 탭메뉴 리스트 표시
+      settingTab.removeClass("on");
+      $(this).addClass("on");
+      //해당 콘텐츠 보이기
+      $(settingCon).removeClass("show");
+      $(settingCon).eq(idx).addClass("show");
+    });
+});
 
-//       // 이미지 선택시 프로필파일 선택창 활성화
-//       if ($(this).val() === "upload_profile") {
-//         //내가 클릭한 값이 일치하는지 확인해야해서 $(this)사용, input_profile.val()은 3개 버튼의 값을 가져오기에 확인이 불가함.
-//         console.log("프로필 바꿔라");
-//         //안의 파일선택인풋 활성화
-//         $("#profile_img_change").click();
-//       }
-//     } else if ($(this).is(input_bg)) {
-//       // choose_background에 대한 동작 수행
-//       choose_background.removeClass("on");
-//       $(e.target).parents("li").addClass("on");
-//       // 이미지 선택시 배경파일 선택창 활성화
-//       if ($(this).val() === "upload_bg") {
-//         console.log("배경 바꿔라");
-
-//         //파일선택 인풋창 실행
-//         $("#profile_bg_change").click();
-//       }
-//     }
-//   }
-// );
+//(설정-1) 프로필 이미지 변경
 var choose_profile = $(
   ".choose_profile > ul.edit_profile_padding > li > label > div"
 );

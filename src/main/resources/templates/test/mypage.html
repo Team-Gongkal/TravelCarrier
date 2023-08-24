@@ -220,16 +220,16 @@
         <ul>
           <li class="on"><span>프로필 편집</span></li>
           <li><span>계정 설정</span></li>
-          <li><span>로그아웃</span></li>
+          <!-- <li><span>로그아웃</span></li>
           <li><span>탈퇴</span></li>
-          <li><span>눈누난나</span></li>
+          <li><span>눈누난나</span></li> -->
         </ul>
       </div>
       <!-- 환결설정 모달창========================================================= -->
       <div class="edit_modal_con">
         <ul>
           <!-- 프로필 이미지 변경 -->
-          <li class="edit_profile">
+          <li class="edit_profile show">
             <!-- <form> -->
             <div class="edit_profile_ex">
               <h3>미리보기
@@ -350,7 +350,46 @@
           </li>
           <!-- 프로필 변경 끝 -->
           <!-- 개인정보설정 -->
-          <li></li>
+          <li class="account_settings">
+            <h3>내 정보 수정하기</h3>
+            <div class="account_name">
+              <div class="tit">
+                <span>이름</span>
+              </div>
+              <div class="info_text">
+                <input type="text">
+              </div>
+              <div class="msg">
+                <span class="msg_text">사용가능한 별명이에요!</span>
+                <span class="msg_cnt">글자수<em>/제한</em></span>
+              </div>
+            </div>
+            <div class="account_email">
+              <div class="tit">
+                <span>내계정</span>
+              </div>
+              <div class="info_text">
+                <input type="email" name="" id="" readonly>
+              </div>
+            </div>
+            <div class="account_password">
+              <div class="tit">
+                <span>비밀번호</span>
+              </div>
+              <div class="change_pw">
+                <button type="button">비밀번호 변경하기</button>
+              </div>
+            </div>
+            <div id="del_account">
+              <div class="tit">
+                <span>탈퇴</span>
+              </div>
+              <button type="button" onclick="alertModal('탈퇴 ')">탈퇴하기</button>
+            </div>
+            <div class="edit_profile_saveBtn">
+              <button type="submit" class="btn">저장하기</button>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

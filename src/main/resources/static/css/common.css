@@ -86,7 +86,7 @@ button {
   font-weight: 300;
   padding: 1em;
   border: none;
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   box-sizing: border-box;
   color: #353a52;
 }
@@ -158,7 +158,7 @@ button.btn {
   color: #f7f7f7;
   background: #a0c1ca;
   border: none;
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   cursor: pointer;
   font-family: "NanumSquareNeo";
   letter-spacing: 0.05rem;
