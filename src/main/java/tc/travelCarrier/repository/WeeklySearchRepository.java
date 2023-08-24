@@ -23,8 +23,7 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
 
     Page<Weekly> findByUserOrderByIdDesc(User user, Pageable pageable);
 
-    // dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
-//    @Query("SELECT DISTINCT w FROM Weekly w WHERE w.status == 'ALL'")
+
 
 
     @Query("SELECT w FROM Weekly w INNER JOIN w.gowiths g WHERE g.user = ?1 ORDER BY w.id DESC")
@@ -52,5 +51,6 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
     @Query("SELECT w FROM Weekly w WHERE w.user = ?1 AND w.status != ?2 ORDER BY w.id DESC")
     Page<Weekly> findFollowWeekliesByTraveler(User user, OpenStatus status, Pageable pageable);
 
-    // 친구의 마이페이지 태그된 글 목록 -> 해당 글의 글쓴이가 로그인유저의 팔로워일때 AND ALL인것만 뜸
+
+
 }

@@ -1,5 +1,12 @@
 // 트래블러의 페이지를 보여주는 이벤트리스너를 관리하는 js입니다
 
+
+$(document).ready(function() {
+    // 페이지가 로드될 때 실행되는 함수
+    $('.userProfile_tab li.on').trigger('click'); // 탭 클릭
+});
+
+
 //현재 방문한 트래블러 페이지의 주인의 이메일
 let TravelerEmail = $(location).attr('href').substring( $(location).attr('href').indexOf("/member/")+8 );
 
