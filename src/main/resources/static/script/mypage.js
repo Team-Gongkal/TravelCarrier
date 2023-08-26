@@ -1,5 +1,7 @@
 // mypage의 기본적 css동작을 관장하는 리스너를 등록하는 js파일 입니다.
 
+
+
 //계정관리 모달창 활성화 - by 윤아
 $("#edit_menu").on("click", function () {
   $(".edit_menu").addClass("show");

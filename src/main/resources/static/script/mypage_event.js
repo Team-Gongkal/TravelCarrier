@@ -1,5 +1,11 @@
 // mypage의 ajax를 관리하는 이벤트리스너를 등록하는 js파일입니다
 
+$(document).ready(function() {
+    // 페이지가 로드될 때 실행되는 함수
+    getPage("dia", 1);
+});
+
+
 //팔로우/팔로워 탭 - by 윤아
 $("#follower").on("click", function () {
   getFollowPage("tra", "follower", 1);
