@@ -418,3 +418,50 @@ function getDate(btn) {
 //     $("#profile_bg_change").trigger("click");
 //   }
 // });
+
+// 닉네임 바꾸기(10글자 제한) - by.서현
+$(document).on("keyup",".info_text input", function(){
+   var length = $(this).val().length;
+   $(".msg_cnt").empty();
+   $(".msg_cnt").append(`${length}<em>/10</em>`);
+
+   if(length > 10) $(".msg_text").text("별명이 너무 길어요.");
+   else if(length == 0) $(".msg_text").text("별명을 입력해주세요.");
+   else $(".msg_text").text("사용 가능한 별명이에요!");
+});
+
+
+// 유효성 검사 - by.서현
+function profileValidCheck(){
+    var nickNameLength = $(".info_text input").val().length;
+    if(nickNameLength > 10 || nickNameLength==0 ) return false;
+
+    var data = {
+        nickName : $(".info_text input").val()
+    };
+    return data;
+}
+
+
+// 내정보 수정 저장 - by.서현
+$(document).on("click",".infoBtn button", function(){
+    alert("클릭!");
+    var data = profileValidCheck();
+    if(data == false) return;
+
+    //변경된 정보 저장하기
+    $.ajax({
+        type : "POST",
+        url : "/TravelCarrier/member/info",
+        data : JSON.stringify(data),
+        contentType : "application/json",
+        success : function(data){
+            alert("저장되었습니다.");
+        },
+        error : function(jqXHR, textStatus, errorThrown){
+            alert("저장 실패");
+        }
+
+    })
+
+});

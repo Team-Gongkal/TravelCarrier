@@ -5,21 +5,19 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.User;
+import tc.travelCarrier.dto.MemberInfoDTO;
 import tc.travelCarrier.repository.FollowRepository;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 import tc.travelCarrier.repository.WeeklySearchRepository;
 import tc.travelCarrier.service.AttachService;
+import tc.travelCarrier.service.MemberService;
 import tc.travelCarrier.service.SearchService;
 
 @Controller
@@ -34,6 +32,7 @@ public class MemberContoller {
     private final WeeklySearchRepository weeklySearchRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final SearchService searchService;
+    private final MemberService memberService;
 
     @GetMapping("/member/login")
     public String memberLogin(Model model,
@@ -78,16 +77,24 @@ public class MemberContoller {
     }
 
 
-    // 멤버 프로필사진 변경
+    // 멤버 배경사진 변경
     @PostMapping(value="/member/background")
     @ResponseBody
-    public ResponseEntity registBackground(@RequestParam("backgroundImg") MultipartFile backgroundImgFile,
-                                 @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+    public ResponseEntity background (@RequestParam("backgroundImg") MultipartFile backgroundImgFile,
+                                      @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         User user = principalDetails.getUser();
         attachService.saveAttachUserBackground(backgroundImgFile, user);
         return ResponseEntity.ok(null);
     }
 
+    // 멤버 정보 변경
+    @PostMapping(value="/member/info")
+    public ResponseEntity updateInfo(@RequestBody MemberInfoDTO memberInfoDTO,
+                                           @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        memberService.updateMemberInfo(memberInfoDTO,user);
+        return ResponseEntity.ok(null);
+    }
 
 }
 
