@@ -34,7 +34,7 @@ public class AttachRepository {
         em.persist(attachUser);
     }
 
-    // 프로필 사진 삭제
+    // 데일리 사진 삭제
     public void deleteById(int no) {
         AttachDaily attachDaily = em.find(AttachDaily.class, no);
         em.remove(attachDaily);

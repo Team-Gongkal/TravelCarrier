@@ -36,8 +36,10 @@ public class DailyService {
             for (DailyForm form : list) {
                 AttachDaily at = dailyRepository.findAttachDaily(form.getAttachNo());
                 at.updateField(form);
-                // 파일도 변경되었다면 변경해주기
+                // 파일자체도 변경되었다면 변경해주기
                 if(form.getDupdate().equals("change")){
+                    // 이전 사진은 삭제
+                    attachService.deleteServerFile(at.getFullThumbPath());
                     // 서버에 저장, saveArr = {newTitle,thumbPath};
                     String[] saveArr = attachService.saveAttach(form.getFile(),"daily");
                     at.updateFile(saveArr[0],saveArr[1]);

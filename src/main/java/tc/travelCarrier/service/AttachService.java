@@ -110,6 +110,7 @@ public class AttachService {
     // attachNo를 삭제하는 메소드
     public void deleteAttachDaily(List<Integer> deleteNos) {
         for(int no : deleteNos){
+            deleteServerFile(attachRepository.findAttachDaily(no).getFullThumbPath()); //서버에서 삭제
             attachRepository.deleteById(no);
         }
 
