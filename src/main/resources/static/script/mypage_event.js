@@ -455,13 +455,19 @@ $(document).on("click",".infoBtn button", function(){
         url : "/TravelCarrier/member/info",
         data : JSON.stringify(data),
         contentType : "application/json",
-        success : function(data){
+        success : function(){
             alert("저장되었습니다.");
+            switchNickName(data);
         },
         error : function(jqXHR, textStatus, errorThrown){
             alert("저장 실패");
         }
 
     })
-
 });
+
+function switchNickName(data){
+    console.log(data.nickName);
+    $(".info_text input:first").attr("placeholder", data.nickName);
+    $(".my_profile_id span:not(#edit_menu)").text(data.nickName);
+}
