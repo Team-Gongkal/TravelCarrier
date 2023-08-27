@@ -87,6 +87,11 @@ function getFollowPage(type, detailType, page) {
     },
   });
 }
+
+//각 탭에 html apppend후 애니메이션 추가
+function addAnimate(block){
+    block.css("opacity", 0).animate({ opacity: 1 }, 500);
+}
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
   console.log(data);
@@ -97,6 +102,9 @@ function updateResult(type, data) {
     for (var e of data) {
       $(".userProfile_diary").append(diaryHtml(e));
     }
+    //결과에 애니메이션 추가
+    addAnimate($(".userProfile_diary li"));
+
   } else if (type == "tag") {
     console.log("tag 실행");
     $(".userProfile_tagged").empty();
@@ -104,18 +112,25 @@ function updateResult(type, data) {
     for (var e of data) {
       $(".userProfile_tagged").append(taggedHtml(e));
     }
+    //결과에 애니메이션 추가
+    addAnimate($(".userProfile_tagged li"));
+
   } else if (type == "following") {
     $(".follow").empty();
     if (data == null) return;
     for (var e of data) {
       $(".follow").append(travelerHtml(e, "following"));
     }
+    //결과에 애니메이션 추가
+    addAnimate($(".follow li"));
   } else if (type == "follower") {
     $(".follower").empty();
     if (data == null) return;
     for (var e of data) {
       $(".follower").append(travelerHtml(e, "follower"));
     }
+    //결과에 애니메이션 추가
+    addAnimate($(".follower li"));
   }
 
   //게시글 갯수에 따른 스크롤 활성화

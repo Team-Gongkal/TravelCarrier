@@ -29,6 +29,7 @@ import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.DailyForm;
 import tc.travelCarrier.dto.WeeklyForm;
+import tc.travelCarrier.exeption.FileNotDeleteException;
 import tc.travelCarrier.exeption.FileNotFoundException;
 import tc.travelCarrier.repository.AttachRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
@@ -264,7 +265,17 @@ public class AttachService {
                                     .attachTitle(saveArr[0])
                                     .thumb(saveArr[1])
                                     .build();
-        attachRepository.editProfile(attachUser, user);
+
+        AttachUser originAttachUser = attachRepository.findAttachUser(attachUser, user); //이전 프사가 있으면 true를 반환함
+        //이전에 프사가 있었으면 서버에서 이전 프로필사진 파일을 삭제
+        if(originAttachUser != null){
+            // originAttachUser의 경로에 있는 서버에 저장된 파일을 수정한다
+            deleteServerFile(originAttachUser.getFullThumbPath());
+            originAttachUser.editAttachUser(attachUser); //파일 경로 수정
+        }else{ //이전에 프사가 없었으면 새로 저장하기만 한다.
+            attachRepository.saveAttachUser(attachUser);
+        }
+
     }
 
 
@@ -283,7 +294,25 @@ public class AttachService {
                 .title(saveArr[0])
                 .path(saveArr[1])
                 .build();
-        attachRepository.editBackground(attachUserBackground, user);
+        AttachUserBackground origin = attachRepository.findBackground(attachUserBackground, user);
+        if(origin!=null){
+            deleteServerFile(origin.getFullThumbPath());
+            origin.editAttachUserBackground(attachUserBackground);
+        }else {
+            attachRepository.saveAttachUserBackground(attachUserBackground);
+        }
     }
-    
+
+
+    //파일을 삭제하는 메소드
+    public void deleteServerFile(String filePath){
+        File file = new File(filePath);
+        if(file.exists() && file.isFile()){
+            file.delete();
+            return;
+        }
+        throw new FileNotDeleteException("deleteServerFile", filePath+" 경로의 파일을 삭제할수없음");
+    }
+
+
 }
