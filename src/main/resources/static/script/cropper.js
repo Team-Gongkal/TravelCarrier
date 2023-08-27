@@ -134,11 +134,11 @@ $(document).ready(function () {
   //ajax 성공시 화면 변경
   function switchImg(){
       if (profileFormData != null) {
-      console.log("switt");
-         $(".my_profile_img img").attr("src",URL.createObjectURL(profileFormData.get("profileImg")));
+         $(".my_profile_img.circle img").attr("src",URL.createObjectURL(profileFormData.get("profileImg")));
+         $(".profile.circle").css("background-image", "url(" + URL.createObjectURL(profileFormData.get("profileImg")) + ")");
+
       }
       if (backgroundFormData != null) {
-      console.log("switt");
         $(".userProfile_bg img").attr("src",URL.createObjectURL(backgroundFormData.get("backgroundImg")));
       }
   }
