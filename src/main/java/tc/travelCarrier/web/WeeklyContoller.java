@@ -165,15 +165,12 @@ public class WeeklyContoller {
         return weeklyService.saveKeyword(dto);
     }
 
+    // 위클리 삭제하기
     @DeleteMapping("/weekly/{weeklyId}")
     public ResponseEntity<Void> deleteWeekly(@PathVariable("weeklyId") int weeklyId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        try {
-            Weekly weekly = weeklyService.findWeekly(weeklyId);
-            weeklyService.deleteWeekly(weekly,principalDetails.getUser());
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); //500에러
-        }
+        Weekly weekly = weeklyService.findWeekly(weeklyId);
+        weeklyService.deleteWeekly(weekly,principalDetails.getUser());
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/weekly/{weeklyId}")

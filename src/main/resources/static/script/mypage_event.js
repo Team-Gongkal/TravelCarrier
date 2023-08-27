@@ -486,3 +486,5 @@ function switchNickName(data){
     $(".info_text input:first").attr("placeholder", data.nickName);
     $(".my_profile_id span:not(#edit_menu)").text(data.nickName);
 }
+
+
