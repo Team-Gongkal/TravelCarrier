@@ -72,7 +72,7 @@
       <div class="userProfile_content">
         <div class="userProfile_gallery">
           <ul class="userProfile_diary show">
-            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">
+            <!--<li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">
               <div class="uP_diary_thumbnail">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
                   <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일"
@@ -100,7 +100,7 @@
                   </button>
                 </div>
               </div>
-            </li>
+            </li>-->
           </ul>
           <ul class="userProfile_tagged">
             <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
