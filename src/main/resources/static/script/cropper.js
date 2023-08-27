@@ -113,6 +113,7 @@ $(document).ready(function () {
       contentType: false, // application/x-www-form-urlencoded; 방지
       success: function () {
         alert("업로드 성공");
+        switchImg();
       },
       error: function () {
         alert("업로드 에러");
@@ -129,4 +130,19 @@ $(document).ready(function () {
       saveCrop("/TravelCarrier/member/background", backgroundFormData);
     }
   });
+
+  //ajax 성공시 화면 변경
+  function switchImg(){
+      if (profileFormData != null) {
+      console.log("switt");
+         $(".my_profile_img img").attr("src",URL.createObjectURL(profileFormData.get("profileImg")));
+      }
+      if (backgroundFormData != null) {
+      console.log("switt");
+        $(".userProfile_bg img").attr("src",URL.createObjectURL(backgroundFormData.get("backgroundImg")));
+      }
+  }
+
+
 });
+
