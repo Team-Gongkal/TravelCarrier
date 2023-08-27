@@ -145,6 +145,7 @@ public class WeeklyContoller {
         return allWdList;
     }
 
+    // 위클리 수정 메소드
     @PostMapping("/weekly/{weeklyId}/update")
     @ResponseBody
     public int updateWeekly(@Valid WeeklyForm form, BindingResult result,
@@ -173,6 +174,7 @@ public class WeeklyContoller {
         return ResponseEntity.ok().build();
     }
 
+    //태그된 위클리목록중 숨기거나 보이게하는 메소드
     @PutMapping("/weekly/{weeklyId}")
     public ResponseEntity<Void> hideOrShowWeekly(@PathVariable("weeklyId") int weeklyId,
                                                  @RequestBody Map<String,String> request,

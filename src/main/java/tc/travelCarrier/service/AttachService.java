@@ -238,6 +238,10 @@ public class AttachService {
         } else{
             return;
         }
+
+        //이전 파일데이터 서버에서 삭제
+        deleteServerFile(weekly.getAttachWeekly().getFullThumbPath());
+
         //2. 바뀐 경로로 저장
         weekly.getAttachWeekly().setAttachTitle(saveArr[0]);
         weekly.getAttachWeekly().setThumbPath(saveArr[1]);
