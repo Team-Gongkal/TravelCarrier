@@ -202,7 +202,7 @@ function taggedHtml(data) {
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>`;
 
-  if (data.hide == true) html += `<button type="button" >보이기</button>`;
+  if (data.hide == true) html += `<button type="button" class="weeklyShowBtn" >보이기</button>`;
   else if (data.hide == false)
     html += `<button type="button" class="weeklyHideBtn">숨기기</button>`;
 
@@ -292,23 +292,46 @@ function deleteWeekly(weeklyId) {
 $(document).on("click", ".weeklyHideBtn", function () {
   var title = $(this).closest("li").find(".uP_diary_tit").text();
   var wid = $(this).closest("li").data("wid");
-  if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?"))
-    hideOrShowWeekly(wid, "hide");
+  if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?")) {
+    var isComplete = hideOrShowWeekly(this, wid, "hide");
+    if(!isComplete) return; //숨김 실패시 정지
+  }
+});
+// 태그된 위클리 보이기 이벤트 - by.서현
+$(document).on("click", ".weeklyShowBtn", function () {
+  var title = $(this).closest("li").find(".uP_diary_tit").text();
+  var wid = $(this).closest("li").data("wid");
+  if (confirm("[ " + title + " ] 보이기 하시겠습니까?")) {
+    var isComplete = hideOrShowWeekly(this, wid, "show");
+}
 });
 
+function switchBtn(block, type){
+    if(type == "hide"){
+      //숨김 성공시 버튼 수정
+      $(block).removeClass("weeklyHideBtn");
+      $(block).addClass("weeklyShowBtn");
+      $(block).text("보이기");
+    }else if(type == "show"){
+      $(block).removeClass("weeklyShowBtn");
+      $(block).addClass("weeklyHideBtn");
+      $(block).text("숨기기");
+    }
+}
+
 // 태그된 위클리에 대해 숨김또는 보이기 하는 ajax (숨김:"hide" 보이기:"seek")
-function hideOrShowWeekly(weeklyId, type) {
+function hideOrShowWeekly(block, weeklyId, type) {
   $.ajax({
     url: "/TravelCarrier/weekly/" + weeklyId,
     type: "PUT",
     data: JSON.stringify({ type: type }),
     contentType: "application/json",
     success: function (data) {
-      alert("숨김처리 되었습니다.");
-      $("li[data-wid='" + weeklyId + "']").remove();
+      alert("처리되었습니다.");
+      switchBtn(block, type);
     },
     error: function (error) {
-      alert("숨김처리에 실패하였습니다." + error);
+      alert("실패하였습니다." + error);
     },
   });
 }

@@ -336,7 +336,7 @@ public class MyPageController {
         }
         else if(type.equals("tag")){
             Page<Weekly> weeklyPage = searchService.findTagWeeklyPaging(traveler, pageable);
-            return transferCheckTagWeeklyDTO(user, weeklyPage);
+            return transferCheckTagWeeklyDTO(traveler, user, weeklyPage);
         }
         else if(type.equals("tra")){
             if(searchDTO.getDetailType().equals("following")) {
@@ -390,7 +390,7 @@ public class MyPageController {
     }
 
     //tag : ALL, FOLLOW(user가 글쓴이의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있거나 글쓴이가 user일경우)
-    private List<MyPageDTO> transferCheckTagWeeklyDTO(User user, Page<Weekly> weeklyPage) {
+    private List<MyPageDTO> transferCheckTagWeeklyDTO(User traveler, User user, Page<Weekly> weeklyPage) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
         for(Weekly w : weeklyPage){
@@ -415,13 +415,14 @@ public class MyPageController {
                     if(!flag) continue;
                 }
             }
-
+            //hide된 내용은 보이면 안됨
             List<String> users = new ArrayList<>();
             boolean hide = false;
             for(Gowith g : w.getGowiths()) {
                 users.add(g.getUser().getAttachUser().getThumbPath());
-                if(g.getUser().getId() == user.getId()) hide = g.getHide();
+                if(g.getUser().getId() == traveler.getId()) hide = g.getHide();
             }
+            if(hide) continue;
 
             MyPageDTO dto = MyPageDTO.weeklyBuilder()
                     .id(w.getId()).title(w.getTitle()).date(w.getTravelDate())
