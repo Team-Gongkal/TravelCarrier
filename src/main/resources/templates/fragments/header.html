@@ -207,9 +207,9 @@
             </a>
           </li>
           <li>
-            <form class="logout" method="get" action="/logout/action" id="logoutForm">
-              <span onclick="confirmLogout(event)" type="button">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</span>
+            <form class="logout" method="get" action="/logout/action" id="logoutForm" onclick="confirmLogout(event)">
+              <!-- <span type="button"> -->
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</span>
             </form>
           </li>
         </ul>
@@ -225,21 +225,10 @@
         </div>
         <div class="alert_btnBox">
           <button onclick="closeAlert()">아니요</button>
-          <button>네</button>
+          <button class="confirm_btn">네</button>
         </div>
       </div>
     </div>
-
-
-    <script>
-      function confirmLogout(event) {
-        event.preventDefault(); // 폼 제출 방지
-
-        if (confirm("로그아웃하시겠습니까?")) {
-          document.getElementById("logoutForm").submit(); // 폼 제출
-        }
-      }
-    </script>
 
   </th:block>
 
