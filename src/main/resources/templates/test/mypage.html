@@ -72,7 +72,7 @@
       <div class="userProfile_content">
         <div class="userProfile_gallery">
           <ul class="userProfile_diary show">
-            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">
+            <!--<li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">
               <div class="uP_diary_thumbnail">
                 <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
                   <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일"
@@ -100,7 +100,7 @@
                   </button>
                 </div>
               </div>
-            </li>
+            </li>-->
           </ul>
           <ul class="userProfile_tagged">
             <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
@@ -204,7 +204,7 @@
       </ul>
     </div>
   </div>
-  <div class="edit_modal modal_bg show">
+  <div class="edit_modal modal_bg">
     <div class="edit_modal_wrap">
       <div class="edit_modal_nav">
         <div class="my_profile">
@@ -343,7 +343,7 @@
                 </li>
               </ul>
             </div>
-            <div class="edit_profile_saveBtn">
+            <div class="edit_profile_saveBtn imgBtn">
               <button type="submit" class="btn">저장하기</button>
             </div>
             <!-- </form> -->
@@ -357,11 +357,11 @@
                 <span>이름</span>
               </div>
               <div class="info_text">
-                <input type="text">
+                <input type="text" th:placeholder="${profile.name}">
               </div>
               <div class="msg">
-                <span class="msg_text">사용가능한 별명이에요!</span>
-                <span class="msg_cnt">글자수<em>/제한</em></span>
+                <span class="msg_text">별명을 입력해주세요</span>
+                <span class="msg_cnt">0<em>/10</em></span>
               </div>
             </div>
             <div class="account_email">
@@ -386,7 +386,7 @@
               </div>
               <button type="button" onclick="alertModal('탈퇴 ')">탈퇴하기</button>
             </div>
-            <div class="edit_profile_saveBtn">
+            <div class="edit_profile_saveBtn infoBtn">
               <button type="submit" class="btn">저장하기</button>
             </div>
           </li>

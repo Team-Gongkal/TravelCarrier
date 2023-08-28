@@ -8,6 +8,7 @@ import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
+import tc.travelCarrier.exeption.AuthenticationException;
 import tc.travelCarrier.repository.*;
 
 import java.util.List;
@@ -105,10 +106,21 @@ public class WeeklyService {
     public void deleteWeekly(Weekly weekly, User user) {
         // 로그인 user가 글쓴이가 맞는지 확인 후 delete처리한다.
         if(weekly.getUser().getId() == user.getId()) {
+            //삭제 전에 서버에 있는 모든 데이터들을 삭제해줘야함
+            
+            //1. 모든 데일리 삭제
+            for (Daily d : weekly.getDailys()){
+                for(AttachDaily at : d.getAttachDailies()){
+                    attachService.deleteServerFile(at.getFullThumbPath());
+                }
+            }
+            //2. 위클리 썸네일 삭제
+            attachService.deleteServerFile(weekly.getAttachWeekly().getFullThumbPath());
+
+            //3. 엔티티 삭제
             weeklyRepository.remove(weekly);
-        }else{
-            // 예외처리 필요함....
         }
+        else throw new AuthenticationException("deleteWeekly",user.getEmail()+"은 "+weekly.getTitle()+"의 글쓴이인 "+weekly.getUser().getEmail()+"가 아닙니다");
     }
 
     // 위클리 숨김/보이기처리

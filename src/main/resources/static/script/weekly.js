@@ -186,6 +186,7 @@ $(document).on("click", ".removeBtn", function (event) {
   thumb_status = "DELETE";
 });
 
+// 위클리 수정 ajax - by.서현
 $(document).on("click", ".updateWeekly", function (event) {
   event.preventDefault();
   console.log("/TravelCarrier/weekly/" + weeklyId + "/update");
@@ -194,10 +195,8 @@ $(document).on("click", ".updateWeekly", function (event) {
 
   // nation file sdate edate title text gowiths[] status
   var formData = new FormData();
-  if (
-    $(".thumbnail_img.circle img").attr("src") !=
-    "/image/default/weekly_default_thumbnail.png"
-  ) {
+  if ($(".thumbnail_img.circle img").attr("src") !=
+    "/image/default/weekly_default_thumbnail.png") {
     formData.append("file", $("#thumbnail_change")[0].files[0]);
   }
   formData.append("nation", $('select[name="nation"] option:selected').attr("value"));

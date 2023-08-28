@@ -34,7 +34,7 @@ public class AttachRepository {
         em.persist(attachUser);
     }
 
-    // 프로필 사진 삭제
+    // 데일리 사진 삭제
     public void deleteById(int no) {
         AttachDaily attachDaily = em.find(AttachDaily.class, no);
         em.remove(attachDaily);
@@ -44,30 +44,37 @@ public class AttachRepository {
         em.persist(attachUserBackground);
     }
 
-    // 프로필 사진 수정
-    public void editProfile(AttachUser newAttachUser, User user){
+    // 프로필 사진 수정 - 이전에 프사 있으면 수정후에 true를 반환, 프사 없었으면 새로 저장후 fasle를 반환함
+    public AttachUser findAttachUser(AttachUser newAttachUser, User user){
         try{
             String jpql = "SELECT a FROM AttachUser a WHERE a.user = :user";
             AttachUser origin = em.createQuery(jpql, AttachUser.class)
                     .setParameter("user", user)
                     .getSingleResult();
-            origin.editAttachUser(newAttachUser);
+            return origin;
         } catch (NoResultException e){
-            em.persist(newAttachUser);
+            return null;
         }
+    }
+    public void saveAttachUser(AttachUser attachUser){
+        em.persist(attachUser);
     }
 
     // 배경 사진 수정
-    public void editBackground(AttachUserBackground aub, User user){
+    public AttachUserBackground findBackground(AttachUserBackground aub, User user){
         try{
             String jpql = "SELECT a FROM AttachUserBackground a WHERE a.user = :user";
             AttachUserBackground origin = em.createQuery(jpql, AttachUserBackground.class)
                     .setParameter("user", user)
                     .getSingleResult();
-            origin.editAttachUserBackground(aub);
+            return origin;
         } catch (NoResultException e){
-            em.persist(aub);
+            return null;
         }
+    }
+
+    public void saveAttachUserBackground(AttachUserBackground attachUserBackground){
+        em.persist(attachUserBackground);
     }
 
 }

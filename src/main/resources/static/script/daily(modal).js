@@ -273,7 +273,7 @@ $(document).on("change", "#fileChange", function (event) {
   // 데이터 바꿨으니까 화면 리로드
   // day 클릭한번, 이미지 클릭 한번
   $("ul.days_tabSlide .on").click();
-  $("ul.Dform_imglist li").eq(tmpIndex).find("img").click();
+  if(tmpIndex !=0 ) $("ul.Dform_imglist li").eq(tmpIndex).find("img").click();
 });
 
 //이미지 삭제 : 선택된 이미지 한번더 클릭
@@ -381,8 +381,6 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
     // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
     // formDataArr : [{file,title,text,thumb},{file,title,text,thumb}]
     var arr = dataArr[i];
-    console.log("whats after like??");
-    console.log(arr.day);
     //return;
 
     var formDataArr = arr.data;
