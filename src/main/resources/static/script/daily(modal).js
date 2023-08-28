@@ -229,12 +229,14 @@ function drawThumbs() {
 
       //main인 데이터 이미 있으면 붙여줘야됨
       if (formData.get("thumb") == 0) {
-        var li = $("<li>").attr("data-index", tmp).append($('<span>').append(img));
+        var li = $("<li>")
+          .attr("data-index", tmp)
+          .append($("<span>").append(img));
       } else if (formData.get("thumb") == 1) {
         var li = $("<li>")
           .attr("id", "main")
           .attr("data-index", tmp)
-          .append($('<span>').append(img));
+          .append($("<span>").append(img));
       }
       li.attr("data-attachNo", formData.get("attachNo"));
       li.attr("data-update", formData.get("dupdate"));
@@ -489,6 +491,7 @@ window.onload = function () {
   // 슬라이드 수정=========================================
   var slide_width = $(".diary_slides").outerWidth();
   if (slide_width > $(window).width()) {
+    //슬라이드의 길이가 화면을 넘어가면슬라이드 재생
     let origin_slide = document.querySelector("ul.diary_list");
     origin_slide.id = "slide1";
     // $(clone_slide).attr("id", "slide1");
@@ -508,6 +511,28 @@ window.onload = function () {
     $(".diary_viewport").addClass("center");
   }
 };
+
+//daily 일기화면 드래그 -by윤아
+let startPoint = 0;
+let endPoint = 0;
+
+// PC 클릭 이벤트 (드래그)
+// $(".diary_slides").addEventListener("mousedown", (e) => {
+// console.log("mousedown", e.pageX);
+// startPoint = e.pageX; // 마우스 드래그 시작 위치 저장
+// });
+
+// $(".diary_slides").addEventListener("mouseup", (e) => {
+//   console.log("mouseup", e.pageX);
+//   endPoint = e.pageX; // 마우스 드래그 끝 위치 저장
+//   if (startPoint < endPoint) {
+//     // 마우스가 오른쪽으로 드래그 된 경우
+//     console.log("prev move");
+//   } else if (startPoint > endPoint) {
+//     // 마우스가 왼쪽으로 드래그 된 경우
+//     console.log("next move");
+//   }
+// });
 // daily 일기화면(hover) - by.윤아
 $(".diary_viewport").on("mouseenter", "li.d_slide > img", function (e) {
   // 복제된 diary_slides에는 mouseenter 이벤트가 적용되지 않아 위임 방식을 사용하여, 부모 요소인 .diary_viewport에 이벤트를 바인딩함
@@ -542,13 +567,13 @@ $(".diary_slides").on("mouseleave", function () {
     background: "#efeee9",
   });
 
-  // title, period 보이기
+  // 1. title, period 보이기
   $(".diary_titlebox").removeClass("hide");
 
-  // 댓글 아이콘 비활성화
+  //2. 댓글 아이콘 비활성화
   $(".reply_icon").removeClass("show");
 
-  //2. 일기글 숨기기
+  //3. 일기글 숨기기
   $(".diary_textbox").removeClass("on");
 
   //4.필터 비활성화
@@ -641,12 +666,7 @@ $(document).ready(function () {
   });
 });
 
-// 데일리 이미지 호버시 bg 어둡게 -by윤아
-document.addEventListener("mouseover", function(event) {
-  var hoveredElement = event.target;
-});
-$(document).on("mouseenter", "ul.Dform_imglist li img", function(e){
-
-});
-$(document).on("mouseout", "ul.Dform_imglist li img", function(e){
-});
+//슬라이드 드래그 기능 구현 - by윤아
+//첫번째 슬라이드의 위치값이 -100%일 경우 뒤로 보내줌
+//드래그 시 마우스 다운 지점과 마우스 업 지점의 거리를 계산해서 그만큼 diary_slide 클론과, 원본을 이동시켜줌,
+//위치값 계속 계산,,, 하고,, 그래그 방향이 왼쪽인지 오른쪽인지 파악하기
