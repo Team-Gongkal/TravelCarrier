@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 추가해줌 -->
+<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+<body>
+  <!-- <th:block th:replace="fragments/header :: headerFragment"></th:block> -->
+  <main id="signUp">
+    <!--
+      - 계정(이메일) + 중복확인 비밀번호 변경 및 찾디 등에 사용됩니다.
+      - 비밀번호 + 비밀번호 확인
+    ^~20자로 구성해죽
+    --세요. 비밀번호를 한 ㅂ전 더 입력해주세요
+    <!-- - 닉네임(글자수제한) ~자로 구성해주세요 -->
+    <!-- 모두 동의 + 개별약관동의 -->
+    <header class="login_header">
+      <div class="login_logo">
+        <a href="#none">
+          <!-- <img src="" alt=""> -->
+          로고
+        </a>
+      </div>
+      <div class="login_quick">
+        <span>이미 아이디가 있어요! -></span>
+        <span class="quick_login">
+          <a href="#none">
+            login</a>
+        </span>
+      </div>
+    </header>
+    <div class="signUp_wrap">
+
+      <div class="center">
+        <div class="sign_tit">
+          <h1>TravelCarrier</h1>
+          <!-- <P>환. 여기는 회원가입페이지 입니다.할 말이 있으면 하ㄱ세요</P> -->
+        </div>
+        <div class="sign_form">
+          <form>
+            <div class="signUp_email">
+              <div>
+                <div class="sign_input">
+                  <label for="">이메일</label>
+                  <input type="email">
+                </div>
+                <div class="info_text wrong">
+                  <p>비밀번호 변경 및 찾기 등에 사용됩니다.</p>
+                </div>
+              </div>
+              <div class="dubble_check"><button>중복확인</button></div>
+            </div>
+            <div class="signUp_pw1">
+              <div>
+                <div class="sign_input">
+                  <label for="">비밀번호</label>
+                  <input type="password">
+                </div>
+                <div class="info_text right">
+                  <p>6~20자 이내로 구성해주세요</p>
+                </div>
+              </div>
+            </div>
+            <div class="signUp_pw2">
+              <div>
+                <div class="sign_input">
+                  <label for="">비밀번호 확인</label>
+                  <input type="password">
+                </div>
+                <div class="info_text">
+                  <p>비밀번호를 한 번 더 입력해주세요</p>
+                </div>
+              </div>
+            </div>
+            <div class="signUp_name">
+              <div>
+                <div class="sign_input">
+                  <label for="">이름</label>
+                  <input type="text">
+                </div>
+                <div class="info_text">
+                  <p>6~10자 이내로 구성해주세요</p>
+                </div>
+              </div>
+              <div class="dubble_check"><button>중복확인</button></div>
+            </div>
+            <div class="terms_of_service">
+              <div class="sign_input">
+                <label for="">약관동의</label>
+              </div>
+            </div>
+            <div class="save_btn">
+              <button type="submit">가입하기</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src=""></script>
+  </main>
+</body>
+
+</html>

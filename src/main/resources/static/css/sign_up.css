@@ -1,0 +1,126 @@
+main#signUp {
+  position: relative;
+  font-family: "NanumSquareNeo";
+  width: 100%;
+  height: 100%;
+  background: url(../image/login/example/main_v4_1.png);
+  background-size: cover;
+}
+.signUp_wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.9);
+  /* background: #353a52; */
+  /* background: #525d76; */
+  /* background: #a0c1ca; */
+  /* color: #efeee9; */
+}
+.signUp_wrap > div.center {
+  width: 30%;
+  height: auto;
+  border: 1px solid rgba(53, 58, 82, 0.32);
+  border-radius: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 2rem;
+  background: #efeee9;
+  /* background: #353a52; */
+  /* background: #525d76; */
+  /* background: #a0c1ca; */
+}
+.sign_tit {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.sign_form {
+  height: fit-content;
+
+  padding: 0 2rem;
+}
+.sign_form form {
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+.sign_form form > div {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.sign_form form > div :not(.dubble_check) {
+  width: 100%;
+}
+.sign_form form label {
+  width: 100%;
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+}
+.sign_form form input {
+  width: 100%;
+  box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
+}
+.info_text {
+  margin-top: 0.5rem;
+  font-weight: 200;
+  font-size: 0.8rem;
+}
+.signUp_email {
+}
+/* 중복체크 버튼 */
+.dubble_check {
+  width: 30%;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+}
+/* 저장하기버튼 */
+.sign_form .save_btn {
+  margin: 0;
+}
+/* wrong*/
+.info_text.wrong {
+  color: #ff0000;
+  position: relative;
+  padding-left: 1.2em;
+}
+.info_text.wrong::before,
+.info_text.right:before {
+  display: block;
+  width: 1em;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-44%);
+}
+.info_text.wrong::before {
+  content: url(../image/login/sign/wrong.svg);
+}
+/* right */
+.info_text.right {
+  color: #3cb371;
+  position: relative;
+  padding-left: 1.2em;
+}
+.info_text.right:before {
+  content: url(../image/login/sign/right.svg);
+}
+.info_text + div {
+  background: #000;
+  border: 1px solid #000;
+}
+/* 가입하기버튼 (최종) */
+.save_btn button {
+  background: #353a52;
+  color: #efeee9;
+  padding: 1.5em;
+}
