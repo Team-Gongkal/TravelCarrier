@@ -80,11 +80,12 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 }
 /* 프로필 */
 .my_profile {
-  height: fit-content;
+  height: calc(100% - 3.2rem);
   padding-top: 3rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 .my_profile_img {
@@ -420,11 +421,13 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 }
 .userProfile_gallery > ul.show {
   display: grid;
-  animation: show;
+}
+.userProfile_gallery .ani {
+  animation: show_ani;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
-@keyframes show {
+@keyframes show_ani {
   0% {
     transform: translateY(5%);
     opacity: 0;
@@ -761,6 +764,10 @@ li .uP_user_text span.uP_user_added {
   align-items: center;
   display: flex;
 }
+.edit_modal_nav > .my_profile {
+  justify-content: flex-start;
+  height: fit-content;
+}
 .edit_modal_nav {
   width: 20%;
   height: 100%;
@@ -777,7 +784,7 @@ li .uP_user_text span.uP_user_added {
 .edit_modal_nav ul li {
   width: 100%;
   padding: 0rem 2rem;
-  border-bottom: 1px solid #353a521a;
+  border-bottom: 1px solid rgba(53, 58, 82, 0.1);
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -1138,7 +1145,7 @@ li.account_settings > div:not(:last-child) {
   width: 100%;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #353a5246;
+  border-bottom: 1px solid rgba(53, 58, 82, 0.1);
 }
 .account_settings .tit {
   box-sizing: border-box;
@@ -1154,7 +1161,8 @@ li.account_settings > div:not(:last-child) {
   align-items: center;
 }
 .account_settings .info_text input {
-  box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
+  /* box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5); */
+  border: 1px solid rgba(53, 58, 82, 0.1);
   background: #f7f7f7c4;
 }
 .account_name .info_text input:focus {
@@ -1184,8 +1192,8 @@ li.account_settings > div:not(:last-child) {
   box-sizing: border-box;
 }
 .change_pw > button {
-  width: 30%;
-  border: 1px solid rgb(179, 179, 179, 0.5);
+  width: 10rem;
+  border: 1px solid rgb(53, 58, 82, 0.1);
   box-sizing: border-box;
   background: transparent;
   color: #a0c1ca;
@@ -1198,9 +1206,9 @@ li.account_settings > div:not(:last-child) {
   background: #f7f7f7c4;
 }
 #del_account > button {
-  width: 10%;
+  width: 6rem;
   color: #c40303;
-  border: 1px solid rgb(179, 179, 179, 0.5);
+  border: 1px solid rgb(53, 58, 82, 0.1);
   background: transparent;
   font-weight: 400;
   background: #f7f7f769;

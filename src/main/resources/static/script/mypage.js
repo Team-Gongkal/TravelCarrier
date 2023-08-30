@@ -1,7 +1,5 @@
 // mypage의 기본적 css동작을 관장하는 리스너를 등록하는 js파일 입니다.
 
-
-
 //계정관리 모달창 활성화 - by 윤아
 $("#edit_menu").on("click", function () {
   $(".edit_menu").addClass("show");
@@ -31,13 +29,15 @@ $(".clos").on("click", function () {
 //팔로우/팔로워 탭 - by 윤아
 var following_content = $(".userProfile_traveler > ul");
 $("#follower").on("click", function () {
-  following_content.removeClass("show");
+  following_content.removeClass("show ani");
   following_content.filter(".follower").addClass("show");
+  following_content.addClass("ani");
   //getTravelerPage("tra", "follower", 1);
 });
 $("#follow").on("click", function () {
-  following_content.removeClass("show");
+  following_content.removeClass("show ani");
   following_content.filter(".follow").addClass("show");
+  following_content.addClass("ani");
   //getTravelerPage("tra", "following", 1);
 });
 
@@ -98,7 +98,6 @@ userProfileScroll.on("scroll", function () {
 var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery").children("ul,div");
-console.log(contents);
 var idx = $(".userProfile_tab > ul > li.on").index();
 var tab_li = contents.eq(idx).children("li").length;
 on_scroll(idx, tab_li); //화면 로드시 실행해서 보여줌
@@ -108,10 +107,10 @@ tab.on("click", function () {
   idx = $(this).index(); //현재 클릭한 탭의 idx
 
   tab.removeClass("on"); //선택한탭 css 제거
-  contents.removeClass("show"); // 현재 보여지고있는 콘텐츠 숨기기
+  contents.removeClass("show ani"); // 현재 보여지고있는 콘텐츠 숨기기+애니메이션 클래스 제거
 
   $(this).addClass("on"); //선택한 탭 css추가
-  contents.eq(idx).addClass("show"); //idx에 해당하는 콘텐츠 보이기
+  contents.eq(idx).addClass("show ani"); //idx에 해당하는 콘텐츠 보이기
 });
 
 //li개수에 따라 스크롤 생성

@@ -1,10 +1,9 @@
 // mypage의 ajax를 관리하는 이벤트리스너를 등록하는 js파일입니다
 
-$(document).ready(function() {
-    // 페이지가 로드될 때 실행되는 함수
-    getPage("dia", 1);
+$(document).ready(function () {
+  // 페이지가 로드될 때 실행되는 함수
+  getPage("dia", 1);
 });
-
 
 //팔로우/팔로워 탭 - by 윤아
 $("#follower").on("click", function () {
@@ -89,8 +88,8 @@ function getFollowPage(type, detailType, page) {
 }
 
 //각 탭에 html apppend후 애니메이션 추가
-function addAnimate(block){
-    block.css("opacity", 0).animate({ opacity: 1 }, 500);
+function addAnimate(block) {
+  block.addClass("ani");
 }
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
@@ -104,7 +103,6 @@ function updateResult(type, data) {
     }
     //결과에 애니메이션 추가
     addAnimate($(".userProfile_diary li"));
-
   } else if (type == "tag") {
     console.log("tag 실행");
     $(".userProfile_tagged").empty();
@@ -113,8 +111,7 @@ function updateResult(type, data) {
       $(".userProfile_tagged").append(taggedHtml(e));
     }
     //결과에 애니메이션 추가
-    addAnimate($(".userProfile_tagged li"));
-
+    addAnimate($(".userProfile_tagged"));
   } else if (type == "following") {
     $(".follow").empty();
     if (data == null) return;
@@ -122,7 +119,7 @@ function updateResult(type, data) {
       $(".follow").append(travelerHtml(e, "following"));
     }
     //결과에 애니메이션 추가
-    addAnimate($(".follow li"));
+    addAnimate($(".userProfile_traveler"));
   } else if (type == "follower") {
     $(".follower").empty();
     if (data == null) return;
@@ -130,7 +127,7 @@ function updateResult(type, data) {
       $(".follower").append(travelerHtml(e, "follower"));
     }
     //결과에 애니메이션 추가
-    addAnimate($(".follower li"));
+    addAnimate($(".userProfile_traveler"));
   }
 
   //게시글 갯수에 따른 스크롤 활성화
@@ -202,7 +199,8 @@ function taggedHtml(data) {
         <div class="uP_diary_btn">
           <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>`;
 
-  if (data.hide == true) html += `<button type="button" class="weeklyShowBtn" >보이기</button>`;
+  if (data.hide == true)
+    html += `<button type="button" class="weeklyShowBtn" >보이기</button>`;
   else if (data.hide == false)
     html += `<button type="button" class="weeklyHideBtn">숨기기</button>`;
 
@@ -294,7 +292,7 @@ $(document).on("click", ".weeklyHideBtn", function () {
   var wid = $(this).closest("li").data("wid");
   if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?")) {
     var isComplete = hideOrShowWeekly(this, wid, "hide");
-    if(!isComplete) return; //숨김 실패시 정지
+    if (!isComplete) return; //숨김 실패시 정지
   }
 });
 // 태그된 위클리 보이기 이벤트 - by.서현
@@ -303,20 +301,20 @@ $(document).on("click", ".weeklyShowBtn", function () {
   var wid = $(this).closest("li").data("wid");
   if (confirm("[ " + title + " ] 보이기 하시겠습니까?")) {
     var isComplete = hideOrShowWeekly(this, wid, "show");
-}
+  }
 });
 
-function switchBtn(block, type){
-    if(type == "hide"){
-      //숨김 성공시 버튼 수정
-      $(block).removeClass("weeklyHideBtn");
-      $(block).addClass("weeklyShowBtn");
-      $(block).text("보이기");
-    }else if(type == "show"){
-      $(block).removeClass("weeklyShowBtn");
-      $(block).addClass("weeklyHideBtn");
-      $(block).text("숨기기");
-    }
+function switchBtn(block, type) {
+  if (type == "hide") {
+    //숨김 성공시 버튼 수정
+    $(block).removeClass("weeklyHideBtn");
+    $(block).addClass("weeklyShowBtn");
+    $(block).text("보이기");
+  } else if (type == "show") {
+    $(block).removeClass("weeklyShowBtn");
+    $(block).addClass("weeklyHideBtn");
+    $(block).text("숨기기");
+  }
 }
 
 // 태그된 위클리에 대해 숨김또는 보이기 하는 ajax (숨김:"hide" 보이기:"seek")
@@ -458,56 +456,51 @@ function getDate(btn) {
 // });
 
 // 닉네임 바꾸기(10글자 제한) - by.서현
-$(document).on("keyup",".info_text input", function(){
-   var length = $(this).val().length;
-   $(".msg_cnt").empty();
-   $(".msg_cnt").append(`${length}<em>/10</em>`);
+$(document).on("keyup", ".info_text input", function () {
+  var length = $(this).val().length;
+  $(".msg_cnt").empty();
+  $(".msg_cnt").append(`${length}<em>/10</em>`);
 
-   if(length > 10) $(".msg_text").text("별명이 너무 길어요.");
-   else if(length == 0) $(".msg_text").text("별명을 입력해주세요.");
-   else $(".msg_text").text("사용 가능한 별명이에요!");
+  if (length > 10) $(".msg_text").text("별명이 너무 길어요.");
+  else if (length == 0) $(".msg_text").text("별명을 입력해주세요.");
+  else $(".msg_text").text("사용 가능한 별명이에요!");
 });
-
 
 // 유효성 검사 - by.서현
-function profileValidCheck(){
-    var nickNameLength = $(".info_text input").val().length;
-    if(nickNameLength > 10 || nickNameLength==0 ) return false;
+function profileValidCheck() {
+  var nickNameLength = $(".info_text input").val().length;
+  if (nickNameLength > 10 || nickNameLength == 0) return false;
 
-    var data = {
-        nickName : $(".info_text input").val()
-    };
-    return data;
+  var data = {
+    nickName: $(".info_text input").val(),
+  };
+  return data;
 }
-
 
 // 내정보 수정 저장 - by.서현
-$(document).on("click",".infoBtn button", function(){
-    alert("클릭!");
-    var data = profileValidCheck();
-    if(data == false) return;
+$(document).on("click", ".infoBtn button", function () {
+  alert("클릭!");
+  var data = profileValidCheck();
+  if (data == false) return;
 
-    //변경된 정보 저장하기
-    $.ajax({
-        type : "POST",
-        url : "/TravelCarrier/member/info",
-        data : JSON.stringify(data),
-        contentType : "application/json",
-        success : function(){
-            alert("저장되었습니다.");
-            switchNickName(data);
-        },
-        error : function(jqXHR, textStatus, errorThrown){
-            alert("저장 실패");
-        }
-
-    })
+  //변경된 정보 저장하기
+  $.ajax({
+    type: "POST",
+    url: "/TravelCarrier/member/info",
+    data: JSON.stringify(data),
+    contentType: "application/json",
+    success: function () {
+      alert("저장되었습니다.");
+      switchNickName(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("저장 실패");
+    },
+  });
 });
 
-function switchNickName(data){
-    console.log(data.nickName);
-    $(".info_text input:first").attr("placeholder", data.nickName);
-    $(".my_profile_id span:not(#edit_menu)").text(data.nickName);
+function switchNickName(data) {
+  console.log(data.nickName);
+  $(".info_text input:first").attr("placeholder", data.nickName);
+  $(".my_profile_id span:not(#edit_menu)").text(data.nickName);
 }
-
-
