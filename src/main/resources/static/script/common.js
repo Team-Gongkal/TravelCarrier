@@ -17,11 +17,3 @@ $(window).click(function (e) {
     ).removeClass("show");
   }
 });
-// 확인용 알림창--------------------------------------------
-//알림창 띄우기 및 텍스트 변경
-//알림창 닫기
-function closeAlert() {
-  $("#alert_modal").removeClass("show");
-}
-//모달창 활성화시 스크롤 비활성화 하기 -by윤아
-// 스크롤 비활성화

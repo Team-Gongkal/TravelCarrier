@@ -19,6 +19,9 @@ function confirmLogout(event) {
 $(document).on("click", "#logout", function () {
   document.getElementById("logoutForm").submit(); // 폼 제출
 });
+//댓글삭제-------------------------------------
+//팔로우 및 팔로워 삭제-------------------------
+//탈퇴-----------------------------------------
 
 //알림창 닫기====================================
 function closeAlert() {
