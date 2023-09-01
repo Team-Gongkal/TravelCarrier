@@ -17,9 +17,12 @@ import tc.travelCarrier.auth.PrincipalDetails;
 import tc.travelCarrier.domain.Notification;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.NotificationDTO;
+import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.NotificationService;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,8 +34,9 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     public static Map<Integer, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
+    private final MemberRepository memberRepository;
 
-    @GetMapping(value = "/sub", produces = "text/event-stream")
+    @GetMapping(value = "/TravelCarrier/sub", produces = "text/event-stream")
     public SseEmitter subscribe(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                 @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
         System.out.println("액티브 : "+principalDetails.getUser().getId());
@@ -50,39 +54,34 @@ public class NotificationController {
         List<NotificationDTO> dtoList = new ArrayList<NotificationDTO>();
         for(Notification nt : list){
             User sender = nt.getSender();
-            if( nt.getNotificationType().equals("comment") || nt.getNotificationType().equals("recomment") || nt.getNotificationType().equals("gowith")  ){
-                dtoList.add(
-                        NotificationDTO.builder()
-                                .type(nt.getNotificationType())
-                                .id(nt.getId())
-                                .senderName(sender.getName())
-                                .senderThumbPath(sender.getAttachUser().getThumbPath())
-                                .isRead(nt.getIsRead())
-                                .url(nt.getUrl())
-                                .time(nt.getCdate())
-                                .title(nt.getTitle())
-                                .build());
-            }else if( nt.getNotificationType().equals("f_req") || nt.getNotificationType().equals("f_com") ){
-                dtoList.add(
-                        NotificationDTO.builder()
-                                .type(nt.getNotificationType())
-                                .id(nt.getId())
-                                .senderName(sender.getName())
-                                .senderThumbPath(sender.getAttachUser().getThumbPath())
-                                .isRead(nt.getIsRead())
-                                .url(nt.getUrl())
-                                .time(nt.getCdate())
-                                .build());
-            }
+            dtoList.add(
+                    NotificationDTO.builder()
+                            .type(nt.getNotificationType())
+                            .id(nt.getId())
+                            .senderName(sender.getName())
+                            .senderThumbPath(sender.getAttachUser().getThumbPath())
+                            .isRead(nt.getIsRead())
+                            .url(nt.getUrl())
+                            .time(nt.getCdate())
+                            .title(nt.getTitle() == null? null : nt.getTitle())
+                            .build());
         }
-
-
+        Collections.sort(dtoList); //최신순 정렬
         return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping(value = "/TravelCarrier/notification/{notificationId}")
     public ResponseEntity deleteNotification(@PathVariable("notificationId") Long notificationId) {
         notificationService.deleteNotification(notificationId);
+        return ResponseEntity.ok(null);
+    }
+
+    //읽음처리
+    @GetMapping(value = "/TravelCarrier/notification/isRead")
+    public ResponseEntity readNotification(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        User user = memberRepository.findUserByEmail(principalDetails.getUser().getEmail());
+        //user의 모든 알림을 읽음처리한다
+        notificationService.readAll(user);
         return ResponseEntity.ok(null);
     }
 

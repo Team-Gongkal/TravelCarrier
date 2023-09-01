@@ -2,6 +2,7 @@ package tc.travelCarrier.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,8 @@ public class NotificationService {
 
     private final MemberRepository memberRepository;
     private final NotificationRepository notificationRepository;
+    
+    // SSeEmitter 객체 생성
     public SseEmitter subscribe(int userId) {
         // 현재 클라이언트를 위한 SseEmitter 생성
         SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
@@ -38,17 +41,18 @@ public class NotificationService {
         // user의 pk값을 key값으로 해서 SseEmitter를 저장
         NotificationController.sseEmitters.put(userId, sseEmitter);
 
-        sseEmitter.onCompletion(() -> NotificationController.sseEmitters.remove(userId));
-        sseEmitter.onTimeout(() -> NotificationController.sseEmitters.remove(userId));
-        sseEmitter.onError((e) -> NotificationController.sseEmitters.remove(userId));
+        sseEmitter.onCompletion(() -> NotificationController.sseEmitters.remove(sseEmitter));
+        sseEmitter.onTimeout(() -> NotificationController.sseEmitters.remove(sseEmitter));
+        sseEmitter.onError((e) -> NotificationController.sseEmitters.remove(sseEmitter));
 
         return sseEmitter;
     }
 
+    //전체 알림 조회
     public List<Notification> findNotificationByUserIdAndRead(User activeUser) {
         // 읽음처리
         List<Notification> list = notificationRepository.findByReceiver(activeUser);
-        for(Notification notification : list) notification.setIsRead(true);
+        //for(Notification notification : list) notification.setIsRead(true);
         // 알림목록 리턴
         return list;
     }
@@ -58,11 +62,8 @@ public class NotificationService {
         notificationRepository.deleteById(notificationId);
     }
 
-    //댓글작성알림 저장
-    public void saveReplyNotification(Reply reply, User sender) {
-        //AttachDaily ad, String text, User user, CrudDate cd, Reply origin
-
-        //(User sender, User receiver, String notificationType, String content, Boolean isRead)
+    //댓글, 대댓글 알림 저장
+    public void saveReplyNotification(Reply reply, User sender) throws IOException {
         String type;
         User receiver;
         String url;
@@ -78,14 +79,25 @@ public class NotificationService {
 
         // 본인이 본인글에 작성할땐 알림X
         if(receiver.getId() != sender.getId()) {
-            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type).cdate(new Date()).title(reply.getAttachDaily().getDaily().getWeekly().getTitle()).url(url).isRead(false).build();
+            Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type)
+                    .cdate(new Date()).title(sliceText(reply.getOrigin().getText()))
+                    .url(url).isRead(false).build();
             notificationRepository.save(notification);
-            sendEmitter(reply, receiver);
+            sendEmitter(notification, receiver);
         }
     }
 
+
+    //너무 긴 내용 잘라주는 메소드
+    public String sliceText(String text){
+        if(text.length() > 10){
+            text = text.substring(0,9)+"...";
+        }
+        return text;
+    }
+
     // 위클리 태그 알림 저장
-    public void saveTagNotification(Weekly weekly, User sender) {
+    public void saveTagNotification(Weekly weekly, User sender) throws IOException {
 
         for(Gowith go : weekly.getGowiths()) {
             Notification notification = Notification.builder().
@@ -98,30 +110,43 @@ public class NotificationService {
                     .isRead(false)
                     .build();
             notificationRepository.save(notification);
-            sendEmitter(weekly, go.getUser());
+            sendEmitter(notification, go.getUser());
         }
 
     }
+    
+    //팔로우알림 저장
+    public void saveFollowNotification(User receiver, User sender) throws IOException {
+        Notification notification = Notification.builder()
+                .sender(sender)
+                .receiver(receiver)
+                .notificationType("follow")
+                .cdate(new Date())
+                .title(null)
+                .url("/member/"+sender.getEmail())
+                .isRead(false)
+                .build();
+        notificationRepository.save(notification);
+        sendEmitter(notification, receiver);
+    }
 
-    // SSE로 실시간 댓글알림 전송
-    private void sendEmitter(Reply reply, User receiver) {
+
+    // SSE로 실시간 알림 전송
+    private void sendEmitter(Notification notification, User receiver) throws IOException {
         SseEmitter sseEmitter = NotificationController.sseEmitters.get(receiver.getId());
         try {
-            if(reply.getOrigin() == null)  sseEmitter.send(SseEmitter.event().name("reply").data(reply.getId()));
-            else sseEmitter.send(SseEmitter.event().name("re-reply").data(reply.getId()));
+            sseEmitter.send(SseEmitter.event().name("new").data( notification.changeJsonData(), MediaType.APPLICATION_JSON));
         } catch (Exception e) {
+            e.printStackTrace();
             NotificationController.sseEmitters.remove(receiver.getId());
         }
     }
-    // SSE로 실시간 태그알림 전송
-    private void sendEmitter(Weekly weekly, User receiver) {
-/*        SseEmitter sseEmitter = NotificationController.sseEmitters.get(receiver.getId());
-        try {
-            if(reply.getOrigin() == null)  sseEmitter.send(SseEmitter.event().name("reply").data(reply.getId()));
-            else sseEmitter.send(SseEmitter.event().name("re-reply").data(reply.getId()));
-        } catch (Exception e) {
-            NotificationController.sseEmitters.remove(receiver.getId());
-        }*/
-    }
 
+    // 해당 사용자의 모든 알림 읽음처리
+    public void readAll(User user) {
+        List<Notification> list = notificationRepository.findByReceiver(user);
+        for(Notification notification : list) {
+            if(!notification.getIsRead()) notification.setIsRead(true);
+        }
+    }
 }

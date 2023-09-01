@@ -60,7 +60,6 @@ public class WeeklyContoller {
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         // nation 객체 찾기
-        System.out.println("nation : "+form.getNation());
         Nation nation = nationRepository.findNationById(form.getNation());
 
         System.out.println("디폴트 : "+form.getFile());
@@ -154,7 +153,6 @@ public class WeeklyContoller {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
-
         weeklyService.updateWeekly(weeklyId, form, status);
 
         return weeklyId;

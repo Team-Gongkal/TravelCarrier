@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter @Setter @ToString
-public class NotificationDTO {
+public class NotificationDTO implements Comparable<NotificationDTO>{
     // sender와 receiver의 thumbPath,닉네임
     // id와 isread와 content까지
     // 시간, 제목, url(id)도
@@ -39,5 +39,14 @@ public class NotificationDTO {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy. MM. dd HH:mm");
         this.time = dateFormat.format(time);
         this.title = title;
+    }
+
+
+    //알림발생일 최신순으로 정렬
+    @Override
+    public int compareTo(NotificationDTO o) {
+        if(this.id > o.id) return -1;
+        else if(this.id<o.id) return 1;
+        else return 0;
     }
 }
