@@ -264,14 +264,14 @@ function add_friend() {
   add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
 }
 
-// 위클리 삭제 클릭 이벤트 - by.서현
-$(document).on("click", ".weeklyDelBtn", function () {
-  var title = $(this).closest("li").find(".uP_diary_tit").text();
-  var wid = $(this).closest("li").data("wid");
-  if (confirm("[ " + title + " ] 삭제하시겠습니까?")) deleteWeekly(wid);
-});
+// 위클리 삭제 클릭 이벤트 - by.서현 => alert.js로 이동
+//$(document).on("click", ".weeklyDelBtn", function () {
+//  var title = $(this).closest("li").find(".uP_diary_tit").text();
+//  var wid = $(this).closest("li").data("wid");
+//  if (confirm("[ " + title + " ] 삭제하시겠습니까?")) deleteWeekly(wid);
+//});
 
-function deleteWeekly(weeklyId) {
+/*function deleteWeekly(weeklyId) {
   $.ajax({
     url: "/TravelCarrier/weekly/" + weeklyId,
     type: "DELETE",
@@ -284,7 +284,7 @@ function deleteWeekly(weeklyId) {
       alert("삭제 실패" + error);
     },
   });
-}
+}*/
 
 // 태그된 위클리 숨기기 이벤트 - by.서현
 $(document).on("click", ".weeklyHideBtn", function () {

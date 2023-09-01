@@ -55,20 +55,20 @@ public class MemberContoller {
         model.addAttribute("email",null);
         return "test/sign_up";
     }
-
     @PostMapping("/member/sign")
-    public String memberSignIn(@RequestParam String email, @RequestParam String pw, @RequestParam String name){
-        User user = new User(email,passwordEncoder.encode(pw),name);
-        memberRepository.save(user);
-        return "test/login";
-    }
-
-    @PostMapping("/member/signWithEmail")
     public String memberSignWithEmail(@RequestParam String email, Model model){
         System.out.println("메일스:"+email);
         model.addAttribute("email",email);
         return "test/sign_up";
     }
+/*    @PostMapping("/member/sign")
+    public String memberSignIn(@RequestParam String email, @RequestParam String pw, @RequestParam String name){
+        User user = new User(email,passwordEncoder.encode(pw),name);
+        memberRepository.save(user);
+        return "test/login";
+    }*/
+
+
 
     // 로그인했는지 확인하기
     @GetMapping("/member/login/check")

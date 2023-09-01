@@ -317,6 +317,7 @@ $(document).on("click", ".re_btn", function (e) {
   $(".reply_inputText textarea").focus();
 });
 
+/* alert.js로 이동
 // 삭제 이벤트  - by.서현
 $(document).on("click", ".del_btn", function (e) {
   var $comment = $(this).closest(".rep");
@@ -345,3 +346,4 @@ $(document).on("click", ".del_btn", function (e) {
     });
   }
 });
+*/

@@ -45,7 +45,7 @@ public class ReplyService {
     public void deleteReply(ReplyDTO dto) throws ParseException {
         Reply reply = replyRepository.findReply(dto.getReplyId());
         // 답글이 없으면 delete, 답글이 있으면 getDdate()만 수정,
-        if(reply.getReplyList().size() == 0) {
+        if(reply.getReplyList()==null || reply.getReplyList().size() == 0) {
             // 만약 삭제된 댓글의 답글을 삭제하는 연산이었을경우, 원댓도 삭제해야함
             Reply originReply;
             if(reply.getOrigin() != null) originReply = reply.getOrigin();
