@@ -14,20 +14,32 @@ main#signUp {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.8);
   /* background: #353a52; */
   /* background: #525d76; */
   /* background: #a0c1ca; */
   /* color: #efeee9; */
 }
+/* 로그인 버튼 */
+#signUp .quick_login {
+  border: 1px solid #f7f7f79d;
+  border-radius: 0.3em;
+}
+#signUp .quick_login:hover {
+  border: 1px solid #f7f7f7;
+}
+#signUp .login_quick span:first-child {
+  color: #efeee9b0;
+  font-weight: 100;
+}
 .signUp_wrap > div.center {
-  width: 30%;
+  width: 27%;
   height: auto;
   border: 1px solid rgba(53, 58, 82, 0.32);
   border-radius: 1rem;
   box-sizing: border-box;
   overflow: hidden;
-  padding: 2rem;
+  padding: 2rem 1rem;
   background: #efeee9;
   /* background: #353a52; */
   /* background: #525d76; */
@@ -54,7 +66,7 @@ main#signUp {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .sign_form form > div :not(.dubble_check) {
   width: 100%;
@@ -62,20 +74,110 @@ main#signUp {
 .sign_form form label {
   width: 100%;
   display: block;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 400;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
 }
-.sign_form form input {
+.sign_form form input:not(.terms_of_service input) {
   width: 100%;
   box-shadow: 0 0 1px 0.05px rgb(179, 179, 179, 0.5);
+  border: 2px solid transparent;
 }
-.info_text {
+.signUp_wrap .sign_form form input:focus {
+  border: 2px solid #a0c1ca;
+}
+.signUp_wrap .sign_form form input:-webkit-autofill,
+.signUp_wrap .sign_form form input:-webkit-autofill:hover,
+.signUp_wrap .sign_form form input:-webkit-autofill:focus,
+.signUp_wrap .sign_form form input:-webkit-autofill:active,
+#signUp .signUp_wrap .sign_form form input:-internal-autofill-selected {
+  background-color: #f7f7f7 !important;
+}
+#signUp .info_text {
   margin-top: 0.5rem;
   font-weight: 200;
   font-size: 0.8rem;
+  margin-left: 0.3rem;
+  position: relative;
+  padding-left: 1.2em;
+}
+#signUp .info_text:before {
+  content: url(../image/login/sign/check.svg);
+  display: block;
+  width: 1em;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-44%);
 }
 .signUp_email {
+}
+/* 이용약관 */
+.tos_input {
+  width: 100%;
+}
+.tos_input > span {
+  display: block;
+  margin: 1rem 0 1.5rem 0;
+  position: relative;
+  background: #efeee9;
+  border-top: 1px solid rgba(53, 58, 82, 0.2);
+}
+.tos_input > span::before {
+  content: "약관동의";
+  display: block;
+  padding: 0 0.5em;
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background: #efeee9;
+}
+.tos_input > div > div.tos_checkbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#signUp .tos_input .tos_checkbox p {
+  /* margin-bottom: 0; */
+  font-weight: 200;
+  width: 90%;
+  font-size: 0.9rem;
+}
+#signUp .tos_input .tos_checkbox > div {
+  width: 10%;
+}
+.tos_input div input[type="checkbox"] {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  position: absolute;
+}
+
+.tos_input div label {
+  display: block;
+  width: 1rem;
+  padding: 1rem 0;
+  position: relative;
+  margin-bottom: 0;
+}
+.tos_input div label::before {
+  content: url(../image/login/sign/check.svg);
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3rem;
+  opacity: 0.3;
+  cursor: pointer;
+}
+.tos_input div label:hover::before {
+  opacity: 0.7;
 }
 /* 중복체크 버튼 */
 .dubble_check {
@@ -90,8 +192,6 @@ main#signUp {
 /* wrong*/
 .info_text.wrong {
   color: #ff0000;
-  position: relative;
-  padding-left: 1.2em;
 }
 .info_text.wrong::before,
 .info_text.right:before {
@@ -108,15 +208,9 @@ main#signUp {
 /* right */
 .info_text.right {
   color: #3cb371;
-  position: relative;
-  padding-left: 1.2em;
 }
 .info_text.right:before {
   content: url(../image/login/sign/right.svg);
-}
-.info_text + div {
-  background: #000;
-  border: 1px solid #000;
 }
 /* 가입하기버튼 (최종) */
 .save_btn button {
