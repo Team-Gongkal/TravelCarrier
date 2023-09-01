@@ -27,6 +27,10 @@
           </th:block>
 
           <div class="weekly_mainArtc">
+            <div class="writer">
+              <span>by</span>
+              <span th:text="${weekly.id}">아이디</span>
+            </div>
             <div class="weekly_title">
               <h2 th:text="${weekly.title}">TITLE</h2>
             </div>
@@ -42,7 +46,7 @@
             </div>
             <div class=" weekly_with">
               <div class="weekly_companion">
-                <span>with. </span>
+                <!-- <span>with. </span> -->
                 <ul class="sel_companion">
                   <li th:each="w,it : ${weekly.gowiths}"
                     th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
@@ -436,6 +440,7 @@
                         <h3>제목</h3>
                         <input name="title" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)"
                           th:value="${weekly.title}">
+                          <span id="countText">(0/100)</span>
                       </div>
                     </li>
                     <li><!-- 일기 작성-------------------------------- -->
