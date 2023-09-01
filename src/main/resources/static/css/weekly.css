@@ -50,7 +50,12 @@ article .longBox {
   flex-direction: column;
   justify-content: end;
 }
-
+div.writer{
+  margin-bottom: 0.5rem;
+}
+.writer span{
+  opacity: 0.4;
+}
 .weekly_title h2 {
   font-size: 5rem;
   font-weight: 500;
@@ -89,10 +94,10 @@ article .longBox {
   flex: 2.5;
   display: flex;
 }
-.weekly_companion span {
+/* .weekly_companion span {
   font-weight: 300;
   padding-top: 1rem;
-}
+} */
 .weekly_companion ul.sel_companion {
   width: 100%;
   overflow: hidden;

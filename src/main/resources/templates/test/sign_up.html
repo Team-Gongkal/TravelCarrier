@@ -22,7 +22,7 @@
         </a>
       </div>
       <div class="login_quick">
-        <span>이미 아이디가 있어요! -></span>
+        <span>이미 아이디가 있어요!</span>
         <span class="quick_login">
           <a href="#none">
             login</a>
@@ -30,7 +30,6 @@
       </div>
     </header>
     <div class="signUp_wrap">
-
       <div class="center">
         <div class="sign_tit">
           <h1>TravelCarrier</h1>
@@ -41,7 +40,7 @@
             <div class="signUp_email">
               <div>
                 <div class="sign_input">
-                  <label for="">이메일</label>
+                  <label for="" autocomplete="off">이메일</label>
                   <input type="email">
                 </div>
                 <div class="info_text wrong">
@@ -54,7 +53,7 @@
               <div>
                 <div class="sign_input">
                   <label for="">비밀번호</label>
-                  <input type="password">
+                  <input type="password" autocomplete="off">
                 </div>
                 <div class="info_text right">
                   <p>6~20자 이내로 구성해주세요</p>
@@ -65,7 +64,7 @@
               <div>
                 <div class="sign_input">
                   <label for="">비밀번호 확인</label>
-                  <input type="password">
+                  <input type="password" autocomplete="off">
                 </div>
                 <div class="info_text">
                   <p>비밀번호를 한 번 더 입력해주세요</p>
@@ -85,8 +84,24 @@
               <div class="dubble_check"><button>중복확인</button></div>
             </div>
             <div class="terms_of_service">
-              <div class="sign_input">
-                <label for="">약관동의</label>
+              <div class="tos_input">
+                <span></span>
+                <div>
+                  <div class="tos_checkbox">
+                    <p>사진 강제 삭제 동의하십니까?</p>
+                    <div>
+                      <label for=""></label>
+                      <input type="checkbox" name="" id="">
+                    </div>
+                  </div>
+                  <div class="tos_checkbox">
+                    <p>이용약관을 확인했나요?</p>
+                    <div>
+                      <label for=""></label>
+                      <input type="checkbox" name="" id="">
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="save_btn">
@@ -96,7 +111,7 @@
         </div>
       </div>
     </div>
-    <script src=""></script>
+    <script src="/script/signup.js"></script>
   </main>
 </body>
 
