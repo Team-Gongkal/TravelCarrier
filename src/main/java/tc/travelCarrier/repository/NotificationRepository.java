@@ -12,4 +12,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findByReceiver(User receiver);
 
     void deleteById(Long notificationId);
+
+    List<Notification> findByReceiverAndIsRead(User user, boolean b);
+
 }

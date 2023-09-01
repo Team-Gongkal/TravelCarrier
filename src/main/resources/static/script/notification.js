@@ -6,7 +6,7 @@ $.ajax({
     if (resp == "true") {
         setSSE();
         //안읽은 알림이 있다면 알림뱃지 활성화
-        //$(".notice").addClass("active");
+        setNewNoti();
     }
     else console.log("로그인 안함");
   },
@@ -14,6 +14,20 @@ $.ajax({
     alert("로그인 실패 : " + textStatus);
   },
 });
+
+function setNewNoti(){
+    $.ajax({
+      type: "GET",
+      url: "/TravelCarrier/notification/notRead",
+      success: function (resp) {
+        console.log(resp)
+        if(resp) $(".notice").addClass("active");
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert("실패 : " + textStatus);
+      },
+    });
+}
 
 // SSE연결 생성 메소드 = by.서현
 function setSSE() {

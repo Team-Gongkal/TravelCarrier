@@ -47,7 +47,7 @@ public class NotificationController {
 
     @GetMapping(value = "/TravelCarrier/notification")
     public ResponseEntity<List<NotificationDTO>> getNotification(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        List<Notification> list = notificationService.findNotificationByUserIdAndRead(principalDetails.getUser());
+        List<Notification> list = notificationService.findNotificationByUserId(principalDetails.getUser());
         // sender와 receiver의 User 그자체(email,thumbPath,닉네임)
         // id와 isread와 content까지
         // 시간, 제목, url도 필요!!!
@@ -83,6 +83,14 @@ public class NotificationController {
         //user의 모든 알림을 읽음처리한다
         notificationService.readAll(user);
         return ResponseEntity.ok(null);
+    }
+
+    //안읽는 알림 있는지 찾기
+    @GetMapping(value = "/TravelCarrier/notification/notRead")
+    public ResponseEntity notReadNotification(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        User user = memberRepository.findUserByEmail(principalDetails.getUser().getEmail());
+        //user가 안읽은 알림이 있는지 확인
+        return ResponseEntity.ok(notificationService.findNotificationByUserIdAndIsRead(user,false));
     }
 
 }

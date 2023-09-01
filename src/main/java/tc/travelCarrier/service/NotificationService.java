@@ -49,7 +49,7 @@ public class NotificationService {
     }
 
     //전체 알림 조회
-    public List<Notification> findNotificationByUserIdAndRead(User activeUser) {
+    public List<Notification> findNotificationByUserId(User activeUser) {
         // 읽음처리
         List<Notification> list = notificationRepository.findByReceiver(activeUser);
         //for(Notification notification : list) notification.setIsRead(true);
@@ -80,7 +80,7 @@ public class NotificationService {
         // 본인이 본인글에 작성할땐 알림X
         if(receiver.getId() != sender.getId()) {
             Notification notification = Notification.builder().sender(sender).receiver(receiver).notificationType(type)
-                    .cdate(new Date()).title(sliceText(reply.getOrigin().getText()))
+                    .cdate(new Date()).title(sliceText(reply.getOrigin()==null? reply.getAttachDaily().getTitle() : reply.getOrigin().getText()))
                     .url(url).isRead(false).build();
             notificationRepository.save(notification);
             sendEmitter(notification, receiver);
@@ -148,5 +148,11 @@ public class NotificationService {
         for(Notification notification : list) {
             if(!notification.getIsRead()) notification.setIsRead(true);
         }
+    }
+
+    public boolean findNotificationByUserIdAndIsRead(User user, boolean b) {
+        List<Notification> list = notificationRepository.findByReceiverAndIsRead(user,b);
+        if(list.size()==0) return false;
+        return true;
     }
 }
