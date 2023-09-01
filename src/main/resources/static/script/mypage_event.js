@@ -479,10 +479,13 @@ function profileValidCheck() {
 
 // 내정보 수정 저장 - by.서현
 $(document).on("click", ".infoBtn button", function () {
-  alert("클릭!");
   var data = profileValidCheck();
   if (data == false) return;
 
+    var clickBtn = $(".infoBtn button");
+    clickBtn.attr("disabled",true);
+    clickBtn.toggleClass("btn_disable btn");
+    clickBtn.html("저장중..");
   //변경된 정보 저장하기
   $.ajax({
     type: "POST",
@@ -490,8 +493,10 @@ $(document).on("click", ".infoBtn button", function () {
     data: JSON.stringify(data),
     contentType: "application/json",
     success: function () {
-      alert("저장되었습니다.");
       switchNickName(data);
+        clickBtn.attr("disabled",false);
+        clickBtn.toggleClass("btn_disable btn");
+        clickBtn.html("저장하기");
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("저장 실패");

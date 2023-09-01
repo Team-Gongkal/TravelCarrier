@@ -184,7 +184,6 @@ function login_submit(event) {
     },
     success: function (response) {
       // 로그인 성공 시 실행할 동작
-      alert("로그인 성공");
       window.location.href = "/TravelCarrier/"; // 리다이렉트할 URL
     },
     error: function (xhr) {

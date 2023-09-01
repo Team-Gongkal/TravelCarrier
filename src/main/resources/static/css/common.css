@@ -164,6 +164,22 @@ button.btn {
   letter-spacing: 0.05rem;
   transition: 0.2s;
 }
+
+/*서현 - 버튼비활성화*/
+button.btn_disable {
+  width: 11rem;
+  padding: 0.85rem;
+  font-weight: 300;
+  color: #f7f7f7;
+  background: rgb(128, 128, 128);
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-family: "NanumSquareNeo";
+  letter-spacing: 0.05rem;
+  transition: 0.2s;
+}
+
 button.btn:hover {
   background: #525d76;
 }

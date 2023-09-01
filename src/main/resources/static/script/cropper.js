@@ -122,6 +122,12 @@ $(document).ready(function () {
   }
 
   $(".imgBtn button").on("click", function () {
+      //버튼 저장중 처리
+      var clickBtn = $(".imgBtn button");
+      clickBtn.attr("disabled",true);
+      clickBtn.toggleClass("btn_disable btn");
+      clickBtn.html("저장중..");
+
     console.log("이미지 저장해");
     if (profileFormData !== null) {
       saveCrop("/TravelCarrier/member/profile", profileFormData);
@@ -129,6 +135,11 @@ $(document).ready(function () {
     if (backgroundFormData !== null) {
       saveCrop("/TravelCarrier/member/background", backgroundFormData);
     }
+
+      clickBtn.attr("disabled",false);
+      clickBtn.toggleClass("btn_disable btn");
+      clickBtn.html("저장하기");
+
   });
 
   //ajax 성공시 화면 변경

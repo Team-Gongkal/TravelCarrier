@@ -494,6 +494,13 @@ $(".weekly_saveBtn").click(function (event) {
   formData.append("status", $("input[name='status']:checked").val());
 
   console.log(formData.get("nation"));
+
+  //버튼 저장중 처리
+  var clickBtn = $(".weekly_saveBtn");
+  clickBtn.attr("disabled",true);
+  clickBtn.toggleClass("btn_disable btn");
+  clickBtn.html("저장중..");
+
   $.ajax({
     type: "POST",
     url: "/TravelCarrier/weeklyForm",
@@ -501,11 +508,10 @@ $(".weekly_saveBtn").click(function (event) {
     processData: false,
     contentType: false,
     success: function (data) {
-      alert("성공");
       window.location.href = "/TravelCarrier/weekly/" + data;
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      alert("실패");
+      alert("저장에 실패했습니다."+jqXHR+textStatus+errorThrown);
     },
   });
 

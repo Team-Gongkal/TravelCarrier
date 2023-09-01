@@ -51,7 +51,7 @@ public class MemberContoller {
 
     @GetMapping("/member/sign")
     public String memberSignIn(){
-        return "test/sign";
+        return "test/sign_up";
     }
 
     @PostMapping("/member/sign")

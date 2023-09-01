@@ -216,6 +216,13 @@ $(document).on("click", ".updateWeekly", function (event) {
   formData.append("status", $("input[name='status']:checked").val());
   console.log("status : " + formData.get("status"));
   formData.append("thumbStatus", thumb_status);
+
+  //버튼 저장중 처리
+  var clickBtn = $(".updateWeekly");
+  clickBtn.attr("disabled",true);
+  clickBtn.toggleClass("btn_disable btn");
+  clickBtn.html("저장중..");
+
   $.ajax({
     type: "POST",
     url: "/TravelCarrier/weekly/" + weeklyId + "/update",
@@ -224,6 +231,9 @@ $(document).on("click", ".updateWeekly", function (event) {
     contentType: false,
     success: function (data) {
       alert("성공");
+      clickBtn.attr("disabled",false);
+      clickBtn.toggleClass("btn_disable btn");
+      clickBtn.html("저장하기");
       location.replace("/TravelCarrier/weekly/" + data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
