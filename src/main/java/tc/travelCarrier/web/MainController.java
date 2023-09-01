@@ -26,7 +26,7 @@ public class MainController {
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         model.addAttribute("user", user);
 
-        return "test/sign_up";
+        return "test/main";
     }
 
 }

@@ -14,6 +14,7 @@ import tc.travelCarrier.repository.ReplyRepository;
 import tc.travelCarrier.web.NotificationController;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ReplyService {
 
     private final EntityManager em;
 
-    public int saveReply(Reply reply, User user){
+    public int saveReply(Reply reply, User user) throws IOException {
         int replyId = replyRepository.save(reply);
         notificationService.saveReplyNotification(reply, user);
         return replyId;

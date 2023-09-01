@@ -66,8 +66,8 @@ public class MemberContoller {
     @ResponseBody
     public String checkLogin(@AuthenticationPrincipal PrincipalDetails principalDetails){
         System.out.println("어노테이션 있음");
-
-        return "false";
+        if(principalDetails!=null) return "true";
+        else return "false";
     }
 
 
@@ -76,7 +76,7 @@ public class MemberContoller {
     @ResponseBody
     public ResponseEntity registProfile(@RequestParam("profileImg") MultipartFile profileFile,
                                          @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
-        User user = principalDetails.getUser();
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         attachService.saveAttachUser(profileFile, user);
         return ResponseEntity.ok(null);
     }
@@ -87,7 +87,7 @@ public class MemberContoller {
     @ResponseBody
     public ResponseEntity background (@RequestParam("backgroundImg") MultipartFile backgroundImgFile,
                                       @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
-        User user = principalDetails.getUser();
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         attachService.saveAttachUserBackground(backgroundImgFile, user);
         return ResponseEntity.ok(null);
     }

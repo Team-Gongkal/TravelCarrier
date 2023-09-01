@@ -17,8 +17,10 @@ import tc.travelCarrier.repository.FollowRepository;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.WeeklyRepository;
 import tc.travelCarrier.repository.WeeklySearchRepository;
+import tc.travelCarrier.service.MemberService;
 import tc.travelCarrier.service.SearchService;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +33,7 @@ import static tc.travelCarrier.dto.MyPageDTO.generateFollowerDTO;
 @RequestMapping("/TravelCarrier")
 public class MyPageController {
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final WeeklyRepository weeklyRepository;
     private final FollowRepository followRepository;
     private final WeeklySearchRepository weeklySearchRepository;
@@ -220,17 +223,14 @@ public class MyPageController {
 
     // targetUser를 user가 팔로우
     @GetMapping("/member/following/{email}")
-    public ResponseEntity follow(@PathVariable String email, @AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity follow(@PathVariable String email, @AuthenticationPrincipal PrincipalDetails principalDetails) throws IOException {
         User targetUser = memberRepository.findUserByEmail(email);
         User loginUser = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
-        followRepository.save(Follower.builder()
-                .user(loginUser)
-                .follower(targetUser)
-                .fDate(new Date())
-                .build());
+        memberService.followMember(loginUser, targetUser);
+
         return ResponseEntity.ok(null);
     }
-    // targetUser를 user가 팔로우
+    // targetUser를 user가 언팔로우
     @GetMapping("/member/unfollow/{email}")
     public ResponseEntity unfollow(@PathVariable String email, @AuthenticationPrincipal PrincipalDetails principalDetails){
         User targetUser = memberRepository.findUserByEmail(email);

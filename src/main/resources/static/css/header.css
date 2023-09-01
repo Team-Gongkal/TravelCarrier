@@ -135,7 +135,7 @@ header > nav {
   display: block;
   padding-bottom: 100%;
 } */
-.notice:after {
+.notice.active:after {
   content: "";
   display: inline-block;
   position: absolute;

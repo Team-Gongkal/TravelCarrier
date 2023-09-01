@@ -3,6 +3,8 @@ package tc.travelCarrier.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.json.simple.JSONObject;
+import tc.travelCarrier.dto.NotificationDTO;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -51,6 +53,16 @@ public class Notification {
         this.isRead = isRead;
         this.cdate = cdate;
     }
+
+    public NotificationDTO changeJsonData(){
+        NotificationDTO dto = NotificationDTO.builder()
+                .id(id).type(notificationType).senderName(sender.getName())
+                .senderThumbPath(sender.getAttachUser().getThumbPath()).isRead(false).url(url)
+                .time(cdate).title(title!=null ? title :null).build();
+        return dto;
+    }
+
+
 
 
 }

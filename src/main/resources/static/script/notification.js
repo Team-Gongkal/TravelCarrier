@@ -3,7 +3,12 @@ $.ajax({
   type: "GET",
   url: "/TravelCarrier/member/login/check",
   success: function (resp) {
-    if (resp == "loginUser") setSSE();
+    if (resp == "true") {
+        setSSE();
+        //안읽은 알림이 있다면 알림뱃지 활성화
+        //$(".notice").addClass("active");
+    }
+    else console.log("로그인 안함");
   },
   error: function (jqXHR, textStatus, errorThrown) {
     alert("로그인 실패 : " + textStatus);
@@ -13,15 +18,20 @@ $.ajax({
 // SSE연결 생성 메소드 = by.서현
 function setSSE() {
   console.log("notification() 실행됨!");
-  let eventSource = new EventSource("http://localhost:8080/sub");
+  let eventSource = new EventSource("/TravelCarrier/sub");
 
-  eventSource.addEventListener("reply", function (event) {
-    let message = event.data;
-    alert(message);
-  });
-  eventSource.addEventListener("re-reply", function (event) {
-    let message = event.data;
-    alert(message);
+  //실시간 알림 발생시 - 알림모달이 on 되어있다면 append
+  //실시간 알림 발생시 - 알림모달이 off되어있다면 알림발생 안내만 추가
+  eventSource.addEventListener("new", function (e) {
+    if($(".utill_notice").hasClass("show")){
+        var data = JSON.parse(e.data);
+        var html;
+        if (data.type == "comment") html = commentHtml(data);
+        else if (data.type == "recomment") html = recommentHtml(data);
+        else if (data.type == "follow") html = addFriendHtml(data);
+        else if (data.type == "gowith") html = tagHtml(data);
+        $(".update_notice ul").prepend(html);
+    }else $(".notice").addClass("active");
   });
 
   eventSource.addEventListener("error", function (event) {
@@ -35,6 +45,11 @@ $(document).ready(function () {
     // 알림창 셋팅
     getNotification();
     $(".utill_notice").toggleClass("show");
+
+    //읽음처리
+    $(".notice").removeClass("active");
+    isReadNotification();
+
   });
   // 최근 업데이트창 비활성화 - by윤아
   $(".update_notice h6 i").on("click", function () {
@@ -77,20 +92,33 @@ function getNotification() {
   });
 }
 
+// 알림을 읽음처리하는 함수
+function isReadNotification() {
+  $.ajax({
+    type: "GET",
+    url: "/TravelCarrier/notification/isRead",
+    success: function (resp) {
+      console.log("읽음처리 성공");
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("실패 : " + textStatus);
+    },
+  });
+}
+
 function drawNotice(data) {
   console.log(data);
   console.log($(".update_notice ul"));
   $(".update_notice ul").empty();
-
   for (var e of data) {
     var html;
     if (e.type == "comment") html = commentHtml(e);
     else if (e.type == "recomment") html = recommentHtml(e);
-    else if (e.type == "f_req") html = addFriendHtml(e);
-    else if (e.type == "f_com") html = beFriendHtml(e);
+    else if (e.type == "follow") html = addFriendHtml(e);
     else if (e.type == "gowith") html = tagHtml(e);
     $(".update_notice ul").append(html);
   }
+
 }
 
 function commentHtml(data) {
@@ -124,7 +152,7 @@ function recommentHtml(data) {
           </div>
           <div class="notice_textbox">
             <p>
-              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="http://localhost:8080/TravelCarrier${data.url}" class="notice_writing">${data.title}</a> 댓글에 답댓글을
+              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="/TravelCarrier${data.url}" class="notice_writing">${data.title}</a> 댓글에 답댓글을
               남겼습니다.
             </p>
             <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>
@@ -146,7 +174,7 @@ function addFriendHtml(data) {
       </div>
       <div class="notice_textbox">
         <p>
-          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 팔로우를 요청했습니다.
+          <a href="/TravelCarrier${data.url}" class="notice_name">${data.senderName}</a>님이 팔로우 회원님을 팔로우 합니다.
         </p>
         <span class="update_date"><i class="xi-time-o"></i>${data.time}</span>
       </div>
@@ -158,7 +186,7 @@ function addFriendHtml(data) {
   return html;
 }
 
-function beFriendHtml(data) {
+/*function beFriendHtml(data) {
   var html;
   html = `
     <li class="notice_beFriend">
@@ -177,7 +205,7 @@ function beFriendHtml(data) {
     </li>
         `;
   return html;
-}
+}*/
 
 function tagHtml(data) {
   var html;
@@ -188,7 +216,7 @@ function tagHtml(data) {
       </div>
       <div class="notice_textbox">
         <p>
-          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 <a href="http://localhost:8080/TravelCarrier${data.url}" class="notice_writing">${data.title}</a>에 회원님을
+          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 <a href="/TravelCarrier${data.url}" class="notice_writing">${data.title}</a>에 회원님을
           태그했습니다.
         </p>
         <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>
