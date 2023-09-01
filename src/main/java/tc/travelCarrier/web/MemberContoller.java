@@ -50,7 +50,9 @@ public class MemberContoller {
     }
 
     @GetMapping("/member/sign")
-    public String memberSignIn(){
+    public String memberSignIn(Model model){
+
+        model.addAttribute("email",null);
         return "test/sign_up";
     }
 
@@ -59,6 +61,13 @@ public class MemberContoller {
         User user = new User(email,passwordEncoder.encode(pw),name);
         memberRepository.save(user);
         return "test/login";
+    }
+
+    @PostMapping("/member/signWithEmail")
+    public String memberSignWithEmail(@RequestParam String email, Model model){
+        System.out.println("메일스:"+email);
+        model.addAttribute("email",email);
+        return "test/sign_up";
     }
 
     // 로그인했는지 확인하기

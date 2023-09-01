@@ -41,7 +41,8 @@
               <div>
                 <div class="sign_input">
                   <label for="" autocomplete="off">이메일</label>
-                  <input type="email">
+                  <input th:if="${email != null}" type="email" th:value="${email}">
+                  <input th:if="${email == null}" type="email">
                 </div>
                 <div class="info_text wrong">
                   <p>비밀번호 변경 및 찾기 등에 사용됩니다.</p>

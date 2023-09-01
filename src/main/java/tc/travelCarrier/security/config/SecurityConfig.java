@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/TravelCarrier/member/login/**",
                         "/TravelCarrier/login/**",
                         "/TravelCarrier/member/sign/**",
+                        "/TravelCarrier/member/signWithEmail",
                         "/script/**", "/font/**", "/css/**", "/image/**").permitAll() // 해당 경로들은 접근을 허용
                 .anyRequest().hasRole("USER")	 // 다른 모든 요청은
                 //.authenticated() // 인증된 유저만 접근을 허용
