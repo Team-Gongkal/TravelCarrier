@@ -3,7 +3,6 @@ package tc.travelCarrier.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.json.simple.JSONObject;
 import tc.travelCarrier.dto.NotificationDTO;
 
 import javax.persistence.*;
