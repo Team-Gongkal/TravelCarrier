@@ -1,5 +1,6 @@
 package tc.travelCarrier.service;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -205,16 +206,16 @@ public class AttachService {
         // 회전 시킨다.
         switch (orientation) {
             case 6:
-                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_90, null);
+                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_90, (BufferedImageOp[])null);
                 break;
             case 1:
 
                 break;
             case 3:
-                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_180, null);
+                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_180, (BufferedImageOp[])null);
                 break;
             case 8:
-                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_270, null);
+                srcImg = Scalr.rotate(srcImg, Scalr.Rotation.CW_270, (BufferedImageOp[])null);
                 break;
 
             default:
