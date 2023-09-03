@@ -10,6 +10,7 @@ import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.exeption.AuthenticationException;
 import tc.travelCarrier.repository.*;
+import tc.travelCarrier.sse.SseService;
 
 import java.util.List;
 @Service
@@ -26,6 +27,8 @@ public class WeeklyService {
     private final GowithRepository gowithRepository;
     private final NotificationService notificationService;
     private final NationRepository nationRepository;
+    private final SseService sseService;
+
     /**
      * 팔로워 목록 조회
      * */
@@ -42,7 +45,12 @@ public class WeeklyService {
         // 파일저장
         attachService.saveAttachWeekly(file, weekly);
         // 알림전송
-        notificationService.saveTagNotification(weekly, user);
+        if(weekly.getGowiths().size()!=0) {
+            Notification noti[] = notificationService.saveTagNotification(weekly, user);
+            for(Notification n : noti){
+                sseService.sendEmitter(n, n.getReceiver());
+            }
+        }
 
         return weekly.getId();
     }

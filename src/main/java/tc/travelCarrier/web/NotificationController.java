@@ -19,6 +19,7 @@ import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.NotificationDTO;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.service.NotificationService;
+import tc.travelCarrier.sse.SseService;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NotificationController {
 
     private final NotificationService notificationService;
+    private final SseService sseService;
 
     public static Map<Integer, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
     private final MemberRepository memberRepository;
@@ -42,7 +44,7 @@ public class NotificationController {
         System.out.println("액티브 : "+principalDetails.getUser().getId());
         int userId = principalDetails.getUser().getId();
 
-        return notificationService.subscribe(userId);
+        return sseService.subscribe(userId);
     }
 
     @GetMapping(value = "/TravelCarrier/notification")

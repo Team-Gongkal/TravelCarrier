@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tc.travelCarrier.domain.Follower;
+import tc.travelCarrier.domain.Notification;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.MemberInfoDTO;
 import tc.travelCarrier.repository.FollowRepository;
 import tc.travelCarrier.repository.MemberRepository;
+import tc.travelCarrier.sse.SseService;
 
 import java.io.IOException;
 import java.util.Date;
@@ -20,6 +22,7 @@ public class MemberService {
     private final FollowRepository followRepository;
     private final NotificationService notificationService;
     private final MemberRepository memberRepository;
+    private final SseService sseService;
 
 
     public void signIn(User user){
@@ -37,7 +40,10 @@ public class MemberService {
                 .follower(targetUser)
                 .fDate(new Date())
                 .build());
-        notificationService.saveFollowNotification(targetUser, loginUser);
+        Notification notification = notificationService.saveFollowNotification(targetUser, loginUser);
+
+        //알림전송
+        sseService.sendEmitter(notification, notification.getReceiver());
     }
 
 }

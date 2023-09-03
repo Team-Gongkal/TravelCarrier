@@ -136,6 +136,10 @@ function drawNotice(data) {
 }
 
 function commentHtml(data) {
+  var title;
+  if(typeof data.title == "undefined" || data.title == null || data.title == "") title = "제목없음";
+  else title = data.title;
+
   var html;
   html = `
         <li class="notice_comment">
@@ -144,7 +148,7 @@ function commentHtml(data) {
           </div>
           <div class="notice_textbox">
             <p>
-              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="/TravelCarrier${data.url}" class="notice_writing">${data.title}</a> 글에 댓글을
+              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="/TravelCarrier${data.url}" class="notice_writing">`+title+`</a> 글에 댓글을
               남겼습니다.
             </p>
             <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>
