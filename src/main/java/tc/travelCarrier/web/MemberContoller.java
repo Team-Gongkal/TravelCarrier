@@ -27,6 +27,8 @@ import tc.travelCarrier.service.SearchService;
 
 import java.util.Map;
 
+import static tc.travelCarrier.domain.Role.ROLE_USER;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/TravelCarrier")
@@ -73,8 +75,8 @@ public class MemberContoller {
     //회원가입 하는 메소드
     @PostMapping("/member/sign/create")
     public ResponseEntity memberSignIn(@RequestParam String email, @RequestParam String password, @RequestParam String name){
-        User user = new User(email,passwordEncoder.encode(password),name);
-        memberRepository.save(user);
+        User user = User.userDetailRegister().username(name).password(passwordEncoder.encode(password)).email(email).role(ROLE_USER).build();
+        memberService.signIn(user);
         return ResponseEntity.ok(null);
     }
 

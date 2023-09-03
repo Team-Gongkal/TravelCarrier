@@ -18,7 +18,9 @@ $(".save_btn button").on("click", async function(e){
                                     name : name},
               //contentType: "application/json",
               success: function (resp) {
-                window.location.href = "/TravelCarrier/";
+                $(".alert_btnBox button").attr("id", "sign_ok");
+                alertModal2("회원가입 ","되었습니다.");
+
               },
               error: function (jqXHR, textStatus, errorThrown) {
                 alert("회원가입 실패 \n다시 시도해주세요");
@@ -113,3 +115,7 @@ $(document).on("keyup", ".signUp_pw2 input[type='password']", function () {
   else if(pw2.length==0) $(".info_text.pw2 p").text("");
   else $(".info_text.pw2 p").text("비밀번호를 다시 입력해주세요.");
 });
+
+$(document).on("click", "#sign_ok", function(){
+    window.location.href = "/TravelCarrier/";
+})

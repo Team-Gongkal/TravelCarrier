@@ -8,10 +8,8 @@ function alertModal(text) {
   $("#alert_modal").addClass("show");
 }
 
-function alertModal2(text) {
-  var changeText = $(".alert_textbox p").eq(1).children("span");
-  //span을 파라미터로 바꿔주기
-  changeText.text(text);
+function alertModal2(red_text, black_text) {
+   $(".alert_textbox p").eq(1).html(`<span>${red_text}</span>${black_text}`);
   //모달창 활성화 하기(show)
   $("#alert_modal2").addClass("show");
 }
@@ -109,9 +107,10 @@ function deleteReply(reply){
 //아이디 중복확인-----------------------------------------
 function email_check_alert(valid){
     //valid가 true면 사용 가능, false면 불가하다는 의미
-    if(valid) alertModal2("사용 가능");
-    else alertModal2("사용 불가능");
+    if(valid) alertModal2("사용 가능","한 이메일 입니다.");
+    else alertModal2("사용 불가능","한 이메일 입니다.");
 }
+
 
 //알림창 닫기====================================
 function closeAlert() {

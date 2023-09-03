@@ -7,6 +7,7 @@ import tc.travelCarrier.domain.Follower;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.MemberInfoDTO;
 import tc.travelCarrier.repository.FollowRepository;
+import tc.travelCarrier.repository.MemberRepository;
 
 import java.io.IOException;
 import java.util.Date;
@@ -18,6 +19,12 @@ public class MemberService {
 
     private final FollowRepository followRepository;
     private final NotificationService notificationService;
+    private final MemberRepository memberRepository;
+
+
+    public void signIn(User user){
+        memberRepository.save(user);
+    }
 
     public void updateMemberInfo(MemberInfoDTO dto, User user){
         user.setName(dto.getNickName());
