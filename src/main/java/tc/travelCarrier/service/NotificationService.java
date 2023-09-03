@@ -150,6 +150,7 @@ public class NotificationService {
         }
     }
 
+
     public boolean findNotificationByUserIdAndIsRead(User user, boolean b) {
         List<Notification> list = notificationRepository.findByReceiverAndIsRead(user,b);
         if(list.size()==0) return false;
