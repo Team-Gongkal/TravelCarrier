@@ -41,7 +41,8 @@ public class DailyService {
                     // 이전 사진은 삭제
                     attachService.deleteServerFile(at.getFullThumbPath());
                     // 서버에 저장, saveArr = {newTitle,thumbPath};
-                    String[] saveArr = attachService.saveAttach(form.getFile(),"daily");
+                    //String[] saveArr = attachService.saveAttach(form.getFile(),"daily");
+                    String[] saveArr = attachService.upload(form.getFile(),"daily");
                     at.updateFile(saveArr[0],saveArr[1]);
                 }
             }

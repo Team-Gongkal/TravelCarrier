@@ -45,6 +45,9 @@ dependencies {
 	// 문자열비교
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 
+	// S3사용하기
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 
 
 	compileOnly 'org.projectlombok:lombok'

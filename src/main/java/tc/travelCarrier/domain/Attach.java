@@ -32,7 +32,9 @@ public abstract class Attach {
     protected String thumbPath;
 
     public String getThumbPath() {
-        return thumbPath.substring(thumbPath.indexOf("/static") + 7);
+        if(thumbPath.indexOf("/static")!=0) return thumbPath.substring(thumbPath.indexOf("/static") + 7);
+        else if(thumbPath.indexOf("https:")!=0) return thumbPath.substring(thumbPath.indexOf("https:")+1);
+        return thumbPath;
     }
 
     public String getFullThumbPath() {
