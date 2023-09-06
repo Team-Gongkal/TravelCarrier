@@ -50,7 +50,6 @@ import tc.travelCarrier.repository.WeeklyRepository;
 public class AttachService {
 //    @Value("${file.dir}")
 //    private String fileDir;
-//    
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
     private final AmazonS3Client amazonS3Client;
