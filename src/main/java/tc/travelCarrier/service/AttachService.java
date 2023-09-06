@@ -300,7 +300,8 @@ public class AttachService {
 
     // 이미지 리사이징
     private BufferedImage resizeImageFile(MultipartFile mFile) throws IOException {
-        File file = new File(System.getProperty("java.io.tmpdir") + mFile.getOriginalFilename());
+        String tmpDir = "/home/ubuntu/TravelCarrier/tmp/";
+        File file = new File(tmpDir + mFile.getOriginalFilename());
         mFile.transferTo(file);
         // 회전부터
         BufferedImage readImage = turnImage(file);
