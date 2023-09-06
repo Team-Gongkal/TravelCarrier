@@ -40,10 +40,12 @@ public class WeeklyService {
      * 위클리 등록
      */
     public int register(MultipartFile file, Weekly weekly, User user) throws Exception {
-        // 위클리 정보 저장
-        weeklyRepository.save(weekly);
         // 파일저장
         attachService.saveAttachWeekly(file, weekly);
+
+        // 위클리 정보 저장
+        weeklyRepository.save(weekly);
+
         // 알림전송
         if(weekly.getGowiths().size()!=0) {
             Notification noti[] = notificationService.saveTagNotification(weekly, user);

@@ -232,6 +232,8 @@ public class AttachService {
     public String[] upload(MultipartFile multipartFile, String dirName) throws IOException {
 //        File uploadFile = convert(multipartFile)
 //                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+
+        //Multipart 이미지를 리사이징+회전 한 후 File로 변환하여 업로드
         BufferedImage resizedFile = resizeImageFile(multipartFile);
         File uploadFile = convert(resizedFile,multipartFile.getOriginalFilename());
         return upload(uploadFile, dirName);
@@ -261,15 +263,15 @@ public class AttachService {
     }
 
     private void removeNewFile(File targetFile) {
-        if(targetFile.delete()) log.info(targetFile.getName()+" 파일이 삭제되었습니다.");
-        else log.info(targetFile.getName()+" 파일이 삭제되지 못했습니다.");
+        if(targetFile.delete()) log.info(targetFile.getPath()+"위치에 있는 "+targetFile.getName()+" 파일이 삭제되었습니다.");
+        else log.info(targetFile.getPath()+"위치에 있는 "+targetFile.getName()+" 파일이 삭제되지 못했습니다.");
     }
 
     /**
      * Multipart를 File객체로 변환
      */
     private Optional<File> convert(MultipartFile file) throws  IOException {
-        File convertFile = new File(file.getOriginalFilename());
+        File convertFile = new File(tmpFileDir + file.getOriginalFilename());
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
@@ -284,12 +286,11 @@ public class AttachService {
     private File convert(BufferedImage file, String originalName) throws  IOException {
         try {
             // 저장할 파일 경로 및 이름 지정
-            File outputFile = new File(originalName);
+            File outputFile = new File(tmpFileDir + originalName);
             // BufferedImage를 파일로 저장
             String extension = originalName.substring(originalName.lastIndexOf(".")+1);
             if(extension.equals("blob")) extension = "png";
             ImageIO.write(file, extension, outputFile);
-
             return outputFile;
         } catch (IOException e) {
             e.printStackTrace();
