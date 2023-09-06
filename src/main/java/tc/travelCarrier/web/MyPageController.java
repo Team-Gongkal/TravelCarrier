@@ -75,7 +75,7 @@ public class MyPageController {
 
         // 백그라운드 없으면 오류 날 수 있음 - 타임리프로 null체크해서 해결
 
-        return "/test/mypage";
+        return "test/mypage";
     }
 
 
@@ -302,7 +302,7 @@ public class MyPageController {
         model.addAttribute("followers",traveler.getFollowers());
 
 
-        return "/test/traveler";
+        return "test/traveler";
     }
 
     //트래블러 페이지 페이징
