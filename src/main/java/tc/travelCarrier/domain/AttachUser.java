@@ -23,7 +23,7 @@ public class AttachUser extends Attach{
 
     public void editAttachUser(AttachUser au){
         this.attachTitle = au.getAttachTitle();
-        this.thumbPath = au.getFullThumbPath();
+        this.thumbPath = au.getThumbPath();
     }
 
 }

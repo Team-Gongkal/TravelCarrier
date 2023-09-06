@@ -113,12 +113,10 @@ public class AttachService {
             // 파일이 있을경우 서버에 저장후 DB 저장
             //saveArr = saveAttach(file,"weekly");
             //S3:bucket에 저장하기
-            //saveArr = saveAttachS3(file,"weekly");
             saveArr = upload(file,"weekly");
         } else {
             // 파일이 없을경우 서버저장 생략, 기본이미지 경로 DB에 저장
             //saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
-            //saveArr = new String[]{"weekly_default_thumbnail.png", "https://"+bucket+"/"+"weekly"+"/"+uuid+"."+extension;};
             saveArr = new String[]{"weekly_default_thumbnail.png", "static/image/default/weekly_default_thumbnail.png"};
         }
 
@@ -136,7 +134,7 @@ public class AttachService {
     // attachNo를 삭제하는 메소드
     public void deleteAttachDaily(List<Integer> deleteNos) {
         for(int no : deleteNos){
-            deleteServerFile(attachRepository.findAttachDaily(no).getFullThumbPath()); //서버에서 삭제
+            deleteS3File(attachRepository.findAttachDaily(no).getThumbPath()); //서버에서 삭제
             attachRepository.deleteById(no);
         }
 
@@ -160,7 +158,7 @@ public class AttachService {
         }
 
         //이전 파일데이터 서버에서 삭제
-        deleteServerFile(weekly.getAttachWeekly().getFullThumbPath());
+        deleteS3File(weekly.getAttachWeekly().getThumbPath());
 
         //2. 바뀐 경로로 저장
         weekly.getAttachWeekly().setAttachTitle(saveArr[0]);
@@ -191,7 +189,7 @@ public class AttachService {
         //이전에 프사가 있었으면 서버에서 이전 프로필사진 파일을 삭제
         if(originAttachUser != null){
             // originAttachUser의 경로에 있는 서버에 저장된 파일을 수정한다
-            deleteServerFile(originAttachUser.getFullThumbPath());
+            deleteS3File(originAttachUser.getThumbPath());
             originAttachUser.editAttachUser(attachUser); //파일 경로 수정
         }else{ //이전에 프사가 없었으면 새로 저장하기만 한다.
             attachRepository.saveAttachUser(attachUser);
@@ -220,7 +218,7 @@ public class AttachService {
                 .build();
         AttachUserBackground origin = attachRepository.findBackground(attachUserBackground, user);
         if(origin!=null){
-            deleteServerFile(origin.getFullThumbPath());
+            deleteS3File(origin.getThumbPath());
             origin.editAttachUserBackground(attachUserBackground);
         }else {
             attachRepository.saveAttachUserBackground(attachUserBackground);
@@ -399,8 +397,8 @@ public class AttachService {
 */
 
 
-    //파일을 삭제하는 메소드
-    @Deprecated
+    //로컬버전일때 파일을 삭제하는 메소드
+/*    @Deprecated
     public void deleteServerFile(String filePath){
         File file = new File(filePath);
         if(file.exists() && file.isFile()){
@@ -408,8 +406,25 @@ public class AttachService {
             return;
         }
         throw new FileNotDeleteException("deleteServerFile", filePath+" 경로의 파일을 삭제할수없음");
+    }*/
+
+    /**
+     * S3에 업로드된 파일 삭제
+     */
+    public void deleteS3File(String filePath) {
+        // ex) fileKey : 구분/년/월/일/파일.확장자
+        // 기본프/배사였다면 삭제로직 실행X
+        String fileKey;
+        if(!filePath.equals("/image/default/default_bg.jpg") && !filePath.equals("/image/default/default_profile.jpg")) fileKey = filePath.substring(61);
+        else return;
+
+        try {
+            boolean isObjectExist = amazonS3Client.doesObjectExist(bucket, fileKey);
+            if (isObjectExist) amazonS3Client.deleteObject(bucket, fileKey);
+            else throw new FileNotDeleteException("deleteS3File", fileKey + " 경로의 파일이 존재하지 않음");
+        } catch (Exception e) {
+            throw new FileNotDeleteException("deleteS3File", fileKey+" 경로의 파일을 삭제할수없음");
+        }
     }
-
-
 
 }

@@ -123,11 +123,11 @@ public class WeeklyService {
             //1. 모든 데일리 삭제
             for (Daily d : weekly.getDailys()){
                 for(AttachDaily at : d.getAttachDailies()){
-                    attachService.deleteServerFile(at.getFullThumbPath());
+                    attachService.deleteS3File(at.getThumbPath());
                 }
             }
             //2. 위클리 썸네일 삭제
-            attachService.deleteServerFile(weekly.getAttachWeekly().getFullThumbPath());
+            attachService.deleteS3File(weekly.getAttachWeekly().getThumbPath());
 
             //3. 엔티티 삭제
             weeklyRepository.remove(weekly);

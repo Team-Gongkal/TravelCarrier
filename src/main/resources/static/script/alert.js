@@ -39,7 +39,7 @@ $(document).on("click", ".weeklyDelBtn", function () {
 });
 
 $(document).on("click", "#deleteWeekly", function () {
-   var wid = $(this).data("wid");
+   var wid = document.querySelector('#deleteWeekly').dataset['wid'];
    deleteWeekly(wid);
    closeAlert();
 });
