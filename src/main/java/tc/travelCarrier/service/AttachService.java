@@ -48,8 +48,8 @@ import tc.travelCarrier.repository.WeeklyRepository;
 @Transactional
 @Slf4j
 public class AttachService {
-//    @Value("${file.dir}")
-//    private String fileDir;
+    @Value("${file.dir}")
+    private String tmpFileDir;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
     private final AmazonS3Client amazonS3Client;
@@ -300,8 +300,7 @@ public class AttachService {
 
     // 이미지 리사이징
     private BufferedImage resizeImageFile(MultipartFile mFile) throws IOException {
-        String tmpDir = "/home/ubuntu/TravelCarrier/tmp/";
-        File file = new File(tmpDir + mFile.getOriginalFilename());
+        File file = new File(tmpFileDir + mFile.getOriginalFilename());
         mFile.transferTo(file);
         // 회전부터
         BufferedImage readImage = turnImage(file);
