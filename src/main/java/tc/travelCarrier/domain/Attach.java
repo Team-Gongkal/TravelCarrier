@@ -32,8 +32,6 @@ public abstract class Attach {
     protected String thumbPath;
 
     public String getThumbPath() {
-        if(thumbPath.indexOf("/static")!=0) return thumbPath.substring(thumbPath.indexOf("/static") + 7);
-        else if(thumbPath.indexOf("https:")!=0) return thumbPath.substring(thumbPath.indexOf("https:")+1);
         return thumbPath;
     }
 

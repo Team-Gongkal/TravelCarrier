@@ -29,7 +29,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
+    @Value("${file.dir}")
+    private String fileDir;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -60,8 +61,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider).providerId(providerId)
                     .build();
             memberRepository.save(byUsername);
-            //attachRepository.saveProfilePic(AttachUser.builder().attachTitle("default_profile.jpg").user(byUsername).thumb(fileDir+"mypage/default_profile.jpg").build());
-            //attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg").user(byUsername).path(fileDir+"mypage/default_bg.jpg").build());
+            attachRepository.saveProfilePic(AttachUser.builder().attachTitle("default_profile.jpg")
+                    .user(byUsername).thumb(fileDir+"default_profile.jpg").build());
+            attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg")
+                    .user(byUsername).path(fileDir+"default_bg.jpg").build());
         }
 
         return new PrincipalDetails(byUsername, oAuth2UserInfo);
