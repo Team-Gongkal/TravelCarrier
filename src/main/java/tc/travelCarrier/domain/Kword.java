@@ -16,7 +16,7 @@ public class Kword {
         this.daily = d;
         this.text = kword;
     }
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="KWORD_NO")
     private int id;
 
