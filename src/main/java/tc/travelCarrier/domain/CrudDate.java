@@ -1,5 +1,6 @@
 package tc.travelCarrier.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +24,15 @@ public class CrudDate {
         if(udate !=null) this.udate = formatter.parse(udate);
     }
 
+    @Temporal(TemporalType.DATE)
     @Column(name="CDATE")
     private Date cdate;
+
+    @Temporal(TemporalType.DATE)
     @Column(name="UDATE")
     private Date udate;
+
+    @Temporal(TemporalType.DATE)
     @Column(name="DDATE")
     private Date ddate;
 

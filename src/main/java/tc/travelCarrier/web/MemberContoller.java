@@ -8,13 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.security.auth.PrincipalDetails;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.dto.MemberInfoDTO;
 import tc.travelCarrier.repository.FollowRepository;
@@ -31,7 +30,7 @@ import static tc.travelCarrier.domain.Role.ROLE_USER;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/TravelCarrier")
+//@RequestMapping("/TravelCarrier")
 public class MemberContoller {
 
     private final MemberRepository memberRepository;

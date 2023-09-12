@@ -64,7 +64,7 @@ function validCheck() {
     e.preventDefault();
     $.ajax({
       type: "POST",
-      url: "/TravelCarrier/login/action",
+      url: "/login/action",
       data : {
                 username : $("#username").val(),
                 password : $("#password").val()
@@ -76,7 +76,7 @@ function validCheck() {
         sessionStorage.setItem('username', $("#username").val());
         alert("로그인 성공 : "+response);
         notification();
-        //location.href="/TravelCarrier/";
+        //location.href="/";
       },
       error: function (jqXHR, textStatus, errorThrown) {
         alert("로그인 실패 : "+textStatus);
@@ -184,7 +184,7 @@ function login_submit(event) {
     },
     success: function (response) {
       // 로그인 성공 시 실행할 동작
-      window.location.href = "/TravelCarrier/"; // 리다이렉트할 URL
+      window.location.href = "/"; // 리다이렉트할 URL
     },
     error: function (xhr) {
       // 로그인 실패 시 실행할 동작

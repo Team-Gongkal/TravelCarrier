@@ -105,7 +105,7 @@
           <ul class="userProfile_tagged">
             <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
               <div class="uP_diary_thumbnail">
-                <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">
+                <a th:href="'/weekly/' + ${diary.id}">
                   <img th:if="${diary.attachWeekly != null}" th:src="${diary.attachWeekly.thumbPath}"
                     src="/image/mypage/thumbnail1.JPG" alt="썸네일" class="moving_bg">
                 </a>
@@ -125,7 +125,7 @@
                     class="uP_diary_period">2022.10.19 - 2022.10.20</span>
                 </div>
                 <div class="uP_diary_btn">
-                  <a th:href="'/TravelCarrier/weekly/' + ${diary.id}">숨기기</a>
+                  <a th:href="'/weekly/' + ${diary.id}">숨기기</a>
                   <button type="button">
                     삭제하기
                   </button>

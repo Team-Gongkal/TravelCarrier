@@ -1,25 +1,18 @@
 package tc.travelCarrier.web;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.security.auth.PrincipalDetails;
 import tc.travelCarrier.domain.AttachDaily;
 import tc.travelCarrier.domain.CrudDate;
 import tc.travelCarrier.domain.Reply;
 import tc.travelCarrier.domain.User;
-import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.ReplyDTO;
 import tc.travelCarrier.repository.MemberRepository;
-import tc.travelCarrier.repository.ReplyRepository;
 import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.ReplyService;
-import tc.travelCarrier.service.WeeklyService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/TravelCarrier")
+//@RequestMapping("/TravelCarrier")
 public class ReplyController {
 
     private final ReplyService replyService;

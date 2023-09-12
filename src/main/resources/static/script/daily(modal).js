@@ -415,7 +415,7 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
   postData.append("deleteNos", deleteArr);
 
   $.ajax({
-    url: "/TravelCarrier/weekly/" + weeklyId + "/daily" + "/create",
+    url: "/weekly/" + weeklyId + "/daily" + "/create",
     type: "POST",
     data: postData,
     processData: false,

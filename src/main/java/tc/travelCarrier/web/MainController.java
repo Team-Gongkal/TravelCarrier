@@ -5,16 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.security.auth.PrincipalDetails;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.repository.MemberRepository;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/TravelCarrier")
+//@RequestMapping("/TravelCarrier")
 public class MainController {
 
     private final MemberRepository memberRepository;

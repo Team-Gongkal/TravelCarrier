@@ -12,7 +12,7 @@ $(".save_btn button").on("click", async function(e){
     var name = $("input[type='text']").val();
     $.ajax({
             type: "POST",
-            url: "/TravelCarrier/member/sign/create",
+            url: "/member/sign/create",
             data: { email: email,
                                     password : password,
                                     name : name},
@@ -53,7 +53,7 @@ async function validCheckPromise() {
     var emailCheck = false;
     var emailPromise = $.ajax({
         type: "POST",
-        url: "/TravelCarrier/member/sign/validCheck",
+        url: "/member/sign/validCheck",
         data: JSON.stringify({ email: $("input[type='email']").val() }),
         contentType: "application/json"
     });
@@ -93,7 +93,7 @@ $(".dubble_check button").on("click", function(e){
     var data = $("input[type='email']").val();
     $.ajax({
           type: "POST",
-          url: "/TravelCarrier/member/sign/validCheck",
+          url: "/member/sign/validCheck",
           data: JSON.stringify({ email : data}),
           contentType: "application/json",
           success: function (resp) {
@@ -117,5 +117,5 @@ $(document).on("keyup", ".signUp_pw2 input[type='password']", function () {
 });
 
 $(document).on("click", "#sign_ok", function(){
-    window.location.href = "/TravelCarrier/";
+    window.location.href = "/";
 })

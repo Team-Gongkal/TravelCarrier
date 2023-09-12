@@ -223,13 +223,13 @@ $(".weekly_saveBtn").click(function (event) {
 
   $.ajax({
     type: "POST",
-    url: "/TravelCarrier/weeklyForm",
+    url: "/weeklyForm",
     data: formData,
     processData: false,
     contentType: false,
     success: function (data) {
       alert("성공");
-      window.location.href = "/TravelCarrier/weekly/" + data;
+      window.location.href = "/weekly/" + data;
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("실패");
@@ -503,12 +503,12 @@ $(".weekly_saveBtn").click(function (event) {
 
   $.ajax({
     type: "POST",
-    url: "/TravelCarrier/weeklyForm",
+    url: "/weeklyForm",
     data: formData,
     processData: false,
     contentType: false,
     success: function (data) {
-      window.location.href = "/TravelCarrier/weekly/" + data;
+      window.location.href = "/weekly/" + data;
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("저장에 실패했습니다."+jqXHR+textStatus+errorThrown);

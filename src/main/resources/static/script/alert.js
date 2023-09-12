@@ -46,7 +46,7 @@ $(document).on("click", "#deleteWeekly", function () {
 
 function deleteWeekly(weeklyId) {
   $.ajax({
-    url: "/TravelCarrier/weekly/" + weeklyId,
+    url: "/weekly/" + weeklyId,
     type: "DELETE",
     processData: false,
     contentType: false,
@@ -88,7 +88,7 @@ function deleteReply(reply){
 
     $.ajax({
       type: "POST",
-      url: "/TravelCarrier/reply/delete",
+      url: "/reply/delete",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function (resp) {

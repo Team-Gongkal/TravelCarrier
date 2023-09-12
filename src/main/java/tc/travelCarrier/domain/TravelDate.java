@@ -1,5 +1,6 @@
 package tc.travelCarrier.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class TravelDate {
     @Temporal(TemporalType.DATE)
     @Column(name="SDATE")
     private Date sDate;
+
     @Temporal(TemporalType.DATE)
     @Column(name="EDATE")
     private Date eDate;

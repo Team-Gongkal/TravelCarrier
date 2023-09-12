@@ -25,7 +25,7 @@ $(".reply_modal .close").click(function () {
 function currentReplyList(attachNo) {
   $.ajax({
     type: "GET",
-    url: "/TravelCarrier/reply/" + attachNo,
+    url: "/reply/" + attachNo,
     dataType: "json",
     success: function (replyList) {
       console.log("댓글 List 로드 성공");
@@ -128,7 +128,7 @@ function createReply(type) {
   console.log(data);
   $.ajax({
     type: "POST",
-    url: "/TravelCarrier/reply/create",
+    url: "/reply/create",
     data: JSON.stringify(data),
     contentType: "application/json",
     success: function (resp) {
@@ -158,7 +158,7 @@ function modifyReply() {
   console.log(data);
   $.ajax({
     type: "POST",
-    url: "/TravelCarrier/reply/modify",
+    url: "/reply/modify",
     data: JSON.stringify(data),
     contentType: "application/json",
     success: function (replyId) {
@@ -332,7 +332,7 @@ $(document).on("click", ".del_btn", function (e) {
   if (confirm(reply + "번 댓글을 삭제하시겠습니까?")) {
     $.ajax({
       type: "POST",
-      url: "/TravelCarrier/reply/delete",
+      url: "/reply/delete",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function (resp) {

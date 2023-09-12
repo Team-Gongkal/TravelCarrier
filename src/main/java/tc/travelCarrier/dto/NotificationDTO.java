@@ -36,7 +36,7 @@ public class NotificationDTO implements Comparable<NotificationDTO>{
         this.senderThumbPath = senderThumbPath;
         this.isRead = isRead;
         this.url = url;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy. MM. dd HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         this.time = dateFormat.format(time);
         this.title = title;
     }

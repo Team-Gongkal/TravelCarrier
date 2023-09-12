@@ -16,13 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.security.auth.PrincipalDetails;
 import tc.travelCarrier.domain.User;
 import tc.travelCarrier.domain.Weekly;
 import tc.travelCarrier.dto.DailyDTO;
@@ -34,7 +33,7 @@ import tc.travelCarrier.service.DailyService;
 import tc.travelCarrier.service.WeeklyService;
 
 @Controller
-@RequestMapping("/TravelCarrier")
+//@RequestMapping("/TravelCarrier")
 @RequiredArgsConstructor
 public class DailyController {
 

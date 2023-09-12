@@ -1,8 +1,6 @@
 package tc.travelCarrier.web;
 
-import com.amazonaws.services.s3.AmazonS3Client;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,26 +9,24 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.security.auth.PrincipalDetails;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.KwordDTO;
 import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.repository.MemberRepository;
 import tc.travelCarrier.repository.NationRepository;
-import tc.travelCarrier.repository.WeeklyRepository;
 import tc.travelCarrier.service.WeeklyService;
 
 import javax.validation.Valid;
 import java.util.*;
 
 import static tc.travelCarrier.domain.Weekly.createWeekly;
-import static tc.travelCarrier.security.AuthChecker.checkWeeklyAuth;
 import static tc.travelCarrier.security.AuthChecker.getReadAndUpdateAuth;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/TravelCarrier")
+//@RequestMapping("/TravelCarrier")
 public class WeeklyContoller {
 
     private final WeeklyService weeklyService;
@@ -89,6 +85,7 @@ public class WeeklyContoller {
     public String getWeekly(@PathVariable("weeklyId") int weeklyId, Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails) {
         // if) 공개범위 : ALL : 전체공개, FOLLOW : 팔로워공개, ME : 나에게만
         Weekly weekly = weeklyService.findWeekly(weeklyId);
+
         List<WeeklyDTO> allWdList = getAllWeeklyData(weekly, weeklyId);
 
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
