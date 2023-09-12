@@ -110,7 +110,7 @@ function validReply() {
 // 새 댓글 등록 ajax - by.서현
 function createReply(type) {
   if (!validReply()) return;
-/*    var token = $("meta[name='_csrf']").attr("content");
+  /*    var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");*/
   // 댓글이면 origin값이 "", 대댓글이면 origin값이 원댓글Id
   if (type == "댓글달기") var originVal = "";
@@ -135,15 +135,12 @@ function createReply(type) {
       console.log("성공");
       var attachNo = $(".reply_img img").attr("data-attachNo");
       currentReplyList(attachNo);
-
-
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("댓글달기실패");
     },
   });
 }
-
 
 // 댓글 수정 ajax - by.서현
 function modifyReply() {
@@ -206,11 +203,11 @@ function newReplyHtml(img, date, name, comment, replyId, ddate, selfAuth) {
         </div>
         <div class="comment_btn">
           <span class="re_btn">답글달기</span>`;
-        if (selfAuth == 1) {
-          html += `<span class="mod_btn">수정하기</span>
+    if (selfAuth == 1) {
+      html += `<span class="mod_btn">수정하기</span>
           <span class="del_btn">삭제하기</span>`;
-          }
-        html += `
+    }
+    html += `
           </div>
       </div>
     </div>
@@ -219,7 +216,16 @@ function newReplyHtml(img, date, name, comment, replyId, ddate, selfAuth) {
   return html;
 }
 // 대댓글
-function newReCommentHtml(img,date,name,comment,replyId,originName,ddate,selfAuth) {
+function newReCommentHtml(
+  img,
+  date,
+  name,
+  comment,
+  replyId,
+  originName,
+  ddate,
+  selfAuth
+) {
   var html;
   if (ddate != undefined || ddate != null) {
     html = `
@@ -255,12 +261,10 @@ function newReCommentHtml(img,date,name,comment,replyId,originName,ddate,selfAut
           <span class="re_btn">답글달기</span>`;
 
     if (selfAuth == 1) {
-          html+=
-          `<span class="mod_btn">수정하기</span>
+      html += `<span class="mod_btn">수정하기</span>
           <span class="del_btn">삭제하기</span>`;
-      }
-    html+=
-        `</div>
+    }
+    html += `</div>
       </div>`;
   }
   return html;
