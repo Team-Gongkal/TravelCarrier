@@ -5,11 +5,12 @@ function alertModal(text) {
   //span을 파라미터로 바꿔주기
   changeText.text(text);
   //모달창 활성화 하기(show)
+  $("#alert_modal").removeClass("hide");
   $("#alert_modal").addClass("show");
 }
 
 function alertModal2(red_text, black_text) {
-   $(".alert_textbox p").eq(1).html(`<span>${red_text}</span>${black_text}`);
+  $(".alert_textbox p").eq(1).html(`<span>${red_text}</span>${black_text}`);
   //모달창 활성화 하기(show)
   $("#alert_modal2").addClass("show");
 }
@@ -35,13 +36,16 @@ $(document).on("click", ".weeklyDelBtn", function () {
   //'네'버튼에 id부여
   $(".confirm_btn").attr("id", "deleteWeekly");
   $(".confirm_btn").attr("data-wid", wid);
-  alertModal("["+title+"]을 삭제");
+  alertModal("[" + title + "]을 삭제");
 });
 
 $(document).on("click", "#deleteWeekly", function () {
-   var wid = document.querySelector('#deleteWeekly').dataset['wid'];
-   deleteWeekly(wid);
-   closeAlert();
+  var wid = $(this).data("wid");
+  deleteWeekly(wid);
+  closeAlert();
+  var wid = document.querySelector("#deleteWeekly").dataset["wid"];
+  deleteWeekly(wid);
+  closeAlert();
 });
 
 function deleteWeekly(weeklyId) {
@@ -65,26 +69,24 @@ $(document).on("click", ".del_btn", function (e) {
   var $comment = $(this).closest(".rep");
   var reply = $comment.data("reply");
 
-
   //'네'버튼에 id부여
   $(".confirm_btn").attr("id", "deleteReply");
   $(".confirm_btn").attr("data-reply", reply);
 
   alertModal("댓글을 삭제");
-
 });
 
 $(document).on("click", "#deleteReply", function () {
-   var reply = $(this).data("reply");
-   deleteReply(reply);
-   closeAlert();
+  var reply = $(this).data("reply");
+  deleteReply(reply);
+  closeAlert();
 });
 
-function deleteReply(reply){
-    var data = {
-        replyId: reply,
-        ddate: $.datepicker.formatDate("yy-mm-dd", new Date()),
-    };
+function deleteReply(reply) {
+  var data = {
+    replyId: reply,
+    ddate: $.datepicker.formatDate("yy-mm-dd", new Date()),
+  };
 
     $.ajax({
       type: "POST",
@@ -105,16 +107,16 @@ function deleteReply(reply){
 //탈퇴-----------------------------------------
 
 //아이디 중복확인-----------------------------------------
-function email_check_alert(valid){
-    //valid가 true면 사용 가능, false면 불가하다는 의미
-    if(valid) alertModal2("사용 가능","한 이메일 입니다.");
-    else alertModal2("사용 불가능","한 이메일 입니다.");
+function email_check_alert(valid) {
+  //valid가 true면 사용 가능, false면 불가하다는 의미
+  if (valid) alertModal2("사용 가능", "한 이메일 입니다.");
+  else alertModal2("사용 불가능", "한 이메일 입니다.");
 }
-
 
 //알림창 닫기====================================
 function closeAlert() {
   $("#alert_modal").removeClass("show");
+  $("#alert_modal").addClass("hide");
 }
 function closeAlert2() {
   $("#alert_modal2").removeClass("show");
