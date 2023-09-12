@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-  <!--headerFragment 선언-->
-  <th:block th:fragment="headerFragment">
+<!--headerFragment 선언-->
+<th:block th:fragment="headerFragment">
 
-    <header>
-      <nav>
-        <div class="nav">
+  <header>
+    <nav>
+      <div class="nav">
 
-          <!-- <div class="hamburger on">
+        <!-- <div class="hamburger on">
             <span></span>
             <span></span>
           </div> -->
-          <div class="logo">
-            <a href="/">
-              <img src="/image/header/logo/logo.png" alt="logo">
-            </a>
-          </div>
+        <div class="logo">
+          <a href="/">
+            <img src="/image/header/logo/logo.png" alt="logo">
+          </a>
         </div>
-        <div class="board_link">
-          <a href="/">Board</a>
-        </div>
-        <div class="contact_link">
-          <a href="">Contact</a>
-        </div>
-      </nav>
-      <div class="navigation"></div>
-    </header>
-    <!-- utill 유틸 -->
-    <div class="utill_menu">
-      <div class="notice">
-        <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
       </div>
+      <div class="board_link">
+        <a href="/">Board</a>
+      </div>
+      <div class="contact_link">
+        <a href="">Contact</a>
+      </div>
+    </nav>
+    <div class="navigation"></div>
+  </header>
+  <!-- utill 유틸 -->
+  <div class="utill_menu">
+    <div class="notice">
+      <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
+    </div>
 
-      <div class="profile circle" th:if="${user}"
-        th:style="'background-image: url(' + (${user.attachUser.thumbPath}) + ')'">
-        <a href="/member/mypage"></a>
-      </div>
-      <!-- 새로운 알림창 -->
-      <div class="utill_notice">
-        <div class="option_notice"></div>
-        <div class="update_notice">
-          <h6> <i class="xi-angle-right"></i>최근 업데이트</h6>
-          <ul>
-<!--            <li class="notice_addFriend">
+    <div class="profile circle" th:if="${user}"
+      th:style="'background-image: url(' + (${user.attachUser.thumbPath}) + ')'">
+      <a href="/member/mypage"></a>
+    </div>
+    <!-- 새로운 알림창 -->
+    <div class="utill_notice">
+      <div class="option_notice"></div>
+      <div class="update_notice">
+        <h6> <i class="xi-angle-right"></i>최근 업데이트</h6>
+        <ul>
+          <!--            <li class="notice_addFriend">
               <div class="notice_profile circle">
                 <img src="/image/user/profile/bokyung.jpg" alt="프로필 이미지">
               </div>
@@ -188,48 +188,49 @@
                 <i class="xi-close"></i>
               </button>
             </li>-->
-          </ul>
-        </div>
-      </div>
-      <!-- 개인설정 메뉴 -->
-      <div class="user_menu">
-        <ul>
-          <li>
-            <a href="/member/mypage">
-              <span>
-                <i class="fa-solid fa-user"></i>마이페이지</span>
-            </a>
-          </li>
-          <li>
-            <a href="/member/mypage">
-              <span>
-                <i class="fa-regular fa-address-card"></i>계정 정보</span>
-            </a>
-          </li>
-          <li>
-            <form class="logout" method="get" action="/logout/action" id="logoutForm" onclick="confirmLogout(event)">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</span>
-            </form>
-          </li>
         </ul>
       </div>
     </div>
+    <!-- 개인설정 메뉴 -->
+    <div class="user_menu">
+      <ul>
+        <li>
+          <a href="/member/mypage">
+            <span>
+              <i class="fa-solid fa-user"></i>마이페이지</span>
+          </a>
+        </li>
+        <li>
+          <a href="/member/mypage">
+            <span>
+              <i class="fa-regular fa-address-card"></i>계정 정보</span>
+          </a>
+        </li>
+        <li>
+          <form class="logout" method="get" action="/logout/action" id="logoutForm" onclick="confirmLogout(event)">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</span>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-    <!-- confilm 알림창 -->
-    <div id="alert_modal">
-      <div class="alert">
-        <div class="alert_textbox">
-          <p><i class="fa-solid fa-bell"> 알림</i></p>
-          <p><span>바나나</span>하시겠습니까?</p>
-        </div>
-        <div class="alert_btnBox">
-          <button class="confirm_btn">네</button>
-          <button onclick="closeAlert()">아니요</button>
-        </div>
+  <!-- confilm 알림창 -->
+  <div id="alert_modal">
+    <div class="alert">
+      <div class="alert_textbox">
+        <p><i class="fa-solid fa-bell"> 알림</i></p>
+        <p><span>바나나</span>하시겠습니까?</p>
+      </div>
+      <div class="alert_btnBox">
+        <button class="confirm_btn">네</button>
+        <button onclick="closeAlert()">아니요</button>
       </div>
     </div>
+  </div>
 
-  </th:block>
-  </html>
+</th:block>
 
-  </html>
+</html>
+
+</html>

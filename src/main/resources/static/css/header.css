@@ -392,11 +392,15 @@ header > nav {
   opacity: 0;
   visibility: hidden;
   z-index: 150;
+  transition: 0.5s;
 }
-#alert_modal.show,
-#alert_modal.hide {
+#alert_modal.show {
   opacity: 1;
   visibility: visible;
+}
+#alert_modal.hide {
+  opacity: 0;
+  visibility: hidden;
 }
 .alert {
   width: 27%;
