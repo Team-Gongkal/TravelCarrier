@@ -393,7 +393,8 @@ header > nav {
   visibility: hidden;
   z-index: 150;
 }
-#alert_modal.show {
+#alert_modal.show,
+#alert_modal.hide {
   opacity: 1;
   visibility: visible;
 }
@@ -423,6 +424,22 @@ header > nav {
   100% {
     top: 3%;
     opacity: 1;
+  }
+}
+#alert_modal.hide .alert {
+  animation-name: alertHide;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+@keyframes alertHide {
+  0% {
+    top: 3%;
+    opacity: 1;
+  }
+  100% {
+    top: -50%;
+    opacity: 0;
   }
 }
 .alert_textbox {
