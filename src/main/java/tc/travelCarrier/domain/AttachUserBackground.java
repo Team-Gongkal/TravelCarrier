@@ -26,6 +26,6 @@ public class AttachUserBackground extends Attach{
 
     public void editAttachUserBackground(AttachUserBackground aub) {
         this.attachTitle = aub.getAttachTitle();
-        this.thumbPath = aub.getFullThumbPath();
+        this.thumbPath = aub.getThumbPath();
     }
 }

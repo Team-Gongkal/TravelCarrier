@@ -12,7 +12,7 @@
       - 비밀번호 + 비밀번호 확인
     ^~20자로 구성해죽
     --세요. 비밀번호를 한 ㅂ전 더 입력해주세요
-    <!-- - 닉네임(글자수제한) ~자로 구성해주세요 -->
+    - 닉네임(글자수제한) ~자로 구성해주세요 -->
     <!-- 모두 동의 + 개별약관동의 -->
     <header class="login_header">
       <div class="login_logo">
@@ -41,8 +41,8 @@
               <div>
                 <div class="sign_input">
                   <label for="" autocomplete="off">이메일</label>
-                  <input th:if="${email != null}" type="email" th:value="${email}">
-                  <input th:if="${email == null}" type="email">
+                  <input th:if="${email != null}" type="email" th:value="${email}" required>
+                  <input th:if="${email == null}" type="email" required>
                 </div>
                 <div class="info_text wrong">
                   <p>비밀번호 변경 및 찾기 등에 사용됩니다.</p>
@@ -67,7 +67,7 @@
                   <label for="">비밀번호 확인</label>
                   <input type="password" autocomplete="off">
                 </div>
-                <div class="info_text">
+                <div class="info_text pw2">
                   <p>비밀번호를 한 번 더 입력해주세요</p>
                 </div>
               </div>
@@ -78,11 +78,10 @@
                   <label for="">이름</label>
                   <input type="text">
                 </div>
-                <div class="info_text">
-                  <p>6~10자 이내로 구성해주세요</p>
+                <div class="info_text name">
+                  <p>1~10자 이내로 구성해주세요</p>
                 </div>
               </div>
-              <div class="dubble_check"><button>중복확인</button></div>
             </div>
             <div class="terms_of_service">
               <div class="tos_input">
@@ -112,6 +111,19 @@
         </div>
       </div>
     </div>
+    <!-- 안내용 알림창 -->
+    <div id="alert_modal2">
+      <div class="alert">
+        <div class="alert_textbox">
+          <p><i class="fa-solid fa-bell"> 알림</i></p>
+          <p><span></span></p>
+        </div>
+        <div class="alert_btnBox">
+          <button onclick="closeAlert2()">닫기</button>
+        </div>
+      </div>
+    </div>
+
     <script src="/script/signup.js"></script>
   </main>
 </body>

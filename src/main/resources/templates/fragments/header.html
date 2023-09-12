@@ -33,7 +33,7 @@
       </div>
 
       <div class="profile circle" th:if="${user}"
-        th:style="'background-image: url(' + (${user.attachUser != null ? user.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}) + ')'">
+        th:style="'background-image: url(' + (${user.attachUser.thumbPath}) + ')'">
         <a href="/TravelCarrier/member/mypage"></a>
       </div>
       <!-- 새로운 알림창 -->
@@ -215,7 +215,7 @@
       </div>
     </div>
 
-    <!-- 확인용 알림창 -->
+    <!-- confilm 알림창 -->
     <div id="alert_modal">
       <div class="alert">
         <div class="alert_textbox">
@@ -228,7 +228,6 @@
         </div>
       </div>
     </div>
-
 
   </th:block>
   </html>

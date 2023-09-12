@@ -15,7 +15,7 @@ public class DailyDTO implements Comparable<DailyDTO> {
         this.attachDailySort = attachDailySort;;
         this.attachDailyTitle = attachDailyTitle;
         this.attachDailyText = attachDailyText;
-        this.attachThumb = attachThumb.substring(attachThumb.indexOf("static")+6); //  ~/static 까지의 경로를 생략해준다.
+        this.attachThumb = getThumbPath(attachThumb); //  ~/static 까지의 경로를 생략해준다.
         this.thumb = isThumb;
     }
     private int attachNo;
@@ -37,4 +37,12 @@ public class DailyDTO implements Comparable<DailyDTO> {
         }
         return result;
     }
+
+
+    public String getThumbPath(String thumbPath) {
+        if(thumbPath.indexOf("/static")!=0) return thumbPath.substring(thumbPath.indexOf("/static") + 7);
+        else if(thumbPath.indexOf("https:")!=0) return thumbPath.substring(thumbPath.indexOf("https:")+1);
+        return thumbPath;
+    }
+
 }

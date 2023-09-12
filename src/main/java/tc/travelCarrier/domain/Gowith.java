@@ -14,7 +14,7 @@ public class Gowith {
         this.user = user;
         hide = false;
     }
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "GOWITH_NO")
     private int id;
 

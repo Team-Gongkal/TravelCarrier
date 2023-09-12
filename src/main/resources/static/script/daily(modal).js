@@ -55,6 +55,7 @@ $(document).ready(function () {
         .attr("data-text", dataArr[i].data[j].get("text"))
         .attr("data-title", dataArr[i].data[j].get("title"))
         .addClass("d_slide square sqr");
+        console.log(dataArr[i].data[j].get("file"));
       var newImg = $("<img>").attr({
         src: dataArr[i].data[j].get("file"),
         alt: "사진표시할수없음",

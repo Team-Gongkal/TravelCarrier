@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# 모든 .properties 파일을 무시
+config.properties
+
 ### STS ###
 .apt_generated
 .classpath

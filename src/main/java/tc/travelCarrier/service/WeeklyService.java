@@ -10,6 +10,7 @@ import tc.travelCarrier.dto.WeeklyDTO;
 import tc.travelCarrier.dto.WeeklyForm;
 import tc.travelCarrier.exeption.AuthenticationException;
 import tc.travelCarrier.repository.*;
+import tc.travelCarrier.sse.SseService;
 
 import java.util.List;
 @Service
@@ -26,6 +27,8 @@ public class WeeklyService {
     private final GowithRepository gowithRepository;
     private final NotificationService notificationService;
     private final NationRepository nationRepository;
+    private final SseService sseService;
+
     /**
      * 팔로워 목록 조회
      * */
@@ -37,12 +40,21 @@ public class WeeklyService {
      * 위클리 등록
      */
     public int register(MultipartFile file, Weekly weekly, User user) throws Exception {
+
         // 위클리 정보 저장
         weeklyRepository.save(weekly);
+
         // 파일저장
         attachService.saveAttachWeekly(file, weekly);
+
+
         // 알림전송
-        notificationService.saveTagNotification(weekly, user);
+        if(weekly.getGowiths().size()!=0) {
+            Notification noti[] = notificationService.saveTagNotification(weekly, user);
+            for(Notification n : noti){
+                sseService.sendEmitter(n, n.getReceiver());
+            }
+        }
 
         return weekly.getId();
     }
@@ -111,11 +123,11 @@ public class WeeklyService {
             //1. 모든 데일리 삭제
             for (Daily d : weekly.getDailys()){
                 for(AttachDaily at : d.getAttachDailies()){
-                    attachService.deleteServerFile(at.getFullThumbPath());
+                    attachService.deleteS3File(at.getThumbPath());
                 }
             }
             //2. 위클리 썸네일 삭제
-            attachService.deleteServerFile(weekly.getAttachWeekly().getFullThumbPath());
+            attachService.deleteS3File(weekly.getAttachWeekly().getThumbPath());
 
             //3. 엔티티 삭제
             weeklyRepository.remove(weekly);

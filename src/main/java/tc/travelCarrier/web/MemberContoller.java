@@ -25,6 +25,10 @@ import tc.travelCarrier.service.AttachService;
 import tc.travelCarrier.service.MemberService;
 import tc.travelCarrier.service.SearchService;
 
+import java.util.Map;
+
+import static tc.travelCarrier.domain.Role.ROLE_USER;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/TravelCarrier")
@@ -61,12 +65,20 @@ public class MemberContoller {
         model.addAttribute("email",email);
         return "test/sign_up";
     }
-/*    @PostMapping("/member/sign")
-    public String memberSignIn(@RequestParam String email, @RequestParam String pw, @RequestParam String name){
-        User user = new User(email,passwordEncoder.encode(pw),name);
-        memberRepository.save(user);
-        return "test/login";
-    }*/
+
+    // 아이디 중복확인 메소드
+    @PostMapping("/member/sign/validCheck")
+    public ResponseEntity<Boolean> memberEmaillCheck(@RequestBody Map<String, String> requestMap){
+        if(memberRepository.findUserByEmail(requestMap.get("email"))!=null) return ResponseEntity.ok(false);
+        return ResponseEntity.ok(true);
+    }
+    //회원가입 하는 메소드
+    @PostMapping("/member/sign/create")
+    public ResponseEntity memberSignIn(@RequestParam String email, @RequestParam String password, @RequestParam String name){
+        User user = User.userDetailRegister().username(name).password(passwordEncoder.encode(password)).email(email).role(ROLE_USER).build();
+        memberService.signIn(user);
+        return ResponseEntity.ok(null);
+    }
 
 
 

@@ -103,9 +103,9 @@ $(document).ready(function () {
     $(".crop_img_modal").removeClass("show");
   });
   //2. 서버에 올릴 수 있도록 파일로 변환
-  function saveCrop(url, formData) {
+  async function saveCropPromise(url, formData) {
     console.log("---------------------");
-    $.ajax({
+    var ajaxPromise = $.ajax({
       url: url,
       type: "POST",
       data: formData, //앞에서 생성한 formData
@@ -119,9 +119,15 @@ $(document).ready(function () {
         alert("업로드 에러");
       },
     });
+
+    await ajaxPromise.done(function(){
+        console.log("프로미스 종료");
+        return;
+    });
+
   }
 
-  $(".imgBtn button").on("click", function () {
+  $(".imgBtn button").on("click", async function () {
       //버튼 저장중 처리
       var clickBtn = $(".imgBtn button");
       clickBtn.attr("disabled",true);
@@ -130,10 +136,10 @@ $(document).ready(function () {
 
     console.log("이미지 저장해");
     if (profileFormData !== null) {
-      saveCrop("/TravelCarrier/member/profile", profileFormData);
+      await saveCropPromise("/TravelCarrier/member/profile", profileFormData);
     }
     if (backgroundFormData !== null) {
-      saveCrop("/TravelCarrier/member/background", backgroundFormData);
+      await saveCropPromise("/TravelCarrier/member/background", backgroundFormData);
     }
 
       clickBtn.attr("disabled",false);
