@@ -1,6 +1,5 @@
-package tc.travelCarrier.auth;
+package tc.travelCarrier.security.auth;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

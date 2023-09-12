@@ -25,7 +25,7 @@
             <th:block th:each="weekly : ${user.weeklys}">
                 <div th:style="'background-image: url(' + ${weekly.attachWeekly.thumbPath} + ')'"
                     class="thumbnail thumbnail01">
-                    <a th:href="@{/TravelCarrier/weekly/{id}(id=${weekly.id})}" href="#none">
+                    <a th:href="@{/weekly/{id}(id=${weekly.id})}" href="#none">
                         <div class="textbox">
                             <p th:text="${#dates.format(weekly.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(weekly.travelDate.eDate, 'yyyy.MM.dd')}"
                                 class="travel_period">22.10.19-22.10.21</p>
@@ -36,7 +36,7 @@
             </th:block>
 
             <div id="more_thumbnail">
-                <a href="/TravelCarrier/weeklyForm">
+                <a href="/weeklyForm">
                     <div class="plus">
                         <span></span>
                         <span></span>

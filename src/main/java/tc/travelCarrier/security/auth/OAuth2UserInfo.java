@@ -1,4 +1,4 @@
-package tc.travelCarrier.auth;
+package tc.travelCarrier.security.auth;
 
 import java.util.Map;
 

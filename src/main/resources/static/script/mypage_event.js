@@ -25,7 +25,7 @@ $(document).ready(function () {
       if (type == "rev") return;
 
       $.ajax({
-        url: "/TravelCarrier/mypage/search",
+        url: "/mypage/search",
         type: "POST",
         data: JSON.stringify({ type: type, keyword: searchKeyword }),
         contentType: "application/json",
@@ -60,7 +60,7 @@ $(".userProfile_tab li").on("click", function (e) {
 // 타입과 페이지를 파라미터로 해당 페이지를 get - by.서현
 function getPage(type, page) {
   $.ajax({
-    url: "/TravelCarrier/mypage/page",
+    url: "/mypage/page",
     type: "POST",
     data: JSON.stringify({ type: type, page: page }),
     contentType: "application/json",
@@ -74,7 +74,7 @@ function getPage(type, page) {
 }
 function getFollowPage(type, detailType, page) {
   $.ajax({
-    url: "/TravelCarrier/mypage/page",
+    url: "/mypage/page",
     type: "POST",
     data: JSON.stringify({ type: type, page: page, detailType: detailType }),
     contentType: "application/json",
@@ -143,7 +143,7 @@ function diaryHtml(data) {
   var html = `
     <li data-wid="${data.id}" >
       <div class="uP_diary_thumbnail">
-        <a href='/TravelCarrier/weekly/${data.id}'>
+        <a href='/weekly/${data.id}'>
           <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
         </a>
       </div>
@@ -163,7 +163,7 @@ function diaryHtml(data) {
           <span class="uP_diary_period">${data.date.sdate} - ${data.date.edate}</span>
         </div>
         <div class="uP_diary_btn">
-          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>
+          <a href='/weekly/${data.id}'>수정하기</a>
           <button type="button" class="weeklyDelBtn" >삭제하기</button>
         </div>
       </div>
@@ -177,7 +177,7 @@ function taggedHtml(data) {
   var html = `
     <li data-wid="${data.id}">
       <div class="uP_diary_thumbnail">
-        <a href='/TravelCarrier/weekly/${data.id}'>
+        <a href='/weekly/${data.id}'>
           <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
         </a>
       </div>
@@ -197,7 +197,7 @@ function taggedHtml(data) {
           <span class="uP_diary_period">${data.date.sdate} - ${data.date.edate}</span>
         </div>
         <div class="uP_diary_btn">
-          <a href='/TravelCarrier/weekly/${data.id}'>수정하기</a>`;
+          <a href='/weekly/${data.id}'>수정하기</a>`;
 
   if (data.hide == true)
     html += `<button type="button" class="weeklyShowBtn" >보이기</button>`;
@@ -273,7 +273,7 @@ function add_friend() {
 
 /*function deleteWeekly(weeklyId) {
   $.ajax({
-    url: "/TravelCarrier/weekly/" + weeklyId,
+    url: "/weekly/" + weeklyId,
     type: "DELETE",
     processData: false,
     contentType: false,
@@ -320,7 +320,7 @@ function switchBtn(block, type) {
 // 태그된 위클리에 대해 숨김또는 보이기 하는 ajax (숨김:"hide" 보이기:"seek")
 function hideOrShowWeekly(block, weeklyId, type) {
   $.ajax({
-    url: "/TravelCarrier/weekly/" + weeklyId,
+    url: "/weekly/" + weeklyId,
     type: "PUT",
     data: JSON.stringify({ type: type }),
     contentType: "application/json",
@@ -372,7 +372,7 @@ $(document).on("click", "#search_period", function () {
 
 function searchDate(type, sdate, edate) {
   $.ajax({
-    url: "/TravelCarrier/mypage/search/date",
+    url: "/mypage/search/date",
     type: "POST",
     data: JSON.stringify({ type: type, sdate: sdate, edate: edate }),
     contentType: "application/json",
@@ -489,7 +489,7 @@ $(document).on("click", ".infoBtn button", function () {
   //변경된 정보 저장하기
   $.ajax({
     type: "POST",
-    url: "/TravelCarrier/member/info",
+    url: "/member/info",
     data: JSON.stringify(data),
     contentType: "application/json",
     success: function () {

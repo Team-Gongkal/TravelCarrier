@@ -136,10 +136,10 @@ $(document).ready(function () {
 
     console.log("이미지 저장해");
     if (profileFormData !== null) {
-      await saveCropPromise("/TravelCarrier/member/profile", profileFormData);
+      await saveCropPromise("/member/profile", profileFormData);
     }
     if (backgroundFormData !== null) {
-      await saveCropPromise("/TravelCarrier/member/background", backgroundFormData);
+      await saveCropPromise("/member/background", backgroundFormData);
     }
 
       clickBtn.attr("disabled",false);

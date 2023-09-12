@@ -1,4 +1,4 @@
-package tc.travelCarrier.web;
+package tc.travelCarrier.aws;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

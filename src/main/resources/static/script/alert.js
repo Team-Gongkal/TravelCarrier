@@ -50,7 +50,7 @@ $(document).on("click", "#deleteWeekly", function () {
 
 function deleteWeekly(weeklyId) {
   $.ajax({
-    url: "/TravelCarrier/weekly/" + weeklyId,
+    url: "/weekly/" + weeklyId,
     type: "DELETE",
     processData: false,
     contentType: false,
@@ -88,20 +88,20 @@ function deleteReply(reply) {
     ddate: $.datepicker.formatDate("yy-mm-dd", new Date()),
   };
 
-  $.ajax({
-    type: "POST",
-    url: "/TravelCarrier/reply/delete",
-    data: JSON.stringify(data),
-    contentType: "application/json",
-    success: function (resp) {
-      alert("삭제되었습니다.");
-      var attachNo = $(".reply_img img").attr("data-attachNo");
-      currentReplyList(attachNo);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      alert("댓글 삭제 실패");
-    },
-  });
+    $.ajax({
+      type: "POST",
+      url: "/reply/delete",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      success: function (resp) {
+        alert("삭제되었습니다.");
+        var attachNo = $(".reply_img img").attr("data-attachNo");
+        currentReplyList(attachNo);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert("댓글 삭제 실패");
+      },
+    });
 }
 
 //탈퇴-----------------------------------------

@@ -1,7 +1,7 @@
 // 로그인 되었는지 확인 후 되어있으면 SSE를 셋팅하는 메소드 - by.서현
 $.ajax({
   type: "GET",
-  url: "/TravelCarrier/member/login/check",
+  url: "/member/login/check",
   success: function (resp) {
     if (resp == "true") {
         setSSE();
@@ -18,7 +18,7 @@ $.ajax({
 function setNewNoti(){
     $.ajax({
       type: "GET",
-      url: "/TravelCarrier/notification/notRead",
+      url: "/notification/notRead",
       success: function (resp) {
         console.log(resp)
         if(resp) $(".notice").addClass("active");
@@ -32,7 +32,7 @@ function setNewNoti(){
 // SSE연결 생성 메소드 = by.서현
 function setSSE() {
   console.log("notification() 실행됨!");
-  let eventSource = new EventSource("/TravelCarrier/sub");
+  let eventSource = new EventSource("/sub");
 
   //실시간 알림 발생시 - 알림모달이 on 되어있다면 append
   //실시간 알림 발생시 - 알림모달이 off되어있다면 알림발생 안내만 추가
@@ -77,7 +77,7 @@ $(document).ready(function () {
     var notification_id = $(this).attr("data-notification");
     $.ajax({
       type: "GET",
-      url: "/TravelCarrier/notification/" + notification_id,
+      url: "/notification/" + notification_id,
       success: function (resp) {
         console.log("성공");
         $("li button[data-notification='" + notification_id + "']")
@@ -95,7 +95,7 @@ $(document).ready(function () {
 function getNotification() {
   $.ajax({
     type: "GET",
-    url: "/TravelCarrier/notification",
+    url: "/notification",
     success: function (resp) {
       console.log("성공");
       drawNotice(resp);
@@ -110,7 +110,7 @@ function getNotification() {
 function isReadNotification() {
   $.ajax({
     type: "GET",
-    url: "/TravelCarrier/notification/isRead",
+    url: "/notification/isRead",
     success: function (resp) {
       console.log("읽음처리 성공");
     },
@@ -148,7 +148,7 @@ function commentHtml(data) {
           </div>
           <div class="notice_textbox">
             <p>
-              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="/TravelCarrier${data.url}" class="notice_writing">`+title+`</a> 글에 댓글을
+              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="${data.url}" class="notice_writing">`+title+`</a> 글에 댓글을
               남겼습니다.
             </p>
             <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>
@@ -170,7 +170,7 @@ function recommentHtml(data) {
           </div>
           <div class="notice_textbox">
             <p>
-              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="/TravelCarrier${data.url}" class="notice_writing">${data.title}</a> 댓글에 답댓글을
+              <a href="#none" class="notice_name">${data.senderName}</a>님이 <a href="${data.url}" class="notice_writing">${data.title}</a> 댓글에 답댓글을
               남겼습니다.
             </p>
             <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>
@@ -192,7 +192,7 @@ function addFriendHtml(data) {
       </div>
       <div class="notice_textbox">
         <p>
-          <a href="/TravelCarrier${data.url}" class="notice_name">${data.senderName}</a>님이 팔로우 회원님을 팔로우 합니다.
+          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 팔로우 회원님을 팔로우 합니다.
         </p>
         <span class="update_date"><i class="xi-time-o"></i>${data.time}</span>
       </div>
@@ -234,7 +234,7 @@ function tagHtml(data) {
       </div>
       <div class="notice_textbox">
         <p>
-          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 <a href="/TravelCarrier${data.url}" class="notice_writing">${data.title}</a>에 회원님을
+          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 <a href="${data.url}" class="notice_writing">${data.title}</a>에 회원님을
           태그했습니다.
         </p>
         <span class=" update_date"><i class="xi-time-o"></i>${data.time}</span>

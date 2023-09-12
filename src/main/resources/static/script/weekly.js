@@ -144,7 +144,7 @@ $(document).on("click", "#keyword_save", function (event) {
 
   //ajax로 DB에 키워드 저장
   $.ajax({
-    url: "/TravelCarrier/weekly/saveKeyword",
+    url: "/weekly/saveKeyword",
     type: "POST",
     data: JSON.stringify({ dailyId: dailyId, kwordList: keyword_list }),
     contentType: "application/json",
@@ -189,7 +189,7 @@ $(document).on("click", ".removeBtn", function (event) {
 // 위클리 수정 ajax - by.서현
 $(document).on("click", ".updateWeekly", function (event) {
   event.preventDefault();
-  console.log("/TravelCarrier/weekly/" + weeklyId + "/update");
+  console.log("/weekly/" + weeklyId + "/update");
   // 제출전 유효성 검사, false면 제출 X
   if (!checkValidation()) return;
 
@@ -225,7 +225,7 @@ $(document).on("click", ".updateWeekly", function (event) {
 
   $.ajax({
     type: "POST",
-    url: "/TravelCarrier/weekly/" + weeklyId + "/update",
+    url: "/weekly/" + weeklyId + "/update",
     data: formData,
     processData: false,
     contentType: false,
@@ -234,7 +234,7 @@ $(document).on("click", ".updateWeekly", function (event) {
       clickBtn.attr("disabled",false);
       clickBtn.toggleClass("btn_disable btn");
       clickBtn.html("저장하기");
-      location.replace("/TravelCarrier/weekly/" + data);
+      location.replace("/weekly/" + data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("실패");

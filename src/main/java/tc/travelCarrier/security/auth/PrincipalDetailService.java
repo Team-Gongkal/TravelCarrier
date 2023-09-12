@@ -1,4 +1,4 @@
-package tc.travelCarrier.auth;
+package tc.travelCarrier.security.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

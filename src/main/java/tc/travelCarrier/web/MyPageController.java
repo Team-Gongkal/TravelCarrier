@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import tc.travelCarrier.auth.PrincipalDetails;
+import tc.travelCarrier.security.auth.PrincipalDetails;
 import tc.travelCarrier.domain.*;
 import tc.travelCarrier.dto.MyPageDTO;
 import tc.travelCarrier.dto.SearchDTO;
@@ -23,14 +23,13 @@ import tc.travelCarrier.service.SearchService;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static tc.travelCarrier.dto.MyPageDTO.generateFollowerDTO;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/TravelCarrier")
+//@RequestMapping("/TravelCarrier")
 public class MyPageController {
     private final MemberRepository memberRepository;
     private final MemberService memberService;

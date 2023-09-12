@@ -29,7 +29,7 @@
           <div class="weekly_mainArtc">
             <div class="writer">
               <span>by</span>
-              <span th:text="${user.name}">아이디</span>
+              <span th:text="${weekly.user.name}">아이디</span>
             </div>
             <div class="weekly_title">
               <h2 th:text="${weekly.title}">TITLE</h2>
@@ -47,13 +47,20 @@
             <div class=" weekly_with">
               <div class="weekly_companion">
                 <!-- <span>with. </span> -->
+<!--                <a th:if="${it.index} &lt; 5" th:each="w,it : ${weekly.gowiths}" th:href="'/member/'+${w.user.email}" >
+                  <li
+                          th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
+                          class="circle">
+                    동행인 이미지
+                  </li>
+                </a>-->
                 <ul class="sel_companion">
                   <li th:each="w,it : ${weekly.gowiths}"
                     th:style="'background-image: url(' + ${w.user.attachUser.thumbPath} + ');'"
                     th:if="${it.index} &lt; 5" class="circle">
                     동행인 이미지
                   </li>
-                  <li class="circle" id="companion_more"></li>
+                  <li th:if="${#lists.size(weekly.gowiths)} &gt; 4" class="circle" id="companion_more"></li>
                 </ul>
               </div>
               <div class="weekly_disclosure">
@@ -298,10 +305,10 @@
           <div class="keywordBox">
             <ul>
               <li>
-                <a href="/TravelCarrier/">메인페이지</a>
+                <a href="/">메인페이지</a>
               </li>
               <li>
-                <a href="/TravelCarrier/member/mypage">마이페이지이동</a>
+                <a href="/member/mypage">마이페이지이동</a>
               </li>
               <li>
                 <a href="#">게시판이동</a>
@@ -322,10 +329,10 @@
           <div class="keywordBox">
             <ul>
               <li>
-                <a href="/TravelCarrier/">메인페이지</a>
+                <a href="/">메인페이지</a>
               </li>
               <li>
-                <a href="/TravelCarrier/member/mypage">마이페이지이동</a>
+                <a href="/member/mypage">마이페이지이동</a>
               </li>
               <li>
                 <a href="#">게시판이동</a>

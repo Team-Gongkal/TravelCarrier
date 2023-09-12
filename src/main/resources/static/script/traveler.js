@@ -31,7 +31,7 @@ $(document).ready(function () {
       if (type == "rev") return;
 
       $.ajax({
-        url: "/TravelCarrier/mypage/search",
+        url: "/mypage/search",
         type: "POST",
         data: JSON.stringify({ type: type, keyword: searchKeyword }),
         contentType: "application/json",
@@ -66,7 +66,7 @@ $(".userProfile_tab li").on("click", function (e) {
 // 타입과 페이지를 파라미터로 해당 페이지를 get - by.서현
 function getTravelerPage(type, page) {
   $.ajax({
-    url: "/TravelCarrier/member/"+TravelerEmail+"/page",
+    url: "/member/"+TravelerEmail+"/page",
     type: "POST",
     data: JSON.stringify({ userEmail:TravelerEmail, type: type, page: page }),
     contentType: "application/json",
@@ -81,7 +81,7 @@ function getTravelerPage(type, page) {
 
 function getFollowPage(type, detailType, page) {
   $.ajax({
-    url: "/TravelCarrier/member/"+TravelerEmail+"/page",
+    url: "/member/"+TravelerEmail+"/page",
     type: "POST",
     data: JSON.stringify({ type: type, page: page, detailType: detailType }),
     contentType: "application/json",
@@ -138,7 +138,7 @@ function diaryHtml(data) {
   var html = `
     <li data-wid="${data.id}" >
       <div class="uP_diary_thumbnail">
-        <a href='/TravelCarrier/weekly/${data.id}'>
+        <a href='/weekly/${data.id}'>
           <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
         </a>
       </div>
@@ -168,7 +168,7 @@ function taggedHtml(data) {
   var html = `
     <li data-wid="${data.id}">
       <div class="uP_diary_thumbnail">
-        <a href='/TravelCarrier/weekly/${data.id}'>
+        <a href='/weekly/${data.id}'>
           <img src="${data.thumbPath}" alt="썸네일" class="moving_bg">
         </a>
       </div>
@@ -263,7 +263,7 @@ $(document).on("click", "#search_period", function () {
 
 function searchDate(type, sdate, edate) {
   $.ajax({
-    url: "/TravelCarrier/mypage/search/date",
+    url: "/mypage/search/date",
     type: "POST",
     data: JSON.stringify({ type: type, sdate: sdate, edate: edate }),
     contentType: "application/json",
@@ -333,7 +333,7 @@ function add_friend() {
 
 function followingTarget() {
   $.ajax({
-    url: "/TravelCarrier/member/following/"+TravelerEmail,
+    url: "/member/following/"+TravelerEmail,
     type: "GET",
     success: function (resp) {
       console.log("성공");
@@ -346,7 +346,7 @@ function followingTarget() {
 
 function unfollowTarget() {
   $.ajax({
-    url: "/TravelCarrier/member/unfollow/"+TravelerEmail,
+    url: "/member/unfollow/"+TravelerEmail,
     type: "GET",
     success: function (resp) {
       console.log("성공");

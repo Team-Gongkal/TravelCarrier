@@ -9,8 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
-import tc.travelCarrier.auth.PrincipalDetailService;
-import tc.travelCarrier.auth.PrincipalOauth2UserService;
+import tc.travelCarrier.security.auth.PrincipalDetailService;
+import tc.travelCarrier.security.auth.PrincipalOauth2UserService;
 import tc.travelCarrier.security.AuthFailureHandler;
 import tc.travelCarrier.security.AuthSuccessHandler;
 
@@ -56,26 +56,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable() // csrf 토큰을 비활성화
                 .authorizeRequests() // 요청 URL에 따라 접근 권한을 설정
-                .antMatchers("/",
-                        "/TravelCarrier/member/login/**",
-                        "/TravelCarrier/login/**",
-                        "/TravelCarrier/member/sign/**",
-                        "/TravelCarrier/member/signWithEmail",
+                .antMatchers(
+                        "/member/login/**",
+                        "/member/sign/**",
+                        "/member/signWithEmail",
                         "/script/**", "/font/**", "/css/**", "/image/**").permitAll() // 해당 경로들은 접근을 허용
                 .anyRequest().hasRole("USER")	 // 다른 모든 요청은
                 //.authenticated() // 인증된 유저만 접근을 허용
                 .and()
 
                 .formLogin() // 로그인 폼은
-                .loginPage("/TravelCarrier/member/login") // 해당 주소로 로그인 페이지를 호출한다.
+                .loginPage("/member/login") // 해당 주소로 로그인 페이지를 호출한다.
                 .loginProcessingUrl("/login/action") // 해당 URL로 요청이 오면 스프링 시큐리티가 가로채서 로그인처리를 한다. -> loadUserByName
                 .successHandler(authSuccessHandler) // 성공시 요청을 처리할 핸들러
                 .failureHandler(authFailureHandler) // 실패시 요청을 처리할 핸들러
-                //.defaultSuccessUrl("/TravelCarrier/weeklyForm")
+                //.defaultSuccessUrl("/weeklyForm")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout/action")) // 로그아웃 URL
-                .logoutSuccessUrl("/TravelCarrier/member/login") // 성공시 리턴 URL
+                .logoutSuccessUrl("/member/login") // 성공시 리턴 URL
                 .invalidateHttpSession(true) // 인증정보를 지우하고 세션을 무효화
                 .deleteCookies("JSESSIONID", "remember-me") // JSESSIONID, remember-me 쿠키 삭제
                 .permitAll()
@@ -84,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .maximumSessions(1) // 세션 최대 허용 수 1, -1인 경우 무제한 세션 허용
                 .maxSessionsPreventsLogin(false) // true면 중복 로그인을 막고, false면 이전 로그인의 세션을 해제
-                .expiredUrl("/TravelCarrier/member/login?error=true&exception=Have been attempted to login from a new place. or session expired") // 세션이 만료된 경우 이동 할 페이지를 지정
+                .expiredUrl("/member/login?error=true&exception=Have been attempted to login from a new place. or session expired") // 세션이 만료된 경우 이동 할 페이지를 지정
                 .and()
                 .and().rememberMe() // 로그인 유지
                 .alwaysRemember(false) // 항상 기억할 것인지 여부
@@ -93,9 +92,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()					//추가
                 .oauth2Login()				// OAuth2기반의 로그인인 경우
-                .loginPage("/TravelCarrier/member/login")		// 인증이 필요한 URL에 접근하면 /loginForm으로 이동
-                .defaultSuccessUrl("/TravelCarrier/")			// 로그인 성공하면 "/" 으로 이동
-                .failureUrl("/TravelCarrier/member/login")		// 로그인 실패 시 /loginForm으로 이동
+                .loginPage("/member/login")		// 인증이 필요한 URL에 접근하면 /loginForm으로 이동
+                .defaultSuccessUrl("/")			// 로그인 성공하면 "/" 으로 이동
+                .failureUrl("/member/login")		// 로그인 실패 시 /loginForm으로 이동
                 .userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
                 .userService(principalOauth2UserService);	//사용자정보를 처리할 때 사용한다
 
