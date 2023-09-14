@@ -121,7 +121,7 @@
     </form>
     <button type="submit" class="btn weekly_saveBtn"> 저장하기 </button>
     <!-- 동행인 추가 팝업 -->
-    <div class="companion_modal_bg">
+    <div class="companion_modal_bg modal_bg">
       <div class="companion_modal">
         <h3>아이디 검색</h3>
         <div class="id_search">
@@ -129,9 +129,9 @@
           <img src="/image/weekly/icon/serch.svg" alt="serch icon">
         </div>
         <div class="friendsList">
-          <ul class="checked_friends">
-
-          </ul>
+          <!-- 여행글에 태그한 친구 목록 -->
+          <ul class="checked_friends"></ul>
+          <!-- 내 친구들 목록 -->
           <ul class="serch_friends">
             <li th:each="f : ${user.followers}" th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
               <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
@@ -144,7 +144,13 @@
               </label>
             </li>
           </ul>
+          <!-- 검색된 친구 -->
+          <!-- <ul class="find_friends"></ul> -->
         </div>
+        <!-- <div class="no_friends">
+          <p>아직 친구가 없어요🥲</p>
+          <p>친구를 등록해보세요</p>
+        </div> -->
         <button type="button" class="btn goWithBtn">확인</button>
       </div>
     </div>
