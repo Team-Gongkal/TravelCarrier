@@ -202,14 +202,14 @@ main#signUp {
   left: 0;
   transform: translateY(-44%);
 }
-.info_text.wrong::before {
+#signUp .info_text.wrong::before {
   content: url(../image/login/sign/wrong.svg);
 }
 /* right */
 .info_text.right {
   color: #3cb371;
 }
-.info_text.right:before {
+#signUp .info_text.right:before {
   content: url(../image/login/sign/right.svg);
 }
 /* 가입하기버튼 (최종) */

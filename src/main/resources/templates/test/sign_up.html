@@ -44,7 +44,7 @@
                   <input th:if="${email != null}" type="email" th:value="${email}" required>
                   <input th:if="${email == null}" type="email" required>
                 </div>
-                <div class="info_text wrong">
+                <div class="info_text">
                   <p>비밀번호 변경 및 찾기 등에 사용됩니다.</p>
                 </div>
               </div>
@@ -56,7 +56,7 @@
                   <label for="">비밀번호</label>
                   <input type="password" autocomplete="off">
                 </div>
-                <div class="info_text right">
+                <div class="info_text info_pw1">
                   <p>6~20자 이내로 구성해주세요</p>
                 </div>
               </div>
@@ -67,7 +67,7 @@
                   <label for="">비밀번호 확인</label>
                   <input type="password" autocomplete="off">
                 </div>
-                <div class="info_text pw2">
+                <div class="info_text info_pw2">
                   <p>비밀번호를 한 번 더 입력해주세요</p>
                 </div>
               </div>
@@ -75,7 +75,7 @@
             <div class="signUp_name">
               <div>
                 <div class="sign_input">
-                  <label for="">이름</label>
+                  <label for="">닉네임</label>
                   <input type="text">
                 </div>
                 <div class="info_text name">
