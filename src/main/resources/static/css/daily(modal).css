@@ -793,6 +793,17 @@ ul.diary_list > li {
   visibility: visible;
   display: flex;
   transition: 0.5s;
+  animation-name: show;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .reply_modal > .center {
   height: 85%;
