@@ -274,7 +274,7 @@ $(window).on("load", function () {
 
   //스크롤 양 체크하기
   var scroll = weekly_scroll.scrollLeft();
-  console.log("스크롤 양" + scroll);
+  console.log("스크롤 양" + scroll);//0출력됨 왜??
 
   let num = 0; //첫페이지에서 스크롤되는 횟수(첫페이지 동영상 크기 변환) -스크롤을 할 때마다 증가하며 그에 따라서 스크롤 양을 증가시키기
 
@@ -300,7 +300,6 @@ $(window).on("load", function () {
 
   function scrollHandler(e) {
     delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
-
     if (delta < 0) {
       //마우스 휠 방향아래
       if (num <= moving_cnt) {
@@ -321,7 +320,16 @@ $(window).on("load", function () {
       }
     }
   }
-
+  //GoToTop 버튼 클릭시 스크롤 초기화 시키기
+$('.moreBox > a.top').on('click', function(e){
+  e.preventDefault(); // a링크 클릭시 주소에 weekly/246/#이 붙는 것을 방지함
+  num = 0;//num의 값이 초기화 되어야 첫페이지 이동 후 스크롤을 움직였을때 처음 위치부터 이동이 가능함(안하면 카운트가 끝쪽이라 처음으로 이동은 했어도 스크롤 움직이면 바로 마지막 페이지로 넘어가버림)
+  
+  //스크롤 이동시 부드러운 애니메이션추가
+  //위의 스크롤 양을 초기화 하는데 animate를 사용해 천천히 이동하도록 함.(var scroll = weekly_scroll.scrollLeft();에 값을 0으로 이동하도록 설정)
+  scroll = weekly_scroll.animate( { scrollLeft : 0 }, 400 );
+	return false;
+})
   //위클리 수정 모달 활성화
   $(".weekly_edit").on("click", function () {
     $(".weekly_modal_bg").addClass("show");

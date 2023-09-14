@@ -17,8 +17,8 @@
 
   <!-- 읽기권한 있음 : weekly 디자인 시작 -->
   <th:block th:if="${readAuth == 'GRANTED'}">
-    <main class="weekly_scroll">
-      <article id="top">
+    <main class="weekly_scroll" >
+      <article>
         <div class="longBox">
           <th:block th:if="${updateAuth == 'GRANTED'}">
             <div class="weekly_edit" onclick="event.preventDefault()">
@@ -317,14 +317,14 @@
             </ul>
           </div>
           <div class="moreBox">
-            <a href="#top">GoToFirst</a>
+            <a href="#" class="top">GoToFirst</a>
           </div>
         </div>
       </div>
       <div class="shortBox_even weekly_finish_even">
         <div class="shortBox">
           <div class="moreBox">
-            <a href="#top">GoToFirst</a>
+            <a href="#" class="top">GoToFirst</a>
           </div>
           <div class="keywordBox">
             <ul>
