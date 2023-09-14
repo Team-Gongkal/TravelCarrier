@@ -269,12 +269,6 @@ $(document).ready(function () {
   });
 });
 
-//클릭요소 확인용(삭제)
-document.addEventListener("click", function (event) {
-  var hoveredElement = event.target;
-  console.log(hoveredElement);
-});
-
 //(⚙️ 설정)--------------------------------------
 //탭메뉴 활성화
 var settingTab = $(".edit_modal_nav > ul> li"); //탭메뉴 리스트
