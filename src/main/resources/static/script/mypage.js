@@ -17,10 +17,20 @@ $(".period_modal_bg .close").on("click", function () {
   $(".period_modal_bg").removeClass("show");
 });
 
-//프로필 편집 모달창 활성화 - by 윤아
-$("#edit_profile").on("click", function () {
-  $(".edit_modal").addClass("show");
-});
+//프로필 편집 및 계정설정 모달창 활성화 -by.윤아
+function editModal(idx) {
+  $('.edit_modal').addClass('show');//모달창 활성화
+  $('.edit_modal_con > ul >li').removeClass('show');//모달창 안의 콘텐츠 비우기
+  $('.edit_modal_con > ul > li').eq(idx).addClass('show');//해당 콘텐츠 띄우기
+  $('.edit_modal_nav >ul > li').removeClass('on');//탭메뉴 표시 지우기
+  $('.edit_modal_nav> ul > li').eq(idx).addClass('on');//해당 탭메뉴 표시하기
+}
+for(let i = 0; i < 2; i++){
+  $('.edit_menu ul li').eq(i).on("click", function () {
+    editModal(i);
+    console.log('🥲🥲🥲🥲🥲');
+  });
+}
 
 $(".clos").on("click", function () {
   $(".edit_modal").removeClass("show");
