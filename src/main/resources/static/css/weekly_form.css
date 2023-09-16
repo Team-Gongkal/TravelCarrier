@@ -356,13 +356,14 @@ input::-webkit-search-results-decoration {
   display: inline-block;
 }
 /* 친구 리스트 */
-.friendsList {
+.friendsList{
   width: 100%;
   height: 100%;
   overflow-y: scroll;
   margin: 1.5rem 0 1.5rem 0;
   position: relative;
 }
+
 /* 스크롤바 디자인 */
 .friendsList::-webkit-scrollbar {
   width: 0.2em;
@@ -433,6 +434,51 @@ span.circle.profile_circle::after {
   background: #a0c1ca;
   padding: 0.3rem 0 0 0.3rem;
   border: 1px solid transparent;
+}
+/* 친구가 없을 경우 친구추가 안내 */
+.if_no_friends {
+  width: 100%;
+  height: 100%;
+  margin: 1.5rem 0 1.5rem 0;
+  position: relative;
+  text-align: center;
+}
+.if_no_friends>div.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 90%;
+}
+.if_no_friends>div>div:nth-child(1) {
+width: 30%;
+}
+.if_no_friends>div>div:nth-child(2) {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+.if_no_friends >div>div p:nth-child(1) {
+  margin-bottom: 0.5em;
+}
+.if_no_friends >div>div p:nth-child(3) {
+  width: fit-content;
+  font-weight: 300;
+  font-size: 0.9rem;
+  padding-top: 2em;
+  margin: auto;
+  position: relative;
+}
+.if_no_friends >div.center  div p:nth-child(3)::before {
+  content: "";
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1rem;
+  background: rgba(160, 193, 202, 0.2);
+  border-radius: 0.5px;
 }
 .companion_modal button {
   height: fit-content;

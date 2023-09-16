@@ -521,7 +521,7 @@
                 <ul class="checked_friends">
 
                 </ul>
-                <ul class="serch_friends">
+                <ul class="search_friends">
                   <li th:each="f : ${user.followers}"
                     th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
                     <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">

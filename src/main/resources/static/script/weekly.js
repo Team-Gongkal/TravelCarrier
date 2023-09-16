@@ -78,7 +78,7 @@ $(document).ready(function () {
     );
   });
   const checkboxes = document.querySelectorAll(
-    '.serch_friends input[type="checkbox"]:checked'
+    '.search_friends input[type="checkbox"]:checked'
   );
   checkboxes.forEach((checkbox) => {
     const li = checkbox.closest("li");
@@ -89,7 +89,7 @@ $(document).ready(function () {
       if (e.target.checked) {
         document.querySelector(".checked_friends").appendChild(li);
       } else {
-        document.querySelector(".serch_friends").appendChild(li);
+        document.querySelector(".search_friends").appendChild(li);
       }
     });
   });
