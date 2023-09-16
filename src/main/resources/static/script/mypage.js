@@ -309,7 +309,7 @@ function chooseOn() {
     $(this).parents("li").addClass("on");
   }
 }
-// [1] 실행
+// [1]번 실행하긴
 $(".edit_profile input[type=radio]").on("change", chooseOn);
 
 //[2]프로필과 배경이미지 변경 라디오버튼 선택시
@@ -327,5 +327,5 @@ function clickUpload() {
     $("#profile_bg_change").click();
   }
 }
-// [2]실행
+// [2]번 실행하기
 $(".edit_profile input[type=radio]").on("click", clickUpload);
