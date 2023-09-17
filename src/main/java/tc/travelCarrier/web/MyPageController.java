@@ -393,10 +393,15 @@ public class MyPageController {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
         for(Weekly w : weeklyPage){
+            // FOLLOWER : 나도 글쓴이의 팔로워이거나 글쓴이가 본인이라면 띄우기
+            //즉 글쓴이가 test2이고, 로그인한사람이 test2이면 자기자신은 스스로의 팔로워가아니므로 뜨지않는 오류를 해결
             if(w.getStatus() == OpenStatus.FOLLOW){
                 boolean isFollowUser = false;
                 for(Follower f : w.getUser().getFollowers()){
                     if(f.getFollower().getId() == user.getId()){
+                        isFollowUser = true;
+                        break;
+                    } else if(w.getUser().getId() == user.getId()){
                         isFollowUser = true;
                         break;
                     }
@@ -432,7 +437,9 @@ public class MyPageController {
 
             result.add(dto);
         }
-
+        for(MyPageDTO d : result){
+            System.out.println(d);
+        }
         return result;
     }
 

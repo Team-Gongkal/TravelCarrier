@@ -44,6 +44,8 @@ public class WeeklyContoller {
         return "test/weekly_form";
     }
 
+
+    // 모든 요청이 들어올때마다 이 method를 거침. 즉 이제부턴 모든 OpenStatus 정보들은 enum으로 변환되어 들어옴
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(OpenStatus.class, new OpenStatusEditor());
