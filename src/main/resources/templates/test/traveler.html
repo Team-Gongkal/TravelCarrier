@@ -53,16 +53,16 @@
           <div class="userProfile_tab">
             <ul>
               <li class="on">
-                <span>diary<em id="diary_num" th:text=" '(' + ${#lists.size(diaryList)} + ')'"></em></span>
+                <span>diary<em id="diary_num" th:text=" '(' + ${diaryList} + ')'"></em></span>
               </li>
               <li>
-                <span>tagged<em id="tagged_num" th:text=" '(' + ${#lists.size(tagDiaryList)} + ')'"></em></span>
+                <span>tagged<em id="tagged_num" th:text=" '(' + ${tagDiaryList} + ')'"></em></span>
               </li>
               <li>
                 <span>review<em id="review_num">(0)</em></span>
               </li>
               <li>
-                <span>traveler<em id="traveler_num" th:text=" '(' + ${#lists.size(followers)} + ')'"></em></span>
+                <span>traveler<em id="traveler_num" th:text=" '(' + ${followers} + ')'"></em></span>
               </li>
             </ul>
           </div>
@@ -80,119 +80,119 @@
       <div class="userProfile_content">
         <div class="userProfile_gallery">
           <ul class="userProfile_diary show">
-            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">
-              <div class="uP_diary_thumbnail">
-                <a th:href="'/weekly/' + ${diary.id}">
-                  <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일"
-                    class="moving_bg">
-                </a>
-              </div>
-              <div class="uP_diary_box">
-                <div class="uP_diary_companion">
-                  <ul class="sel_companion">
-                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"
-                      th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'" class="circle">
-                    </li>
-                  </ul>
-                </div>
-                <div class="uP_diary_text">
-                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>
-                  <span
-                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
-                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>
-                </div>
-              </div>
-            </li>
+<!--            <li th:if="${diaryList != null}" th:each="diary : ${diaryList}" th:data-wid="${diary.id}">-->
+<!--              <div class="uP_diary_thumbnail">-->
+<!--                <a th:href="'/weekly/' + ${diary.id}">-->
+<!--                  <img th:src="${diary.attachWeekly.thumbPath}" src="/image/mypage/thumbnail1.JPG" alt="썸네일"-->
+<!--                    class="moving_bg">-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div class="uP_diary_box">-->
+<!--                <div class="uP_diary_companion">-->
+<!--                  <ul class="sel_companion">-->
+<!--                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"-->
+<!--                      th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'" class="circle">-->
+<!--                    </li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+<!--                <div class="uP_diary_text">-->
+<!--                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>-->
+<!--                  <span-->
+<!--                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"-->
+<!--                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </li>-->
           </ul>
           <ul class="userProfile_tagged">
-            <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">
-              <div class="uP_diary_thumbnail">
-                <a th:href="'/weekly/' + ${diary.id}">
-                  <img th:if="${diary.attachWeekly != null}" th:src="${diary.attachWeekly.thumbPath}"
-                    src="/image/mypage/thumbnail1.JPG" alt="썸네일" class="moving_bg">
-                </a>
-              </div>
-              <div class="uP_diary_box">
-                <div class="uP_diary_companion">
-                  <ul class="sel_companion">
-                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"
-                      th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'" class="circle">
-                    </li>
-                  </ul>
-                </div>
-                <div class="uP_diary_text">
-                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>
-                  <span
-                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"
-                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>
-                </div>
+<!--            <li th:if="${tagDiaryList != null}" th:each="diary : ${tagDiaryList}">-->
+<!--              <div class="uP_diary_thumbnail">-->
+<!--                <a th:href="'/weekly/' + ${diary.id}">-->
+<!--                  <img th:if="${diary.attachWeekly != null}" th:src="${diary.attachWeekly.thumbPath}"-->
+<!--                    src="/image/mypage/thumbnail1.JPG" alt="썸네일" class="moving_bg">-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div class="uP_diary_box">-->
+<!--                <div class="uP_diary_companion">-->
+<!--                  <ul class="sel_companion">-->
+<!--                    <li th:if="${diary.gowiths != null}" th:each="gowith : ${diary.gowiths}"-->
+<!--                      th:style="'background-image: url(' + ${gowith.user.attachUser.thumbPath} + ');'" class="circle">-->
+<!--                    </li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+<!--                <div class="uP_diary_text">-->
+<!--                  <span th:text="${diary.title}" class="uP_diary_tit">Budapest</span>-->
+<!--                  <span-->
+<!--                    th:text="${#dates.format(diary.travelDate.sDate, 'yyyy.MM.dd') + '-' + #dates.format(diary.travelDate.eDate, 'yyyy.MM.dd')}"-->
+<!--                    class="uP_diary_period">2022.10.19 - 2022.10.20</span>-->
+<!--                </div>-->
 
-              </div>
-            </li>
+<!--              </div>-->
+<!--            </li>-->
           </ul>
           <ul class="userProfile_review">
             <p>페이지준비중입니다</p>
           </ul>
           <div class="userProfile_traveler">
             <ul class="follower">
-              <li th:if="${followers != null}" th:each="follower : ${followers}">
-                <div class="uP_diary_thumbnail">
-                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                    <img th:if="${follower.follower.attachUserBackground != null}"
-                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
-                      alt="썸네일" class="moving_bg">
-                  </a>
-                </div>
-                <div class="uP_user_box">
-                  <div class="uP_user_profileImg">
-                    <div class="my_profile_img circle">
-                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                        <img
-                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
-                      </a>
-                    </div>
-                  </div>
+<!--              <li th:if="${followers != null}" th:each="follower : ${followers}">-->
+<!--                <div class="uP_diary_thumbnail">-->
+<!--                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">-->
+<!--                    <img th:if="${follower.follower.attachUserBackground != null}"-->
+<!--                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"-->
+<!--                      alt="썸네일" class="moving_bg">-->
+<!--                  </a>-->
+<!--                </div>-->
+<!--                <div class="uP_user_box">-->
+<!--                  <div class="uP_user_profileImg">-->
+<!--                    <div class="my_profile_img circle">-->
+<!--                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">-->
+<!--                        <img-->
+<!--                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"-->
+<!--                          src="/image/mypage/profile.jpg" alt="프로필 이미지">-->
+<!--                      </a>-->
+<!--                    </div>-->
+<!--                  </div>-->
 
-                  <div class="uP_user_text">
-                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>
-                    <span class="uP_user_added">22.10.19</span>
-                  </div>
-                  <div class="follower_del_btn">
-                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
-                  </div>
-                </div>
-              </li>
+<!--                  <div class="uP_user_text">-->
+<!--                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>-->
+<!--                    <span class="uP_user_added">22.10.19</span>-->
+<!--                  </div>-->
+<!--                  <div class="follower_del_btn">-->
+<!--                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </li>-->
             </ul>
             <ul class="follow show">
-              <li th:if="${followers != null}" th:each="follower : ${followers}">
-                <div class="uP_diary_thumbnail">
-                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                    <img th:if="${follower.follower.attachUserBackground != null}"
-                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"
-                      alt="썸네일" class="moving_bg">
-                  </a>
-                </div>
-                <div class="uP_user_box">
-                  <div class="uP_user_profileImg">
-                    <div class="my_profile_img circle">
-                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">
-                        <img
-                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"
-                          src="/image/mypage/profile.jpg" alt="프로필 이미지">
-                      </a>
-                    </div>
-                  </div>
+<!--              <li th:if="${followers != null}" th:each="follower : ${followers}">-->
+<!--                <div class="uP_diary_thumbnail">-->
+<!--                  <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">-->
+<!--                    <img th:if="${follower.follower.attachUserBackground != null}"-->
+<!--                      th:src="${follower.follower.attachUserBackground.thumbPath}" src="/image/mypage/thumbnail1.JPG"-->
+<!--                      alt="썸네일" class="moving_bg">-->
+<!--                  </a>-->
+<!--                </div>-->
+<!--                <div class="uP_user_box">-->
+<!--                  <div class="uP_user_profileImg">-->
+<!--                    <div class="my_profile_img circle">-->
+<!--                      <a th:href="'TravelCarrier/member/' + ${follower.follower.email}">-->
+<!--                        <img-->
+<!--                          th:src="${follower.follower != null ? follower.follower.attachUser.thumbPath : '/image/mypage/default_profile.jpg'}"-->
+<!--                          src="/image/mypage/profile.jpg" alt="프로필 이미지">-->
+<!--                      </a>-->
+<!--                    </div>-->
+<!--                  </div>-->
 
-                  <div class="uP_user_text">
-                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>
-                    <span class="uP_user_added">22.10.19</span>
-                  </div>
-                  <div class="follower_del_btn">
-                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
-                  </div>
-                </div>
-              </li>
+<!--                  <div class="uP_user_text">-->
+<!--                    <span th:text="${follower.follower.name}" class="uP_user_name">Budapest</span>-->
+<!--                    <span class="uP_user_added">22.10.19</span>-->
+<!--                  </div>-->
+<!--                  <div class="follower_del_btn">-->
+<!--                    <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </li>-->
             </ul>
           </div>
           <button id="more_btn">more</button>

@@ -248,7 +248,7 @@ public class MyPageController {
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         User traveler = memberRepository.findUserByEmail(email);
 
-        //만약 본인이라면
+        //만약 본인이라면 마이페이지로 리다이렉트
         if(user.getId() == traveler.getId()) return "redirect:/TravelCarrier/member/mypage";
 
         model.addAttribute("user",user);
@@ -263,43 +263,25 @@ public class MyPageController {
         }
         model.addAttribute("isFollowingTraveler", isFollowingTraveler);
 
-        // 트래블러가 접속자를 팔로우 하는지 확인
+        // 내가 팔로워의 팔로워목록에 있는지 확인
         boolean follow = false;
-        // FOLLOW공개 글은 내가 traveler의 팔로잉목록에 있어야 볼 수 있다.
         for(Follower f : traveler.getFollowers()){
             if(f.getFollower().getId() == user.getId()) follow = true;
         }
-
         model.addAttribute("follow", follow);
-        if(follow) model.addAttribute("diaryList",weeklySearchRepository.findFollowWeekliesByTraveler(traveler, OpenStatus.ME,pageable));
-        else model.addAttribute("diaryList",weeklySearchRepository.findNotFollowWeekliesByTraveler(traveler,OpenStatus.ALL,pageable));
 
-        List<Weekly> tagDiaryList = new ArrayList<>();
-        for(Weekly w : weeklyRepository.getTagWeeklys(traveler)){
-            // ME : 글쓴이 본인이거나 함께 태그된사람이면 띄우기
-            if(w.getStatus() == OpenStatus.ME){
-                if(w.getUser().getId() == user.getId()) tagDiaryList.add(w);
-                else {
-                    for(Gowith g : w.getGowiths()){
-                        if(g.getUser().getId() == user.getId()) tagDiaryList.add(w);
-                        break;
-                    }
-                }
-            }
-            // FOLLOWER : 나도 글쓴이의 팔로워라면 띄우기
-            if(w.getStatus() == OpenStatus.FOLLOW){
-                for(Follower f : w.getUser().getFollowers()){
-                    if(f.getUser().getId() == user.getId()) tagDiaryList.add(w);
-                    break;
-                }
-            }
-            // ALL : 무조건 띄우기
-            if(w.getStatus() == OpenStatus.ALL) tagDiaryList.add(w);
-        }
-        model.addAttribute("tagDiaryList", tagDiaryList);
+        //다이어리 갯수 로드
+        Page<Weekly> weeklyPage = searchService.findWeeklyPaging(traveler, pageable);
+        List<MyPageDTO> diaryList = transferCheckWeeklyDTO(traveler, user, weeklyPage);
+        model.addAttribute("diaryList",diaryList.size());
 
-        model.addAttribute("followers",traveler.getFollowers());
-
+        //태그된 다이어리 갯수 로드
+        Page<Weekly> tagWeeklyPage = searchService.findTagWeeklyPaging(traveler, pageable);
+        List<MyPageDTO> tagDiaryList = transferCheckTagWeeklyDTO(traveler, user, tagWeeklyPage);
+        model.addAttribute("tagDiaryList", tagDiaryList.size());
+        
+        //팔로워 로드
+        model.addAttribute("followers",traveler.getFollowers().size());
 
         return "test/traveler";
     }
@@ -320,18 +302,10 @@ public class MyPageController {
             dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
          */
 
-        //내가 traveler의 팔로잉목록에 있는지 확인
-        boolean isFollowUser = false;
-        for(Follower f : traveler.getFollowers()){
-            if(f.getFollower().getId() == user.getId()){
-                isFollowUser = true;
-                break;
-            }
-        }
-        System.out.println("팔로잉 중? ="+isFollowUser);
+
         if(type.equals("dia")){
             Page<Weekly> weeklyPage = searchService.findWeeklyPaging(traveler, pageable);
-            return transferCheckWeeklyDTO(user, weeklyPage, isFollowUser);
+            return transferCheckWeeklyDTO(traveler, user, weeklyPage);
         }
         else if(type.equals("tag")){
             Page<Weekly> weeklyPage = searchService.findTagWeeklyPaging(traveler, pageable);
@@ -353,9 +327,17 @@ public class MyPageController {
 
     //해당 트래블러의 다이어리에 대해 접근할수있는 데이터만 남기기
     //dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
-    private List<MyPageDTO> transferCheckWeeklyDTO(User user, Page<Weekly> weeklyPage, boolean isFollowUser) {
+    private List<MyPageDTO> transferCheckWeeklyDTO(User traveler, User user, Page<Weekly> weeklyPage) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
+        //내가 traveler의 팔로잉목록에 있는지 확인
+        boolean isFollowUser = false;
+        for(Follower f : traveler.getFollowers()){
+            if(f.getFollower().getId() == user.getId()){
+                isFollowUser = true;
+                break;
+            }
+        }
         for(Weekly w : weeklyPage){
             if(w.getStatus() == OpenStatus.FOLLOW && !isFollowUser) continue;
             if(w.getStatus() == OpenStatus.ME){
