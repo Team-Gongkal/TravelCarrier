@@ -57,9 +57,14 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	testImplementation("org.junit.vintage:junit-vintage-engine") {
-		exclude group: "org.hamcrest", module: "hamcrest-core"
-	}
+//	testImplementation("org.junit.vintage:junit-vintage-engine") {
+//		exclude group: "org.hamcrest", module: "hamcrest-core"
+//	}
+	testImplementation 'org.mockito:mockito-core:3.11.2'
+	testImplementation 'org.mockito:mockito-junit-jupiter:3.11.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+
 }
 bootRun {
 	jvmArgs = ["-Dspring.thymeleaf.cache=false"]

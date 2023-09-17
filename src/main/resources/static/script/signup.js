@@ -1,6 +1,6 @@
 $(".save_btn button").on("click", async function (e) {
   e.preventDefault();
-  //console.log("결과 : " + await validCheckPromise());
+  console.log("결과 : " + await validCheckPromise());
   if (!(await validCheckPromise())) {
     alert("조건을 충족하지 못했습니다. 다시 작성해주세요.");
     return;
@@ -33,22 +33,20 @@ async function validCheckPromise() {
   var name = $("input[type='text']").val();
   if (email.length == 0 || password.length == 0 || name.length == 0)
     return false;
-
   // 비밀번호가 형식에 맞는지
   var pwCheck1 = false;
-  if ("사용 가능한 비밀번호 입니다." == $(".info_text.right p").text())
+  if ("사용 가능한 비밀번호 입니다." == $(".info_pw1 p").text())
     pwCheck1 = true;
-
   // 비밀번호 확인이 됐는지
   var pwCheck2 = false;
-  if ("올바른 비밀번호 입니다." == $(".info_text.pw2 p").text())
+  if ("비밀번호가 일치합니다." == $(".info_pw2 p").text())
     pwCheck2 = true;
-
   // 이름의 길이가 맞는지
   var nameCheck = false;
   if ("사용 가능한 별명 입니다." == $(".info_text.name p").text())
     nameCheck = true;
 
+  console.log(pwCheck1 + " " + pwCheck2 + " " + nameCheck);
   if (!pwCheck1 || !pwCheck2 || !nameCheck) return false;
   // 이메일 중복 체크 했는지
   var emailCheck = false;
