@@ -16,15 +16,17 @@ $(document).ready(function () {
         '<img id="cropImg" src="" alt="편집할 이미지" class="preview_image">'
       );
 
-    //선택한 이미지 파일명 가져오기-------------
-    var selectedFile = event.target.files[0];
+    //{1} 선택한 이미지 파일명 가져오기-------------
 
     //내가 선택한 파일을 변수로 담아줌/다중파일 업로드가 가능한데, 우리는 1개만 선택하니 [0]번으로 고정함
-    $(".crop_img > img").attr("src", URL.createObjectURL(selectedFile));
+    var selectedFile = event.target.files[0];
     //이미지 url생성해주기, 보안상 url을 가져오는 것이 안돼, 임의로 만들어줌
+    $(".crop_img > img").attr("src", URL.createObjectURL(selectedFile));
+
+    //파일명 불러와주기
     $(".crop_img_wrap > .filePath > p > span").text(selectedFile.name);
 
-    //cropper.js 사용하기
+    //{2} cropper.js 사용하기
     const image = document.getElementById("cropImg");
 
     cropper = new Cropper(image, {
@@ -112,11 +114,11 @@ $(document).ready(function () {
       processData: false, // data 파라미터 강제 string 변환 방지
       contentType: false, // application/x-www-form-urlencoded; 방지
       success: function () {
-        alert("업로드 성공");
+        console.log("프로필 이미지 -> 업로드 성공🙌");
         switchImg();
       },
       error: function () {
-        alert("업로드 에러");
+        console.log("프로필 이미지 -> 업로드 에러🥲");
       },
     });
 
@@ -132,7 +134,8 @@ $(document).ready(function () {
       var clickBtn = $(".imgBtn button");
       clickBtn.attr("disabled",true);
       clickBtn.toggleClass("btn_disable btn");
-      clickBtn.html("저장중..");
+      //이미지 저장 로딩중 활성화
+      $('#loading').addClass('show');
 
     console.log("이미지 저장해");
     if (profileFormData !== null) {
@@ -140,12 +143,13 @@ $(document).ready(function () {
     }
     if (backgroundFormData !== null) {
       await saveCropPromise("/member/background", backgroundFormData);
+   
     }
 
       clickBtn.attr("disabled",false);
       clickBtn.toggleClass("btn_disable btn");
-      clickBtn.html("저장하기");
-
+      //이미지 저장 로딩중 비활성화
+      $('#loading').removeClass('show');
   });
 
   //ajax 성공시 화면 변경

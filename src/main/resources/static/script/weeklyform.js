@@ -139,7 +139,7 @@ $(document).ready(function () {
 
   // 선택된 동행인 우선 정렬 - by윤아
   const checkboxes = document.querySelectorAll(
-    '.serch_friends input[type="checkbox"]'
+    '.search_friends input[type="checkbox"]'
   );
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", (e) => {
@@ -147,7 +147,7 @@ $(document).ready(function () {
       if (e.target.checked) {
         document.querySelector(".checked_friends").appendChild(li);
       } else {
-        document.querySelector(".serch_friends").appendChild(li);
+        document.querySelector(".search_friends").appendChild(li);
       }
     });
   });
@@ -282,7 +282,7 @@ $(document).ready(function () {
       "금요일",
       "토요일",
     ],
-    dayNamesMin: ["일", "월", "바뀜", "수", "목", "금", "토"],
+    dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
     monthNamesShort: [
       "1월",
       "2월",
@@ -342,7 +342,7 @@ $(document).ready(function () {
       "금요일",
       "토요일",
     ],
-    dayNamesMin: ["일", "월", "바뀜", "수", "목", "금", "토"],
+    dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
     monthNamesShort: [
       "1월",
       "2월",
@@ -402,7 +402,7 @@ $(document).ready(function () {
 
   // 선택된 동행인 우선 정렬 - by윤아
   const checkboxes = document.querySelectorAll(
-    '.serch_friends input[type="checkbox"]'
+    '.search_friends input[type="checkbox"]'
   );
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", (e) => {
@@ -410,11 +410,23 @@ $(document).ready(function () {
       if (e.target.checked) {
         document.querySelector(".checked_friends").appendChild(li);
       } else {
-        document.querySelector(".serch_friends").appendChild(li);
+        document.querySelector(".search_friends").appendChild(li);
       }
     });
   });
 });
+
+//동행인이 없을 시 동행인 추가 문구 안내 - by윤아
+//만약 동행인 리스트의 값이 0일 경우 보여질 것과 안보여질 것 ㅋ클래스 변경
+$('#plus_companion').on('click',function(){
+if($('.checked_friends').length == 0 && $('.search_friends').length == 0){
+  $('.friendsList').hide();
+  $('.if_no_friends').show();
+}else{
+  $('.if_no_friends').hide();
+  $('.friendsList').show();
+}
+})
 
 // 사진첨부시 미리보기를 생성하는 메소드 by서현
 $(document).on("change", "#thumbnail_change", function (event) {

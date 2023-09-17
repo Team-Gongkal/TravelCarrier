@@ -485,7 +485,7 @@ $(document).on("click", ".infoBtn button", function () {
     var clickBtn = $(".infoBtn button");
     clickBtn.attr("disabled",true);
     clickBtn.toggleClass("btn_disable btn");
-    clickBtn.html("저장중..");
+    $('#loading').addClass('show');
   //변경된 정보 저장하기
   $.ajax({
     type: "POST",
@@ -496,12 +496,14 @@ $(document).on("click", ".infoBtn button", function () {
       switchNickName(data);
         clickBtn.attr("disabled",false);
         clickBtn.toggleClass("btn_disable btn");
-        clickBtn.html("저장하기");
+        $('#loading').removeClass('show');
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("저장 실패");
+      $('#loading').removeClass('show');
     },
   });
+
 });
 
 function switchNickName(data) {

@@ -132,7 +132,7 @@
           <!-- 여행글에 태그한 친구 목록 -->
           <ul class="checked_friends"></ul>
           <!-- 내 친구들 목록 -->
-          <ul class="serch_friends">
+          <ul class="search_friends">
             <li th:each="f : ${user.followers}" th:attr="data-fid=${f.follower.id}, data-fname=${f.follower.name}">
               <input type="checkbox" value="yunah" th:id="'#' + ${f.follower.id}" class="hide">
               <label th:for="'#' + ${f.follower.id}">
@@ -147,10 +147,18 @@
           <!-- 검색된 친구 -->
           <!-- <ul class="find_friends"></ul> -->
         </div>
-        <!-- <div class="no_friends">
-          <p>아직 친구가 없어요🥲</p>
-          <p>친구를 등록해보세요</p>
-        </div> -->
+        <div class="if_no_friends">
+          <div class="center">
+            <div>
+              <img src="image/weekly/icon/addfriend.svg" alt="">
+            </div>
+            <div>
+              <p>아직 등록된 친구가 없어요</p>
+              <p>친구를 등록해주세요!</p>
+              <p>(위클리 저장 후 동행인을 추가해보세요)</p>
+            </div>
+          </div>
+        </div>
         <button type="button" class="btn goWithBtn">확인</button>
       </div>
     </div>
