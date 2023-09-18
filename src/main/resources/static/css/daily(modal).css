@@ -500,6 +500,7 @@ button.Dform_btn_disable {
   align-items: center;
   justify-content: center;
   transition: 0.2s;
+  
 }
 .diary_noH > .center {
   width: 100%;
@@ -509,15 +510,16 @@ button.Dform_btn_disable {
   justify-content: space-between;
 }
 .diary_noH h1 {
-  font-size: calc(100vh / 7);
+  /* 뷰포트 높이(100vh)를 7로 나눈 값과 10rem 중 작은 값을 선택하여 폰트 크기를 결정함ㄴ. 따라서 뷰포트 크기가 충분히 큰 경우 10rem이 적용되고, 작은 경우에는 100vh / 7로 폰트 크기가 결정됨*/
+  font-size: min( calc(100vh / 7),10rem);
   margin-bottom: 2rem;
-  padding-right: 0.05rem;
+  padding-right: 1rem;
   font-weight: 400;
   letter-spacing: 0.1rem;
 }
 .diary_noH p {
-  font-size: calc(100vh / 15);
-  padding-right: 0.1rem;
+  font-size: min( calc(100vh / 15),4rem);
+  padding-right: 1rem;
   font-weight: 300;
   letter-spacing: 0.2rem;
 }
@@ -707,13 +709,13 @@ ul.diary_list > li {
   height: 100%;
   display: flex;
   flex-direction: column;
-  color: #f7f7f7;
+  color: #ffff;
   letter-spacing: 0.2em;
 }
 .diary_textbox.on h6 {
   width: 100%;
   flex: 1;
-  font-size: 1rem;
+  font-size: 1.1rem;
   padding: 1.5rem 0;
   box-sizing: border-box;
   font-weight: 400;
@@ -721,11 +723,11 @@ ul.diary_list > li {
 .diary_textbox.on p {
   height: 100%;
   flex: 10;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1.8em;
   box-sizing: border-box;
   overflow-y: scroll;
-  font-weight: 100;
+  font-weight: 200;
   padding: 0 1em;
 }
 /* 스크롤바 디자인 */
