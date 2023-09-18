@@ -419,7 +419,7 @@ $(document).ready(function () {
 //동행인이 없을 시 동행인 추가 문구 안내 - by윤아
 //만약 동행인 리스트의 값이 0일 경우 보여질 것과 안보여질 것 ㅋ클래스 변경
 $('#plus_companion').on('click',function(){
-if($('.checked_friends').length == 0 && $('.search_friends').length == 0){
+if($('.checked_friends li').length == 0 && $('.search_friends li').length == 0){
   $('.friendsList').hide();
   $('.if_no_friends').show();
 }else{
