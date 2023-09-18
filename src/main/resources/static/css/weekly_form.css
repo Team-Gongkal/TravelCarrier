@@ -453,6 +453,7 @@ span.circle.profile_circle::after {
 }
 .if_no_friends>div>div:nth-child(1) {
 width: 30%;
+box-sizing: border-box;
 }
 .if_no_friends>div>div:nth-child(2) {
   margin-top: 1.5rem;
