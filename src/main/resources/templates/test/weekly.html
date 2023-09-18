@@ -519,7 +519,6 @@
               </div>
               <div class="friendsList">
                 <ul class="checked_friends">
-
                 </ul>
                 <ul class="search_friends">
                   <li th:each="f : ${user.followers}"
@@ -534,6 +533,18 @@
                     </label>
                   </li>
                 </ul>
+              </div>
+              <div class="if_no_friends">
+                <div class="center">
+                  <div>
+                    <img src="image/weekly/icon/addfriend.svg" alt="친구추가아이콘">
+                  </div>
+                  <div>
+                    <p>아직 등록된 친구가 없어요</p>
+                    <p>친구를 등록해주세요!</p>
+                    <p>(위클리 저장 후 동행인을 추가해보세요)</p>
+                  </div>
+                </div>
               </div>
               <button type="button" class="btn goWithBtn">확인</button>
             </div>
