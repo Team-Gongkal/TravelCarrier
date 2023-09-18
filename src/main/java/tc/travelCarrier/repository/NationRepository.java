@@ -8,5 +8,5 @@ import tc.travelCarrier.domain.User;
 @Repository
 public interface NationRepository extends JpaRepository<Nation, Integer> {
 
-    public Nation findNationById(int userId);
+    public Nation findNationById(int nationId);
 }

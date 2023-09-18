@@ -96,9 +96,8 @@ function getFollowPage(type, detailType, page) {
 
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
-  console.log(data);
   if (type == "dia") {
-    console.log("dia 실행");
+    $('#diary_num').text("("+data.length+")");
     $(".userProfile_diary").empty();
     if (data == null) return;
     for (var e of data) {
@@ -106,12 +105,16 @@ function updateResult(type, data) {
     }
   } else if (type == "tag") {
     console.log("tag 실행");
+    $(tagged_num).text("("+100+")");
     $(".userProfile_tagged").empty();
     if (data == null) return;
     for (var e of data) {
+     console.log("태그데이터!! ");
+      console.log(e);
       $(".userProfile_tagged").append(taggedHtml(e));
     }
   } else if (type == "following") {
+    $('#traveler_num').text("("+data.length+")");
     $(".follow").empty();
     if (data == null) return;
     for (var e of data) {
