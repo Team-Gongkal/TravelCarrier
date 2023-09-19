@@ -480,9 +480,14 @@ header > nav {
 }
 .alert .alert_textbox p:nth-child(2) {
   padding: 2rem 0 2.5rem 0;
+  display: flex;
+  justify-content: center;
 }
-.alert .alert_textbox p:nth-child(2) span {
+.alert .red_text {
   color: #c40303;
+}
+.alert .black_text {
+  color: #353a52;
 }
 .alert .alert_textbox p i {
   color: #ff931c;

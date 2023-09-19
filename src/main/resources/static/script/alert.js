@@ -1,9 +1,14 @@
 // 각종 경고 메시지 및 알림창 스크립트 파일
 
-function alertModal(text) {
-  var changeText = $(".alert_textbox p").eq(1).children("span");
+function alertModal(red_text, black_text) {
+  var changeRedText = $(".alert_textbox p .red_text");
+  var changeBlackText = $(".alert_textbox p .black_text");
   //span을 파라미터로 바꿔주기
-  changeText.text(text);
+  if (typeof black_text === "undefined" || black_text === null) {
+    black_text = "하시겠습니까?";
+  }
+  changeRedText.text(red_text);
+  changeBlackText.text(black_text);
   //모달창 활성화 하기(show)
   $("#alert_modal").removeClass("hide");
   $("#alert_modal").addClass("show");
@@ -36,7 +41,7 @@ $(document).on("click", ".weeklyDelBtn", function () {
   //'네'버튼에 id부여
   $(".confirm_btn").attr("id", "deleteWeekly");
   $(".confirm_btn").attr("data-wid", wid);
-  alertModal("[" + title + "]을 삭제");
+  alertModal("[ " + title + " ] ", " 일기를 삭제하시겠습니까?");
 });
 
 $(document).on("click", "#deleteWeekly", function () {
@@ -88,20 +93,20 @@ function deleteReply(reply) {
     ddate: $.datepicker.formatDate("yy-mm-dd", new Date()),
   };
 
-    $.ajax({
-      type: "POST",
-      url: "/reply/delete",
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      success: function (resp) {
-        alert("삭제되었습니다.");
-        var attachNo = $(".reply_img img").attr("data-attachNo");
-        currentReplyList(attachNo);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        alert("댓글 삭제 실패");
-      },
-    });
+  $.ajax({
+    type: "POST",
+    url: "/reply/delete",
+    data: JSON.stringify(data),
+    contentType: "application/json",
+    success: function (resp) {
+      alert("삭제되었습니다.");
+      var attachNo = $(".reply_img img").attr("data-attachNo");
+      currentReplyList(attachNo);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("댓글 삭제 실패");
+    },
+  });
 }
 
 //탈퇴-----------------------------------------
@@ -113,8 +118,11 @@ function email_check_alert(valid) {
   else alertModal2("사용 불가능", "한 이메일 입니다.");
 }
 
+//친구끊기
+
 //알림창 닫기====================================
 function closeAlert() {
+  console.log("실행중단됨");
   $("#alert_modal").removeClass("show");
   $("#alert_modal").addClass("hide");
 }

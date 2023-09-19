@@ -1,15 +1,14 @@
 // 트래블러의 페이지를 보여주는 이벤트리스너를 관리하는 js입니다
 
-
-$(document).ready(function() {
-    // 페이지가 로드될 때 실행되는 함수
-    $('.userProfile_tab li.on').trigger('click'); // 탭 클릭
+$(document).ready(function () {
+  // 페이지가 로드될 때 실행되는 함수
+  $(".userProfile_tab li.on").trigger("click"); // 탭 클릭
 });
 
-
 //현재 방문한 트래블러 페이지의 주인의 이메일
-let TravelerEmail = $(location).attr('href').substring( $(location).attr('href').indexOf("/member/")+8 );
-
+let TravelerEmail = $(location)
+  .attr("href")
+  .substring($(location).attr("href").indexOf("/member/") + 8);
 
 //팔로우/팔로워 탭 - by 윤아
 $("#follower").on("click", function () {
@@ -66,9 +65,9 @@ $(".userProfile_tab li").on("click", function (e) {
 // 타입과 페이지를 파라미터로 해당 페이지를 get - by.서현
 function getTravelerPage(type, page) {
   $.ajax({
-    url: "/member/"+TravelerEmail+"/page",
+    url: "/member/" + TravelerEmail + "/page",
     type: "POST",
-    data: JSON.stringify({ userEmail:TravelerEmail, type: type, page: page }),
+    data: JSON.stringify({ userEmail: TravelerEmail, type: type, page: page }),
     contentType: "application/json",
     success: function (resp) {
       updateResult(type, resp);
@@ -81,7 +80,7 @@ function getTravelerPage(type, page) {
 
 function getFollowPage(type, detailType, page) {
   $.ajax({
-    url: "/member/"+TravelerEmail+"/page",
+    url: "/member/" + TravelerEmail + "/page",
     type: "POST",
     data: JSON.stringify({ type: type, page: page, detailType: detailType }),
     contentType: "application/json",
@@ -97,7 +96,7 @@ function getFollowPage(type, detailType, page) {
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
   if (type == "dia") {
-    $('#diary_num').text("("+data.length+")");
+    $("#diary_num").text("(" + data.length + ")");
     $(".userProfile_diary").empty();
     if (data == null) return;
     for (var e of data) {
@@ -109,12 +108,12 @@ function updateResult(type, data) {
     $(".userProfile_tagged").empty();
     if (data == null) return;
     for (var e of data) {
-     console.log("태그데이터!! ");
+      console.log("태그데이터!! ");
       console.log(e);
       $(".userProfile_tagged").append(taggedHtml(e));
     }
   } else if (type == "following") {
-    $('#traveler_num').text("("+data.length+")");
+    $("#traveler_num").text("(" + data.length + ")");
     $(".follow").empty();
     if (data == null) return;
     for (var e of data) {
@@ -314,29 +313,79 @@ function getDate(btn) {
 }
 
 // 친구추가 이벤트
-$('.add_friend_btn > button').on('click', function(){
-    add_friend();
-})
+$(".add_friend_btn > button").on("click", function () {
+  add_friend();
+});
 
 //친구추가 버튼
+// function add_friend() {
+// var add_friend_btn = $(".add_friend_btn > button");
+// if (add_friend_btn.hasClass("completed")) { //친구일때 친구취소시 동작
+//       // unfollowTarget();
+//       // add_friend_btn.removeClass("completed");
+//       // add_friend_btn.children("span").text("친구추가");
+// } else { // 친구 아닐때 친구신청시
+// if(!add_friend_btn.hasClass("completed")){
+//       followingTarget();
+//       add_friend_btn.addClass("completed");
+//       add_friend_btn.children("span").text("친구끊기");
+// }
+// }
+
+// function followingTarget() {
+//   $.ajax({
+//     url: "/member/following/"+TravelerEmail,
+//     type: "GET",
+//     success: function (resp) {
+//       console.log("성공");
+//     },
+//     error: function (error) {
+//       alert("실패" + error);
+//     },
+//   });
+// }
+
+// function unfollowTarget() {
+//   $.ajax({
+//     url: "/member/unfollow/"+TravelerEmail,
+//     type: "GET",
+//     success: function (resp) {
+//       console.log("성공");
+//     },
+//     error: function (error) {
+//       alert("실패" + error);
+//     },
+//   });
+// }
+
 function add_friend() {
   var add_friend_btn = $(".add_friend_btn > button");
-  if (add_friend_btn.hasClass("completed")) { //친구일때 친구취소시 동작
-        unfollowTarget();
-        add_friend_btn.removeClass("completed");
-        add_friend_btn.children("span").text("follow");
-        add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
-  } else { // 친구 아닐때 친구신청시
-        followingTarget();
-        add_friend_btn.addClass("completed");
-        add_friend_btn.children("span").text("following");
-        add_friend_btn.children("i").attr("class", "fa-solid fa-check fa-xs fa");
+  let nickName = $(".my_profile_id").children("span").text();
+  console.log(nickName);
+  if (add_friend_btn.hasClass("completed")) {
+    alertModal("[ " + nickName + " ] ", "님을 삭제하시겠습니까?");
+    console.log("나랑 친구끊자❤️");
+    //'네'버튼에 id부여
+    $(".confirm_btn").attr("id", "deleteFriend");
+  } else {
+    //친구가 아닐 떄 친구신청시
+    followingTarget();
+    add_friend_btn.addClass("completed");
+    add_friend_btn.children("span").text("친구끊기");
+    console.log("나랑 친구하자💜");
   }
 }
+// 친구일때 친구취소시 동작
+$(document).on("click", "#deleteFriend", function () {
+  unfollowTarget();
+  $(".add_friend_btn > button").removeClass("completed");
+  $(".add_friend_btn > button").children("span").text("친구추가");
+  closeAlert();
+});
 
-function followingTarget() {
+function unfollowTarget() {
   $.ajax({
-    url: "/member/following/"+TravelerEmail,
+    url: "/member/unfollow/" + TravelerEmail,
     type: "GET",
     success: function (resp) {
       console.log("성공");
@@ -347,9 +396,9 @@ function followingTarget() {
   });
 }
 
-function unfollowTarget() {
+function followingTarget() {
   $.ajax({
-    url: "/member/unfollow/"+TravelerEmail,
+    url: "/member/following/" + TravelerEmail,
     type: "GET",
     success: function (resp) {
       console.log("성공");
