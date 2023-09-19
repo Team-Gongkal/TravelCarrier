@@ -54,7 +54,7 @@ $(".userProfile_tab li").on("click", function (e) {
     $("#follower").trigger("click");
     return;
   } else if (type == "rev") {
-    $("#search").attr("placeholder", "");
+    $("#search").attr("placeholder", "리뷰검색");
     return;
   } else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
 
@@ -105,7 +105,7 @@ function updateResult(type, data) {
     }
   } else if (type == "tag") {
     console.log("tag 실행");
-    $(tagged_num).text("("+100+")");
+    $(tagged_num).text("(" + 100 + ")");
     $(".userProfile_tagged").empty();
     if (data == null) return;
     for (var e of data) {

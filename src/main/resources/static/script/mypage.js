@@ -104,49 +104,58 @@ userProfileScroll.on("scroll", function () {
   }
 });
 
-//메인 탭메뉴 활성화 -by윤아
+//마이페이지 갤러리 = 메인 탭메뉴 활성화 -by윤아
 var $scroll = $("#userProfile_wrap > div.userProfile_scroll");
 var tab = $(".userProfile_tab > ul > li");
 var contents = $(".userProfile_gallery").children("ul,div");
 var idx = $(".userProfile_tab > ul > li.on").index();
 var tab_li = contents.eq(idx).children("li").length;
-on_scroll(idx, tab_li); //화면 로드시 실행해서 보여줌
+on_scroll(0, tab_li); //화면 로드시 실행해서 보여줌
 
 //탭실행
 tab.on("click", function () {
   idx = $(this).index(); //현재 클릭한 탭의 idx
 
-  tab.removeClass("on"); //선택한탭 css 제거
+  tab.removeClass("on"); //모든li css 제거
   contents.removeClass("show ani"); // 현재 보여지고있는 콘텐츠 숨기기+애니메이션 클래스 제거
 
-  $(this).addClass("on"); //선택한 탭 css추가
+  $(this).addClass("on"); //선택한 탭li css추가
   contents.eq(idx).addClass("show ani"); //idx에 해당하는 콘텐츠 보이기
+  console.log('('+idx+')🥲3-4번 탭오류 수정중임다')
+  on_scroll(idx, tab_li);
 });
 
 //li개수에 따라 스크롤 생성
 function on_scroll() {
   $scroll.addClass("hide"); //스크롤 전체 제거
 
+  //트래블러탭제외한 탭메뉴 선택시
   if (idx < 3) {
-    console.log("3번이하선택");
+    console.log("❤️" + idx +"💜3번이하선택");
     $(".travlar_option").removeClass("show");
     $(".search_period").addClass("show");
+    $(".search_period").addClass("show");
+    // 해당 컨텐츠의 게시글 갯수가 5개 이상인 경우(더보기)
     if (tab_li >= 5) {
       console.log("게시글이 5이하");
       $scroll.removeClass("hide");
+    }else if(idx > 16){
+    // 게시글 개수에 따른 더보기버튼 활성화
+    $("#more_btn").addClass("show");
     }
-    $(".search_period").addClass("show");
-  } else if (idx == 3) {
+  //트래블러탭 선택시
+  } else if (idx === 3) {
     console.log("트레블러 선탣");
     $(".search_period").removeClass("show");
     $(".travlar_option").addClass("show");
+    // 친구 목록이 12명 이상일 경우(더보기)
     if (tab_li >= 12) {
       console.log("친구없음 나가");
       $scroll.removeClass("hide");
-    }
-  } else if (idx > 16) {
-    // 게시글 개수에 따른 더보기버튼 활성화,,
-    $("#more_btn").addClass("show");
+    }else if(idx > 16){
+      // 게시글 개수에 따른 더보기버튼 활성화
+      $("#more_btn").addClass("show");
+      }
   }
 }
 
