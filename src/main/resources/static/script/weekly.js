@@ -341,3 +341,14 @@ $('.moreBox > a.top').on('click', function(e){
     $(window).on("wheel DOMMouseScroll", scrollHandler);
   });
 });
+
+// 동행인 목록 띄우기
+var companion = document.querySelectorAll('.sel_companion li');
+companion.forEach(function(li){
+li.addEventListener('mouseenter', function(){
+  document.getElementById('tagged_companion').classList.add('show');
+})
+li.addEventListener('mouseleave', function(){
+  document.getElementById('tagged_companion').classList.remove('show');
+})
+})

@@ -61,6 +61,20 @@
                     동행인 이미지
                   </li>
                   <li th:if="${#lists.size(weekly.gowiths)} &gt; 4" class="circle" id="companion_more"></li>
+                  <!-- 태그된 동행인 목록을 보여주는 모달 modal -->
+                  <div id="tagged_companion">
+                    <ul>
+                      <li th:each="w : ${weekly.gowiths}" th:attr="data-fid=${w.user.id}, data-fname=${w.user.name}, name='gowiths'">
+                        <a th:href="'/member/' + ${w.user.email}">
+                          <span class="profile_circle circle">
+                            <img th:src="${w.user.attachUser.thumbPath}" src="/image/weekly/friendList/friend2.png"
+                              alt="프로필사진">
+                          </span>
+                          <span th:text="${w.user.name}" class="nickname">닉네임</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </ul>
               </div>
               <div class="weekly_disclosure">
@@ -551,7 +565,6 @@
           </div>
         </div>
       </th:block>
-
     </main>
   </th:block>
 
