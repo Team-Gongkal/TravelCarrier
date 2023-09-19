@@ -81,7 +81,6 @@ div.userProfile_scroll::-webkit-scrollbar-track {
 /* 프로필 */
 .my_profile {
   height: calc(100% - 3.2rem);
-  padding-top: 3rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
