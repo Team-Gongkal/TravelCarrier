@@ -249,7 +249,7 @@ public class MyPageController {
         User traveler = memberRepository.findUserByEmail(email);
 
         //만약 본인이라면 마이페이지로 리다이렉트
-        if(user.getId() == traveler.getId()) return "redirect:/TravelCarrier/member/mypage";
+        if(user.getId() == traveler.getId()) return "redirect:/member/mypage";
 
         model.addAttribute("user",user);
         // 헤더에 들어가는거임!!
