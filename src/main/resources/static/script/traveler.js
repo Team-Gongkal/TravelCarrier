@@ -58,7 +58,7 @@ $(".userProfile_tab li").on("click", function (e) {
   } else $("#search").attr("placeholder", "검색하기 (제목, 국가명, 동행인)");
 
   var data = getTravelerPage(type, 1);
-  updateResult(type, data);
+  //updateResult(type, data);
   $("#search").val(""); // 입력 필드의 값을 빈 문자열로 설정
 });
 
@@ -95,6 +95,7 @@ function getFollowPage(type, detailType, page) {
 
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
+    console.log(data.length);
   if (type == "dia") {
     $("#diary_num").text("(" + data.length + ")");
     $(".userProfile_diary").empty();
@@ -104,7 +105,7 @@ function updateResult(type, data) {
     }
   } else if (type == "tag") {
     console.log("tag 실행");
-    $(tagged_num).text("(" + 100 + ")");
+    $("#tagged_num").text("(" + data.length + ")");
     $(".userProfile_tagged").empty();
     if (data == null) return;
     for (var e of data) {
