@@ -155,6 +155,7 @@ div.userProfile_scroll::-webkit-scrollbar-track {
   height: 3.2rem;
   position: relative;
   display: flex;
+  justify-content: space-between;
 }
 /* 일정높이시 고정 */
 .drop_menu.drop {
@@ -1218,7 +1219,7 @@ li.account_settings > div:not(:last-child) {
 }
 
 /* loding : 로딩중 팝업 */
-#loading{
+#loading {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.92);
@@ -1233,7 +1234,7 @@ li.account_settings > div:not(:last-child) {
   z-index: 151;
   transition: 0.3s;
 }
-#loading.show{
+#loading.show {
   visibility: visible;
   opacity: 1;
 }
