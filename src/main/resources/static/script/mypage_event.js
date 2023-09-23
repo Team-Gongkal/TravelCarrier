@@ -222,7 +222,7 @@ function travelerHtml(data, type) {
                       <img src="${
                         data.backgroundThumbPath != null
                           ? data.backgroundThumbPath
-                          : "/image/default/default_bg.jpg"
+                          : "/image/default/default_bg.png"
                       }"
                         alt="썸네일" class="moving_bg">
                     </a>
@@ -292,18 +292,18 @@ function add_friend() {
 $(document).on("click", ".weeklyHideBtn", function () {
   var title = $(this).closest("li").find(".uP_diary_tit").text();
   var wid = $(this).closest("li").data("wid");
-  if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?")) {
+  //if (confirm("[ " + title + " ] 숨김처리 하시겠습니까?")) {
     var isComplete = hideOrShowWeekly(this, wid, "hide");
     if (!isComplete) return; //숨김 실패시 정지
-  }
+  //}
 });
 // 태그된 위클리 보이기 이벤트 - by.서현
 $(document).on("click", ".weeklyShowBtn", function () {
   var title = $(this).closest("li").find(".uP_diary_tit").text();
   var wid = $(this).closest("li").data("wid");
-  if (confirm("[ " + title + " ] 보이기 하시겠습니까?")) {
+  //if (confirm("[ " + title + " ] 보이기 하시겠습니까?")) {
     var isComplete = hideOrShowWeekly(this, wid, "show");
-  }
+  //}
 });
 
 function switchBtn(block, type) {
@@ -327,7 +327,7 @@ function hideOrShowWeekly(block, weeklyId, type) {
     data: JSON.stringify({ type: type }),
     contentType: "application/json",
     success: function (data) {
-      alert("처리되었습니다.");
+      alertModal2("","처리되었습니다.");
       switchBtn(block, type);
     },
     error: function (error) {
@@ -393,7 +393,7 @@ function dateValidate() {
   // 기간선택 검사
   if ($(".inquire_period li:first-child").hasClass("on")) {
     if ($("#sdate").val() == "" || $("#edate").val() == "") {
-      alert("날짜가 선택되지 않았습니다");
+      alertModal2("날짜"+"가 선택되지 않았습니다");
       return false;
     }
   } else {

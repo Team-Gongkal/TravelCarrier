@@ -5,7 +5,7 @@ $(document).ready(function () {
   //공통 실행====================================
   $(profileImgInput).on("change", function (event) {
     // 파일 선택이 완료되었을 때 실행할 코드 작성
-    alert("파일이 선택되었습니다.");
+    //alert("파일이 선택되었습니다.");
     //이미지 편집 모달창 띄우기
     $(".crop_img_modal").addClass("show");
 

@@ -1,6 +1,7 @@
 package tc.travelCarrier.web;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.StaleObjectStateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -170,7 +171,11 @@ public class WeeklyContoller {
     @DeleteMapping("/weekly/{weeklyId}")
     public ResponseEntity<Void> deleteWeekly(@PathVariable("weeklyId") int weeklyId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         Weekly weekly = weeklyService.findWeekly(weeklyId);
-        weeklyService.deleteWeekly(weekly,principalDetails.getUser());
+        try {
+            weeklyService.deleteWeekly(weekly,principalDetails.getUser());
+        } catch (StaleObjectStateException e){
+            System.out.println("StaleObjectStateException 오류발생");
+        }
         return ResponseEntity.ok().build();
     }
 

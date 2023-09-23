@@ -26,12 +26,16 @@ public class MemberService {
     private final AttachRepository attachRepository;
     @Value("${file.dir}")
     private String fileDir;
+    @Value("${default.profile}")
+    private String defaultProfile;
+    @Value("${default.background}")
+    private String defaultBackground;
     public void signIn(User user){
         User savedUser = memberRepository.save(user);
-        attachRepository.saveProfilePic(AttachUser.builder().attachTitle("default_profile.jpg")
-                .user(savedUser).thumb(fileDir+"default_profile.jpg").build());
-        attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg")
-                .user(savedUser).path(fileDir+"default_bg.jpg").build());
+        attachRepository.saveProfilePic(AttachUser.builder().attachTitle(defaultProfile)
+                .user(savedUser).thumb(fileDir+defaultProfile).build());
+        attachRepository.saveBgPic(AttachUserBackground.builder().title(defaultBackground)
+                .user(savedUser).path(fileDir+defaultBackground).build());
     }
 
     public void updateMemberInfo(MemberInfoDTO dto, User user){

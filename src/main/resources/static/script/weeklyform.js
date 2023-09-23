@@ -394,7 +394,7 @@ $(document).ready(function () {
   $("#plus_companion").on("click", function () {
     if (selfAuth == "GRANTED") $(".companion_modal_bg").addClass("show");
     else if (selfAuth == "DENIED")
-      alert("친구 게시글의 동행인은 수정 할 수 없습니다");
+      alertModal2("친구 게시글의 동행인은 수정 할 수 없습니다");
   });
   $(".companion_modal > button").on("click", function () {
     $(".companion_modal_bg").removeClass("show");
@@ -523,7 +523,7 @@ $(".weekly_saveBtn").click(function (event) {
       window.location.href = "/weekly/" + data;
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      alert("저장에 실패했습니다."+jqXHR+textStatus+errorThrown);
+      alertModal2("저장에 실패했습니다."+jqXHR+textStatus+errorThrown);
     },
   });
 
@@ -541,7 +541,7 @@ function checkValidation() {
     $("#sdate").val() == "" ||
     $("#edate").val() == ""
   ) {
-    alert("날짜는 필수입력항목 입니다.");
+    alertModal2("날짜","는 필수입력항목 입니다.");
     return false;
   }
   return true;
@@ -552,7 +552,7 @@ $("#addText").keyup(function (e) {
   $("#countText").html("(" + content.length + " / 100)"); //글자수 실시간 카운팅
 
   if (content.length > 100) {
-    alert("최대 100자까지 입력 가능합니다.");
+    //alert("최대 100자까지 입력 가능합니다.");
     $(this).val(content.substring(0, 100));
     $("#countText").html("(100 / 100)");
   }

@@ -23,13 +23,18 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Transactional
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
+
+    @Value("${file.dir}")
+    private String fileDir;
+    @Value("${default.profile}")
+    private String defaultProfile;
+    @Value("${default.background}")
+    private String defaultBackground;
+
     //DefaultOAuth2UserService는 OAuth2로그인 시 loadUserByUsername메서드로 로그인한 유저가 DB에 저장되어있는지를 찾는다.
     private final AttachRepository attachRepository;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Value("${file.dir}")
-    private String fileDir;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -60,10 +65,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider).providerId(providerId)
                     .build();
             memberRepository.save(byUsername);
-            attachRepository.saveProfilePic(AttachUser.builder().attachTitle("default_profile.jpg")
-                    .user(byUsername).thumb(fileDir+"default_profile.jpg").build());
-            attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg")
-                    .user(byUsername).path(fileDir+"default_bg.jpg").build());
+            attachRepository.saveProfilePic(AttachUser.builder().attachTitle(defaultProfile)
+                    .user(byUsername).thumb(fileDir+defaultProfile).build());
+            attachRepository.saveBgPic(AttachUserBackground.builder().title(defaultBackground)
+                    .user(byUsername).path(fileDir+defaultBackground).build());
         }
 
         return new PrincipalDetails(byUsername, oAuth2UserInfo);

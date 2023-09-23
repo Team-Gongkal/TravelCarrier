@@ -45,9 +45,9 @@ $(document).on("click", ".weeklyDelBtn", function () {
 });
 
 $(document).on("click", "#deleteWeekly", function () {
-  var wid = $(this).data("wid");
-  deleteWeekly(wid);
-  closeAlert();
+//  var wid = $(this).data("wid");
+//  deleteWeekly(wid);
+//  closeAlert();
   var wid = document.querySelector("#deleteWeekly").dataset["wid"];
   deleteWeekly(wid);
   closeAlert();
@@ -62,8 +62,13 @@ function deleteWeekly(weeklyId) {
     success: function (data) {
       $("li[data-wid='" + weeklyId + "']").remove();
     },
-    error: function (error) {
-      alert("삭제 실패" + error);
+    error: function (xhr, status, error) {
+      if (xhr.status === 500) {
+        alert("서버 오류가 발생했습니다.");
+        // 500 오류에 대한 추가 처리를 여기에 추가할 수 있습니다.
+      } else {
+        alert("삭제 실패: " + error);
+      }
     },
   });
 }
@@ -82,7 +87,8 @@ $(document).on("click", ".del_btn", function (e) {
 });
 
 $(document).on("click", "#deleteReply", function () {
-  var reply = $(this).data("reply");
+  //var reply = $(this).data("reply");
+  const reply = this.dataset.reply;
   deleteReply(reply);
   closeAlert();
 });
@@ -99,8 +105,11 @@ function deleteReply(reply) {
     data: JSON.stringify(data),
     contentType: "application/json",
     success: function (resp) {
-      alert("삭제되었습니다.");
-      var attachNo = $(".reply_img img").attr("data-attachNo");
+      //var attachNo = $(".reply_img img").attr("data-attachNo");
+      const replyImages = document.querySelectorAll(".reply_img img");
+      const firstImage = replyImages[0]; // 첫 번째 이미지를 가져옴
+      const attachNo = firstImage.getAttribute("data-attachNo");
+      console.log(attachNo);
       currentReplyList(attachNo);
     },
     error: function (jqXHR, textStatus, errorThrown) {

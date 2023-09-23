@@ -204,7 +204,7 @@ function travelerHtml(data, type) {
                       <img src="${
                         data.backgroundThumbPath != null
                           ? data.backgroundThumbPath
-                          : "/image/default/default_bg.jpg"
+                          : "/image/default/default_bg.png"
                       }"
                         alt="썸네일" class="moving_bg">
                     </a>
@@ -285,7 +285,7 @@ function dateValidate() {
   // 기간선택 검사
   if ($(".inquire_period li:first-child").hasClass("on")) {
     if ($("#sdate").val() == "" || $("#edate").val() == "") {
-      alert("날짜가 선택되지 않았습니다");
+      alertModal2("날짜"+"가 선택되지 않았습니다");
       return false;
     }
   } else {
