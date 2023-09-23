@@ -359,7 +359,7 @@ header > nav {
   transition: 0.1s;
 }
 .notice_textbox p a:hover {
-  background-color: #efeee9;
+  background-color: #f7f7f7;
 }
 .notice_textbox span.update_date {
   display: block;
