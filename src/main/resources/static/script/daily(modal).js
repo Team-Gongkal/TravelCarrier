@@ -295,7 +295,7 @@ $(document).on("click", "li.clickImg", function (event) {
     }
     selectArr.splice(liIndex, 1);
     $("ul.days_tabSlide .on").click();
-  }
+  }else return;
 
   //방금 삭제한게 마지막이면 마지막요소 클릭하도록
   if (isLast && selectArr.length != 1) {
