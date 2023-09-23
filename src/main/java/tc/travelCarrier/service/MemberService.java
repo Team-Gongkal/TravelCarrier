@@ -44,6 +44,9 @@ public class MemberService {
 
     //팔로우시 DB에 팔로잉정보 저장, 알림 전송
     public void followMember(User loginUser, User targetUser) throws IOException {
+        //이미 친구인지 확인
+        Follower f = followRepository.findByUserAndFollower(loginUser, targetUser);
+        if( f != null) return; //이미 친구이면 그대로 종료
         followRepository.save(Follower.builder()
                 .user(loginUser)
                 .follower(targetUser)

@@ -245,19 +245,29 @@ function travelerHtml(data, type) {
 
   if (type == "following") {
     html += `
-                    <div class="follower_del_btn">
+                    <div class="follower_del_btn" data-userid="${data.email}" >
                        <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
                      </div>`;
   } else if (type == "follower") {
-    html += `<div class="follower_add_btn">
-                      <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구추가</button>
-                    </div>`;
+    //만약 내가 팔로우하는 팔로워라면 친구삭제?맞팔로우?
+    if(data.fff){
+        html += `<div class="follower_del_btn" data-userid="${data.email}" >
+                          <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구삭제</button>
+                        </div>`;
+    }else{
+        html += `<div class="follower_add_btn" data-userid="${data.email}" >
+                          <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구추가</button>
+                        </div>`;
+    }
+
   }
   html += `</div>
                 </li>`;
 
   return html;
 }
+
+
 
 //친구추가 버튼
 function add_friend() {
@@ -287,6 +297,56 @@ function add_friend() {
     },
   });
 }*/
+
+
+// 친구끊기 이벤트
+$(document).on("click", ".follower_del_btn", async function () {
+    var userid = this.getAttribute("data-userid");
+    await unfollowTarget(userid);
+    $(this).removeClass("follower_del_btn").addClass("follower_add_btn");
+    $(this).find("button").html("<i class=\"fa-solid fa-user-minus fa-xs fa\"></i>친구추가");
+});
+
+function unfollowTarget(userid) {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      url: "/member/unfollow/" + userid,
+      type: "GET",
+      success: function (resp) {
+        console.log("1");
+        resolve(resp);
+      },
+      error: function (error) {
+        alert("실패" + error);
+        reject(error);
+      },
+    });
+  });
+}
+
+// 친구추가 이벤트
+$(document).on("click", ".follower_add_btn", async function () {
+    var userid = this.getAttribute("data-userid");
+    await followingTarget(userid);
+    $(this).removeClass("follower_add_btn").addClass("follower_del_btn");
+    $(this).find("button").html("<i class=\"fa-solid fa-user-minus fa-xs fa\"></i>친구끊기");
+});
+
+function followingTarget(userid) {
+  return new Promise(function (resolve, reject) {
+  $.ajax({
+    url: "/member/following/" + userid,
+    type: "GET",
+    success: function (resp) {
+      resolve(resp);
+    },
+    error: function (error) {
+      reject(error);
+    },
+  });
+});
+}
+
 
 // 태그된 위클리 숨기기 이벤트 - by.서현
 $(document).on("click", ".weeklyHideBtn", function () {

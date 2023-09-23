@@ -24,6 +24,9 @@ public class MyPageDTO {
     private String backgroundThumbPath;
     private String fDate;
 
+    private boolean fff; //Follow for Follow : 맞팔여부 확인
+    private boolean fffSelf; // 팔로워탭에 뜨는 카드가 본인일때 체크
+
     private boolean hide;
 
     public MyPageDTO(){}
@@ -49,7 +52,8 @@ public class MyPageDTO {
 
     }
 
-    public static MyPageDTO generateFollowerDTO(String name, int id, String thumbPath, String bgPath, Date fDate, String email){
+    public static MyPageDTO generateFollowerDTO(String name, int id, String thumbPath, String bgPath,
+                                                Date fDate, String email, Boolean fff, Boolean fffSelf){
         MyPageDTO dto = new MyPageDTO();
         dto.setName(name);
         dto.setId(id);
@@ -58,6 +62,8 @@ public class MyPageDTO {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dto.setFDate(dateFormat.format(fDate));
         dto.setEmail(email);
+        dto.setFff(fff);
+        dto.setFffSelf(fffSelf);
         return dto;
     }
 
