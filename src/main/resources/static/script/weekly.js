@@ -354,4 +354,25 @@ li.addEventListener('mouseenter', function(){
 li.addEventListener('mouseleave', function(){
   document.getElementById('tagged_companion').classList.remove('show');
 })
-})
+});
+
+$(document).on("click", ".deleteWeekly", function (event) {
+    event.preventDefault();
+    $(".confirm_btn").attr("id", "delWeekly");
+    alertModal("삭제");
+});
+$(document).on("click", "#delWeekly", function () {
+    $.ajax({
+      url: "/weekly/" + weeklyId,
+      type: "DELETE",
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        window.location.href = "/";
+      },
+      error: function (xhr, status, error) {
+          alert("삭제 실패: " + error);
+           closeAlert();
+      },
+    });
+});
