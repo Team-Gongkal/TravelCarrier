@@ -50,10 +50,10 @@ article .longBox {
   flex-direction: column;
   justify-content: end;
 }
-div.writer{
+div.writer {
   margin: 0rem 0 1rem 0.2rem;
 }
-.writer span{
+.writer span {
   opacity: 0.4;
 }
 .weekly_title h2 {
@@ -105,7 +105,7 @@ div.writer{
 #companion_more {
   background: url(../image/weekly/icon/view-more.png);
 }
-.weekly_with > .weekly_companion > ul.sel_companion > li{
+.weekly_with > .weekly_companion > ul.sel_companion > li {
   float: left;
 }
 .weekly_with > .weekly_companion > ul.sel_companion > li,
@@ -565,15 +565,14 @@ li.card span:nth-child(2):hover {
   margin-bottom: 1.5rem;
 }
 /* 태그된 동행인 목록------------------------ */
-#tagged_companion{
+#tagged_companion {
   width: max-content;
   min-width: 50%;
   position: absolute;
-  bottom: -0.8rem;  left: -1.07rem;
+  bottom: -0.8rem;
+  left: -1.07rem;
   /* 마지막 a태그의 margin-bottom: 0.7rem, left 과맞춤 + 미세조정*/
-
-  background: #efeee9;
-  /* background: #f7f7f7; */
+  background: rgb(246, 246, 245);
   border: 1px solid #d7d7d7;
   box-shadow: 2px 2px 4px #d7d7d7;
   box-sizing: border-box;
@@ -582,38 +581,40 @@ li.card span:nth-child(2):hover {
   transition: 0.3s;
   border-radius: 0.5rem;
 }
-#tagged_companion.show{
+#tagged_companion.show {
   opacity: 1;
   visibility: visible;
-  animation: show_comp 0.5s  0.2s 1;
+  animation: show_comp 0.5s 0.2s 1;
 }
 @keyframes show_comp {
-  0%{}
-  100%{}
+  0% {
+  }
+  100% {
+  }
 }
-#tagged_companion ul{
- padding: 1rem 0rem 0rem 0rem;
- display: flex;
- flex-direction: column-reverse;
+#tagged_companion ul {
+  padding: 1rem 0rem 0rem 0rem;
+  display: flex;
+  flex-direction: column-reverse;
 }
-#tagged_companion ul li>a{
-display: flex;
-align-items: center;
-margin-bottom: 0.7rem;
-padding: 0 1rem;
+#tagged_companion ul li > a {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
+  padding: 0 1rem;
 }
-#tagged_companion ul a > span.circle{
+#tagged_companion ul a > span.circle {
   display: block;
 }
-#tagged_companion ul a > span.circle img{
+#tagged_companion ul a > span.circle img {
   position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-#tagged_companion ul a > span.nickname{
+#tagged_companion ul a > span.nickname {
   margin-left: 0.5rem;
   /* color: #f7f7f7; */
 }
