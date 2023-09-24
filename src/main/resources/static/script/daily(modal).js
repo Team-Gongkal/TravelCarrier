@@ -52,6 +52,7 @@ $(document).ready(function () {
         //슬라이드 셋팅
         setSlide();
         setSlideClass();
+        playSlide()
         setSlideEvent();
 
         //모달 셋팅
@@ -78,6 +79,7 @@ function reloadDailies(newDailies){
     //슬라이드 셋팅
     setSlide();
     setSlideClass();
+    playSlide();
     setSlideEvent();
 
     //모달 셋팅
@@ -492,6 +494,31 @@ $(".modal_title > .close").on("click", function (e) {
   e.preventDefault();
   $(".daily_form_bg").removeClass("show");
 });
+
+function playSlide() {
+  // 슬라이드 수정=========================================
+  var slide_width = $(".diary_slides").outerWidth();
+  if (slide_width > $(window).width()) {
+    //슬라이드의 길이가 화면을 넘어가면슬라이드 재생
+    let origin_slide = document.querySelector("ul.diary_list");
+    origin_slide.id = "slide1";
+    // $(clone_slide).attr("id", "slide1");
+
+    let clone_slide = origin_slide.cloneNode(true); //(true)로 자식요소까지 복제해서 변수에 할당함
+    clone_slide.id = "slide2";
+    document.querySelector("div.diary_slides").appendChild(clone_slide); //자식요소로 붙여넣음
+
+    document.querySelector("#slide1").style.left = "0px";
+    document.querySelector("#slide2").style.left =
+      document.querySelector("ul.diary_list").offsetWidth + "px"; // offsetWidth : 마진값을 제외한 너비값을 계산
+
+    origin_slide.classList.add("original");
+    clone_slide.classList.add("clone");
+    $(".diary_viewport").removeClass("center");
+  } else {
+    $(".diary_viewport").addClass("center");
+  }
+}
 
 //데일리 이미지 슬라이드 구현 - by윤아
 window.onload = function () {
