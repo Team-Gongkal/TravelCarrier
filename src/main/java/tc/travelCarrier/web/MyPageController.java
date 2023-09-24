@@ -156,6 +156,37 @@ public class MyPageController {
         return null;
     }
 
+    //트래블러페이지 검색어로 검색 (태그, 내글을 타입으로 구분)
+    @PostMapping("/member/{email}/search")
+    @ResponseBody
+    public List<MyPageDTO> searchTravelerByKeyword(@PathVariable String email,
+                                                   @AuthenticationPrincipal PrincipalDetails principalDetails,
+                                                    @RequestBody SearchDTO searchDTO, Pageable pageable){
+        System.out.println(searchDTO.toString());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        User traveler = memberRepository.findUserByEmail(email);
+        String type = searchDTO.getType();
 
+        if(type.equals("dia")) return searchService.findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(searchDTO.getKeyword(), user, traveler, pageable);
+        else if(type.equals("tag")) return searchService.findTaggedWeekliesByKeywordAndUser(searchDTO.getKeyword(), user, traveler, pageable);
+        else if(type.equals("tra")) return searchService.findFollowerByNameAndEmail(searchDTO.getDetailType(), searchDTO.getKeyword(), user, traveler, pageable);
+        return null;
+    }
+
+    //트래블러페이지 다이어리 기간으로 검색
+    @PostMapping("/member/{email}/search/date")
+    @ResponseBody
+    public List<MyPageDTO> searchTravelerByDate(@PathVariable String email,
+                                                @AuthenticationPrincipal PrincipalDetails principalDetails,
+                                                @RequestBody SearchDTO searchDTO, Pageable pageable) throws ParseException {
+        System.out.println(searchDTO.toString());
+        User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
+        User traveler = memberRepository.findUserByEmail(email);
+        String type = searchDTO.getType();
+
+        if(type.equals("dia")) return searchService.findWeeklyPagingByDate(searchDTO, user, traveler, pageable);
+        else if(type.equals("tag")) return searchService.findTagWeeklyPagingByDate(searchDTO, user, traveler, pageable);
+        else return null;
+    }
 
 }

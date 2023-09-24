@@ -29,47 +29,80 @@ public class SearchService {
     private final WeeklySearchRepository weeklySearchRepository;
     private final MemberRepository memberRepository;
 
+    //[마이페이지] 에서 user가 다이어리를 검색
     public List<MyPageDTO> findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser (String keyword, User user, Pageable pageable){
         return transferWeeklyDTO(user, weeklySearchRepository.findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(keyword, user, pageable));
     }
 
+    // [트래블러페이지] 에서 user가 다이어리를 검색
+    public List<MyPageDTO> findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser (String keyword, User user, User traveler, Pageable pageable){
+        return transferCheckWeeklyDTO(traveler, user, weeklySearchRepository.findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(keyword, traveler, pageable));
+    }
+
+    //[마이페이지]에서 다이어리 데이터
     public List<MyPageDTO> findWeeklyPaging (User user, Pageable pageable){
         return transferWeeklyDTO(user,weeklySearchRepository.findByUserOrderByIdDesc(user, pageable));
     }
+    //[트래블러페이지]에서 다이어리 데이터
     public List<MyPageDTO> findWeeklyPaging (User traveler, User user, Pageable pageable){
         return transferCheckWeeklyDTO(traveler,user,weeklySearchRepository.findByUserOrderByIdDesc(traveler, pageable));
     }
 
+    //[마이페이지]에서 태그된 위클리 데이터
     public List<MyPageDTO> findTagWeeklyPaging (User user, Pageable pageable){
         return transferWeeklyDTO(user,weeklySearchRepository.findTaggedWeekliesByUser(user, pageable));
     }
+    //[트래블러페이지]에서 태그된 위클리 데이터
     public List<MyPageDTO> findTagWeeklyPaging (User traveler, User user, Pageable pageable){
         return transferCheckTagWeeklyDTO(traveler,user,weeklySearchRepository.findTaggedWeekliesByUser(traveler, pageable));
     }
 
+    //[마이페이지]에서 팔로워데이터
     public List<MyPageDTO> getFollowingPaging(User user, Pageable pageable) {
         return transferFollowerDTO("following", memberRepository.getFollowingPaging(user, pageable), user);
     }
+    
+    //[트래블러페이지]에서 팔로워데이터
     public List<MyPageDTO> getFollowingPaging(User traveler, User user, Pageable pageable) {
         return transferFollowerDTO("following", memberRepository.getFollowingPaging(traveler, pageable), user);
     }
+    
+    //[마이페이지]에서 팔로워 데이터
     public List<MyPageDTO> getFollowerPaging(User user, Pageable pageable) {
         return transferFollowerDTO("follower", memberRepository.getFollowerPaging(user,pageable), user);
     }
+    
+    //[트래블러페이지]에서 팔로워데이터
     public List<MyPageDTO> getFollowerPaging(User traveler, User user, Pageable pageable) {
         return transferFollowerDTO("follower", memberRepository.getFollowerPaging(traveler,pageable), user);
     }
+    
+    //[마이페이지]에서 태그된 위클리를 검색
     public List<MyPageDTO> findTaggedWeekliesByKeywordAndUser(String keyword, User user, Pageable pageable) {
         return transferWeeklyDTO(user, weeklySearchRepository.findTaggedWeekliesByKeywordAndUser(keyword, user, pageable));
     }
 
+    //[트래블러페이지]에서 트래블러가 태그된 위클리를 검색
+    public List<MyPageDTO> findTaggedWeekliesByKeywordAndUser(String keyword, User user,  User traveler, Pageable pageable) {
+        return transferCheckTagWeeklyDTO(traveler, user, weeklySearchRepository.findTaggedWeekliesByKeywordAndUser(keyword, traveler, pageable));
+    }
 
+
+    //[마이페이지]에서 팔로잉/팔로워를 검색
     public List<MyPageDTO> findFollowerByNameAndEmail(String type, String keyword, User user, Pageable pageable) {
         if(type.equals("follower")) return transferFollowerDTO("follower",memberRepository.findFollowerByNameAndEmail(keyword, user, pageable),user);
         else if(type.equals("following")) return transferFollowerDTO("following",memberRepository.findFollowingByNameAndEmail(keyword, user, pageable),user);
         else return null;
     }
 
+    //[트래블러페이지]에서 트래블러의 팔로잉/팔로워를 검색
+    public List<MyPageDTO> findFollowerByNameAndEmail(String type, String keyword, User user, User traveler, Pageable pageable) {
+        if(type.equals("follower")) return transferFollowerDTO("follower",memberRepository.findFollowerByNameAndEmail(keyword, traveler, pageable),user);
+        else if(type.equals("following")) return transferFollowerDTO("following",memberRepository.findFollowingByNameAndEmail(keyword, traveler, pageable),user);
+        else return null;
+    }
+
+    //[마이페이지]에서 다이어리 기간검색
     public List<MyPageDTO> findWeeklyPagingByDate(SearchDTO searchDTO, User user, Pageable pageable) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date sdate = sdf.parse(searchDTO.getSdate());
@@ -77,15 +110,33 @@ public class SearchService {
         return transferWeeklyDTO(user, weeklySearchRepository.findWeeklyPagingByDate(sdate, edate, user, pageable));
     }
 
+    //[트래블러페이지]에서 다이어리 기간검색
+    public List<MyPageDTO> findWeeklyPagingByDate(SearchDTO searchDTO, User user, User traveler, Pageable pageable) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date sdate = sdf.parse(searchDTO.getSdate());
+        Date edate = sdf.parse(searchDTO.getEdate());
+        return transferCheckWeeklyDTO(traveler, user, weeklySearchRepository.findWeeklyPagingByDate(sdate, edate, traveler, pageable));
+    }
+
+    //[마이페이지]에서 태그된 위클리 기간검색
     public List<MyPageDTO> findTagWeeklyPagingByDate(SearchDTO searchDTO, User user, Pageable pageable) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date sdate = sdf.parse(searchDTO.getSdate());
         Date edate = sdf.parse(searchDTO.getEdate());
-        return transferWeeklyDTO(user, weeklySearchRepository.findTagWeeklyPagingByDate(sdate, edate,  user, pageable));
+        return transferWeeklyDTO(user, weeklySearchRepository.findTagWeeklyPagingByDate(sdate, edate, user, pageable));
+    }
+
+    //[트래블러페이지]에서 태그된 위클리 기간검색
+    public List<MyPageDTO> findTagWeeklyPagingByDate(SearchDTO searchDTO, User user,  User traveler, Pageable pageable) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date sdate = sdf.parse(searchDTO.getSdate());
+        Date edate = sdf.parse(searchDTO.getEdate());
+        return transferCheckWeeklyDTO(traveler, user, weeklySearchRepository.findTagWeeklyPagingByDate(sdate, edate,  traveler, pageable));
     }
 
 
 
+    //다이어리, 태그된 다이어리 데이터를 DTO객체로 단순 변환하는 메소드 (마이페이지에서 사용 - 로그인객체와 상관없이 본인글은 전부 보여야함)
     private List<MyPageDTO> transferWeeklyDTO(User user, Page<Weekly> weeklyPage) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
@@ -109,6 +160,8 @@ public class SearchService {
 
         return result;
     }
+
+    //팔로잉 데이터를 DTO로 변환하는 메소드 (각 로그인 유저에 맞춰 표시)
     private List<MyPageDTO> transferFollowerDTO(String type, Page<Follower> fPage, User loginUser) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
@@ -159,8 +212,7 @@ public class SearchService {
     }
 
 
-    //해당 트래블러의 다이어리에 대해 접근할수있는 데이터만 남기기
-    //dia : ALL, FOLLOW(user가 traveler의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있을경우만)
+    //다이어리 데이터중 로그인 유저가 접근할수있는 데이터만 남기기
     private List<MyPageDTO> transferCheckWeeklyDTO(User traveler, User user, Page<Weekly> weeklyPage) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
@@ -204,6 +256,7 @@ public class SearchService {
         return result;
     }
 
+    //태그된 다이어리중 로그인유저가 접근할 수 있는 데이터만 남기기
     //tag : ALL, FOLLOW(user가 글쓴이의 팔로잉목록에 있을경우만), ME(Gowith에 user가 있거나 글쓴이가 user일경우)
     private List<MyPageDTO> transferCheckTagWeeklyDTO(User traveler, User user, Page<Weekly> weeklyPage) {
         // dto : weeklyId, title, date, thumbPath, goWithList

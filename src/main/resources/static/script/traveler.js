@@ -26,16 +26,18 @@ $(document).ready(function () {
       event.preventDefault();
       var searchKeyword = $(this).val();
       var type = $(".userProfile_tab li.on span").text().substring(0, 3); //tag 또는 dia 보내짐
-
+      var detailType = "";
+      if(type == "tra") detailType = $('.travlar_option button.on').text();
       if (type == "rev") return;
 
       $.ajax({
-        url: "/mypage/search",
+        url: "/member/"+TravelerEmail+"/search",
         type: "POST",
-        data: JSON.stringify({ type: type, keyword: searchKeyword }),
+        data: JSON.stringify({ type: type, detailType : detailType, keyword: searchKeyword }),
         contentType: "application/json",
         success: function (resp) {
-          updateResult(type, resp);
+          if(type=="tra") updateResult(detailType, resp);
+          else updateResult(type, resp);
         },
         error: function (error) {
           alert("실패");
@@ -70,6 +72,8 @@ function getTravelerPage(type, page) {
     data: JSON.stringify({ userEmail: TravelerEmail, type: type, page: page }),
     contentType: "application/json",
     success: function (resp) {
+      if(type=="dia") $("#diary_num").text("(" + resp.length + ")");
+      else if(type=="tag") $("#tagged_num").text("(" + resp.length + ")");
       updateResult(type, resp);
     },
     error: function (error) {
@@ -92,20 +96,21 @@ function getFollowPage(type, detailType, page) {
     },
   });
 }
-
+function addAnimate(block) {
+  block.addClass("ani");
+}
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
     console.log(data);
   if (type == "dia") {
-    $("#diary_num").text("(" + data.length + ")");
     $(".userProfile_diary").empty();
     if (data == null) return;
     for (var e of data) {
       $(".userProfile_diary").append(diaryHtml(e));
     }
+    addAnimate($(".userProfile_diary li"));
   } else if (type == "tag") {
     console.log("tag 실행");
-    $("#tagged_num").text("(" + data.length + ")");
     $(".userProfile_tagged").empty();
     if (data == null) return;
     for (var e of data) {
@@ -113,19 +118,22 @@ function updateResult(type, data) {
       console.log(e);
       $(".userProfile_tagged").append(taggedHtml(e));
     }
+    addAnimate($(".userProfile_tagged"));
   } else if (type == "following") {
-    $("#traveler_num").text("(" + data.length + ")");
+    //$("#traveler_num").text("(" + data.length + ")");
     $(".follow").empty();
     if (data == null) return;
     for (var e of data) {
       $(".follow").append(travelerHtml(e, "following"));
     }
+    addAnimate($(".userProfile_traveler"));
   } else if (type == "follower") {
     $(".follower").empty();
     if (data == null) return;
     for (var e of data) {
       $(".follower").append(travelerHtml(e, "follower"));
     }
+    addAnimate($(".userProfile_traveler"));
   }
 
   //게시글 갯수에 따른 스크롤 활성화

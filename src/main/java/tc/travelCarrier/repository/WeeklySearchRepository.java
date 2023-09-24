@@ -17,6 +17,7 @@ import java.util.Date;
 public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
     @Query("SELECT DISTINCT w FROM Weekly w JOIN w.nation n JOIN w.gowiths g JOIN g.user u WHERE (w.title LIKE %?1% OR n.name LIKE %?1% OR u.email LIKE %?1% OR u.name LIKE %?1%) AND w.user = ?2 ORDER BY w.id DESC")
     Page<Weekly> findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(String keyword, User user, Pageable pageable);
+
     @Query("SELECT DISTINCT w FROM Weekly w JOIN w.nation n JOIN w.gowiths g JOIN g.user u WHERE (w.title LIKE %?1% OR n.name LIKE %?1% OR u.email LIKE %?1% OR u.name LIKE %?1%) AND g.user = ?2 ORDER BY w.id DESC")
     Page<Weekly> findTaggedWeekliesByKeywordAndUser(String keyword, User user, Pageable pageable);
 
