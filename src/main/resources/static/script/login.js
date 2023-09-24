@@ -1,11 +1,7 @@
-
-
-
 $(document).ready(function () {
-
-  window.onresize = function () {
-    document.location.reload();
-  };
+  // window.onresize = function () {
+  //   document.location.reload();
+  // };
   var input1 = $(".login form div input[type=text]"),
     input2 = $(".login form div input[type=password]");
 
