@@ -74,6 +74,13 @@ $(".update_notice h6 i").on("click", function () {
 $(document).mouseup(function (e) {
   //
   var alertNew = $(".utill_notice");
+  let noticeIcon = $(".notice");
+  $(".update_notice h6 i, .notice").on("click", function () {
+    $(".utill_notice ").removeClass("show");
+    if (alertNew.hasClass("show") == true) {
+      $(".utill_notice ").removeClass("show");
+    }
+  });
   if (alertNew.has(e.target).length == 0) {
     console.log(alertNew + "내가클릭한거 : " + e.target);
     alertNew.removeClass("show");
