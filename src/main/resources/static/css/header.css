@@ -6,10 +6,10 @@ header {
   top: 0;
   left: 0;
   z-index: 100;
-  padding: 0.7rem 0.8rem;
+  padding: 1rem 0.8rem;
   box-sizing: border-box;
   background: #efeee9;
-  border-right: 1.5px solid rgb(82, 93, 118, 0.5);
+  border-right: 1.5px solid rgb(82, 93, 118, 0.8);
 }
 header > nav {
   height: 100%;

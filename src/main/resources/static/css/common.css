@@ -71,7 +71,7 @@ body::-webkit-scrollbar {
 main:not(#start_page):not(#signUp) {
   font-family: "NanumSquareNeo";
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   margin-left: 3.2rem; /*header너비*/
 }
 /* input Ui */
