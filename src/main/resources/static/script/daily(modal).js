@@ -49,11 +49,9 @@ $(document).ready(function () {
         setFirst(dailies);
 
         //슬라이드 셋팅
-
-        playSlide();
         setSlide();
+        cloneSlide();
         setSlideClass();
-        setSlideEvent();
 
         //모달 셋팅
         getCurrentDataArr();
@@ -78,9 +76,8 @@ function reloadDailies(newDailies){
 
     //슬라이드 셋팅
     setSlide();
+    cloneSlide();
     setSlideClass();
-    playSlide();
-    setSlideEvent();
 
     //모달 셋팅
     getCurrentDataArr();
@@ -495,7 +492,7 @@ $(".modal_title > .close").on("click", function (e) {
   $(".daily_form_bg").removeClass("show");
 });
 
-function playSlide() {
+function cloneSlide() {
   // 슬라이드 수정=========================================
   var slide_width = $(".diary_slides").outerWidth();
   if (slide_width > $(window).width()) {
@@ -521,7 +518,7 @@ function playSlide() {
 }
 
 //데일리 이미지 슬라이드 구현 - by윤아
-window.onload = function () {
+//window.onload = function () {
   //   var slide_left = 0;
   //   var first = 1;
   //   var last;
@@ -559,32 +556,30 @@ window.onload = function () {
   //   }
 
   // 슬라이드 수정=========================================
-  var slide_width = $(".diary_slides").outerWidth();
-  if (slide_width > $(window).width()) {
-    //슬라이드의 길이가 화면을 넘어가면슬라이드 재생
-    let origin_slide = document.querySelector("ul.diary_list");
-    origin_slide.id = "slide1";
-    // $(clone_slide).attr("id", "slide1");
+//  var slide_width = $(".diary_slides").outerWidth();
+//  if (slide_width > $(window).width()) {
+//    //슬라이드의 길이가 화면을 넘어가면슬라이드 재생
+//    let origin_slide = document.querySelector("ul.diary_list");
+//    origin_slide.id = "slide1";
+//    // $(clone_slide).attr("id", "slide1");
+//
+//    let clone_slide = origin_slide.cloneNode(true); //(true)로 자식요소까지 복제해서 변수에 할당함
+//    clone_slide.id = "slide2";
+//    document.querySelector("div.diary_slides").appendChild(clone_slide); //자식요소로 붙여넣음
+//
+//    document.querySelector("#slide1").style.left = "0px";
+//    document.querySelector("#slide2").style.left =
+//      document.querySelector("ul.diary_list").offsetWidth + "px"; // offsetWidth : 마진값을 제외한 너비값을 계산
+//
+//    origin_slide.classList.add("original");
+//    clone_slide.classList.add("clone");
+//    $(".diary_viewport").removeClass("center");
+//  } else {
+//    $(".diary_viewport").addClass("center");
+//  }
+//};
 
-    let clone_slide = origin_slide.cloneNode(true); //(true)로 자식요소까지 복제해서 변수에 할당함
-    clone_slide.id = "slide2";
-    document.querySelector("div.diary_slides").appendChild(clone_slide); //자식요소로 붙여넣음
 
-    document.querySelector("#slide1").style.left = "0px";
-    document.querySelector("#slide2").style.left =
-      document.querySelector("ul.diary_list").offsetWidth + "px"; // offsetWidth : 마진값을 제외한 너비값을 계산
-
-    origin_slide.classList.add("original");
-    clone_slide.classList.add("clone");
-    $(".diary_viewport").removeClass("center");
-  } else {
-    $(".diary_viewport").addClass("center");
-  }
-};
-
-//daily 일기화면 드래그 -by윤아
-let startPoint = 0;
-let endPoint = 0;
 
 // PC 클릭 이벤트 (드래그)
 // $(".diary_slides").addEventListener("mousedown", (e) => {
@@ -603,8 +598,14 @@ let endPoint = 0;
 //     console.log("next move");
 //   }
 // });
+
+//});
+
+//daily 일기화면 드래그 -by윤아
+let startPoint = 0;
+let endPoint = 0;
 // daily 일기화면(hover) - by.윤아
-$(".diary_viewport").on("mouseenter", "li.d_slide > img", function (e) {
+$(document).on("mouseenter", ".diary_viewport li.d_slide > img", function (e) {
   // 복제된 diary_slides에는 mouseenter 이벤트가 적용되지 않아 위임 방식을 사용하여, 부모 요소인 .diary_viewport에 이벤트를 바인딩함
 
   //1. 백그라운드 바꾸기
@@ -628,7 +629,9 @@ $(".diary_viewport").on("mouseenter", "li.d_slide > img", function (e) {
   //4.필터 활성화
   $(".filter").addClass("on");
   $(".diary_viewport").addClass("black");
+
 });
+
 
 //슬라이드 전체 호버시 효과(제목 및 댓글 아이콘 따로 처리)
 $(".diary_slides").on("mouseleave", function () {
@@ -698,8 +701,7 @@ function setSlideClass() {
 // }
 
 //슬라이드 호버시 텍스트 바꿔주기 -by윤아
-function setSlideEvent() {
-  $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
+$(document).on("mouseenter", ".diary_viewport .d_slide", function (e) {
     var hover_attachNo = $(e.target).data("attachno");
     console.log(hover_attachNo); //숫자로 잘 출력됨
 
@@ -734,9 +736,8 @@ function setSlideEvent() {
     $(".diary_textbox ul li h6").text(hover_data.title);
     $(".diary_textbox ul li p").text(hover_data.text);
   });
-};
-
 //슬라이드 드래그 기능 구현 - by윤아
 //첫번째 슬라이드의 위치값이 -100%일 경우 뒤로 보내줌
 //드래그 시 마우스 다운 지점과 마우스 업 지점의 거리를 계산해서 그만큼 diary_slide 클론과, 원본을 이동시켜줌,
 //위치값 계속 계산,,, 하고,, 그래그 방향이 왼쪽인지 오른쪽인지 파악하기
+
