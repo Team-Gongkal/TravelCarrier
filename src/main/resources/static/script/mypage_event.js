@@ -13,7 +13,7 @@ $("#follow").on("click", function () {
   getFollowPage("tra", "following", 1);
 });
 
-// 검색어를 바탕으로 위클리 검색 ajax - by.서현
+// 검색어를 바탕으로 검색 ajax - by.서현
 $(document).ready(function () {
   $("#search").keypress(function (event) {
     if (event.which === 13) {
@@ -21,16 +21,18 @@ $(document).ready(function () {
       event.preventDefault();
       var searchKeyword = $(this).val();
       var type = $(".userProfile_tab li.on span").text().substring(0, 3); //tag 또는 dia 보내짐
-
+      var detailType = "";
+      if(type == "tra") detailType = $('.travlar_option button.on').text();
       if (type == "rev") return;
-
+        console.log(type+" "+detailType+" "+searchKeyword);
       $.ajax({
         url: "/mypage/search",
         type: "POST",
-        data: JSON.stringify({ type: type, keyword: searchKeyword }),
+        data: JSON.stringify({ type: type, detailType : detailType, keyword: searchKeyword }),
         contentType: "application/json",
         success: function (resp) {
-          updateResult(type, resp);
+          if(type=="tra") updateResult(detailType, resp);
+          else updateResult(type, resp);
         },
         error: function (error) {
           alert("실패");
@@ -115,23 +117,24 @@ function updateResult(type, data) {
     //결과에 애니메이션 추가
     addAnimate($(".userProfile_tagged"));
   } else if (type == "following") {
-    //$("#traveler_num").text("(" + data.length + ")");
-    $(".follow").empty();
-    if (data == null) return;
-    for (var e of data) {
-      $(".follow").append(travelerHtml(e, "following"));
+            //$("#traveler_num").text("(" + data.length + ")");
+            $(".follow").empty();
+            if (data == null) return;
+            for (var e of data) {
+              $(".follow").append(travelerHtml(e, "following"));
+            }
+            //결과에 애니메이션 추가
+            addAnimate($(".userProfile_traveler"));
+    } else if (type == "follower") {
+            $(".follower").empty();
+            if (data == null) return;
+            for (var e of data) {
+              $(".follower").append(travelerHtml(e, "follower"));
+            }
+            //결과에 애니메이션 추가
+            addAnimate($(".userProfile_traveler"));
     }
-    //결과에 애니메이션 추가
-    addAnimate($(".userProfile_traveler"));
-  } else if (type == "follower") {
-    $(".follower").empty();
-    if (data == null) return;
-    for (var e of data) {
-      $(".follower").append(travelerHtml(e, "follower"));
-    }
-    //결과에 애니메이션 추가
-    addAnimate($(".userProfile_traveler"));
-  }
+
 
   //게시글 갯수에 따른 스크롤 활성화
   idx = $(".userProfile_tab > ul > li.on").index();

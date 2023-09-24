@@ -64,8 +64,10 @@ public class SearchService {
     }
 
 
-    public List<MyPageDTO> findFollowerByNameAndEmail(String keyword, User user, Pageable pageable) {
-        return transferFollowerDTO("following",weeklySearchRepository.findFollowerByNameAndEmail(keyword, user, pageable),user);
+    public List<MyPageDTO> findFollowerByNameAndEmail(String type, String keyword, User user, Pageable pageable) {
+        if(type.equals("follower")) return transferFollowerDTO("follower",memberRepository.findFollowerByNameAndEmail(keyword, user, pageable),user);
+        else if(type.equals("following")) return transferFollowerDTO("following",memberRepository.findFollowingByNameAndEmail(keyword, user, pageable),user);
+        else return null;
     }
 
     public List<MyPageDTO> findWeeklyPagingByDate(SearchDTO searchDTO, User user, Pageable pageable) throws ParseException {

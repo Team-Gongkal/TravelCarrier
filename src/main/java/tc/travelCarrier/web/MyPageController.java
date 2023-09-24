@@ -74,8 +74,7 @@ public class MyPageController {
         if(type.equals("dia")) return searchService.findByTitleOrNationNameOrUserNameOrUserEmailContainingForCurrentUser(searchDTO.getKeyword(), user, pageable);
         else if(type.equals("tag")) return searchService.findTaggedWeekliesByKeywordAndUser(searchDTO.getKeyword(), user, pageable);
         else if(type.equals("tra")) {
-            //
-            return searchService.findFollowerByNameAndEmail(searchDTO.getKeyword(), user, pageable);
+            return searchService.findFollowerByNameAndEmail(searchDTO.getDetailType(), searchDTO.getKeyword(), user, pageable);
         }
         return null;
     }

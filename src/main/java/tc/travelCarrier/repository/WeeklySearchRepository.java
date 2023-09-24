@@ -31,8 +31,7 @@ public interface WeeklySearchRepository extends JpaRepository<Weekly, Integer> {
 
 
 
-    @Query("SELECT f FROM Follower f JOIN f.user u WHERE u = ?2 AND (f.follower.name LIKE %?1% OR f.follower.email LIKE %?1%)")
-    Page<Follower> findFollowerByNameAndEmail (String keyword, User user, Pageable pageable);
+
 
     @Query("SELECT w FROM Weekly w WHERE w.user = ?3 AND (w.travelDate.sDate >= ?1 AND w.travelDate.eDate <= ?2)")
     Page<Weekly> findWeeklyPagingByDate(Date sdate, Date edate, User user, Pageable pageable);
