@@ -298,7 +298,7 @@ header > nav {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 .utill_notice.show {
-  right: 0.5rem;
+  right: 0.7rem;
   transition: 0.5s;
 }
 .update_notice {

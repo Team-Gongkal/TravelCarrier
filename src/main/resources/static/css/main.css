@@ -3,7 +3,10 @@ main#main_map {
   /* height: 100%; */
   /* padding: 0.7rem 0.7rem 0.7rem 0; */
   margin: 0.7rem 0.7rem 0.7rem 0;
-  border: 2px solid rgb(82, 93, 118, 0.8);
+  border-bottom: 2px solid rgb(82, 93, 118, 0.8);
+  border-top: 2px solid rgb(82, 93, 118, 0.8);
+  border-right: 2px solid rgb(82, 93, 118, 0.8);
+  border-left: 1px solid rgb(82, 93, 118, 0.8);
   box-sizing: border-box;
   background: url(../image/main/map/background.svg);
   background-position: center;
@@ -18,16 +21,16 @@ main#main_map:after {
   position: absolute;
   background: #efeee9;
   width: 5px;
-  height: 0.7rem;
+  height: 1rem;
   z-index: 150;
   right: 100%;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 main#main_map:before {
-  bottom: -0.7rem;
+  bottom: -01rem;
 }
 main#main_map:after {
-  top: -0.7rem;
+  top: -1rem;
 }
 /*썸네일-----------------------------------------*/
 .weekly_thumbnails {
