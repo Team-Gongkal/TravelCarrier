@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
-public class WeeklyRepository{
+public class WeeklyRepository {
 
     private final EntityManager em;
 
@@ -101,9 +101,6 @@ public class WeeklyRepository{
 
     public void deleteGowith(Gowith gowith) {
         em.remove(gowith);
-    }
-    public void deleteAttachWeekly(AttachWeekly thumb) {
-        em.remove(thumb);
     }
 
     // 태그된 위클리 리스트를 조회

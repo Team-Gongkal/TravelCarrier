@@ -95,7 +95,7 @@ function getFollowPage(type, detailType, page) {
 
 // 결과를 바탕으로 html틀을 할당 - by.서현
 function updateResult(type, data) {
-    console.log(data.length);
+    console.log(data);
   if (type == "dia") {
     $("#diary_num").text("(" + data.length + ")");
     $(".userProfile_diary").empty();
@@ -204,7 +204,7 @@ function travelerHtml(data, type) {
                       <img src="${
                         data.backgroundThumbPath != null
                           ? data.backgroundThumbPath
-                          : "/image/default/default_bg.jpg"
+                          : "/image/default/default_bg.png"
                       }"
                         alt="썸네일" class="moving_bg">
                     </a>
@@ -223,11 +223,48 @@ function travelerHtml(data, type) {
                     <div class="uP_user_text">
                       <span class="uP_user_name">${data.name}</span>
                       <span class="uP_user_added">${data.fdate}</span>
-                    </div></li>`;
+                    </div>`;
+
+  if (type == "following") {
+      if(data.fffSelf){
+          html += `<div data-userid="${data.email}" >
+                            <button disabled></button>
+                          </div>`;
+      }else{
+          if(data.fff){
+              html += `<div class="follower_del_btn" data-userid="${data.email}" >
+                                <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
+                              </div>`;
+          }else{
+              html += `<div class="follower_add_btn" data-userid="${data.email}" >
+                                <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구추가</button>
+                              </div>`;
+          }
+      }
+  } else if (type == "follower") {
+    if(data.fffSelf){
+        html += `<div data-userid="${data.email}" >
+                          <button disabled></button>
+                        </div>`;
+    }else{
+        if(data.fff){
+            html += `<div class="follower_del_btn" data-userid="${data.email}" >
+                              <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구끊기</button>
+                            </div>`;
+        }else{
+            html += `<div class="follower_add_btn" data-userid="${data.email}" >
+                              <button><i class="fa-solid fa-user-minus fa-xs fa"></i>친구추가</button>
+                            </div>`;
+        }
+    }
+
+
+  }
+  html += `</div>
+                </li>`;
 
   return html;
 }
-
 // 기간 선택 이벤트
 $(".inquire_period li").on("click", function () {
   // 기존에 on 클래스가 붙어있는 li 요소의 on 클래스를 제거
@@ -285,7 +322,7 @@ function dateValidate() {
   // 기간선택 검사
   if ($(".inquire_period li:first-child").hasClass("on")) {
     if ($("#sdate").val() == "" || $("#edate").val() == "") {
-      alert("날짜가 선택되지 않았습니다");
+      alertModal2("날짜"+"가 선택되지 않았습니다");
       return false;
     }
   } else {

@@ -100,7 +100,7 @@ $('input[name="keyword"]').on("keydown", function (event) {
   if (event.key === "Enter") {
     // li가 9개면 실행 X
     if ($(".keyword_card li").length === 5) {
-      alert("5개까지만 등록할 수 있습니다");
+      alertModal2("5개","까지만 등록할 수 있습니다");
     } else {
       // 작성한 키워드를 저장 및 input 비우기
       var myKeyword = $('input[name="keyword"]').val();
@@ -128,7 +128,7 @@ var dailyId = -1;
 // 키워드 추가 클릭할때마다 현재 키워드입력창의 index 저장 - by.서현
 $(document).on("click", ".keyword", function () {
   key_index = $(this).closest(".weekly_wrap").index() - 1;
-  dailyId = $(this).data("daily");
+  dailyId = this.dataset.daily;
   openModal();
 });
 
@@ -141,7 +141,6 @@ $(document).on("click", "#keyword_save", function (event) {
     keyword_list.push($(this).text().trim());
   });
   all_keywords[key_index] = keyword_list;
-
   //ajax로 DB에 키워드 저장
   $.ajax({
     url: "/weekly/saveKeyword",
@@ -164,13 +163,14 @@ $(document).on("click", "#keyword_save", function (event) {
 function updateKeyword(keyword_list) {
   var keywordBox = $(".weekly_wrap").eq(key_index).find(".keywordBox");
   keywordBox.empty();
-
+    console.log(keyword_list);
   if (keyword_list.length > 0) {
     $.each(keyword_list, function (index, text) {
       var ul = $("<ul>");
-      var li = $("<li>").addClass("keyword").text(text);
+      var li = $("<li>").addClass("keyword").text(text).attr("data-daily", dailyId);
       /*        var span = $("<span>").addClass("card_del").html('<i class="xi-close"></i>');
         li.append(span);*/
+        console.log(li);
       ul.append(li);
       keywordBox.append(ul);
     });
@@ -217,6 +217,7 @@ $(document).on("click", ".updateWeekly", function (event) {
   console.log("status : " + formData.get("status"));
   formData.append("thumbStatus", thumb_status);
 
+   $("#loading").addClass("show");
   //버튼 저장중 처리
   var clickBtn = $(".updateWeekly");
   clickBtn.attr("disabled",true);
@@ -230,14 +231,16 @@ $(document).on("click", ".updateWeekly", function (event) {
     processData: false,
     contentType: false,
     success: function (data) {
-      alert("성공");
+      //alert("성공");
       clickBtn.attr("disabled",false);
       clickBtn.toggleClass("btn_disable btn");
       clickBtn.html("저장하기");
-      location.replace("/weekly/" + data);
+      $("#loading").removeClass("show");
+      //location.replace("/weekly/" + data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      alert("실패");
+      alertModal2("실패");
+      $("#loading").removeClass("show");
     },
   });
 });
@@ -351,4 +354,25 @@ li.addEventListener('mouseenter', function(){
 li.addEventListener('mouseleave', function(){
   document.getElementById('tagged_companion').classList.remove('show');
 })
-})
+});
+
+$(document).on("click", ".deleteWeekly", function (event) {
+    event.preventDefault();
+    $(".confirm_btn").attr("id", "delWeekly");
+    alertModal("삭제");
+});
+$(document).on("click", "#delWeekly", function () {
+    $.ajax({
+      url: "/weekly/" + weeklyId,
+      type: "DELETE",
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        window.location.href = "/";
+      },
+      error: function (xhr, status, error) {
+          alert("삭제 실패: " + error);
+           closeAlert();
+      },
+    });
+});

@@ -98,11 +98,11 @@ public class MyPageController {
         else if(type.equals("tra")){
             if(searchDTO.getDetailType().equals("following")) {
                 Page<Follower> followingPage = memberRepository.getFollowingPaging(user, pageable);
-                return transferFollowerDTO("following", followingPage);
+                return transferFollowerDTO("following", followingPage,user);
             }
             else if(searchDTO.getDetailType().equals("follower")) {
                 Page<Follower> followerPage = memberRepository.getFollowerPaging(user,pageable);
-                return transferFollowerDTO("follower", followerPage);
+                return transferFollowerDTO("follower", followerPage,user);
             }
 
         }
@@ -132,21 +132,49 @@ public class MyPageController {
 
         return result;
     }
-    private List<MyPageDTO> transferFollowerDTO(String type, Page<Follower> fPage) {
+    private List<MyPageDTO> transferFollowerDTO(String type, Page<Follower> fPage, User loginUser) {
         // dto : weeklyId, title, date, thumbPath, goWithList
         List<MyPageDTO> result = new ArrayList<>();
         if(type.equals("following")) {
             for (Follower f : fPage) {
+                // 팔로잉목록에 로그인유저의 친구가 있는지 확인..
+                boolean fff = false;
+                for (Follower fo : loginUser.getFollowers()){
+                    System.out.println("!!"+fo.getFollower().getId()+", "+f.getFollower().getId());
+                    if(fo.getFollower().getId() == f.getFollower().getId()) {
+                        fff=true;
+                        break;
+                    }
+                }
+                //본인이 있는 경우의수도 고려해야함
+                boolean fffSelf = false;
+                System.out.println("??"+f.getFollower().getId() +" "+ loginUser.getId());
+                if(f.getFollower().getId() == loginUser.getId()) fffSelf = true;
+
                 result.add(generateFollowerDTO(f.getFollower().getName(), f.getFollower().getId(), f.getFollower().getAttachUser().getThumbPath(),
                         f.getFollower().getAttachUserBackground() == null ? null : f.getFollower().getAttachUserBackground().getThumbPath(),
-                        f.getFDate(), f.getFollower().getEmail()));
+                        f.getFDate(), f.getFollower().getEmail(),fff,fffSelf));
                 //System.out.println(f.getFollower().getName()+", "+dto.toString());
             }
         } else if(type.equals("follower")) {
             for (Follower f : fPage) {
+                //맞팔인지 확인해야함 즉 이사람이 내 follwing에도 있어야함..
+                boolean fff = false;
+                for (Follower fo : loginUser.getFollowers()){ //본인의 팔로워 돌면서 겹치는거 찾기 -> 같으면 맞팔인것!
+                    //System.out.println("!!"+fo.getFollower().getName()+", "+f.getUser().getName());
+                    if(fo.getFollower().getId() == f.getUser().getId()) {
+                        fff=true;
+                        break;
+                    }
+                }
+                
+                //본인이 있는 경우의수도 고려해야함
+                boolean fffSelf = false;
+                if(f.getUser().getId() == loginUser.getId()) fffSelf = true;
+                
                 result.add(generateFollowerDTO(f.getUser().getName(), f.getUser().getId(), f.getUser().getAttachUser().getThumbPath(),
                         f.getUser().getAttachUserBackground() == null ? null : f.getUser().getAttachUserBackground().getThumbPath(),
-                        f.getFDate(), f.getUser().getEmail()));
+                        f.getFDate(), f.getUser().getEmail(),fff,fffSelf));
                 //System.out.println(f.getFollower().getName()+", "+dto.toString());
             }
         }
@@ -168,7 +196,7 @@ public class MyPageController {
         else if(type.equals("tag")) weeklyPage = searchService.findTaggedWeekliesByKeywordAndUser(searchDTO.getKeyword(), user, pageable);
         else if(type.equals("tra")) {
             Page<Follower> follwerPage= searchService.findFollowerByNameAndEmail(searchDTO.getKeyword(), user, pageable);
-            return transferFollowerDTO("following",follwerPage);
+            return transferFollowerDTO("following",follwerPage,user);
         }
 
         //그대로 리턴하면 순환참조 오류 발생하므로 dto로 바꿔서 보내준다
@@ -314,11 +342,11 @@ public class MyPageController {
         else if(type.equals("tra")){
             if(searchDTO.getDetailType().equals("following")) {
                 Page<Follower> followingPage = memberRepository.getFollowingPaging(traveler, pageable);
-                return transferFollowerDTO("following", followingPage);
+                return transferFollowerDTO("following", followingPage,user);
             }
             else if(searchDTO.getDetailType().equals("follower")) {
                 Page<Follower> followerPage = memberRepository.getFollowerPaging(traveler,pageable);
-                return transferFollowerDTO("follower", followerPage);
+                return transferFollowerDTO("follower", followerPage,user);
             }
 
         }

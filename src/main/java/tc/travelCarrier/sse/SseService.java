@@ -38,6 +38,8 @@ public class SseService {
     // SSE로 실시간 알림 전송
     public void sendEmitter(Notification notification, User receiver) throws IOException {
         SseEmitter sseEmitter = NotificationController.sseEmitters.get(receiver.getId());
+        if(sseEmitter == null) return;
+
         try {
             sseEmitter.send(SseEmitter.event().name("new").data( notification.changeJsonData(), MediaType.APPLICATION_JSON));
         } catch (Exception e) {

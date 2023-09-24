@@ -48,6 +48,15 @@ import tc.travelCarrier.repository.WeeklyRepository;
 @Transactional
 @Slf4j
 public class AttachService {
+    @Value("${file.dir}")
+    private String fileDir;
+    @Value("${default.profile}")
+    private String defaultProfile;
+    @Value("${default.background}")
+    private String defaultBackground;
+    @Value("${default.weekly}")
+    private String defaultWeekly;
+
     @Value("${tmpFile.dir}")
     private String tmpFileDir;
     @Value("${cloud.aws.s3.bucket}")
@@ -117,7 +126,7 @@ public class AttachService {
         } else {
             // 파일이 없을경우 서버저장 생략, 기본이미지 경로 DB에 저장
             //saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
-            saveArr = new String[]{"weekly_default_thumbnail.png", "static/image/default/weekly_default_thumbnail.png"};
+            saveArr = new String[]{"weekly_default_thumbnail.jpg", "/image/default/weekly_default_thumbnail.png"};
         }
 
         //2.AttachWeekly 엔티티 생성해서 DB에도 저장
@@ -152,7 +161,7 @@ public class AttachService {
             saveArr = upload(form.getFile(),"weekly");
         } else if(form.getThumbStatus().equals("DELETE")){
             //saveArr = new String[]{weekly.getNation()+".png", fileDir + "weekly/default_thumbnails/" + weekly.getNation() +".png"};
-            saveArr = new String[]{"weekly_default_thumbnail.png", "static/image/default/weekly_default_thumbnail.png"};
+            saveArr = new String[]{"weekly_default_thumbnail.png", "/image/default/weekly_default_thumbnail.png"};
         } else{
             return;
         }
@@ -415,7 +424,9 @@ public class AttachService {
         // ex) fileKey : 구분/년/월/일/파일.확장자
         // 기본프/배사였다면 삭제로직 실행X
         String fileKey;
-        if(!filePath.equals("/image/default/default_bg.jpg") && !filePath.equals("/image/default/default_profile.jpg")) fileKey = filePath.substring(61);
+        if(!filePath.equals(fileDir+defaultBackground)
+                && !filePath.equals(fileDir+defaultProfile)
+                && !filePath.equals(fileDir+defaultWeekly) ) fileKey = filePath.substring(61);
         else return;
 
         try {

@@ -358,7 +358,7 @@
                 <span>이름</span>
               </div>
               <div class="info_text">
-                <input type="text" th:placeholder="${profile.name}">
+                <input type="text" th:value="${profile.name}">
               </div>
               <div class="msg">
                 <span class="msg_text">별명을 입력해주세요</span>
@@ -370,7 +370,7 @@
                 <span>내계정</span>
               </div>
               <div class="info_text">
-                <input type="email" name="" id="" readonly>
+                <input type="email" name="" id="" th:placeholder="${profile.email}" readonly>
               </div>
             </div>
             <div class="account_password">
@@ -423,9 +423,9 @@
     </div>
   </div>
   <!-- 로딩중 -->
-  <div id="loading">
+<!--  <div id="loading">
     <div class="cssload-spin-box"></div>
-  </div>
+  </div>-->
   <script src="/script/mypage.js"></script>
   <script src="/script/mypage_event.js"></script>
   <script src="/script/cropper.js"></script>

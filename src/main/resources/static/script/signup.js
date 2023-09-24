@@ -2,7 +2,7 @@ $(".save_btn button").on("click", async function (e) {
   e.preventDefault();
   console.log("결과 : " + await validCheckPromise());
   if (!(await validCheckPromise())) {
-    alert("조건을 충족하지 못했습니다. 다시 작성해주세요.");
+    alertModal2("","조건을 충족하지 못했습니다. 다시 작성해주세요.");
     return;
   }
 

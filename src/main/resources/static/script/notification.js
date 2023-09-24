@@ -212,7 +212,7 @@ function addFriendHtml(data) {
       </div>
       <div class="notice_textbox">
         <p>
-          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 팔로우 회원님을 팔로우 합니다.
+          <a href="${data.url}" class="notice_name">${data.senderName}</a>님이 회원님을 팔로우 합니다.
         </p>
         <span class="update_date"><i class="xi-time-o"></i>${data.time}</span>
       </div>

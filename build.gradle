@@ -47,7 +47,8 @@ dependencies {
 
 	// S3사용하기
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-
+	testImplementation 'junit:junit:4.13.1'
+	testImplementation 'junit:junit:4.13.1'
 
 
 	compileOnly 'org.projectlombok:lombok'
@@ -60,6 +61,8 @@ dependencies {
 //	testImplementation("org.junit.vintage:junit-vintage-engine") {
 //		exclude group: "org.hamcrest", module: "hamcrest-core"
 //	}
+	// 테스트 환경
+	runtimeOnly 'com.h2database:h2' // 테스트 코드 작성시 사용할 DB(H2)
 	testImplementation 'org.mockito:mockito-core:3.11.2'
 	testImplementation 'org.mockito:mockito-junit-jupiter:3.11.2'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'

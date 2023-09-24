@@ -1,3 +1,4 @@
+
 //화면 로드되면 바로 click Day1 해주기
 var liIndex = "";
 //formData day정보와 함께 배열로 저장한다. [ {DAY1,{file,title, text,thumb}},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
@@ -37,16 +38,57 @@ function setFirst(dailies) {
   });
 }
 
+var dailies;
 $(document).ready(function () {
-  setFirst(dailies);
-  getCurrentDataArr();
-  drawThumbs();
-  //첫번째 탭 자동클릭
-  $("ul.days_tabSlide li:first").click();
+    $.ajax({
+    type: "GET",
+    url: "/weekly/"+weeklyId+"/dailies",
+    dataType: "json",
+    success: function (resp) {
+        console.log(resp);
+        dailies = resp;
+        setFirst(dailies);
+
+        //슬라이드 셋팅
+        setSlide();
+        setSlideClass();
+        setSlideEvent();
+
+        //모달 셋팅
+        getCurrentDataArr();
+        drawThumbs();
+        //첫번째 탭 자동클릭
+        $("ul.days_tabSlide li:first").click();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("실패 : " + textStatus);
+    },
+  });
 });
 
+function reloadDailies(newDailies){
+    liIndex = "";
+    selectArr = [];
+    dataArr = [];
+    $(".diary_slides").empty();
+
+    dailies = newDailies;
+    setFirst(dailies);
+
+    //슬라이드 셋팅
+    setSlide();
+    setSlideClass();
+    setSlideEvent();
+
+    //모달 셋팅
+    getCurrentDataArr();
+    drawThumbs();
+    //첫번째 탭 자동클릭
+    $("ul.days_tabSlide li:first").click();
+}
+
 // 슬라이드 셋팅
-$(document).ready(function () {
+function setSlide() {
   var newUl = $("<ul>").addClass("diary_list");
   for (var i = 0; i < dataArr.length; i++) {
     for (var j = 0; j < dataArr[i].data.length; j++) {
@@ -73,7 +115,7 @@ $(document).ready(function () {
 
     $(".diary_slides").append(newUl);
   }
-});
+};
 
 // function : 사진첨부시 동작 (by.서현)
 $(document).on("change", ".attach", function (event) {
@@ -295,7 +337,7 @@ $(document).on("click", "li.clickImg", function (event) {
     }
     selectArr.splice(liIndex, 1);
     $("ul.days_tabSlide .on").click();
-  }
+  }else return;
 
   //방금 삭제한게 마지막이면 마지막요소 클릭하도록
   if (isLast && selectArr.length != 1) {
@@ -360,10 +402,10 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
   event.preventDefault();
   // 유효성검사
   if (dataArr.length == 0) {
-    alert("저장할 사진이 없습니다!");
+    //alert("저장할 사진이 없습니다!");
     return;
   }
-
+$("#loading").addClass("show");
   // 버튼변화이벤트
   var clickBtn = $(this);
   $(clickBtn).attr("disabled", true);
@@ -374,10 +416,10 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
   //data: [{file,title,text,thumb},{file,title,text,thumb}]
   var postData = new FormData();
   console.log("===============================");
-  if (checkThumbnails(dataArr))
-    alert(
-      "대표이미지를 선택하지 않은 데일리가 있습니다.\n 자동으로 가장 첫 사진을 썸네일로 설정합니다."
-    );
+//  if (checkThumbnails(dataArr))
+//    alert(
+//      "대표이미지를 선택하지 않은 데일리가 있습니다.\n 자동으로 가장 첫 사진을 썸네일로 설정합니다."
+//    );
   for (var i = 0; i < dataArr.length; i++) {
     // arr = {day,data} = DAY1, [{file,title,text,thumb},{file,title,text,thumb}]
     // formDataArr : [{file,title,text,thumb},{file,title,text,thumb}]
@@ -418,25 +460,26 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
     url: "/weekly/" + weeklyId + "/daily" + "/create",
     type: "POST",
     data: postData,
+    dataType: "json",
     processData: false,
     contentType: false,
-    success: function (dailies) {
+    success: function (data) {
       $(clickBtn).attr("disabled", false);
       $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
       $(clickBtn).html("저장하기");
-      alert("저장되었습니다.");
-      //바뀐 attachNo를 업데이트 해줘야함!!
-      setFirst(dailies);
-      getCurrentDataArr();
-      drawThumbs();
-      //첫번째 탭 자동클릭
-      $("ul.days_tabSlide li:first").click();
+      alertModal2("","저장되었습니다.");
+      reloadDailies(data);
+
+      $("#loading").removeClass("show");
+      $(".daily_form_bg").removeClass("show");
+
     },
     error: function (error) {
       $(clickBtn).attr("disabled", false);
       $(clickBtn).toggleClass("Dform_btn_disable Dform_btn_save");
       $(clickBtn).html("저장하기");
-      alert("응 실패 ㅋㅋ" + error);
+      alertModal2("실패 : ",error);
+      $("#loading").removeClass("show");
     },
   });
 });
@@ -445,7 +488,8 @@ $(document).on("click", "button.Dform_btn_save", function (event) {
 $(".writing").on("click", function () {
   $(".daily_form_bg").addClass("show");
 });
-$(".modal_title > .close").on("click", function () {
+$(".modal_title > .close").on("click", function (e) {
+  e.preventDefault();
   $(".daily_form_bg").removeClass("show");
 });
 
@@ -581,7 +625,7 @@ $(".diary_slides").on("mouseleave", function () {
 });
 
 // 슬라이드 사진 크기에 따라 클래스명 변경 - by.서현
-$(document).ready(function () {
+function setSlideClass() {
   $(".d_slide > img").each(function (index) {
     const $img = $(this);
     const img = new Image();
@@ -599,7 +643,7 @@ $(document).ready(function () {
       }
     };
   });
-});
+};
 
 //텍스트 박스 안의 ID와  다이어리리스트 안의 ID가 같을 때
 
@@ -627,7 +671,7 @@ $(document).ready(function () {
 // }
 
 //슬라이드 호버시 텍스트 바꿔주기 -by윤아
-$(document).ready(function () {
+function setSlideEvent() {
   $(".diary_viewport").on("mouseenter", ".d_slide", function (e) {
     var hover_attachNo = $(e.target).data("attachno");
     console.log(hover_attachNo); //숫자로 잘 출력됨
@@ -663,7 +707,7 @@ $(document).ready(function () {
     $(".diary_textbox ul li h6").text(hover_data.title);
     $(".diary_textbox ul li p").text(hover_data.text);
   });
-});
+};
 
 //슬라이드 드래그 기능 구현 - by윤아
 //첫번째 슬라이드의 위치값이 -100%일 경우 뒤로 보내줌

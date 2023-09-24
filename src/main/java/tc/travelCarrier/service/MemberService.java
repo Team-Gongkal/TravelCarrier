@@ -26,12 +26,16 @@ public class MemberService {
     private final AttachRepository attachRepository;
     @Value("${file.dir}")
     private String fileDir;
+    @Value("${default.profile}")
+    private String defaultProfile;
+    @Value("${default.background}")
+    private String defaultBackground;
     public void signIn(User user){
         User savedUser = memberRepository.save(user);
-        attachRepository.saveProfilePic(AttachUser.builder().attachTitle("default_profile.jpg")
-                .user(savedUser).thumb(fileDir+"default_profile.jpg").build());
-        attachRepository.saveBgPic(AttachUserBackground.builder().title("default_bg.jpg")
-                .user(savedUser).path(fileDir+"default_bg.jpg").build());
+        attachRepository.saveProfilePic(AttachUser.builder().attachTitle(defaultProfile)
+                .user(savedUser).thumb(fileDir+defaultProfile).build());
+        attachRepository.saveBgPic(AttachUserBackground.builder().title(defaultBackground)
+                .user(savedUser).path(fileDir+defaultBackground).build());
     }
 
     public void updateMemberInfo(MemberInfoDTO dto, User user){
@@ -40,6 +44,9 @@ public class MemberService {
 
     //팔로우시 DB에 팔로잉정보 저장, 알림 전송
     public void followMember(User loginUser, User targetUser) throws IOException {
+        //이미 친구인지 확인
+        Follower f = followRepository.findByUserAndFollower(loginUser, targetUser);
+        if( f != null) return; //이미 친구이면 그대로 종료
         followRepository.save(Follower.builder()
                 .user(loginUser)
                 .follower(targetUser)

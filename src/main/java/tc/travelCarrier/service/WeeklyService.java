@@ -1,6 +1,7 @@
 package tc.travelCarrier.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.StaleObjectStateException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -120,13 +121,13 @@ public class WeeklyService {
         if(weekly.getUser().getId() == user.getId()) {
             //삭제 전에 서버에 있는 모든 데이터들을 삭제해줘야함
             
-            //1. 모든 데일리 삭제
+/*            //1. 모든 데일리 삭제
             for (Daily d : weekly.getDailys()){
                 for(AttachDaily at : d.getAttachDailies()){
                     attachService.deleteS3File(at.getThumbPath());
                 }
-            }
-            //2. 위클리 썸네일 삭제
+            }*/
+            //2. S3 서버에서 위클리 썸네일 삭제
             attachService.deleteS3File(weekly.getAttachWeekly().getThumbPath());
 
             //3. 엔티티 삭제

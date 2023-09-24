@@ -79,6 +79,14 @@ public class DailyController {
         return "test/daily(modal)";
     }
 
+    @GetMapping("/weekly/{weeklyId}/dailies")
+    @ResponseBody
+    public List<DailyDTO> getDailies(@PathVariable("weeklyId") int weeklyId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        Weekly weekly = weeklyService.findWeekly(weeklyId);
+        List<DailyDTO> dailies = dailyService.getAttachDaily(weekly);
+        Collections.sort(dailies, new DailyDTOComparator());
+        return dailies;
+    }
 
     /**
      * 데일리 폼작성 후 데일리정보 등록하는 메소드
