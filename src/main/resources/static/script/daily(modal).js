@@ -50,9 +50,10 @@ $(document).ready(function () {
         setFirst(dailies);
 
         //슬라이드 셋팅
+
+        playSlide();
         setSlide();
         setSlideClass();
-        playSlide()
         setSlideEvent();
 
         //모달 셋팅
