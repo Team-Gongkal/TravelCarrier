@@ -500,7 +500,6 @@ button.Dform_btn_disable {
   align-items: center;
   justify-content: center;
   transition: 0.2s;
-  
 }
 .diary_noH > .center {
   width: 100%;
@@ -511,14 +510,14 @@ button.Dform_btn_disable {
 }
 .diary_noH h1 {
   /* 뷰포트 높이(100vh)를 7로 나눈 값과 10rem 중 작은 값을 선택하여 폰트 크기를 결정함ㄴ. 따라서 뷰포트 크기가 충분히 큰 경우 10rem이 적용되고, 작은 경우에는 100vh / 7로 폰트 크기가 결정됨*/
-  font-size: min( calc(100vh / 7),10rem);
+  font-size: min(calc(100vh / 7), 10rem);
   margin-bottom: 2rem;
   padding-right: 1rem;
   font-weight: 400;
   letter-spacing: 0.1rem;
 }
 .diary_noH p {
-  font-size: min( calc(100vh / 15),4rem);
+  font-size: min(calc(100vh / 15), 4rem);
   padding-right: 1rem;
   font-weight: 300;
   letter-spacing: 0.2rem;
@@ -747,13 +746,16 @@ ul.diary_list > li {
   bottom: 0;
   right: 0.5rem;
   cursor: pointer;
-  opacity: 0.3;
+  opacity: 0.5;
   visibility: hidden;
 }
 .reply_icon img {
   max-width: 100%;
   height: auto;
   width: 100%;
+  /* mix-blend-mode: difference; */
+  /* mix-blend-mode: color; */
+  mix-blend-mode: luminosity;
 }
 .reply_icon.on:after {
   content: "";

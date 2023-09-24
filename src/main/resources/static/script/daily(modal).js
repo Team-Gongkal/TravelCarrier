@@ -1,4 +1,3 @@
-
 //화면 로드되면 바로 click Day1 해주기
 var liIndex = "";
 //formData day정보와 함께 배열로 저장한다. [ {DAY1,{file,title, text,thumb}},{DAY2,formDataArr[1]},{DAY3,formDataArr[2]} ]
