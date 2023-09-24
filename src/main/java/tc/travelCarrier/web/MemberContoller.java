@@ -35,13 +35,10 @@ public class MemberContoller {
 
     private final MemberRepository memberRepository;
     private final AttachService attachService;
-    private final WeeklyRepository weeklyRepository;
-    private final FollowRepository followRepository;
-    private final WeeklySearchRepository weeklySearchRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final SearchService searchService;
     private final MemberService memberService;
 
+    //로그인
     @GetMapping("/member/login")
     public String memberLogin(Model model,
                               @RequestParam(value = "error", required = false) String error,
@@ -52,12 +49,15 @@ public class MemberContoller {
         return "test/login";
     }
 
+    //아이디를 가지고 로그인
     @GetMapping("/member/sign")
     public String memberSignIn(Model model){
 
         model.addAttribute("email",null);
         return "test/sign_up";
     }
+    
+    // 회원가입창 이동
     @PostMapping("/member/sign")
     public String memberSignWithEmail(@RequestParam String email, Model model){
         System.out.println("메일스:"+email);
@@ -65,13 +65,14 @@ public class MemberContoller {
         return "test/sign_up";
     }
 
-    // 아이디 중복확인 메소드
+    // 회원가입시 아이디 중복확인
     @PostMapping("/member/sign/validCheck")
     public ResponseEntity<Boolean> memberEmaillCheck(@RequestBody Map<String, String> requestMap){
         if(memberRepository.findUserByEmail(requestMap.get("email"))!=null) return ResponseEntity.ok(false);
         return ResponseEntity.ok(true);
     }
-    //회원가입 하는 메소드
+    
+    //회원가입 (회원정보저장)
     @PostMapping("/member/sign/create")
     public ResponseEntity memberSignIn(@RequestParam String email, @RequestParam String password, @RequestParam String name){
         User user = User.userDetailRegister().username(name).password(passwordEncoder.encode(password)).email(email).role(ROLE_USER).build();
@@ -79,9 +80,7 @@ public class MemberContoller {
         return ResponseEntity.ok(null);
     }
 
-
-
-    // 로그인했는지 확인하기
+    // 실시간 SSE 통신을 위해 로그인 여부를 체크하는 메소드
     @GetMapping("/member/login/check")
     @ResponseBody
     public String checkLogin(@AuthenticationPrincipal PrincipalDetails principalDetails){
@@ -89,8 +88,7 @@ public class MemberContoller {
         if(principalDetails!=null) return "true";
         else return "false";
     }
-
-
+    
     // 멤버 프로필사진 변경
     @PostMapping(value="/member/profile")
     @ResponseBody
@@ -100,7 +98,6 @@ public class MemberContoller {
         attachService.saveAttachUser(profileFile, user);
         return ResponseEntity.ok(null);
     }
-
 
     // 멤버 배경사진 변경
     @PostMapping(value="/member/background")
