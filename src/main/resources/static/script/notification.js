@@ -52,40 +52,30 @@ function setSSE() {
   });
 }
 
-$(document).ready(function () {
-  // 최근 업데이트창 활성화 - by윤아
-  $(".notice").on("click", function (e) {
+// 최근 업데이트창 활성화 및  -by윤아
+$(document).mouseup(function (e) {
+  $(document).on("click", ".notice", function (e) {
     // 알림창 셋팅
     getNotification();
-    $(".utill_notice").addClass("show");
+    $(".utill_notice").toggleClass("show");
 
     //읽음처리
     $(".notice").removeClass("active");
     isReadNotification();
   });
-});
 
-// 최근 업데이트창 비활성화 - by윤아
-$(".update_notice h6 i").on("click", function () {
-  $(".utill_notice ").removeClass("show");
-});
-
-//알림창 밖의 요소 클릭시 알림창 비활성화 -by윤아
-$(document).mouseup(function (e) {
-  //
+  //알림창 밖의 요소 클릭시 최근 업데이트창 비활성화
   var alertNew = $(".utill_notice");
-  let noticeIcon = $(".notice");
-  $(".update_notice h6 i, .notice").on("click", function () {
-    $(".utill_notice ").removeClass("show");
-    if (alertNew.hasClass("show") == true) {
-      $(".utill_notice ").removeClass("show");
-    }
-  });
   if (alertNew.has(e.target).length == 0) {
     console.log(alertNew + "내가클릭한거 : " + e.target);
     alertNew.removeClass("show");
   }
+  //요소내 닫기버튼 클릭시 닫기
+  $(".update_notice h6 i").on("click", function () {
+    $(".utill_notice ").removeClass("show");
+  });
 });
+
 // 알림삭제 - by.서현
 $(document).on("click", ".notice_del", function () {
   var notification_id = $(this).attr("data-notification");
