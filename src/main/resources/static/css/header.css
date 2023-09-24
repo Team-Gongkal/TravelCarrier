@@ -18,7 +18,6 @@ header > nav {
   flex-direction: column;
   justify-items: center;
   justify-content: space-between;
-  overflow: hidden;
   padding-top: 5px;
   box-sizing: border-box;
   background: #efeee9;
@@ -96,7 +95,43 @@ header > nav {
   box-sizing: border-box;
   transform: rotate(-90deg);
 }
-
+.help_link {
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.help_link::after,
+.help_link::before {
+  content: "";
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+}
+.help_link:hover::after {
+  content: "도움말";
+  font-size: 0.8rem;
+  font-weight: 300;
+  width: 4rem;
+  left: calc(100% + 1.2rem);
+  background: rgb(0, 0, 0, 0.8);
+  color: #f7f7f7;
+  padding: 0.7em;
+  border-radius: 5px;
+}
+.help_link:hover::before {
+  content: "";
+  height: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(100% + 0.2rem);
+  border-right: 0.6em solid rgb(0, 0, 0, 0.8);
+  border-top: 0.5em solid transparent;
+  border-bottom: 0.5em solid transparent;
+  border-left: 0.5em solid transparent;
+}
 /* 유틸메뉴---------------------------------------- */
 .utill_menu {
   width: fit-content;
@@ -126,7 +161,6 @@ header > nav {
   box-shadow: 1px 1px 2px rgba(53, 58, 82, 0.2);
 }
 .notice {
-  background-color: rgb(255, 255, 255, 0.3);
   cursor: pointer;
   transition: 0.2s;
 }
@@ -156,6 +190,9 @@ header > nav {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.notice:hover {
+  background-color: rgb(255, 255, 255, 0.3);
+}
 .profile {
   box-shadow: 1px 1px 2px rgba(53, 58, 82, 0.2);
   margin-left: 1rem;
@@ -176,7 +213,7 @@ header > nav {
 }
 .user_menu {
   width: 10rem;
-  height: 9rem;
+  height: 12rem;
   position: absolute;
   top: 100%;
   right: 0;
