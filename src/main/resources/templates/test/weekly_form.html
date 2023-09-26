@@ -43,7 +43,7 @@
             <div class="country">
               <h3>여행 국가</h3>
               <select name="nation">
-                <option th:each="nation : ${nationList}" th:value="${nation.id}" th:text="${nation.name}" ></option>
+                <option th:each="nation : ${nationList}" th:value="${nation.id}" th:text="${nation.name}"></option>
               </select>
 
             </div>
@@ -163,7 +163,30 @@
       </div>
     </div>
   </main>
-
+  <!-- 튜토리얼 페이지 -->
+  <div id="tutorial" class="show">
+    <div class="tooltip">
+        <div class="tt_textbox">
+            <div class="tt_title">
+                <h4>제목</h4>
+                <button id="close_tutorial"><i class="fa-solid fa-xmark fa-lg"></i></i></button>
+            </div>
+            <div class="tt_explain">
+                <p>설명해야할 문구를 작성해주세요</p>
+            </div>
+        </div>
+        <div class="tt_btn">
+            <div class="tt_prograss">
+              <span>진행/</span>
+            </div>
+            <div>
+                <button class="tt_prev">이전</button>
+                <button class="tt_next">다음</button>
+            </div>
+        </div>
+        <div id="arrow" class="bottom"></div>
+    </div>
+</div>
   <script>
     var selectNation = 82;
 
@@ -183,6 +206,9 @@
   </script>
   <script src="/script/countries.js"></script>
   <script src="/script/weeklyform.js"></script>
+  <!-- 튜토리얼 스크립트 -->
+  <script src="/script/tutorial/tuto_common.js"></script>
+  <script src="/script/tutorial/tuto_weeklyform.js"></script>
 </body>
 
 </html>

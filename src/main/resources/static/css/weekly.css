@@ -42,6 +42,7 @@ article .longBox {
   padding: 2rem 1.5rem;
   box-sizing: border-box;
   position: relative;
+  background: #efeee9;
 }
 .weekly_mainArtc {
   width: 100%;
@@ -180,6 +181,7 @@ div.writer {
   align-items: center;
   flex-direction: column;
   box-sizing: border-box;
+  background: #efeee9;
 }
 .shortBox_odd,
 .shortBox_even {
