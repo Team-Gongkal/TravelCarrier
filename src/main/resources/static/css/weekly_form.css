@@ -63,6 +63,7 @@ main#weekly_form div {
   position: relative;
   padding-bottom: 75%;
   align-self: center;
+  cursor: pointer;
 }
 .thumbnail_img img {
   object-fit: cover;
@@ -211,7 +212,6 @@ a.dateClick {
   width: 7em;
   border-radius: 100px;
   background: #f7f7f7;
-  color: #a0c1ca;
   text-indent: 0;
   text-align: center;
   line-height: 3em;

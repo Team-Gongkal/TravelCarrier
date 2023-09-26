@@ -518,10 +518,28 @@ li.card span:nth-child(2):hover {
   padding-bottom: 65%;
   align-self: center;
 }
-.weekly_modal_bg button.close {
+.close_and_del{
+  display: flex;
+  width: fit-content;
   position: absolute;
   top: 30%;
   right: 1.5rem;
+}
+.weekly_modal_bg .modal_title button.close {
+  position: relative;
+  margin-left: 1rem;
+}
+#weekly_modal_form div.modal_title button.deleteWeekly{
+  width: fit-content;
+  background: transparent;
+  border: 2px solid #c8c8c8;
+  color: #c8c8c8;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+}
+#weekly_modal_form div.modal_title button.deleteWeekly:hover{
+  border: 2px solid #c40303;
+  color: #c40303;
 }
 .weekly_modal_bg .addText textarea {
   height: 8em;
@@ -563,6 +581,14 @@ li.card span:nth-child(2):hover {
 }
 .updateWeekly {
   margin-bottom: 1.5rem;
+}
+#weekly_form button.white_btn {
+  color: #a0c1ca;
+  background: #efeee9;
+  border: 1px solid #a0c1ca;
+}
+#weekly_form .thumbnail_btn button.white_btn:hover {
+  background: #e7e6e2;
 }
 /* 태그된 동행인 목록------------------------ */
 #tagged_companion {

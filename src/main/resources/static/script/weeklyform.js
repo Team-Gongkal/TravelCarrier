@@ -564,3 +564,9 @@ $("#addText").keyup(function (e) {
     $("#countText").html("(100 / 100)");
   }
 });
+
+//썸네일 클릭시 파일인풋 활성화 - by윤아
+  //(1)프로필 이미지 변경
+$(document).on('click', '.thumbnail_img', function(){
+$('#thumbnail_change').click();
+})

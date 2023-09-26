@@ -2,7 +2,7 @@
 $(document).on("click", ".close", function () {
   closeModal();
 });
-console.log(url);
+console.log(url);//삭제
 function closeModal() {
   $(".keyword_modal_bg").removeClass("show");
   $(".keyword_card").empty();
@@ -336,10 +336,9 @@ $('.moreBox > a.top').on('click', function(e){
   //위클리 수정 모달 활성화
   $(".weekly_edit").on("click", function () {
     $(".weekly_modal_bg").addClass("show");
-    console.log("모달활성화");
     $(window).off("wheel DOMMouseScroll", scrollHandler);
   });
-  $(".modal_title > .close").on("click", function () {
+  $(".modal_title .close").on("click", function () {
     $(".weekly_modal_bg").removeClass("show");
     $(window).on("wheel DOMMouseScroll", scrollHandler);
   });
