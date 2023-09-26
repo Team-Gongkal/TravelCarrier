@@ -358,58 +358,17 @@ function getDate(btn) {
   return result;
 }
 
-// 친구추가 이벤트
+// 친구추가 이벤트 - 트래블러탭의 프로필 아래에 있는 버튼 동작
 $(".add_friend_btn > button").on("click", function () {
   add_friend();
 });
-
-//친구추가 버튼
-// function add_friend() {
-// var add_friend_btn = $(".add_friend_btn > button");
-// if (add_friend_btn.hasClass("completed")) { //친구일때 친구취소시 동작
-//       // unfollowTarget();
-//       // add_friend_btn.removeClass("completed");
-//       // add_friend_btn.children("span").text("친구추가");
-// } else { // 친구 아닐때 친구신청시
-// if(!add_friend_btn.hasClass("completed")){
-//       followingTarget();
-//       add_friend_btn.addClass("completed");
-//       add_friend_btn.children("span").text("친구끊기");
-// }
-// }
-
-// function followingTarget() {
-//   $.ajax({
-//     url: "/member/following/"+TravelerEmail,
-//     type: "GET",
-//     success: function (resp) {
-//       console.log("성공");
-//     },
-//     error: function (error) {
-//       alert("실패" + error);
-//     },
-//   });
-// }
-
-// function unfollowTarget() {
-//   $.ajax({
-//     url: "/member/unfollow/"+TravelerEmail,
-//     type: "GET",
-//     success: function (resp) {
-//       console.log("성공");
-//     },
-//     error: function (error) {
-//       alert("실패" + error);
-//     },
-//   });
-// }
 
 function add_friend() {
   var add_friend_btn = $(".add_friend_btn > button");
   let nickName = $(".my_profile_id").children("span").text();
   console.log(nickName);
   if (add_friend_btn.hasClass("completed")) {
-    alertModal("[ " + nickName + " ] ", "님을 삭제하시겠습니까?");
+    alertModal("[ " + nickName + " ] ", "님을 친구끊기 하시겠습니까?");
     console.log("나랑 친구끊자❤️");
     //'네'버튼에 id부여
     $(".confirm_btn").attr("id", "deleteFriend");
@@ -453,4 +412,52 @@ function followingTarget() {
       alert("실패" + error);
     },
   });
+}
+
+//트래블러 탭에서 친구추가 및 끊기!!
+$(document).on("click", ".follower_del_btn", async function () {
+    var userid = this.getAttribute("data-userid");
+    await unfollowTarget(userid);
+    $(this).removeClass("follower_del_btn").addClass("follower_add_btn");
+    $(this).find("button").html("<i class=\"fa-solid fa-user-minus fa-xs fa\"></i>친구추가");
+});
+
+function unfollowTarget(userid) {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      url: "/member/unfollow/" + userid,
+      type: "GET",
+      success: function (resp) {
+        console.log("1");
+        resolve(resp);
+      },
+      error: function (error) {
+        alert("실패" + error);
+        reject(error);
+      },
+    });
+  });
+}
+
+// 친구추가 이벤트
+$(document).on("click", ".follower_add_btn", async function () {
+    var userid = this.getAttribute("data-userid");
+    await followingTarget(userid);
+    $(this).removeClass("follower_add_btn").addClass("follower_del_btn");
+    $(this).find("button").html("<i class=\"fa-solid fa-user-minus fa-xs fa\"></i>친구끊기");
+});
+
+function followingTarget(userid) {
+  return new Promise(function (resolve, reject) {
+  $.ajax({
+    url: "/member/following/" + userid,
+    type: "GET",
+    success: function (resp) {
+      resolve(resp);
+    },
+    error: function (error) {
+      reject(error);
+    },
+  });
+});
 }
