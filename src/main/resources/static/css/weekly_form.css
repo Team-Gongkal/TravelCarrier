@@ -490,7 +490,7 @@ box-sizing: border-box;
 .addText textarea {
   height: 11rem;
 }
-#countText {
+.countText {
   display: block;
   padding-top: 0.2rem;
   font-weight: 300;
