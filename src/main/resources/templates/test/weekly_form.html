@@ -69,7 +69,8 @@
           <li> <!-- 제목 입력-------------------------------- -->
             <div class="title">
               <h3>제목</h3>
-              <input name="title" type="text" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)">
+              <input name="title" type="text" id="addTitle" placeholder="제목을 작성해주세요(미입력시 국가명으로 자동입력됩니다)">
+              <span class="countText">(0/30)</span>
             </div>
           </li>
           <li><!-- 일기 작성-------------------------------- -->
@@ -77,7 +78,7 @@
               <h3>추가글 </h3>
               <textarea name="text" id="addText" cols="30" wrap="off"
                 placeholder="추가로 기재하고 싶은 글이 있을 경우 작성해주세요"></textarea>
-              <span id="countText">(0/100)</span>
+              <span class="countText">(0/100)</span>
             </div>
           </li>
           <li> <!-- 동행인--------------------------------------- -->
@@ -150,7 +151,7 @@
         <div class="if_no_friends">
           <div class="center">
             <div>
-              <img src="image/weekly/icon/addfriend.svg" alt="">
+              <img src="/image/weekly/icon/addfriend.svg" alt="">
             </div>
             <div>
               <p>아직 등록된 친구가 없어요</p>

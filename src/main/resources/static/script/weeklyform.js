@@ -553,15 +553,26 @@ function checkValidation() {
   }
   return true;
 }
-// 글자수세기
+// 텍스트의 글자수세기
 $("#addText").keyup(function (e) {
   var content = $(this).val();
-  $("#countText").html("(" + content.length + " / 100)"); //글자수 실시간 카운팅
+  $(".countText:eq(1)").html("(" + content.length + " / 100)"); //글자수 실시간 카운팅
 
   if (content.length > 100) {
     //alert("최대 100자까지 입력 가능합니다.");
     $(this).val(content.substring(0, 100));
-    $("#countText").html("(100 / 100)");
+    $(".countText:eq(1)").html("(100 / 100)");
+  }
+});
+// 타이틀의 글자수세기
+$("#addTitle").keyup(function (e) {
+  var content = $(this).val();
+  $(".countText:eq(0)").html("(" + content.length + " / 30)"); //글자수 실시간 카운팅
+
+  if (content.length > 30) {
+    //alert("최대 100자까지 입력 가능합니다.");
+    $(this).val(content.substring(0, 30));
+    $(".countText:eq(0)").html("(30 / 30)");
   }
 });
 

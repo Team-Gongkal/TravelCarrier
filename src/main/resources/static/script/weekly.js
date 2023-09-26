@@ -1,7 +1,7 @@
 // 모달 비활성화 - by.서현
-$(document).on("click", ".close", function () {
-  closeModal();
-});
+//$(document).on("click", ".close", function () {
+//  closeModal();
+//});
 console.log(url);//삭제
 function closeModal() {
   $(".keyword_modal_bg").removeClass("show");
@@ -33,6 +33,11 @@ function openModal() {
 var url = window.location.href; //현재문서의 url가져오기
 
 $(document).ready(function () {
+
+  //변화 체크를 위해 초기값 저장하기
+  setOriginValue();
+
+
   //위클리에서 데일리로 넘어가는 경로 설정 - by.윤아
   $(".daily_path").attr("href", url + "/daily");
   // text 줄바꿈처리 - by.서현
@@ -338,10 +343,10 @@ $('.moreBox > a.top').on('click', function(e){
     $(".weekly_modal_bg").addClass("show");
     $(window).off("wheel DOMMouseScroll", scrollHandler);
   });
-  $(".modal_title .close").on("click", function () {
-    $(".weekly_modal_bg").removeClass("show");
-    $(window).on("wheel DOMMouseScroll", scrollHandler);
-  });
+//  $(".modal_title .close").on("click", function () {
+//    $(".weekly_modal_bg").removeClass("show");
+//    $(window).on("wheel DOMMouseScroll", scrollHandler);
+//  });
 });
 
 // 동행인 목록 띄우기
@@ -375,3 +380,65 @@ $(document).on("click", "#delWeekly", function () {
       },
     });
 });
+
+
+var originThumb;
+var originNation;
+var originSdate;
+var originEdate;
+var originTitle;
+var originText;
+var originGowiths = [];
+var originStatus;
+function setOriginValue(){
+    originThumb = $(".thumbnail_img.circle img").attr("src");
+    originNation = $('select[name="nation"] option:selected').attr("value");
+    originSdate = $("#sdate").val();
+    originEdate = $("#edate").val();
+    originTitle = $("div.title input").val();
+    originText = $("#addText").val();
+    originGowiths = [];
+    $("#sc li:not(:last)").each(function () {
+      originGowiths.push($(this).data("fid"));
+    });
+    originStatus = $("input[name='status']:checked").val();
+}
+
+//위클리 수정사항 발생 후 저장안하고 닫기 누르면 알림창 띄움. -by.서현
+function isChange(){
+    newGowiths = [];
+    $("#sc li:not(:last)").each(function () {
+      newGowiths.push($(this).data("fid"));
+    });
+    console.log(originThumb != $(".thumbnail_img.circle img").attr("src"));
+    console.log(originNation != $('select[name="nation"] option:selected').attr("value"));
+    console.log(originSdate != $("#sdate").val());
+    console.log(originEdate != $("#edate").val());
+    console.log(originTitle != $("div.title input").val());
+    console.log(originText != $("#addText").val());
+    console.log(JSON.stringify(originGowiths) !== JSON.stringify(newGowiths));
+    console.log(originStatus != $("input[name='status']:checked").val());
+
+    if(originThumb != $(".thumbnail_img.circle img").attr("src")
+    ||originNation != $('select[name="nation"] option:selected').attr("value")
+    ||originSdate != $("#sdate").val()
+    ||originEdate != $("#edate").val()
+    ||originTitle != $("div.title input").val()
+    ||originText != $("#addText").val()
+    ||JSON.stringify(originGowiths) !== JSON.stringify(newGowiths)
+    ||originStatus != $("input[name='status']:checked").val()){
+        return true;
+    }
+
+    return false;
+}
+function closeUpdateModel(){
+    $(".weekly_modal_bg").removeClass("show");
+    $(window).on("wheel DOMMouseScroll", scrollHandler);
+}
+
+$(document).on("click",".close_and_del .close",function(e){
+    if(isChange()){
+        weekly_update_close_alert();
+    }
+})
