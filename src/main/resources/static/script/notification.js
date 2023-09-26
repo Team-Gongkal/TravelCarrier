@@ -52,18 +52,24 @@ function setSSE() {
   });
 }
 
+$(document).on("click", ".notice", async function (e) {
+    // 알림창 셋팅
+    if(!$(".utill_notice").hasClass("show")) {
+        console.log("보여줘");
+        await getNotification();
+        $(".utill_notice").addClass("show");
+        //읽음처리
+        $(".notice").removeClass("active");
+        isReadNotification();
+    }
+});
+
 // 최근 업데이트창 활성화 및  -by윤아
 $(document).mouseup(function (e) {
-  $(document).on("click", ".notice", async function (e) {
-    // 알림창 셋팅
-    if(!$(".utill_notice").hasClass("show")) await getNotification();
-    console.log("뒤");
-    $(".utill_notice").toggleClass("show");
-
-    //읽음처리
-    $(".notice").removeClass("active");
-    isReadNotification();
-  });
+   //.notice 클릭시 비활성화 무시
+   if ($(".notice").has(e.target).length != 0) {
+       return;
+   }
 
   //알림창 밖의 요소 클릭시 최근 업데이트창 비활성화
   var alertNew = $(".utill_notice");
