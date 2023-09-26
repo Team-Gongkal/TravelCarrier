@@ -7,8 +7,8 @@ function alertModal(red_text, black_text) {
   if (typeof black_text === "undefined" || black_text === null) {
     black_text = "하시겠습니까?";
   }
-  changeRedText.text(red_text);
-  changeBlackText.text(black_text);
+  changeRedText.html(red_text);
+  changeBlackText.html(black_text);
   //모달창 활성화 하기(show)
   $("#alert_modal").removeClass("hide");
   $("#alert_modal").addClass("show");
@@ -36,7 +36,7 @@ $(document).on("click", "#logout", function () {
 function weekly_update_close_alert(){
   //'네'버튼에 id부여
   $(".confirm_btn").attr("id", "weekly_close");
-  alertModal("","저장하지 않으면 변경사항이 반영되지 않습니다.\n닫으시겠습니까?");
+  alertModal("",`저장하지 않으면 변경사항이 반영되지 않습니다.<em></em> 닫으시겠습니까?`);
 }
 $(document).on("click", "#weekly_close", function () {
   closeAlert();
