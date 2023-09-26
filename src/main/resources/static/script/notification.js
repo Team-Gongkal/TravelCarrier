@@ -54,9 +54,10 @@ function setSSE() {
 
 // 최근 업데이트창 활성화 및  -by윤아
 $(document).mouseup(function (e) {
-  $(document).on("click", ".notice", function (e) {
+  $(document).on("click", ".notice", async function (e) {
     // 알림창 셋팅
-    getNotification();
+    if(!$(".utill_notice").hasClass("show")) await getNotification();
+    console.log("뒤");
     $(".utill_notice").toggleClass("show");
 
     //읽음처리
@@ -95,17 +96,22 @@ $(document).on("click", ".notice_del", function () {
 });
 
 // 알림목록을 로드하는 함수
-function getNotification() {
-  $.ajax({
+async function getNotification() {
+  var ajax = $.ajax({
     type: "GET",
     url: "/notification",
     success: function (resp) {
-      console.log("성공");
+      console.log("성공,앞");
       drawNotice(resp);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("실패 : " + textStatus);
     },
+  });
+
+  await ajax.done(function(){
+      console.log("앞 종료");
+      return;
   });
 }
 
