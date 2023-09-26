@@ -32,6 +32,17 @@ $(document).on("click", "#logout", function () {
   document.getElementById("logoutForm").submit(); // 폼 제출
 });
 
+//위클리 수정 그냥닫기 이벤트
+function weekly_update_close_alert(){
+  //'네'버튼에 id부여
+  $(".confirm_btn").attr("id", "weekly_close");
+  alertModal("","저장하지 않으면 변경사항이 반영되지 않습니다.\n닫으시겠습니까?");
+}
+$(document).on("click", "#weekly_close", function () {
+  closeAlert();
+  closeUpdateModel();
+});
+
 //위클리 삭제-----------------------------------
 // 위클리 삭제 클릭 이벤트 - by.서현
 $(document).on("click", ".weeklyDelBtn", function () {
