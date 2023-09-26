@@ -137,7 +137,7 @@ header > nav {
   width: fit-content;
   height: auto;
   position: absolute;
-  right: 0.8rem;
+  right: -0.2rem;
   top: 0.7rem;
   display: flex;
   z-index: 100;
@@ -150,6 +150,7 @@ header > nav {
   opacity: 0;
   visibility: hidden;
 }
+.search,
 .notice,
 .profile {
   width: 2.7rem;
@@ -159,10 +160,8 @@ header > nav {
   position: relative;
   cursor: pointer;
   box-shadow: 1px 1px 2px rgba(53, 58, 82, 0.2);
-}
-.notice {
-  cursor: pointer;
   transition: 0.2s;
+  margin-right: 1rem;
 }
 /* .notice:after {
   content: "";
@@ -181,6 +180,7 @@ header > nav {
   border-radius: 100%;
   /* 새로운 알림이 있을 때 적용, 삭제 */
 }
+.search img,
 .notice img {
   max-width: 100%;
   height: auto;
@@ -190,12 +190,13 @@ header > nav {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.notice:hover {
+.notice:hover,
+.search img:hover {
   background-color: rgb(255, 255, 255, 0.3);
 }
 .profile {
   box-shadow: 1px 1px 2px rgba(53, 58, 82, 0.2);
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -225,6 +226,7 @@ header > nav {
   visibility: hidden;
   opacity: 0;
   margin-top: 0.6rem;
+  margin-right: 0.8rem;
   z-index: 150;
 }
 .user_menu.on {

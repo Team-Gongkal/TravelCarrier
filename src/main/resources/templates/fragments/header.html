@@ -34,7 +34,9 @@
     <div class="notice">
       <img src="/image/header/icon/notification.png" alt="실시간 알림 아이콘">
     </div>
-
+    <div class="search">
+      <img src="/image/header/icon/search.svg" alt="실시간 알림 아이콘">
+    </div>
     <div class="profile circle" th:if="${user}"
       th:style="'background-image: url(' + (${user.attachUser.thumbPath}) + ')'">
       <a href="/member/mypage"></a>
@@ -204,7 +206,7 @@
           </a>
         </li>
         <li>
-          <a href="/member/mypage">
+          <a href="#">
             <span>
               <i class="fa-regular fa-address-card"></i>계정 정보</span>
           </a>

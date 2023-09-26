@@ -766,6 +766,7 @@ li .uP_user_text span.uP_user_added {
 .edit_modal_nav > .my_profile {
   justify-content: flex-start;
   height: fit-content;
+  padding-top: 3rem;
 }
 .edit_modal_nav {
   width: 20%;
