@@ -384,6 +384,13 @@ $(document).ready(function () {
       if ($("#sdate").val() != "") $("#periodValidation").text("");
     },
   });
+  //날짜를 오늘로 기본설정하기 - by윤아
+  //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+  //시작날짜 초기값을 오늘 날짜로 설정
+  $('#sdate').datepicker('setDate', 'today');
+  //끝나는 날짜 초기값을 내일로 설정
+  $('#edate').datepicker('setDate', 'today');
+
   //input태그 옆의 이미지 클릭시 datepicker열기 - by윤아
   $(".dateClick").on("click", function (e) {
     $(e.target).prev("input").focus();
