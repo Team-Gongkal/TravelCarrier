@@ -53,23 +53,28 @@ main.daily {
 /* 데일리 시작화면-------------------------------------------------- */
 .daily_start {
   /* display: none; 삭제 */
-  width: 100%;
-  height: 100%;
   position: relative;
+  border: 1PX solid #b3b3b375;
+  box-sizing: border-box;
+  background: #f7f7f7;
 }
-.daily_start > div {
+.daily_start_bg{
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  height: 50%;
+  background: rgba(239, 238, 233, 1);
+  display: flex;
+  align-items: center;justify-content:center ;
+
 }
 .sdaily_text {
   text-align: center;
   top: 22%;
 }
-.sdaily_text p {
+.diary_noH .sdaily_text p {
   padding: 0.5rem 0;
-  font-size: 0.9rem;
-  font-weight: 200;
+  font-size: 1.2rem;
+  font-weight: 300;
   letter-spacing: 0.05rem;
   color: #525d76;
 }
@@ -77,12 +82,14 @@ main.daily {
   color: #a0c1ca;
 }
 .daily_start .writing {
-  top: 40%;
+  width: 100%;
+  height: 100%;
   text-align: center;
   cursor: pointer;
 }
-.writing .circle {
-  width: 7rem;
+.diary_noH .writing .circle {
+  width: 6rem;
+  position: relative;
   top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -356,6 +363,7 @@ div.filePath {
   background: rgba(179, 179, 179, 0.3);
   border-radius: 0.2rem;
   display: flex;
+  align-items: center;
 }
 div.filePath p {
   width: 100%;
@@ -743,7 +751,7 @@ ul.diary_list > li {
 .reply_icon {
   width: 2.2rem;
   position: absolute;
-  bottom: 0;
+  bottom: 0.3rem;
   right: 0.5rem;
   cursor: pointer;
   opacity: 0.5;
@@ -756,6 +764,19 @@ ul.diary_list > li {
   /* mix-blend-mode: difference; */
   /* mix-blend-mode: color; */
   mix-blend-mode: luminosity;
+}
+.reply_icon:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 100%;
+  background: #00000075;
+  /* 새로운 알림이 있을 때 적용, 삭제 */
 }
 .reply_icon.on:after {
   content: "";
