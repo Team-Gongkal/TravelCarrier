@@ -289,8 +289,8 @@ $(window).on("load", function () {
   //mousewheel DOMMouseScroll 스크롤 이벤트
   $(window).on("wheel DOMMouseScroll", scrollHandler);
 
-  //위클리 추가글 위에 mouseover시 스크롤 비활성화
-  $(".weekly_addText > textarea, .utill_notice").on(
+  //mouseover시 스크롤 비활성화(위클리 추가글/ 유틸메뉴 튜토리얼)
+  $(".weekly_addText > textarea, .utill_notice, #tutorial").on(
     "mouseenter mouseleave",
     function (event) {
       if (event.type === "mouseenter") {
