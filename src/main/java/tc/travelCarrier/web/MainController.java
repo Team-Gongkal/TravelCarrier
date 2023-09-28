@@ -1,9 +1,11 @@
 package tc.travelCarrier.web;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -20,8 +22,8 @@ public class MainController {
 
     @GetMapping("/")
     @Transactional
-    public String mainPage(Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails){
-
+    public String mainPage( Model model,
+                           @AuthenticationPrincipal PrincipalDetails principalDetails){
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         model.addAttribute("user", user);
 

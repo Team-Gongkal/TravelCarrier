@@ -91,9 +91,19 @@ var main = [
 // 함수적용--------------------------------------------
 var currentIdx = 0;
 $(document).ready(function () {
-  //초기 설정값 보여주기(object자료명,시작인덱스)
-  show(main,currentIdx);
-  prevBtnClick(main);
-  nextBtnClick(main);
+
+    // 쿠키가 없다면 튜토리얼을 show하고, 쿠키가 있다면 show하지 않는다.
+    const tuto_main = getCookie('tuto_main');
+    if (!tuto_main) {
+        console.log("쿠키없으니까 튜토리얼을 셋팅할게요");
+        document.cookie = "tuto_main=true; max-age=3600";
+
+        $("#tutorial").addClass("show");
+        //초기 설정값 보여주기(object자료명,시작인덱스)
+          show(main,currentIdx);
+          prevBtnClick(main);
+          nextBtnClick(main);
+    }
 });
 closeTutorial(main);
+

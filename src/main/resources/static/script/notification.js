@@ -23,7 +23,7 @@ function setNewNoti() {
       if (resp) $(".notice").addClass("active");
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      alert("실패 : " + textStatus);
+      alert("setNewNoti 실패 : " + textStatus);
     },
   });
 }

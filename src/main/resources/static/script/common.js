@@ -17,3 +17,24 @@ $(window).click(function (e) {
     ).removeClass("show");
   }
 });
+
+//모달을 위한 쿠키확인 메소드 - by서현
+function getCookie(key) {
+  // 모든 쿠키 가져오기
+  const cookies = document.cookie.split(';');
+  // 쿠키 목록 순회
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    // 쿠키를 "="로 분할하여 key와 value를 얻습니다.
+    const cookieParts = cookie.split('=');
+    const cookieName = cookieParts[0];
+    const cookieValue = cookieParts[1];
+
+    // 원하는 key와 일치하는 쿠키를 찾으면 해당 값을 반환합니다.
+    if (cookieName === key) {
+      return decodeURIComponent(cookieValue);
+    }
+  }
+  // 원하는 key를 찾지 못한 경우 null을 반환합니다.
+  return null;
+}

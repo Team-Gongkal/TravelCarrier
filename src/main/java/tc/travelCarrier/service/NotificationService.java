@@ -21,7 +21,7 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
 
     //전체 알림 조회
-    public List<Notification> findNotificationByUserId(User activeUser) {
+    public List<Notification> findNotificationByUser(User activeUser) {
         // 읽음처리
         List<Notification> list = notificationRepository.findByReceiver(activeUser);
         //for(Notification notification : list) notification.setIsRead(true);
