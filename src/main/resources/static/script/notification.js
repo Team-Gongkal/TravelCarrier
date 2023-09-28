@@ -61,13 +61,14 @@ $(document).on("click", ".notice", async function (e) {
         //읽음처리
         $(".notice").removeClass("active");
         isReadNotification();
-    }
+    }else $(".utill_notice ").removeClass("show");
 });
 
 // 최근 업데이트창 활성화 및  -by윤아
 $(document).mouseup(function (e) {
    //.notice 아이콘 클릭시 아래 비활성화 무시
    if ($(".notice").has(e.target).length != 0) {
+       console.log("닫혀라");
        return;
    }
 
