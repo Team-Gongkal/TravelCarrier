@@ -39,7 +39,7 @@ public class WeeklyContoller {
     public String getWeeklyForm(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
-        List<Nation> nationList = nationRepository.findAll();
+        List<Nation> nationList = nationRepository.findAllByOrderByNameAsc();
         model.addAttribute("user", user);
         model.addAttribute("nationList", nationList);
         return "test/weekly_form";
@@ -59,6 +59,7 @@ public class WeeklyContoller {
         if(result.hasErrors()) {
             System.out.println("Validation Error");
         }
+        System.out.println("과연 바인딩 됐을까 "+form.toString());
         //로그인한 유저의 정보
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
         // nation 객체 찾기
@@ -93,7 +94,7 @@ public class WeeklyContoller {
 
         User user = memberRepository.findUserByEmail( principalDetails.getUser().getEmail());
 
-        List<Nation> nationList = nationRepository.findAll();
+        List<Nation> nationList = nationRepository.findAllByOrderByNameAsc();
         model.addAttribute("nationList", nationList);
 
         // 읽기,쓰기 권한 처리
