@@ -136,3 +136,4 @@ $(document).on("click", "#close_tutorial", function () {
     $(all.element).removeClass("tuto");
   });
 });
+

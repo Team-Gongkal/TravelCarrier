@@ -44,7 +44,7 @@ public class NotificationController {
 
     @GetMapping(value = "/notification")
     public ResponseEntity<List<NotificationDTO>> getNotification(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        List<Notification> list = notificationService.findNotificationByUserId(principalDetails.getUser());
+        List<Notification> list = notificationService.findNotificationByUser(principalDetails.getUser());
         // sender와 receiver의 User 그자체(email,thumbPath,닉네임)
         // id와 isread와 content까지
         // 시간, 제목, url도 필요!!!
