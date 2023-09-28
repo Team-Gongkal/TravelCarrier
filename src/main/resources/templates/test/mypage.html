@@ -194,8 +194,8 @@
   <div class="edit_menu modal_bg">
     <div>
       <ul>
-        <li id="edit_profile" >프로필 수정</li>
-        <li id="edit_account" >계정정보</li>
+        <li id="edit_profile">프로필 수정</li>
+        <li id="edit_account">계정정보</li>
         <li onclick="confirmLogout(event)" type="button">
           <span>
             로그아웃</span>
@@ -205,7 +205,7 @@
     </div>
   </div>
   <!-- 프로필 및 계정 편집 탭 콘텐츠-->
-  <div class="edit_modal modal_bg">
+  <div class="edit_modal modal_bg show">
     <div class="edit_modal_wrap">
       <div class="edit_modal_nav">
         <div class="my_profile">
@@ -227,7 +227,7 @@
         </ul>
       </div>
       <!-- 환결설정 모달창========================================================= -->
-      <div class="edit_modal_con">
+      <div class="edit_modal_con show">
         <ul>
           <!-- 프로필 이미지 변경 -->
           <li class="edit_profile show">
@@ -373,12 +373,60 @@
                 <input type="email" name="" id="" th:placeholder="${profile.email}" readonly>
               </div>
             </div>
-            <div class="account_password">
+            <div class="account_usercode">
               <div class="tit">
-                <span>비밀번호</span>
+                <span>회원번호</span>
               </div>
-              <div class="change_pw">
-                <button type="button">비밀번호 변경하기</button>
+              <div class="info_text">
+                <input type="text" name="" id="" th:placeholder="${profile.id}" readonly>
+              </div>
+              <div class="copy_btn">
+                <button type="button">복사하기</button>
+              </div>
+            </div>
+            <div class="account_password">
+              <div class="account_pw_box">
+                <div class="tit">
+                  <span>비밀번호</span>
+                </div>
+                <div class="change_pw_btn">
+                  <button type="button">비밀번호 변경하기</button>
+                </div>
+              </div>
+              <div id="changingPw">
+                <div class="change_pw_box nowPassword">
+                  <div class="tit">
+                    <span>현재 비밀번호</span>
+                  </div>
+                  <div class="info_text">
+                    <input type="password" name="" id="">
+                  </div>
+                  <div class="msg">
+                    <span class="msg_text">현재 비밀번호 입력해주세요</span>
+                  </div>
+                </div>
+                <div class="change_pw_box newPassword">
+                  <div class="tit">
+                    <span>새로운 비밀번호</span>
+                  </div>
+                  <div class="info_text">
+                    <input type="password" name="" id="">
+                  </div>
+                  <div class="msg">
+                    <span class="msg_text  wrong">변경할 비밀번호를 입력해주세요</span>
+                  </div>
+                </div>
+                <div class="change_pw_box dubbleCheckPassword">
+                  <div class="tit">
+                    <span>비밀번호 확인</span>
+                  </div>
+                  <div class="info_text">
+                    <input type="password" name="" id="">
+                  </div>
+                  <div class="msg">
+                    <span class="msg_text right">비밀번호를 한 번 더 입력해주세요</span>
+                  </div>
+                </div>
               </div>
             </div>
             <div id="del_account">
@@ -419,11 +467,11 @@
         <button type="reset" class="btn">취소하기</button>
         <button type="button" class="btn">적용하기</button>
       </div>
-      
+
     </div>
   </div>
   <!-- 로딩중 -->
-<!--  <div id="loading">
+  <!--  <div id="loading">
     <div class="cssload-spin-box"></div>
   </div>-->
   <script src="/script/mypage.js"></script>

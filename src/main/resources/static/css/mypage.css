@@ -1138,15 +1138,18 @@ div.edit_profile_padding > div {
 }
 
 /* (설정-2) 계정확인 및 정보 변경--------------------------------*/
-li.account_settings > h3 {
+li.account_settings h3 {
   /* padding: 5% 0 5% 0; */
 }
-li.account_settings > div:not(:last-child) {
+li.account_settings > div:not(:last-child, .account_password),
+.account_pw_box,
+.change_pw_box {
   width: 100%;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(53, 58, 82, 0.1);
 }
+
 .account_settings .tit {
   box-sizing: border-box;
   width: 15%;
@@ -1165,9 +1168,14 @@ li.account_settings > div:not(:last-child) {
   border: 1px solid rgba(53, 58, 82, 0.1);
   background: #f7f7f7c4;
 }
-.account_name .info_text input:focus {
+.account_name .info_text input:focus,
+.change_pw_box .info_text input:focus {
   background: #f7f7f7;
   border: 1px solid #a0c1ca;
+}
+.account_usercode .info_text {
+  width: 25%;
+  margin-right: 0.5rem;
 }
 .msg {
   width: 55%;
@@ -1180,31 +1188,73 @@ li.account_settings > div:not(:last-child) {
 }
 .msg_text {
   font-weight: 200;
-  color: #a0c1ca;
+  color: #525d76;
   letter-spacing: 0.1em;
+}
+.msg_text.wrong {
+  color: #c40303;
+}
+.msg_text.right {
+  color: #3cb371;
 }
 .msg_cnt em {
   opacity: 0.5;
   font-weight: 300;
 }
-.change_pw {
+/* 비밀번호 변경 */
+.account_password {
+  height: auto;
+}
+#changingPw {
+  height: 0px;
+  overflow: hidden;
+  position: relative;
+  transition: 1s;
+  opacity: 0;
+}
+#changingPw.show {
+  opacity: 1;
+  height: 100%;
+}
+.change_pw_btn {
   width: 50%;
   box-sizing: border-box;
 }
-.change_pw > button {
-  width: 10rem;
+.change_pw_box:not(:last-child) {
+  border-bottom: 0px solid rgba(53, 58, 82, 0.1);
+}
+.account_settings .change_pw_box .tit {
+  padding: 1.5rem 1rem;
+}
+.nowPassword:nth-child(1) .tit {
+  padding-top: 3rem;
+}
+.dubbleCheckPassword:nth-child(3) .tit {
+  padding-bottom: 3rem;
+}
+.change_pw_btn > button,
+.copy_btn button {
   border: 1px solid rgb(53, 58, 82, 0.1);
   box-sizing: border-box;
   background: transparent;
-  color: #a0c1ca;
+  color: #353a52;
   font-weight: 300;
   background: #f7f7f769;
   letter-spacing: 0.1rem;
 }
-.change_pw > button:hover {
+
+.change_pw_btn > button {
+  width: 10rem;
+}
+.copy_btn button {
+  width: 6rem;
+}
+.change_pw_btn > button:hover,
+.copy_btn button:hover {
   border: 1px solid #a0c1ca;
   background: #f7f7f7c4;
 }
+
 #del_account > button {
   width: 6rem;
   color: #c40303;

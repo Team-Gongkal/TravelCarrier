@@ -19,21 +19,6 @@
 
   <th:block th:if="${readAuth == 'GRANTED'}">
     <main class="daily">
-      <!-- daily 시작화면 UI -->
-      <div class="daily_start" style="display: none;">
-        <div class="sdaily_text">
-          <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
-          </p>
-          <p>사진과 함께 남겨주세요</p>
-        </div>
-        <div class="writing square rectL">
-          <div class="circle">
-            <img src="/image/daily/icon/pencil.png" alt="edit diary icon">
-          </div>
-          <span>글쓰기</span>
-        </div>
-      </div>
-
       <!--daily-form 데일리 입력 폼/ 모달창-->
       <th:block th:if="${updateAuth == 'GRANTED'}">
         <div class="daily_form_bg modal_bg">
@@ -115,7 +100,23 @@
             <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
               yyyy-mm-dd</p>
           </div>
+          <div class="daily_start_bg">
+              <div class="sdaily_text">
+                <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
+                </p>
+                <p>사진과 함께 남겨주세요</p>
+              </div>
+          </div>
           <div class="diary_viewport">
+                  <!-- daily 시작화면 UI -->
+            <div class="daily_start square rectL">
+              <div class="writing">
+                <div class="circle">
+                  <img src="/image/daily/icon/pencil.png" alt="edit diary icon">
+                </div>
+                <span>글쓰기</span>
+              </div>
+            </div>
             <div class="diary_slides">
             </div>
           </div>
@@ -128,7 +129,7 @@
             <ul>
               <li>
                 <h6>제목</h6>
-                <p>일기 내용</p>
+                <p style="white-space:pre;">일기 내용</p>
               </li>
             </ul>
           </div>

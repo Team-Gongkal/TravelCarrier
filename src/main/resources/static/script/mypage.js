@@ -1,6 +1,6 @@
 // mypage의 기본적 css동작을 관장하는 리스너를 등록하는 js파일 입니다.
 
-//계정관리 모달창 활성화 - by 윤아
+//설정 모달창 활성화 - by 윤아
 $("#edit_menu").on("click", function () {
   $(".edit_menu").addClass("show");
 });
@@ -19,22 +19,35 @@ $(".period_modal_bg .close").on("click", function () {
 
 //프로필 편집 및 계정설정 모달창 활성화 -by.윤아
 function editModal(idx) {
-  $('.edit_modal').addClass('show');//모달창 활성화
-  $('.edit_modal_con > ul >li').removeClass('show');//모달창 안의 콘텐츠 비우기
-  $('.edit_modal_con > ul > li').eq(idx).addClass('show');//해당 콘텐츠 띄우기
-  $('.edit_modal_nav >ul > li').removeClass('on');//탭메뉴 표시 지우기
-  $('.edit_modal_nav> ul > li').eq(idx).addClass('on');//해당 탭메뉴 표시하기
+  $(".edit_modal").addClass("show"); //모달창 활성화
+  $(".edit_modal_con > ul >li").removeClass("show"); //모달창 안의 콘텐츠 비우기
+  $(".edit_modal_con > ul > li").eq(idx).addClass("show"); //해당 콘텐츠 띄우기
+  $(".edit_modal_nav >ul > li").removeClass("on"); //탭메뉴 표시 지우기
+  $(".edit_modal_nav> ul > li").eq(idx).addClass("on"); //해당 탭메뉴 표시하기
 }
-for(let i = 0; i < 2; i++){
-  $('.edit_menu ul li').eq(i).on("click", function () {
-    editModal(i);
-    console.log('🥲🥲🥲🥲🥲');
-  });
+for (let i = 0; i < 2; i++) {
+  $(".edit_menu ul li")
+    .eq(i)
+    .on("click", function () {
+      editModal(i);
+      console.log("🥲🥲🥲🥲🥲");
+    });
 }
 
 $(".clos").on("click", function () {
   $(".edit_modal").removeClass("show");
 });
+
+//유저메뉴-계정설정 클릭시 마이페이지 이동 및 해당 모달 열기
+$(".user_menu ul li")
+  .eq(1)
+  .on("click", function () {
+    //링크가 이미 마이페이지일 경우 아닌 경우 파악하고 링크변경 하기
+    $(this).children("a").attr("href", "/member/mypage");
+    //모달창 열기
+    //문제) 열면 새고가 되면서 안창이 닫혀버림 원인파악중
+    editModal(1);
+  });
 
 //팔로우/팔로워 탭 - by 윤아
 var following_content = $(".userProfile_traveler > ul");
@@ -121,7 +134,7 @@ tab.on("click", function () {
 
   $(this).addClass("on"); //선택한 탭li css추가
   contents.eq(idx).addClass("show ani"); //idx에 해당하는 콘텐츠 보이기
-  console.log('('+idx+')🥲3-4번 탭오류 수정중임다')
+  console.log("(" + idx + ")🥲3-4번 탭오류 수정중임다");
   on_scroll(idx, tab_li);
 });
 
@@ -131,7 +144,7 @@ function on_scroll() {
 
   //트래블러탭제외한 탭메뉴 선택시
   if (idx < 3) {
-    console.log("❤️" + idx +"💜3번이하선택");
+    console.log("❤️" + idx + "💜3번이하선택");
     $(".travlar_option").removeClass("show");
     $(".search_period").addClass("show");
     $(".search_period").addClass("show");
@@ -139,11 +152,11 @@ function on_scroll() {
     if (tab_li >= 5) {
       console.log("게시글이 5이하");
       $scroll.removeClass("hide");
-    }else if(idx > 16){
-    // 게시글 개수에 따른 더보기버튼 활성화
-    $("#more_btn").addClass("show");
+    } else if (idx > 16) {
+      // 게시글 개수에 따른 더보기버튼 활성화
+      $("#more_btn").addClass("show");
     }
-  //트래블러탭 선택시
+    //트래블러탭 선택시
   } else if (idx === 3) {
     console.log("트레블러 선탣");
     $(".search_period").removeClass("show");
@@ -152,10 +165,10 @@ function on_scroll() {
     if (tab_li >= 12) {
       console.log("친구없음 나가");
       $scroll.removeClass("hide");
-    }else if(idx > 16){
+    } else if (idx > 16) {
       // 게시글 개수에 따른 더보기버튼 활성화
       $("#more_btn").addClass("show");
-      }
+    }
   }
 }
 
@@ -348,3 +361,9 @@ function clickUpload() {
 }
 // [2]번 실행하기
 $(".edit_profile input[type=radio]").on("click", clickUpload);
+
+// 비밀번호 변경-by윤아
+$(document).on("click", ".change_pw_btn button", function () {
+  $(".account_pw_box").css("display", "none");
+  $("#changingPw").addClass("show");
+});
