@@ -21,12 +21,12 @@ $(window).click(function (e) {
 //모달을 위한 쿠키확인 메소드 - by서현
 function getCookie(key) {
   // 모든 쿠키 가져오기
-  const cookies = document.cookie.split(';');
+  const cookies = document.cookie.split(";");
   // 쿠키 목록 순회
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i].trim();
     // 쿠키를 "="로 분할하여 key와 value를 얻습니다.
-    const cookieParts = cookie.split('=');
+    const cookieParts = cookie.split("=");
     const cookieName = cookieParts[0];
     const cookieValue = cookieParts[1];
 
@@ -38,3 +38,10 @@ function getCookie(key) {
   // 원하는 key를 찾지 못한 경우 null을 반환합니다.
   return null;
 }
+
+//메인화면  header옆 left-border제거
+$(document).ready(function () {
+  $("main#main_map")
+    .siblings("header")
+    .css("border-right", "1.5px solid transparent");
+});
