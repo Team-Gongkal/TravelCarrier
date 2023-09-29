@@ -53,30 +53,29 @@ function setSSE() {
 }
 
 $(document).on("click", ".notice", async function (e) {
-    // 알림창 셋팅
-    if(!$(".utill_notice").hasClass("show")) {
-        console.log("보여줘");
-        await getNotification();
-        $(".utill_notice").addClass("show");
-        //읽음처리
-        $(".notice").removeClass("active");
-        isReadNotification();
-    }else $(".utill_notice ").removeClass("show");
+  // 알림창 셋팅
+  if (!$(".utill_notice").hasClass("show")) {
+    console.log("보여줘");
+    await getNotification();
+    $(".utill_notice").addClass("show");
+    //읽음처리
+    $(".notice").removeClass("active");
+    isReadNotification();
+  } else $(".utill_notice ").removeClass("show");
 });
 
 // 최근 업데이트창 활성화 및  -by윤아
 $(document).mouseup(function (e) {
-   //.notice 아이콘 클릭시 아래 비활성화 무시
-   if ($(".notice").has(e.target).length != 0) {
-       console.log("닫혀라");
-       return;
-   }
+  //.notice 아이콘 클릭시 아래 비활성화 무시
+  if ($(".notice").has(e.target).length != 0) {
+    console.log("닫혀라");
+    return;
+  }
 
   //알림창 밖의 요소 클릭시 최근 업데이트창 비활성화
   var alertNew = $(".utill_notice");
   //alertNew안에 e.target이있는지 확인하기(값 : false,true로 도출)
   if (alertNew.has(e.target).length == 0) {
-    console.log(alertNew + "내가클릭한거 : " + e.target);
     alertNew.removeClass("show");
   }
   //요소내 닫기버튼 클릭시 닫기
@@ -117,9 +116,9 @@ async function getNotification() {
     },
   });
 
-  await ajax.done(function(){
-      console.log("앞 종료");
-      return;
+  await ajax.done(function () {
+    console.log("앞 종료");
+    return;
   });
 }
 
