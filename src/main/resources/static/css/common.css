@@ -68,11 +68,33 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-main:not(#start_page):not(#signUp) {
+/* 이미지 드래그 방지 */
+img.drag {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+main.weekly_scroll,
+main#weekly_form,
+main#userProfile_wrap,
+main.daily,
+main#editProfile,
+main#mypage_wrap,
+main#signPage {
   font-family: "NanumSquareNeo";
   width: 100%;
-  /* height: 100%; */
-  margin-left: 3.2rem; /*header너비*/
+  padding-left: 3.2rem;
+  box-sizing: border-box;
+}
+main#main_map,
+main#signUp,
+main#start_page {
+  font-family: "NanumSquareNeo";
+  width: 100%;
+  box-sizing: border-box;
+}
+main:not(#start_page):not(#signUp) {
 }
 /* input Ui */
 input,

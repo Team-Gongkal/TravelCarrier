@@ -34,14 +34,14 @@
   max-width: 100%;
   object-fit: cover;
 }
-#userProfile_wrap > div.userProfile_scroll {
+div.userProfile_scroll {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-behavior: smooth;
   position: relative;
 }
-#userProfile_wrap > div.userProfile_scroll.hide {
+div.userProfile_scroll.hide {
   overflow-y: hidden;
   padding-right: 0.86rem;
 }

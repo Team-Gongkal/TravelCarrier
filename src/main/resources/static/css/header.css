@@ -528,6 +528,12 @@ header > nav {
 .alert .black_text {
   color: #353a52;
 }
+.alert .black_text em {
+  display: block;
+  width: 100%;
+  height: 0.5em;
+  /* line-height: 1.8em;  */
+}
 .alert .alert_textbox p i {
   color: #ff931c;
   vertical-align: bottom;
