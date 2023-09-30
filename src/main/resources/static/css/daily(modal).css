@@ -499,7 +499,6 @@ button.Dform_btn_disable {
 
 /* 일기화면(호버전noHover)------------------------------------------------------------------*/
 .diary_noH {
-  /* width: calc(100% - 3.2rem); header빼줌 */
   width: 100%;
   height: 100%;
   box-sizing: border-box;

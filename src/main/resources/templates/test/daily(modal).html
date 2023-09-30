@@ -100,16 +100,16 @@
             <p th:text="'기간 : ' + ${weekly.travelDate.sDate} + ' ~ ' + ${weekly.travelDate.eDate}"> 기간 : yyyy-mm-dd ~
               yyyy-mm-dd</p>
           </div>
-          <div class="daily_start_bg">
-              <div class="sdaily_text">
-                <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
-                </p>
-                <p>사진과 함께 남겨주세요</p>
-              </div>
+          <div class="daily_start_bg" style="display:none;">
+            <div class="sdaily_text">
+              <p><b>여행</b>동안 경험했던 <b>소중한 추억</b>을
+              </p>
+              <p>사진과 함께 남겨주세요</p>
+            </div>
           </div>
           <div class="diary_viewport">
-                  <!-- daily 시작화면 UI -->
-            <div class="daily_start square rectL">
+            <!-- daily 시작화면 UI -->
+            <div class="daily_start square rectL " style="display:none;">
               <div class="writing">
                 <div class="circle">
                   <img src="/image/daily/icon/pencil.png" alt="edit diary icon">
@@ -211,11 +211,11 @@
 
     </main>
   </th:block>
-<!--  &lt;!&ndash; 로딩중 &ndash;&gt;
+  <!--  &lt;!&ndash; 로딩중 &ndash;&gt;
   <div id="loading">
     <div class="cssload-spin-box"></div>
   </div>-->
-<!--  var dailies = [[${ dailies }]];-->
+  <!--  var dailies = [[${ dailies }]];-->
   <script th:inline="javascript">
 
 

@@ -50,6 +50,7 @@ $(document).ready(function () {
       setFirst(dailies);
 
       //슬라이드 셋팅
+      setSlideClass();
       setSlide();
       //cloneSlide();
       startSlide(); //슬라이드 실행
@@ -76,6 +77,7 @@ function reloadDailies(newDailies) {
   dailies = newDailies;
   setFirst(dailies);
 
+  setSlideClass();
   setSlide(); //슬라이드 셋팅
   //cloneSlide(); //슬라이드복제
   startSlide(); //슬라이드 실행
@@ -497,23 +499,31 @@ $(".modal_title > .close").on("click", function (e) {
 //슬라이드 실행
 function startSlide() {
   let origin_slide = $("ul.diary_list");
-  origin_slide.prop("id", "slide1");
+  origin_slide.attr("id", "slide1");
   // origin_slide.id = "slide1";
-  // origin_slide.classList.add("original");
 
-  var slide_width = $(".diary_list").outerWidth();
+  var slide_width = $("ul.diary_list#slide1").outerWidth();
   var veiw_width = $(".diary_viewport").outerWidth();
   console.log(slide_width + "////" + veiw_width);
   //화면 크기에 따라 실행
   if (slide_width > veiw_width) {
     //슬라이드 복제
-    let clone_slide = origin_slide.clone(); //(true)로 자식요소까지 복제해서 변수에 할당함
+    let clone_slide = origin_slide.clone(); //(true)로 자식요소까지 복제해서 변수에 할당함 스크립트해당
     document.querySelector("div.diary_slides").appendChild(clone_slide[0]); //복제된 슬라이드를 자식요소로 붙여넣음
     origin_slide.prop("id", "slide2");
     // clone_slide.id = "slide2";
     $(".diary_viewport").removeClass("center");
     //슬라이드 실행
     playSlide();
+    // //만약 슬라이드가 2개일 경우 재생, 일시정지 기능 추가 및 드래그 기능 추가
+    // if ($(".diary_list").length <= 1) return;
+    // $(document).on("mouseenter", ".diary_viewport", function (e) {
+    //   stopSlide();
+    //   dragSlide();
+    // });
+    // $(document).on("mouseleave", ".diary_viewport", function (e) {
+    //   playSlide();
+    // });
   } else {
     //슬라이드 멈춤 및 가운데 정렬
     stopSlide();
@@ -550,10 +560,12 @@ function playSlide() {
   let move = 1; //이동 크기 - 정수여야 함
   let slide = $(".diary_slides"); // jQuery로 .diary_slides 요소 선택
 
+  // if ($(".diary_list").length > 1) {
   slideInterval = window.setInterval(
     () => movingSlide(move, slide),
     parseInt(1000 / 100)
   );
+  // }
   // 인터벌 애니메이션 함수(공용)
   function movingSlide(d, slide) {
     let left = parseInt($(".diary_slides").css("left"));
@@ -568,17 +580,23 @@ function playSlide() {
     }
   }
 }
+//슬라이드 멈춤, 인터벌 멈춤
 function stopSlide() {
   clearInterval(slideInterval);
 }
+
 // daily 일기화면(mouseenter)시 효과 - by.윤아
 $(document).on("mouseenter", ".diary_viewport li.d_slide > img", function (e) {
   // 복제된 diary_slides에는 mouseenter 이벤트가 적용되지 않아 위임 방식을 사용하여, 부모 요소인 .diary_viewport에 이벤트를 바인딩함
   mouseoverEffect(e);
+  stopSlide();
 });
-//daily 일기화면(mouseover)시 효과
+//daily 일기화면(mouseleave)시 효과
 $(".diary_slides").on("mouseleave", function (e) {
   mouseleaveEffect(e);
+  if ($(".diary_list").length > 1) {
+    playSlide();
+  }
 });
 //슬라이드 마우스오버시 변화
 function mouseoverEffect(e) {
@@ -623,6 +641,106 @@ function mouseleaveEffect() {
   //4.필터 비활성화
   $(".filter").removeClass("on");
   $(".diary_viewport").removeClass("black");
+}
+
+//슬라이드 드래그
+// dragSlide();
+// $(".diary_viewport").on("mouseenter", function () {
+dragSlide();
+// });
+//드래그를 위해 변수 초기화 해주기(각각 시작지점,끝지점)
+
+function dragSlide(e) {
+  let viewport = $(".diary_viewport"); // jQuery 객체를 DOM 요소로 변환
+  let slide = $(".diary_slides");
+  let pressed = false; // 눌려진 상태를 의미
+  let startPoint = 0; // 시작점
+  let dragStartPoint = 0; // 드래그 시작점
+
+  // 드래그한 거리를 저장할 변수 추가
+  let currentPoint = 0;
+
+  // 마우스를 눌렀을 때
+  viewport.on("mousedown", function (e) {
+    // e.preventDefault();
+    pressed = true; // 마우스가 눌려져있음
+    startPoint = e.clientX;
+    dragStartPoint = parseInt(slide.css("left")) || 0;
+    currentPoint = startPoint;
+  });
+  viewport.on("mouseup", function (e) {
+    pressed = false; // 마우스가 떼어져있음
+  });
+
+  viewport.on("mousemove", function (e) {
+    if (!pressed) return;
+    e.preventDefault();
+    endPoint = e.clientX;
+    let moveD = endPoint - currentPoint;
+    let newLeft = dragStartPoint + moveD;
+    // console.log(endPoint + " - " + currentPoint + " =  moveD : " + moveD);
+    // console.log("😍left :" + dragStartPoint + "/ + " + moveD + " = " + newLeft);
+    slide.css("left", newLeft + "px");
+
+    // 슬라이드의 현재 left 값을 가져오기
+    // 조건설정시 필요 변수들
+    let slideleft = parseInt(slide.css("left"));
+    let slideWidth = parseInt($(".diary_slides").width());
+    let ulWidth = parseInt($(".diary_list#slide1").width());
+    let viewportWidth = parseInt($(".diary_viewport").width());
+    console.log(
+      "좌우 끝까지 이동시 : " +
+        slideleft +
+        " / " +
+        ulWidth +
+        " / " +
+        (slideWidth - viewportWidth)
+    );
+    //슬라이드left가 0일때
+    //슬라이드의 -left가 전체너비랑 같을 때
+    if (slideleft > 0) {
+      // 슬라이드가 처음에 있을 때
+      slide.css("left", -ulWidth + "px");
+    } else if (-slideleft >= slideWidth - viewportWidth) {
+      // 슬라이드가 오른쪽으로 이동한 경우
+      slide.css("left", -(slideWidth - viewportWidth - ulWidth) + "px");
+      // $(".diary_slides").prepend($(".diary_list:last-child"));
+    }
+    // else if (-ulWidth >= slideWidth - viewportWidth) {
+    //   // 슬라이드가 오른쪽으로 이동한 경우
+    //   console.log("끝에 도착했을떄");
+    //   // slide.css("left", -ulWidth + "px");
+    //   $(".diary_slides").prepend($(".diary_list:last-child"));
+    // } else if (slideleft < -ulWidth) {
+    //   // 슬라이드가 왼쪽으로 이동한 경우
+    //   $(".diary_slides").append($(".diary_list:first-child"));
+    // }
+
+    startPoint = endPoint; // startPoint를 현재 endPoint로 업데이트
+  });
+}
+
+function checkBoundary() {
+  let slide = $(".diary_slides");
+  let slideLeft = parseInt(slide.css("left"));
+
+  if (slideLeft === 0) {
+    let ulLeft = parseInt($(".diary_list").eq(0).width());
+    if (-slideLeft >= ulLeft) {
+      // 이동값과 슬라이드 1개의 너비가 일치하면 실행
+      $(".diary_slides").append($(".diary_list").eq(0).clone());
+      $(".diary_slides").css("left", "0px");
+    }
+  }
+
+  // if (inner.left > outer.left) {
+  //   slide.style.left = "0px";
+  // } else if (inner.right < outer.right) {
+  //   slide.style.left = `-${inner.width - outer.width}px`;
+  //   let left = parseInt($(".diary_slides").css("left"));
+  //   let ulleft = parseInt($(".diary_list").eq(0).width());
+
+  // }
 }
 
 // 슬라이드 사진 크기에 따라 클래스명 변경 - by.서현
@@ -674,7 +792,7 @@ function setSlideClass() {
 //슬라이드 호버시 텍스트 바꿔주기 -by윤아
 $(document).on("mouseenter", ".diary_viewport .d_slide", function (e) {
   var hover_attachNo = $(e.target).data("attachno");
-  console.log(hover_attachNo); //숫자로 잘 출력됨
+  //console.log(hover_attachNo); //숫자로 잘 출력됨
 
   function making_slideArray() {
     var diary_attachNo = []; //비어있는 ARRAY배열 생성
