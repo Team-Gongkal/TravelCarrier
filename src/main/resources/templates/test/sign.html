@@ -5,33 +5,33 @@
 <th:block th:replace="fragments/head :: headFragment"></th:block>
 
 <body>
-<th:block th:replace="fragments/header :: headerFragment"></th:block>
+    <th:block th:replace="fragments/header :: headerFragment"></th:block>
 
-<main>
-    <div>
-        <form action="/member/sign" method="post">
+    <main id="signPage">
+        <div>
+            <form action="/member/sign" method="post">
 
-            <div class="email">
-                <!--<label for="">이메일</label>-->
-                <input name="email" type="text" placeholder="이메일을 입력해주세요" title="email" />
-            </div>
-            <div class="pw">
-                <!--<label for="">비밀번호</label>-->
-                <input name="pw" type="password" placeholder="비밀번호를 입력해주세요" title="password" />
-            </div>
-            <div class="name">
-                <input name="name" type="text" placeholder="이름을 입력해주세요" title="name" />
-            </div>
+                <div class="email">
+                    <!--<label for="">이메일</label>-->
+                    <input name="email" type="text" placeholder="이메일을 입력해주세요" title="email" />
+                </div>
+                <div class="pw">
+                    <!--<label for="">비밀번호</label>-->
+                    <input name="pw" type="password" placeholder="비밀번호를 입력해주세요" title="password" />
+                </div>
+                <div class="name">
+                    <input name="name" type="text" placeholder="이름을 입력해주세요" title="name" />
+                </div>
 
 
-            <button type="submit">가입</button>
-        </form>
-    </div>
-</main>
+                <button type="submit">가입</button>
+            </form>
+        </div>
+    </main>
 
-<script>
+    <script>
 
-  </script>
+    </script>
 </body>
 
 </html>
