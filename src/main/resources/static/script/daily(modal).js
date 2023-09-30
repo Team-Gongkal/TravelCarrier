@@ -590,6 +590,9 @@ $(document).on("mouseenter", ".diary_viewport li.d_slide > img", function (e) {
   // 복제된 diary_slides에는 mouseenter 이벤트가 적용되지 않아 위임 방식을 사용하여, 부모 요소인 .diary_viewport에 이벤트를 바인딩함
   mouseoverEffect(e);
   stopSlide();
+  if ($(".diary_list").length > 1) {
+    dragSlide();
+  }
 });
 //daily 일기화면(mouseleave)시 효과
 $(".diary_slides").on("mouseleave", function (e) {
@@ -646,11 +649,12 @@ function mouseleaveEffect() {
 //슬라이드 드래그
 // dragSlide();
 // $(".diary_viewport").on("mouseenter", function () {
-dragSlide();
+// dragSlide();
 // });
 //드래그를 위해 변수 초기화 해주기(각각 시작지점,끝지점)
 
 function dragSlide(e) {
+  // if ($(".diary_list").length < 1) return;
   let viewport = $(".diary_viewport"); // jQuery 객체를 DOM 요소로 변환
   let slide = $(".diary_slides");
   let pressed = false; // 눌려진 상태를 의미
