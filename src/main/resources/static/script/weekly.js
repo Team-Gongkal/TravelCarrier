@@ -450,5 +450,5 @@ function closeUpdateModel() {
 $(document).on("click", ".close_and_del .close", function (e) {
   if (isChange()) {
     weekly_update_close_alert();
-  }
+  } else closeUpdateModel();
 });
