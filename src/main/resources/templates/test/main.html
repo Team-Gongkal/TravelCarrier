@@ -74,8 +74,14 @@
         </div>
     </div>
     <!-- script -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var randImages = [[${randImages}]];
+        /*]]>*/
+    </script>
     <script src="/script/tutorial/tuto_common.js"></script>
     <script src="/script/tutorial/tuto_main.js"></script>
+    <script src="/script/main.js"></script>
 </body>
 
 </html>

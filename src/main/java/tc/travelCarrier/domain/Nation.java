@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 public class Nation {
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="NATION_ID")
     private int id;
 
