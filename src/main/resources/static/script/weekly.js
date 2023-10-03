@@ -2,7 +2,7 @@
 //$(document).on("click", ".close", function () {
 //  closeModal();
 //});
-console.log(url);//삭제
+console.log(url); //삭제
 function closeModal() {
   $(".keyword_modal_bg").removeClass("show");
   $(".keyword_card").empty();
@@ -33,10 +33,8 @@ function openModal() {
 var url = window.location.href; //현재문서의 url가져오기
 
 $(document).ready(function () {
-
   //변화 체크를 위해 초기값 저장하기
   setOriginValue();
-
 
   //위클리에서 데일리로 넘어가는 경로 설정 - by.윤아
   $(".daily_path").attr("href", url + "/daily");
@@ -105,7 +103,7 @@ $('input[name="keyword"]').on("keydown", function (event) {
   if (event.key === "Enter") {
     // li가 9개면 실행 X
     if ($(".keyword_card li").length === 5) {
-      alertModal2("5개","까지만 등록할 수 있습니다");
+      alertModal2("5개", "까지만 등록할 수 있습니다");
     } else {
       // 작성한 키워드를 저장 및 input 비우기
       var myKeyword = $('input[name="keyword"]').val();
@@ -168,14 +166,17 @@ $(document).on("click", "#keyword_save", function (event) {
 function updateKeyword(keyword_list) {
   var keywordBox = $(".weekly_wrap").eq(key_index).find(".keywordBox");
   keywordBox.empty();
-    console.log(keyword_list);
+  console.log(keyword_list);
   if (keyword_list.length > 0) {
     $.each(keyword_list, function (index, text) {
       var ul = $("<ul>");
-      var li = $("<li>").addClass("keyword").text(text).attr("data-daily", dailyId);
+      var li = $("<li>")
+        .addClass("keyword")
+        .text(text)
+        .attr("data-daily", dailyId);
       /*        var span = $("<span>").addClass("card_del").html('<i class="xi-close"></i>');
         li.append(span);*/
-        console.log(li);
+      console.log(li);
       ul.append(li);
       keywordBox.append(ul);
     });
@@ -200,11 +201,16 @@ $(document).on("click", ".updateWeekly", function (event) {
 
   // nation file sdate edate title text gowiths[] status
   var formData = new FormData();
-  if ($(".thumbnail_img.circle img").attr("src") !=
-    "/image/default/weekly_default_thumbnail.png") {
+  if (
+    $(".thumbnail_img.circle img").attr("src") !=
+    "/image/default/weekly_default_thumbnail.png"
+  ) {
     formData.append("file", $("#thumbnail_change")[0].files[0]);
   }
-  formData.append("nation", $('select[name="nation"] option:selected').attr("value"));
+  formData.append(
+    "nation",
+    $('select[name="nation"] option:selected').attr("value")
+  );
   formData.append("sdate", $("#sdate").val());
   formData.append("edate", $("#edate").val());
   if ($("div.title input").val() === "") {
@@ -222,10 +228,10 @@ $(document).on("click", ".updateWeekly", function (event) {
   console.log("status : " + formData.get("status"));
   formData.append("thumbStatus", thumb_status);
 
-   $("#loading").addClass("show");
+  $("#loading").addClass("show");
   //버튼 저장중 처리
   var clickBtn = $(".updateWeekly");
-  clickBtn.attr("disabled",true);
+  clickBtn.attr("disabled", true);
   clickBtn.toggleClass("btn_disable btn");
   clickBtn.html("저장중..");
 
@@ -237,7 +243,7 @@ $(document).on("click", ".updateWeekly", function (event) {
     contentType: false,
     success: function (data) {
       //alert("성공");
-      clickBtn.attr("disabled",false);
+      clickBtn.attr("disabled", false);
       clickBtn.toggleClass("btn_disable btn");
       clickBtn.html("저장하기");
       $("#loading").removeClass("show");
@@ -282,7 +288,7 @@ $(window).on("load", function () {
 
   //스크롤 양 체크하기
   var scroll = weekly_scroll.scrollLeft();
-  console.log("스크롤 양" + scroll);//0출력됨 왜??
+  console.log("스크롤 양" + scroll); //0출력됨 왜??
 
   let num = 0; //첫페이지에서 스크롤되는 횟수(첫페이지 동영상 크기 변환) -스크롤을 할 때마다 증가하며 그에 따라서 스크롤 양을 증가시키기
 
@@ -328,59 +334,59 @@ $(window).on("load", function () {
       }
     }
   }
+
   //GoToTop 버튼 클릭시 스크롤 초기화 시키기
-$('.moreBox > a.top').on('click', function(e){
-  e.preventDefault(); // a링크 클릭시 주소에 weekly/246/#이 붙는 것을 방지함
-  num = 0;//num의 값이 초기화 되어야 첫페이지 이동 후 스크롤을 움직였을때 처음 위치부터 이동이 가능함(안하면 카운트가 끝쪽이라 처음으로 이동은 했어도 스크롤 움직이면 바로 마지막 페이지로 넘어가버림)
-  
-  //스크롤 이동시 부드러운 애니메이션추가
-  //위의 스크롤 양을 초기화 하는데 animate를 사용해 천천히 이동하도록 함.(var scroll = weekly_scroll.scrollLeft();에 값을 0으로 이동하도록 설정)
-  scroll = weekly_scroll.animate( { scrollLeft : 0 }, 400 );
-	return false;
-})
+  $(".moreBox > a.top").on("click", function (e) {
+    e.preventDefault(); // a링크 클릭시 주소에 weekly/246/#이 붙는 것을 방지함
+    num = 0; //num의 값이 초기화 되어야 첫페이지 이동 후 스크롤을 움직였을때 처음 위치부터 이동이 가능함(안하면 카운트가 끝쪽이라 처음으로 이동은 했어도 스크롤 움직이면 바로 마지막 페이지로 넘어가버림)
+
+    //스크롤 이동시 부드러운 애니메이션추가
+    //위의 스크롤 양을 초기화 하는데 animate를 사용해 천천히 이동하도록 함.(var scroll = weekly_scroll.scrollLeft();에 값을 0으로 이동하도록 설정)
+    scroll = weekly_scroll.animate({ scrollLeft: 0 }, 400);
+    return false;
+  });
   //위클리 수정 모달 활성화
   $(".weekly_edit").on("click", function () {
     $(".weekly_modal_bg").addClass("show");
     $(window).off("wheel DOMMouseScroll", scrollHandler);
   });
-//  $(".modal_title .close").on("click", function () {
-//    $(".weekly_modal_bg").removeClass("show");
-//    $(window).on("wheel DOMMouseScroll", scrollHandler);
-//  });
+  //  $(".modal_title .close").on("click", function () {
+  //    $(".weekly_modal_bg").removeClass("show");
+  //    $(window).on("wheel DOMMouseScroll", scrollHandler);
+  //  });
 });
 
 // 동행인 목록 띄우기
-var companion = document.querySelectorAll('.sel_companion li');
-companion.forEach(function(li){
-li.addEventListener('mouseenter', function(){
-  document.getElementById('tagged_companion').classList.add('show');
-})
-li.addEventListener('mouseleave', function(){
-  document.getElementById('tagged_companion').classList.remove('show');
-})
+var companion = document.querySelectorAll(".sel_companion li");
+companion.forEach(function (li) {
+  li.addEventListener("mouseenter", function () {
+    document.getElementById("tagged_companion").classList.add("show");
+  });
+  li.addEventListener("mouseleave", function () {
+    document.getElementById("tagged_companion").classList.remove("show");
+  });
 });
 
 $(document).on("click", ".deleteWeekly", function (event) {
-    event.preventDefault();
-    $(".confirm_btn").attr("id", "delWeekly");
-    alertModal("삭제");
+  event.preventDefault();
+  $(".confirm_btn").attr("id", "delWeekly");
+  alertModal("삭제");
 });
 $(document).on("click", "#delWeekly", function () {
-    $.ajax({
-      url: "/weekly/" + weeklyId,
-      type: "DELETE",
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        window.location.href = "/";
-      },
-      error: function (xhr, status, error) {
-          alert("삭제 실패: " + error);
-           closeAlert();
-      },
-    });
+  $.ajax({
+    url: "/weekly/" + weeklyId,
+    type: "DELETE",
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      window.location.href = "/";
+    },
+    error: function (xhr, status, error) {
+      alert("삭제 실패: " + error);
+      closeAlert();
+    },
+  });
 });
-
 
 var originThumb;
 var originNation;
@@ -390,55 +396,59 @@ var originTitle;
 var originText;
 var originGowiths = [];
 var originStatus;
-function setOriginValue(){
-    originThumb = $(".thumbnail_img.circle img").attr("src");
-    originNation = $('select[name="nation"] option:selected').attr("value");
-    originSdate = $("#sdate").val();
-    originEdate = $("#edate").val();
-    originTitle = $("div.title input").val();
-    originText = $("#addText").val();
-    originGowiths = [];
-    $("#sc li:not(:last)").each(function () {
-      originGowiths.push($(this).data("fid"));
-    });
-    originStatus = $("input[name='status']:checked").val();
+function setOriginValue() {
+  originThumb = $(".thumbnail_img.circle img").attr("src");
+  originNation = $('select[name="nation"] option:selected').attr("value");
+  originSdate = $("#sdate").val();
+  originEdate = $("#edate").val();
+  originTitle = $("div.title input").val();
+  originText = $("#addText").val();
+  originGowiths = [];
+  $("#sc li:not(:last)").each(function () {
+    originGowiths.push($(this).data("fid"));
+  });
+  originStatus = $("input[name='status']:checked").val();
 }
 
 //위클리 수정사항 발생 후 저장안하고 닫기 누르면 알림창 띄움. -by.서현
-function isChange(){
-    newGowiths = [];
-    $("#sc li:not(:last)").each(function () {
-      newGowiths.push($(this).data("fid"));
-    });
-    console.log(originThumb != $(".thumbnail_img.circle img").attr("src"));
-    console.log(originNation != $('select[name="nation"] option:selected').attr("value"));
-    console.log(originSdate != $("#sdate").val());
-    console.log(originEdate != $("#edate").val());
-    console.log(originTitle != $("div.title input").val());
-    console.log(originText != $("#addText").val());
-    console.log(JSON.stringify(originGowiths) !== JSON.stringify(newGowiths));
-    console.log(originStatus != $("input[name='status']:checked").val());
+function isChange() {
+  newGowiths = [];
+  $("#sc li:not(:last)").each(function () {
+    newGowiths.push($(this).data("fid"));
+  });
+  console.log(originThumb != $(".thumbnail_img.circle img").attr("src"));
+  console.log(
+    originNation != $('select[name="nation"] option:selected').attr("value")
+  );
+  console.log(originSdate != $("#sdate").val());
+  console.log(originEdate != $("#edate").val());
+  console.log(originTitle != $("div.title input").val());
+  console.log(originText != $("#addText").val());
+  console.log(JSON.stringify(originGowiths) !== JSON.stringify(newGowiths));
+  console.log(originStatus != $("input[name='status']:checked").val());
 
-    if(originThumb != $(".thumbnail_img.circle img").attr("src")
-    ||originNation != $('select[name="nation"] option:selected').attr("value")
-    ||originSdate != $("#sdate").val()
-    ||originEdate != $("#edate").val()
-    ||originTitle != $("div.title input").val()
-    ||originText != $("#addText").val()
-    ||JSON.stringify(originGowiths) !== JSON.stringify(newGowiths)
-    ||originStatus != $("input[name='status']:checked").val()){
-        return true;
-    }
+  if (
+    originThumb != $(".thumbnail_img.circle img").attr("src") ||
+    originNation != $('select[name="nation"] option:selected').attr("value") ||
+    originSdate != $("#sdate").val() ||
+    originEdate != $("#edate").val() ||
+    originTitle != $("div.title input").val() ||
+    originText != $("#addText").val() ||
+    JSON.stringify(originGowiths) !== JSON.stringify(newGowiths) ||
+    originStatus != $("input[name='status']:checked").val()
+  ) {
+    return true;
+  }
 
-    return false;
+  return false;
 }
-function closeUpdateModel(){
-    $(".weekly_modal_bg").removeClass("show");
-    $(window).on("wheel DOMMouseScroll", scrollHandler);
+function closeUpdateModel() {
+  $(".weekly_modal_bg").removeClass("show");
+  $(window).on("wheel DOMMouseScroll", scrollHandler);
 }
 
-$(document).on("click",".close_and_del .close",function(e){
-    if(isChange()){
-        weekly_update_close_alert();
-    }
-})
+$(document).on("click", ".close_and_del .close", function (e) {
+  if (isChange()) {
+    weekly_update_close_alert();
+  }
+});
