@@ -755,15 +755,18 @@ function scrollSlide() {
           .animate({ left: scrollPrev }, 500, "easeOutCubic");
       }
     } else if (delta > 0) {
+      console.log("마우스 방향 위임");
       //마우스 휠 방향이 위일떄(next)
       if (slideleft <= ulWidth) {
         let scrollNext = slideleft - 300;
-        if (-slideleft >= slideWidth - viewportWidth - 300) {
+        if (-slideleft - 300 >= slideWidth - viewportWidth) {
           daily_scroll.css(
             "left",
             -(slideWidth - viewportWidth - ulWidth) + "px"
           );
-        } else if (slideleft >= ulWidth) {
+          console.log("나 끈ㅌ까지 ㅗ왔어");
+        } else {
+          console.log("나 스크롤 한다?");
           $(daily_scroll)
             .stop()
             .animate({ left: scrollNext }, 500, "easeOutCubic");
