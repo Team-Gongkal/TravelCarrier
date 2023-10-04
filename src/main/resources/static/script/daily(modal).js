@@ -592,6 +592,7 @@ $(document).on("mouseenter", ".diary_viewport li.d_slide > img", function (e) {
   stopSlide();
   if ($(".diary_list").length > 1) {
     dragSlide();
+    scrollSlide();
   }
 });
 //daily 일기화면(mouseleave)시 효과
@@ -646,13 +647,7 @@ function mouseleaveEffect() {
   $(".diary_viewport").removeClass("black");
 }
 
-//슬라이드 드래그
-// dragSlide();
-// $(".diary_viewport").on("mouseenter", function () {
-// dragSlide();
-// });
-//드래그를 위해 변수 초기화 해주기(각각 시작지점,끝지점)
-
+//슬라이드 드래그 구현
 function dragSlide(e) {
   // if ($(".diary_list").length < 1) return;
   let viewport = $(".diary_viewport"); // jQuery 객체를 DOM 요소로 변환
@@ -662,7 +657,7 @@ function dragSlide(e) {
   let dragStartPoint = 0; // 드래그 시작점
 
   // 드래그한 거리를 저장할 변수 추가
-  let currentPoint = 0;
+  // let currentPoint = 0;
 
   // 마우스를 눌렀을 때
   viewport.on("mousedown", function (e) {
@@ -670,17 +665,27 @@ function dragSlide(e) {
     pressed = true; // 마우스가 눌려져있음
     startPoint = e.clientX;
     dragStartPoint = parseInt(slide.css("left")) || 0;
-    currentPoint = startPoint;
+    // currentPoint = startPoint;
   });
   viewport.on("mouseup", function (e) {
+    let slideleft = parseInt(slide.css("left"));
+    let moreMove = slideleft + 200;
+    if (!pressed) return; // pressed가 false인 경우에는 아무 작업도 하지 않음
     pressed = false; // 마우스가 떼어져있음
+    console.log("마우스 뗸다 더 나가라");
+    // slide.animate(
+    //   {
+    //     left: moreMove + "px",
+    //   },
+    //   1000
+    // ); // 1000ms (1초) 동안 애니메이션을 실행합니다.
   });
 
   viewport.on("mousemove", function (e) {
     if (!pressed) return;
     e.preventDefault();
     endPoint = e.clientX;
-    let moveD = endPoint - currentPoint;
+    let moveD = endPoint - startPoint;
     let newLeft = dragStartPoint + moveD;
     // console.log(endPoint + " - " + currentPoint + " =  moveD : " + moveD);
     // console.log("😍left :" + dragStartPoint + "/ + " + moveD + " = " + newLeft);
@@ -719,32 +724,53 @@ function dragSlide(e) {
     //   // 슬라이드가 왼쪽으로 이동한 경우
     //   $(".diary_slides").append($(".diary_list:first-child"));
     // }
-
-    startPoint = endPoint; // startPoint를 현재 endPoint로 업데이트
   });
 }
 
-function checkBoundary() {
-  let slide = $(".diary_slides");
-  let slideLeft = parseInt(slide.css("left"));
+//슬라이드 스크롤 구현
+function scrollSlide() {
+  //가로 슬라이드 구현 - by윤아
+  var daily_scroll = $(".diary_slides");
+  let slideWidth = parseInt($(".diary_slides").width());
+  let ulWidth = parseInt($(".diary_list#slide1").width());
+  let viewportWidth = parseInt($(".diary_viewport").width());
 
-  if (slideLeft === 0) {
-    let ulLeft = parseInt($(".diary_list").eq(0).width());
-    if (-slideLeft >= ulLeft) {
-      // 이동값과 슬라이드 1개의 너비가 일치하면 실행
-      $(".diary_slides").append($(".diary_list").eq(0).clone());
-      $(".diary_slides").css("left", "0px");
+  //mousewheel DOMMouseScroll 스크롤 이벤트
+  let delta; //스크롤의 방향을 판별하기 위한 변수로 할당은 스크롤이벤트 안에서 함
+  $(".diary_viewport").on("wheel DOMMouseScroll", scrollHandler);
+  function scrollHandler(e) {
+    delta = e.originalEvent.wheelDelta || e.originalEvent.delta * -1;
+    let slideleft = parseInt($(".diary_slides").css("left"));
+    if (delta < 0) {
+      //마우스 휠 방향아래(prev)
+      let scrollPrev = slideleft + 300;
+      if (slideleft >= -10) {
+        // 슬라이드가 처음에 있을 때
+        slideleft = parseInt($(".diary_slides").css("left"));
+        // daily_scroll.css("left", -ulWidth + "px");
+        daily_scroll.css("left", -ulWidth + slideleft + "px");
+      } else {
+        $(daily_scroll)
+          .stop()
+          .animate({ left: scrollPrev }, 500, "easeOutCubic");
+      }
+    } else if (delta > 0) {
+      //마우스 휠 방향이 위일떄(next)
+      if (slideleft <= ulWidth) {
+        let scrollNext = slideleft - 300;
+        if (-slideleft >= slideWidth - viewportWidth - 300) {
+          daily_scroll.css(
+            "left",
+            -(slideWidth - viewportWidth - ulWidth) + "px"
+          );
+        } else if (slideleft >= ulWidth) {
+          $(daily_scroll)
+            .stop()
+            .animate({ left: scrollNext }, 500, "easeOutCubic");
+        }
+      }
     }
   }
-
-  // if (inner.left > outer.left) {
-  //   slide.style.left = "0px";
-  // } else if (inner.right < outer.right) {
-  //   slide.style.left = `-${inner.width - outer.width}px`;
-  //   let left = parseInt($(".diary_slides").css("left"));
-  //   let ulleft = parseInt($(".diary_list").eq(0).width());
-
-  // }
 }
 
 // 슬라이드 사진 크기에 따라 클래스명 변경 - by.서현
