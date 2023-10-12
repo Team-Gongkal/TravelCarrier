@@ -14,6 +14,7 @@ TravelCarrier의 가장 큰 특징은 일반적인 게시글 종속성의 역전
 ## Information
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FcheshireHYUN%2FTravelCarrier&count_bg=%2381C5E0&title_bg=%23D0D0D0&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
+테스트계정 : id:test@naver.com pw:111111
 배포 주소 : http://www.travelcarrier.site <br/>
 개발기간 : 2023.03 ~ 2023.09
 |Design&Publish|FrontEnd&BackEnd|
