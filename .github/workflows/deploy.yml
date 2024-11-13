@@ -14,10 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # 2. JAR 파일 빌드
-      - name: Build JAR file
+      #JDK 셋팅
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      #프로젝트 빌드
+      - name: Build with Gradle
         run: |
-          ./mvnw clean package -DskipTests
+          chmod +x ./gradlew
+          ./gradlew build -x test
 
       # 3. JAR 파일을 라즈베리파이 서버로 전송
       - name: Copy JAR file to Raspberry Pi
