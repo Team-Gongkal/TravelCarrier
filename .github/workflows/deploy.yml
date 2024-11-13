@@ -37,7 +37,7 @@ jobs:
           password: ${{ secrets.PI_PASSWORD }}  # 라즈베리파이 비밀번호
           source: "build/libs/*.jar"  # 빌드된 JAR 파일만 복사
           target: "Project/travelCarrier/"  # 라즈베리파이의 타겟 디렉토리
-          strip_components: 1  # 폴더 구조를 제거하고 파일만 복사
+          strip_components: 2  # 폴더 구조를 제거하고 파일만 복사
 
       # 4. 배포 서버에서 docker-compose 명령어 실행
       - name: Deploy to Raspberry Pi
