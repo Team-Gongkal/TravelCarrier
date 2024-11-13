@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.PI_USERNAME }}  # 라즈베리파이 사용자 이름
           password: ${{ secrets.PI_PASSWORD }}  # 라즈베리파이 비밀번호
           source: "./"  # 현재 디렉토리에서 복사할 파일들
-          target: "/home/pi/Project/travelCarrier/"  # 라즈베리파이의 타겟 디렉토리
+          target: "Project/travelCarrier/"  # 라즈베리파이의 타겟 디렉토리
 
       # 4. 배포 서버에서 docker-compose 명령어 실행
       - name: Deploy to Raspberry Pi
@@ -47,7 +47,7 @@ jobs:
           username: ${{ secrets.PI_USERNAME }}
           password: ${{ secrets.PI_PASSWORD }}
           script: |
-            cd /home/pi/Project/travelCarrier/
+            cd Project/travelCarrier/
             docker-compose pull
             docker-compose down
             docker-compose up -d
