@@ -128,7 +128,7 @@ public class WeeklyService {
                 }
             }*/
             //2. S3 서버에서 위클리 썸네일 삭제
-            attachService.deleteS3File(weekly.getAttachWeekly().getThumbPath());
+            attachService.deleteServerFile(weekly.getAttachWeekly().getThumbPath());
 
             //3. 엔티티 삭제
             weeklyRepository.remove(weekly);

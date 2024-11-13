@@ -1,0 +1,46 @@
+name: Deploy TravelCarrier to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 저장소 클론
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # 2. JAR 파일 빌드
+      - name: Build JAR file
+        run: |
+          ./mvnw clean package -DskipTests
+
+      # 3. JAR 파일을 라즈베리파이 서버로 전송
+      - name: Copy JAR file to Raspberry Pi
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PI_HOST }}  # 라즈베리파이 IP 주소
+          port: ${{ secrets.PI_PORT }}  # 라즈베리파이 SSH 포트
+          username: ${{ secrets.PI_USERNAME }}  # 라즈베리파이 사용자 이름
+          password: ${{ secrets.PI_PASSWORD }}  # 라즈베리파이 비밀번호
+          source: "./"  # 현재 디렉토리에서 복사할 파일들
+          target: "/home/pi/Project/travelCarrier/"  # 라즈베리파이의 타겟 디렉토리
+
+      # 4. 배포 서버에서 docker-compose 명령어 실행
+      - name: Deploy to Raspberry Pi
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PI_HOST }}
+          port: ${{ secrets.PI_PORT }}
+          username: ${{ secrets.PI_USERNAME }}
+          password: ${{ secrets.PI_PASSWORD }}
+          script: |
+            cd /home/pi/Project/travelCarrier/
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d
+            docker image prune -f
