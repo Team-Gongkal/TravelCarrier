@@ -5,7 +5,7 @@
 @font-face {
   font-family: "NanumSquareNeo-Variable";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
-    format("woff2");
+  format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -143,81 +143,81 @@ main {
   overflow: hidden;
   /* -------------------------------------- */
   background-color: #bdccd4;
-  background-image: 
+  background-image:
     /* 큰 세로줄 */ linear-gradient(
-      90deg,
-      rgba(53, 58, 82, 0.2) 0px,
-      rgba(53, 58, 82, 0.2) 1px,
-      transparent 1px,
-      transparent 99px,
-      transparent 100px
-    ),
-    /* 큰 가로줄 */
-      linear-gradient(
-        rgba(53, 58, 82, 0.2) 0px,
-        rgba(53, 58, 82, 0.2) 1px,
-        transparent 1px,
-        transparent 99px,
-        transparent 100px
-      ),
-    /* 세밀한 가로줄 */
-      linear-gradient(
-        rgba(53, 58, 82, 0.2) 0px,
-        rgba(53, 58, 82, 0.2) 1px,
-        transparent 1px,
-        transparent 99px,
-        transparent 100px
-      ),
-    /* 큰 가로줄 */
-      linear-gradient(
-        90deg,
-        rgba(53, 58, 82, 0.2) 0px,
-        rgba(53, 58, 82, 0.2) 1px,
-        transparent 1px,
-        transparent 99px,
-        transparent 100px
-      ),
-    /* 큰 가로줄 강조 */
-      linear-gradient(
-        transparent 0px,
-        transparent 0px,
-        #bdccd4 0px,
-        #bdccd4 0px,
-        transparent 0px,
-        transparent 0px
-      ),
-    /* 플러스 세로선 */
-      linear-gradient(
-        90deg,
-        rgba(53, 58, 82, 0.2) 0px,
-        rgba(53, 58, 82, 0.2) 1px,
-        transparent 1px,
-        transparent 99px,
-        rgba(53, 58, 82, 0.2) 99px,
-        rgba(53, 58, 82, 0.2) 100px
-      ),
-    /* 플러스 강조, 네모박스 생김 */
-      /* linear-gradient(
           90deg,
-          transparent 0px,
-          transparent 5px,
-          #bdccd4 5px,
-          #bdccd4 95px,
-          transparent 95px,
+          rgba(53, 58, 82, 0.2) 0px,
+          rgba(53, 58, 82, 0.2) 1px,
+          transparent 1px,
+          transparent 99px,
           transparent 100px
-        ), */
-      linear-gradient(
+  ),
+    /* 큰 가로줄 */
+  linear-gradient(
+          rgba(53, 58, 82, 0.2) 0px,
+          rgba(53, 58, 82, 0.2) 1px,
+          transparent 1px,
+          transparent 99px,
+          transparent 100px
+  ),
+    /* 세밀한 가로줄 */
+  linear-gradient(
+          rgba(53, 58, 82, 0.2) 0px,
+          rgba(53, 58, 82, 0.2) 1px,
+          transparent 1px,
+          transparent 99px,
+          transparent 100px
+  ),
+    /* 큰 가로줄 */
+  linear-gradient(
+          90deg,
+          rgba(53, 58, 82, 0.2) 0px,
+          rgba(53, 58, 82, 0.2) 1px,
+          transparent 1px,
+          transparent 99px,
+          transparent 100px
+  ),
+    /* 큰 가로줄 강조 */
+  linear-gradient(
+          transparent 0px,
+          transparent 0px,
+          #bdccd4 0px,
+          #bdccd4 0px,
+          transparent 0px,
+          transparent 0px
+  ),
+    /* 플러스 세로선 */
+  linear-gradient(
+          90deg,
+          rgba(53, 58, 82, 0.2) 0px,
+          rgba(53, 58, 82, 0.2) 1px,
+          transparent 1px,
+          transparent 99px,
+          rgba(53, 58, 82, 0.2) 99px,
+          rgba(53, 58, 82, 0.2) 100px
+  ),
+    /* 플러스 강조, 네모박스 생김 */
+    /* linear-gradient(
+        90deg,
         transparent 0px,
-        transparent 1px,
-        #bdccd4 1px,
-        #bdccd4 99px,
-        transparent 99px,
+        transparent 5px,
+        #bdccd4 5px,
+        #bdccd4 95px,
+        transparent 95px,
         transparent 100px
-      );
+      ), */
+  linear-gradient(
+          transparent 0px,
+          transparent 1px,
+          #bdccd4 1px,
+          #bdccd4 99px,
+          transparent 99px,
+          transparent 100px
+  );
   linear-gradient: (rgba(53, 58, 82, 0.2), rgba(53, 58, 82, 0.2));
   /* 배경  칸 간격 및 개수 조절 */
   background-size: 50px 100%, 100% 50px, 100% 0px, 0px 100%, 100% 50px,
-    50px 100%, 50px 100%;
+  50px 100%, 50px 100%;
 }
 .main_map img {
   display: block;
