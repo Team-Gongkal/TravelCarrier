@@ -35,7 +35,7 @@ jobs:
           port: ${{ secrets.PI_PORT }}  # 라즈베리파이 SSH 포트
           username: ${{ secrets.PI_USERNAME }}  # 라즈베리파이 사용자 이름
           password: ${{ secrets.PI_PASSWORD }}  # 라즈베리파이 비밀번호
-          source: "./"  # 현재 디렉토리에서 복사할 파일들
+          source: "build/libs/*.jar"  # 빌드된 JAR 파일만 복사
           target: "Project/travelCarrier/"  # 라즈베리파이의 타겟 디렉토리
 
       # 4. 배포 서버에서 docker-compose 명령어 실행
